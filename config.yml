@@ -1,0 +1,90 @@
+baseURL: https://lzz-blog.web.app/
+languageCode: en-us
+title: LzzBlog
+description: Blog Site of Lyu Zizheng. All random thoughts~
+paginate: 10
+theme: PaperMod
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+# googleAnalytics: UA-123-45
+
+minify:
+    disableXML: true
+    # minifyOutput: true
+
+menu:
+    main:
+        - name: Home 
+          url: /
+          weight: 1
+        - name: Archive
+          url: archives
+          weight: 5
+        - name: Search
+          url: search/
+          weight: 4
+        - name: Tags
+          url: tags/
+          weight: 3
+        - name: Categories
+          url: categories/
+          weight: 2
+
+params:
+    # defaultTheme: light
+    # defaultTheme: dark
+    defaultTheme: auto # to switch between dark or light according to browser theme
+
+    homeInfoParams:
+        Title: "Zizheng'Place"
+        Content: >
+            让生活有趣一点~  
+
+            分享一些感悟，心得，学习笔记~
+
+
+    socialIcons:
+        - name: github
+          url: "https://github.com/Brabalawuka"
+        - name: LinkedIn
+          url: "https://www.linkedin.com/in/zizheng-lyu-84404912a/"
+        - name: Instagram
+          url: "https://www.instagram.com/lyuzizheng"
+
+    fuseOpts:
+        isCaseSensitive: false
+        shouldSort: true
+        location: 0
+        distance: 1000
+        threshold: 0.4
+        minMatchCharLength: 0
+        keys: ["title", "permalink", "summary", "content"]
+
+    cover:
+        hiddenInList: true # hide on list pages and home
+        hiddenInSingle: false # hide on single page
+
+
+    #ShowShareButtons: true
+    ShowReadingTime: true
+    ShowPostNavLinks: true
+    ShowCodeCopyButtons: true
+    comments: true
+
+
+
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON # is necessary
+
+taxonomies:
+    category: categories
+    tag: tags
+    series: series
