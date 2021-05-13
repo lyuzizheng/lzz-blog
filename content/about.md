@@ -11,7 +11,7 @@ description: "Backend Engineer - Platform Services"
 ---
 ## Summary
 
-Zizheng is an postive and confident person who constantly learn, review, and improve himself. Zizheng has a decisive and logical mind to solve problems; And has a sensitive and aesthetic heart to communicate and inspire the people around him.  
+Zizheng is a postive and confident person who constantly learn, review, and improve himself. Zizheng has a decisive and logical mind to solve problems; And a sensitive and aesthetic heart to feel, communicate and inspire the people around him.
 
 ## Education and Experiences
 
@@ -19,7 +19,7 @@ Zizheng is an postive and confident person who constantly learn, review, and imp
 
 - Aug 2017 - May 2021
 - B.Eng. Computer Engineering
-- 🏆 Full NTU Science and Engineering Undergraduate Merit Scholarship 
+- 🏆 Full NTU Science and Engineering Undergraduate Merit Scholarship  
 
 ### Bytedance
 
@@ -54,9 +54,9 @@ Zizheng is an postive and confident person who constantly learn, review, and imp
 
 ## Contact
 
-### Phone  
+<!-- ### Phone  
 
-[+6583423169](tel:+6583423169)  
+[+6583423169](tel:+6583423169)   -->
 
 ### Email  
 
