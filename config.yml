@@ -69,7 +69,8 @@ params:
         keys: ["title", "permalink", "summary", "content"]
 
     cover:
-        hiddenInList: true # hide on list pages and home
+        responsiveImages: false
+        hiddenInList: false # hide on list pages and home
         hiddenInSingle: false # hide on single page
 
 
@@ -77,6 +78,7 @@ params:
     ShowReadingTime: true
     ShowPostNavLinks: true
     ShowCodeCopyButtons: true
+    ShowBreadCrumbs: true
     comments: true
 
 
