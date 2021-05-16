@@ -10,9 +10,6 @@ cover:
     image: "cover.jpg"
     relative: true
     alt: "Padlock on a wooden door"
-
-resources:
-- src: 'fig1.png'
 ---
 
 很久没有写东西了，逻辑或许比较混乱……  
