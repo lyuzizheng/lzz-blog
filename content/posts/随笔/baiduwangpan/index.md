@@ -1,5 +1,5 @@
 ---
-author: "子正"
+author: "LZZ"
 title: "pandownload被封，百度做错了吗？"
 date: "2020-04-16"
 tags: ["中二", "异想天开"]

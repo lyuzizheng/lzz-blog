@@ -1,5 +1,5 @@
 ---
-author: "子正"
+author: "LZZ"
 title: "Mastering Go学习笔记"
 date: "2021-05-15"
 tags: ["学习", "Golang"]
