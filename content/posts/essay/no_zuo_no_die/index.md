@@ -6,6 +6,10 @@ tags: ["作死", "日记"]
 categories: ["随笔"]
 ShowToc: true
 TocOpen: false
+cover:
+    image: "img/cover.jpg"
+    relative: true
+    alt: "在作死的边缘试探"
 ---
 
 ## 更新中 23 May 2021
@@ -14,7 +18,12 @@ TocOpen: false
 
 ## 23th May 2021 触发Intel SpeedStep 锁 0.79Ghz
 
-尝试Windows 10 21H1 Insider Preview 触发系统Bug，导致Dell XPS 15 9570 不断正常温度触发SpeedStep 降频至800MHZ根本用不了了。尝试过断电，升级Bios，各种方法后决定重装系统解决。  
+尝试Windows 10 21H1 Insider Preview 触发系统Bug，导致Dell XPS 15 9570 不断正常温度触发SpeedStep，CPU降频至800MHZ根本用不了了。尝试过断电，升级Bios，各种方法后决定重装系统解决。  
+
+- 24th May 重装系统后发现并没有解决问题，由于没有新的散热硅脂，没办法更改散热情况。打开ThrottleStop发现经常发生Power Limit Throttling，怎么也找不到解决办法，只好对CPU进行降压0.12V的尝试！  
+- 发现Dell这版bios把降压功能锁了，我RTMD。给Bios降级至一个帖子说的可以进行降压的版本，用thorttlstop降压，开启Scheduling Task自动启动。
+
+问题暂时解决
 
 ## 07th May 2021 触发Intel Control Penal导致的黑屏bug
 
