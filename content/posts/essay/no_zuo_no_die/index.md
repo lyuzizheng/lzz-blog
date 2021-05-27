@@ -6,10 +6,12 @@ tags: ["作死", "日记"]
 categories: ["随笔"]
 ShowToc: true
 TocOpen: false
+summary: "作为不断勇于尝(zuo)试(si)的新青年，特此记录下勇于尝试新东西造成的及其后悔的作死记录。"
 cover:
     image: "img/cover_new.png"
     relative: true
     alt: "在作死的边缘试探"
+
 ---
 作为不断勇于尝(zuo)试(si)的新青年，特此记录下勇于尝试新东西造成的及其后悔的作死记录。
 

@@ -19,9 +19,9 @@ minify:
 
 menu:
     main:
-        - name: Home 
-          url: /
-          weight: 1
+        # - name: Home 
+        #   url: /
+        #   weight: 1
         - name: Archive
           url: archives
           weight: 5
@@ -59,26 +59,27 @@ params:
         - name: Instagram
           url: "https://www.instagram.com/lyuzizheng"
 
-    # fuseOpts:
-    #     isCaseSensitive: false
-    #     shouldSort: true
-    #     location: 0
-    #     distance: 1000
-    #     threshold: 0.4
-    #     minMatchCharLength: 0
-    #     keys: ["title", "permalink", "summary", "content"]
+    fuseOpts:
+        isCaseSensitive: false
+        shouldSort: true
+        location: 0
+        distance: 1000
+        threshold: 0.4
+        minMatchCharLength: 0
+        keys: ["title", "permalink", "summary", "content"]
 
     cover:
-        responsiveImages: true
+        responsiveImages: false
         hiddenInList: false # hide on list pages and home
-        hiddenInSingle: false # hide on single page
+        hiddenInSingle: true # hide on single page
 
 
-    #ShowShareButtons: true
-    ShowReadingTime: false
-    ShowPostNavLinks: false
+  
+    ShowShareButtons: true
+    ShowReadingTime: true
+    ShowPostNavLinks: true
     ShowCodeCopyButtons: true
-    ShowBreadCrumbs: true
+    ShowBreadCrumbs: false
     comments: true
 
 
