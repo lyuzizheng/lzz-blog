@@ -6,7 +6,11 @@ tags: ["吐槽", "日记"]
 categories: ["随笔"]
 summary: "脑子瓦特了，脑血栓了，都设计不出来的APP逻辑，离谱的BUG吐槽记录"
 ShowToc: true
-TocOpen: false
+TocOpen: true
+cover:
+    image: "cover.jpg"
+    relative: true
+    alt: "食屎啦你.jpg"
 ---
 
 
