@@ -1,19 +1,16 @@
 ---
 author: "LZZ"
-title: "【持续更新】子正的作死日记"
+title: "【持续更新 23th May 2021】子正的作死日记"
 date: "2021-05-23"
 tags: ["作死", "日记"]
 categories: ["随笔"]
 ShowToc: true
 TocOpen: false
 cover:
-    image: "img/cover.png"
+    image: "img/cover_new.png"
     relative: true
     alt: "在作死的边缘试探"
 ---
-
-## 更新中 23 May 2021
-
 作为不断勇于尝(zuo)试(si)的新青年，特此记录下勇于尝试新东西造成的及其后悔的作死记录。
 
 ## 23th May 2021 触发Intel SpeedStep 锁 0.79Ghz
