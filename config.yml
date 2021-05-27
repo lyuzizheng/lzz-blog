@@ -59,24 +59,24 @@ params:
         - name: Instagram
           url: "https://www.instagram.com/lyuzizheng"
 
-    fuseOpts:
-        isCaseSensitive: false
-        shouldSort: true
-        location: 0
-        distance: 1000
-        threshold: 0.4
-        minMatchCharLength: 0
-        keys: ["title", "permalink", "summary", "content"]
+    # fuseOpts:
+    #     isCaseSensitive: false
+    #     shouldSort: true
+    #     location: 0
+    #     distance: 1000
+    #     threshold: 0.4
+    #     minMatchCharLength: 0
+    #     keys: ["title", "permalink", "summary", "content"]
 
     cover:
-        responsiveImages: false
+        responsiveImages: true
         hiddenInList: false # hide on list pages and home
         hiddenInSingle: false # hide on single page
 
 
     #ShowShareButtons: true
-    ShowReadingTime: true
-    ShowPostNavLinks: true
+    ShowReadingTime: false
+    ShowPostNavLinks: false
     ShowCodeCopyButtons: true
     ShowBreadCrumbs: true
     comments: true
