@@ -8,7 +8,7 @@ ShowToc: true
 TocOpen: false
 summary: "作为不断勇于尝(zuo)试(si)的新青年，特此记录下勇于尝试新东西造成的及其后悔的作死记录。"
 cover:
-    image: "img/cover_new.png"
+    image: "cover2.jpg"
     relative: true
     alt: "在作死的边缘试探"
 
@@ -18,6 +18,8 @@ cover:
 ## 23th May 2021 触发Intel SpeedStep 锁 0.79Ghz
 
 尝试Windows 10 21H1 Insider Preview 触发系统Bug（也可能不是系统的问题），导致Dell XPS 15 9570 不断正常使用触发SpeedStep，CPU降频至800MHZ根本用不了了。尝试过断电，升级Bios，各种方法后决定重装系统解决。  
+
+![Example image](2021_05_23_SpeedStep/fig1.png#center)  
 
 - 24th May 重装系统后发现并没有解决问题，由于没有新的散热硅脂，没办法更改散热情况。只好打开ThrottleStop发现经常发生Power Limit Throttling这个现象，怎么也找不到解决办法，只好对CPU进行降压0.12V的尝试！  
 - 发现Dell这版bios把降压功能锁了，我RTMD！！！给Bios降级至一个帖子说的可以进行降压的版本，用thorttlstop降压，开启Scheduling Task自动启动。
