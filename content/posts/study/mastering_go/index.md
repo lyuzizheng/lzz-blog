@@ -1,7 +1,7 @@
 ---
 author: "LZZ"
 title: "Mastering Go学习笔记"
-date: "2021-05-15"
+date: "2021-07-23"
 tags: ["学习", "Golang"]
 categories: ["笔记"]
 summary: "Mastering Go Second Edition 学习笔记"
@@ -87,3 +87,83 @@ func main() {
 
 argument[0] = programme name  
 argumeent[1..] = arguments in string form
+
+## Chapter 2 Understanding Go Internals
+
+## Compiler
+
+To compile go programm
+
+`go tool compile test.go`  
+`go tool compile -pack test.go` -> you will get an archive file instead of an object file, an archive file is used to group multiple files
+
+## GC  
+
+To observe memory statistics
+```
+var mem runtime.MemStats 
+runtime.ReadMemStats(&mem)
+fmt.Println("mem.Alloc:", mem.Alloc)
+fmt.Println("mem.TotalAlloc:", mem.TotalAlloc)
+fmt.Println("mem.HeapAlloc:", mem.HeapAlloc)
+fmt.Println("mem.NumGC:", mem.NumGC)
+fmt.Println("-----")
+```
+
+
+Go uses Tricolor Sweeping Algo to carry out GC: The objects of the black set are guaranteed to have no pointers to any object of the white set; Grey color set might have reference to white set.
+
+首先color **ROOT** reference to grey -> The roots are the objects that can be directly accessed by the application, which includes global variables and other things on the stack. -> pick grey变成黑色 -> 递归寻找黑色的dependent改成灰色（如果是白色的话）-> 直到所有的灰色都被遍历过就okleh -> 回收白色
+
+## Using C Languang
+
+```
+package main 
+
+//#include <stdio.h>
+//void callC() {
+//	printf("Calling C Code!/n")
+//} 
+
+import "C"
+import "fmt" 
+
+func main() {  
+	fmt.Println("A Go statement!")   
+	C.callC()  
+	fmt.Println("Another Go statement!")
+}
+```
+
+
+## DEFER
+
+```
+# 1 2 3
+func d1() {
+	for i := 3; i > 0; i-- { 
+		defer fmt.Print(i, " ")
+	}
+}
+
+# 0 0 0
+func d2() { 
+	for i := 3; i > 0; i-- { 
+		defer func() {
+			fmt.Print(i, " ") 
+		}() 
+	} 
+	fmt.Println()
+}
+
+# 1 2 3
+func d3() { 
+	for i := 3; i > 0; i-- { 
+		defer func(n int) { 
+			fmt.Print(n, " ")
+		}(i) 
+	}
+}
+```
+
+`defer` keyword is last in first out. 
