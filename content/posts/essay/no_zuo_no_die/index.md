@@ -1,6 +1,6 @@
 ---
 author: "LZZ"
-title: "【持续更新 23th May 2021】子正的作死日记"
+title: "【持续更新 15th Aug 2021】子正的作死日记"
 date: "2021-08-15"
 tags: ["作死", "日记"]
 categories: ["随笔"]

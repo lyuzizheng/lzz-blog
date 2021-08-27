@@ -1,7 +1,7 @@
 ---
 author: "LZZ"
 title: "【持续更新】十年脑血栓也设计不出来的APP逻辑"
-date: "2021-05-23"
+date: "2021-08-27"
 tags: ["吐槽", "日记"]
 categories: ["随笔"]
 summary: "脑子瓦特了，脑血栓了，都设计不出来的APP逻辑，离谱的BUG吐槽记录"
