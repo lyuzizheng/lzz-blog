@@ -23,7 +23,8 @@ Zizheng is a postive and confident person who constantly learn, review, and impr
 
 ### Bytedance
 
-- Aug 2021 - Now Software Engineer
+- Aug 2021 - Now Backend Software Engineer
+  - IM_CLOUD Team, maintaining Tiktok IM Backend Services
 - Jan 2021 - May 2021 Software Engineer Intern
   - Developing and Maintaining company PaaS service, API Gateway to handle million level QPS
   - Successfully sustain the Chinese New Year Campaign

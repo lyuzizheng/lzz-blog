@@ -13,6 +13,13 @@ cover:
     alt: "食屎啦你.jpg"
 ---
 
+## 21th Aug 2021 Shopee无语的账号删除机制
+
+用Google登陆Shopee会自动创建以Google Gmail为邮件的账号。就会导致这个email不可用，但是注销账号需要你自行再添加电话号码才能注销。。。  
+
+{{< youtube 3XjcL3_iyyg >}}  
+
+### 27th Aug 2021 已向shopee的朋友反馈，研发表示会审核现有机制进行修复
 
 ## 27th May 2021 QQ智障密保设计
 
