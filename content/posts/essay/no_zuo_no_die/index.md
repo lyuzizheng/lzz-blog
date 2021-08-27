@@ -21,7 +21,7 @@ cover:
 
 [All-in-1 Full Automatic Smart Sit/Stand Desk With Power Hub](https://www.kickstarter.com/projects/adjustabot/fully-automatic-sit-stand-desk-with-power-hub)
 
-![Example image](2021_08_15_kickstarter/fig2.jpg#center)  
+![Example image](2021_08_15_kickstarter/fig2.jpeg#center)  
 
 看起来非常不错的众筹项目其实是一个彻头彻尾的骗局，从宣传片请演员和prototype的mockup都做得非常逼真。其实这里面最大的责任方在于kickstarter，他们作为一个平台理应比用户更能辨别骗局。 However! They! Don't! Fking! Care! 当用户想找平台帮忙时，会发现平台早已经把免责声明写在用户协议里面了。
 
