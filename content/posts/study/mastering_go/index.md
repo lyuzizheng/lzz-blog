@@ -24,7 +24,7 @@ TocOpen: false
 
 ### 安装
 
-```
+```bash
 choco install golang
 go env -w GOPROXY=https://goproxy.cn #这一步是翻墙
 ## Create a folder
@@ -34,7 +34,8 @@ go mod init YOUR_MODULE_NAME
 ### Hello World Programme  
 
 Create a folder name ```chapter_1```
-```
+
+```go
 package main
 
 import (
@@ -45,8 +46,10 @@ func main() {
 	fmt.Println("Hello World")
 }
 ```
-build and run 
-```
+
+build and run  
+
+```bash
 go build .\chapter_1\aSourceFile.go
 .\aSrouceFile.exe
 
@@ -56,7 +59,7 @@ go build .\chapter_1\aSourceFile.go
 注意naming convention 不应该是 ```aSourceFile.go``` 应该是 ```source_file.go```  
 如果不想compile就启动的话
 
-```
+```bash
 go run source_file.go
 
 > Hello World
@@ -64,8 +67,9 @@ go run source_file.go
 
 ### STDOUT
 
-optput:
-```
+optput:  
+
+```go
 fmt.Println(s1,s2) == fmt.Print(s1, " ", s2, "\n")
 ```
 
@@ -75,7 +79,7 @@ The official name for `:=` is the short assignment statement.
 
 ### Command Line Argument 
 
-```
+```go
 func main() { 
 	if len(os.Args) == 1 {
 		fmt.Println("Please give one or more floats.") os.Exit(1)
@@ -99,8 +103,9 @@ To compile go programm
 
 ## GC  
 
-To observe memory statistics
-```
+To observe memory statistics  
+
+```go
 var mem runtime.MemStats 
 runtime.ReadMemStats(&mem)
 fmt.Println("mem.Alloc:", mem.Alloc)
@@ -117,7 +122,7 @@ Go uses Tricolor Sweeping Algo to carry out GC: The objects of the black set are
 
 ## Using C Languang
 
-```
+```go
 package main 
 
 //#include <stdio.h>
@@ -138,7 +143,7 @@ func main() {
 
 ## DEFER
 
-```
+```go
 # 1 2 3
 func d1() {
 	for i := 3; i > 0; i-- { 
