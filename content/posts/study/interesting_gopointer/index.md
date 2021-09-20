@@ -1,10 +1,10 @@
 ---
 author: "LZZ"
-title: "Interesting Golang \"Passed by Value\" & \"Passed By Reference\""
+title: "Interesting Golang \"Passed by Value\" & \"Passed By Pointer Value\""
 date: "2021-09-08"
 tags: ["学习", "Golang"]
 categories: ["笔记"]
-summary: "Just some insights on usage of Golang Pass By Value and Pass by Reference~"
+summary: "Just some insights on usage of Golang Pass By Value and Pass by Reference（Pointer）~"
 ShowToc: true
 TocOpen: false
 cover:
@@ -12,7 +12,7 @@ cover:
     relative: true
 ---
 
-As we all know, there are two types of of variable assignment in Golang. Copy the exact value and allocate in stack and copy the reference pointer to the value and assign the the new variable. Things like **slice, map, channel, interface** and **func** are copied by reference and others like **struct, int and other primitive data types** are copied the exact value it containes.
+As we all know, there are two types of variable assignments in Golang. Copy the exact value then allocate in stack and copy the reference pointer to the value and assign that to the new variable. Things like **slice, map, channel, interface and func** are copied by "pointer values" and others like ****struct, int and other primitive data types** are copied with the exact value it contains.  
 
 The below code is easy to understand：  
 
@@ -45,7 +45,7 @@ NewStruct: {0 0}
 UpdatedStruct: {0 0}
 ``` 
 
-This is because the struct `Mysturct` is copied with its value. So, the below on should be easier to predict.
+This is because the struct `Mysturct` is copied with its value. So, the below one should be easier to predict.
 
 ```go
 func UpdateMap(m map[string]int) {
@@ -166,7 +166,7 @@ Slice5              []int       0x000000c0000ac000           0           0   24
 Slice5: [1 2 0]
 ```
 
-So, when the reference of the slice array is copied to the function as parameter, these 24 bytes are copied to a new place as the slice is a struct actually. However, the pointer to the actual array remains the same. Therefore, update `s[2] = 0` will amend the orginal array to `[1,2,3] -> [1,2,0]` as the new `address: 0x000000c0000ac030` is still refering to the old array. Not the following step `append` is interesting. The append action makes exceeds the capacity of the old array and therefore a new array pointer is allocated to the inner slice struct pointer `address: 0x000000c0000ac030` so its internal array pointer is now different from the outside one. Then the following `s[1] = 5` is changing the new array of the Slice S. The lead to `[1,2,0] -> [1, 5, 0, 8]` is not reflected in the original slice s where the slice is at its `0x000000c0000ac000` position.  
+So, when the reference of the slice array is copied to the function as parameter, these 24 bytes are copied to a new place as the slice is a basically just a struct. However, the pointer to the actual array remains the same. Therefore, updating `s[2] = 0` will amend the orginal array to `[1,2,3] -> [1,2,0]` as the new `address: 0x000000c0000ac030` is still refering to the old array. Now the following step `append` is interesting. The append action makes the slice exceeds the capacity of the old slice and therefore a new array pointer is allocated to the inner slice struct pointer `address: 0x000000c0000ac030` so its internal array pointer is now different from the outside one. Then the following `s[1] = 5` is changing the new array of the Slice S. This leads to `[1,2,0] -> [1, 5, 0, 8]` being not reflected in the original slice S where the slice is at its `0x000000c0000ac000` position.  
 
 ```go
 func CheckSlice(){
@@ -199,4 +199,4 @@ Slice5              []int       0x000000c0000ac000           0           0   24
 Slice5: [1 5 0]
 ```  
 
-If we preallocate the slice capacity of the slice as 10. There will be no change in the array pointer. Append action would only amend the length of the slice from 3 -> 4. Therefore the append 8 is not shown from the outside s but the amended 5 can be shown.
+If we preallocate the slice capacity of the slice as 10. There will be no change in the array pointer due to appending operation Append action would only amend the length of the slice from 3 -> 4. Therefore the append 8 is not shown from the outside s but the amended 5 can be shown.
