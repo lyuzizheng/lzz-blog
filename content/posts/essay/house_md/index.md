@@ -4,8 +4,6 @@ title: "从豪斯医生看身体出轨和精神出轨"
 date: "2019-02-07"
 tags: ["豪斯医生", "思考"]
 categories: ["随笔"]
-ShowToc: false
-TocOpen: false
 summary: "肉体出轨和精神出轨到底哪个更不可能接受？在发现伴侣出轨后所做出的反应又是如何的？到底谁才是受害者？"
 cover:
     image: "cover.jpg"

@@ -1,11 +1,9 @@
 ---
 author: "LZZ"
 title: "爱情"
-date: "2021-09-21"
+date: "2021-09-20"
 tags: ["爱情", "矫情"]
 categories: ["随笔"]
-ShowToc: false
-TocOpen: false
 summary: "凌晨睡不着，CTMD"
 ---
 
@@ -49,4 +47,6 @@ summary: "凌晨睡不着，CTMD"
 
 **B:** 那就孤独终老吧sb~  
 
-\[完\]  
+---
+
+完
