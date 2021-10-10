@@ -4,7 +4,7 @@ title: "Bytedance Crush Course学习笔记"
 date: "2021-10-03"
 tags: ["学习", "Golang"]
 categories: ["笔记"]
-summary: "字节后端工程师教程学习笔记"、
+summary: "字节后端工程师教程学习笔记"
 draft: true
 ShowToc: false
 TocOpen: false
