@@ -8,6 +8,9 @@ summary: "I found this piece of code snippet in our codebase and it turns out to
 draft: false
 ShowToc: false
 TocOpen: false
+cover:
+    image: "cover.png"
+    relative: true
 
 ---
 
