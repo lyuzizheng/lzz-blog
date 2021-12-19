@@ -137,5 +137,10 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 
 Now we have a `msg_id` to pass around our microservices instead of a huge message body. A message body may be a picture, a voice message or a lopng text. The id suitable to represent a single message to pass around.  
 
+<div class="alert-warning">
+This is a yellow colored box
+</div>
 
-
+::: warning
+*here be dragons*
+:::
