@@ -8,7 +8,7 @@ ShowToc: true
 TocOpen: false
 summary: "2022元旦，我收到了第二封来自母亲的家书，在25岁的那年。"
 cover:
-    image: "cover.jpg"
+    image: "cover.jpeg"
     relative: true
     alt: "在作死的边缘试探"
 
