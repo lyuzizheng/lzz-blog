@@ -1,6 +1,6 @@
 ---
 author: "LZZ"
-title: "How Does Instant Messaging Work (In TikTok)"
+title: "[WIP] How Does Instant Messaging Work (In TikTok)"
 date: "2021-12-18"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
@@ -136,11 +136,3 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 > We use KV NoSQL DB as the record is independent message record with not other relational information inside message datebase.
 
 Now we have a `msg_id` to pass around our microservices instead of a huge message body. A message body may be a picture, a voice message or a lopng text. The id suitable to represent a single message to pass around.  
-
-<div class="alert-warning">
-This is a yellow colored box
-</div>
-
-::: warning
-*here be dragons*
-:::
