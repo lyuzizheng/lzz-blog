@@ -6,11 +6,11 @@ tags: ["家书", "日记", "母亲"]
 categories: ["随笔"]
 ShowToc: true
 TocOpen: false
-summary: "2022元旦，我收到了第二封来自母亲的家书，在25岁的那年。"
+summary: "2022年元旦，我收到母亲一封家书，简单的文字，正值我思考去年种种机遇，成长与遗憾之际。感动涕零，无以言表，特此记下"
 cover:
     image: "cover.jpeg"
     relative: true
-    alt: "在作死的边缘试探"
+    alt: "母亲的画"
 
 ---
 
