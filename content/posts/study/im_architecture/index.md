@@ -1,10 +1,10 @@
 ---
 author: "LZZ"
-title: "[WIP] How Does Instant Messaging Work (In TikTok)"
-date: "2021-12-18"
+title: "How Does Instant Messaging Work? (Holistic IM System Introduction)"
+date: "2022-01-16"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
-summary: "This essay will start from a view of PM to define what user's need for a simple instant messaging service as well as a perspective of SWE on how to implement these features (backend) in a robust and reliable way."
+summary: "This essay took me one week to finish writing. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
 draft: false
 ShowToc: false
 TocOpen: false
@@ -13,12 +13,13 @@ cover:
     relative: true
 
 ---
+This essay I will start from a view of PM to define what user's need for a simple instant messaging service as well as a perspective of SWE on how to implement these features (backend) in a robust and reliable way.
 
 ## What is "IM"  
 
 ### Basic "IM" introduction  
 
-IM means instant messaging, many APPs support Instant messaging function. The most simple scenario is that User A would love to send message to User B.  
+IM means instant messaging, many APPs support Instant messaging function. Tipical IM Applications include Messenger, WhatsApp, Telegram and many more other small . The most simple scenario is that User A would love to send message to User B.  
 
 In this simple case, what we can think about fulfilling the function is that:  
 
@@ -48,11 +49,11 @@ After this, we can push further on the messaging system. For example, we dont wa
 > 2. Push Notification (APNS + FCM)  
 > 3. Long Connection Notification/Online Status Detection
 
-After talking about the connection issue. We can think about storage issues. What is A has a lot of conversation with many other people: C, D, E...  
+After talking about the connection issue. We can think about storage issues. What if A has a lot of conversation with many other people: C, D, E...  
 
 ![Example image](fig3.jpeg#center)  
 
-How do we tell which msg belongs to conversation between which two users? How do we know which message to fetch if A opens the chat with different people like C, D ,E. Therefore, we need more information to be stored. The conversation information-- the message sent to the server belongs to the conversation from which two people.  
+How do we tell which msg belongs to conversation between which two users? How do we know which message to fetch if A opens the chat with different people like C, D ,E. Therefore, we need more information to be stored. The conversation information (chat info)-- the message sent to the server belongs to the conversation from which two people.  
 
 > 📍 **Feature (Conversation):**
 >
@@ -91,8 +92,29 @@ We may need up to 3 tables to store the related information about the conversati
 Now we have our conversation ready and message storage ready. One serious problem is emerging. We need to know whether user has read the messages sent to the conversation and list out all unread messages/conversations in their chatting list. Technical solution is simplier for a one-on-one chat. **However, for a group chat, if there are thousands of messages and different member has their reading position.** We need a place to store all these current reading position.
 Wait!  
 
-There is another problem. Since data sets get big and all messages are stored in one database. If one is to fetch all his conversation information and all group chats messages using this current mode. **This task will cause considerable amount of delay when fetching messages belonging to you**
-So we need to have:  
+There is another problem. Since data sets get big and all messages are stored in one database. If one is to fetch all his conversation information and all group chats messages using this current mode. **This task will cause considerable amount of delay when fetching messages belonging to you** Why? Let's take a look of this situation that, I wanna query for all my msgs grouped in every conversation with the messges in time order and the conversation also in latest replied order. How am I supposed to write this SQL?
+
+```sql
+## Sample and poorly written
+select
+conv.conversation_id,
+collectlist(message_table.msg)
+from
+(
+    select
+        conversation_id
+    from conversation_table
+    where user_id = 00000
+) conv
+left join message_table
+on conv.conv_id = message_table.conv_id 
+group by conv.conversation_id
+order by ??
+limit ??
+```
+
+I dont know how to write this, cos its so complicated and we know it will take long to query.  
+So we need to have bullet point 5 added:  
 
 > 📍 **Feature (Conversation):**
 >
@@ -124,7 +146,7 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 
 ## IM Architecture  
 
-### Message Sending and Retriving  
+### Basic Message Sending
 
 ![Example image](fig7.jpeg#center)  
 
@@ -135,4 +157,64 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 > KV DataBase `msgbodies`:   `key = msgId`, `value = msgcontent`  
 > We use KV NoSQL DB as the record is independent message record with not other relational information inside message datebase.
 
-Now we have a `msg_id` to pass around our microservices instead of a huge message body. A message body may be a picture, a voice message or a lopng text. The id suitable to represent a single message to pass around.  
+Now we have a `msg_id` to pass around our microservices instead of a huge message body. A message body may be a picture, a voice message or a lopng text. A msg_id is more suitable to represent a single message and pass around and it saves space. After we have a simple messaging service, we need a conversation management service.
+
+![Example image](fig8.jpeg#center)  
+
+- Provide API `create_conversation`/ `delete_conversation`
+- Provide API `add_member`/`delete_member`
+- Provide API `get_conv_info`/`get_member`/ `get_setting`
+- Provide API `set_read_index`
+
+> Qn: Is that all we nned for sending/storing a message? (Not including push msg to the other user)  
+
+### Basic Message Retriving (Inbox Design)
+
+As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation setting they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a thing called inbox to arrange all messages sequentially.**
+
+Lets recall our draft design: ![Example image](fig6.jpeg#center)  
+So a inbox is like email inbox, or a physical mail box, we stack new messges to the inbox so msgs are arranged in a timely order. Theare are two modes of inbox design that are commonly used:
+
+- **Push Mode (写扩散)**
+- **Pull Mode (读扩散)**  
+
+And they have their own advantages and disadvantanges and we take a look.
+
+> Pull Mode (读扩散)
+> - Every conversation would have an inbox and and when A is checking his inbox. A read opeartion would iterate all those conversaiton inbox that is related to A and pull the messages he hasnt read.  
+> - Pros: Every message only requires one write to the inbox in addition to the actual message storage. Every Inbox contains the messages that is solely for each conversation and its easy to fetch history messages of one chat.
+> - Cons: Difficult/Heavy to Read all messages of that single person
+> ![Example image](fig9.png#center)  
+> In the figure, the inbox is a Zset (ordered set, choose ur db wisly) and msgs are appended in a time order
+> ---
+> Push Mode (写扩散)
+> - Push Mode pushes all messages that person involves into his Inbox Set, order by message timeline. This operation is done when new message is produced. One only need to fetch his messages in a timeline set from his inbox.  
+> - Pros: Fast reading of one's inbox list. Easy for cold start/fresh reinstall online data fetching.
+> - Cons: Writing of new messages to private inbox can be heavy, especially for group chat. e.g. sending a msg to a group with 500 members would result 500 updates event of the user inbox. Also its hard to retrieve messages from one conversation and need to do filtering query.
+> ![Example image](fig10.png#center)  
+
+To make a robust system and optimise through put. We choose to inplement both inbox and take both advantages! See the updated design:
+
+![Example image](fig11.jpeg#center)  
+
+For all messgae sending event, we feed it into a message_queue and prepare a comsumer group service lets say `message_consumer`. `msg_consumer` consumes user messages sent out by `message_api_srv` from `msg_kafka`. `msg_consumer` tells `inbox_api_srv` to store the index to inboxes database. The database we only store the index of the message body as otherwise the inbox would be huge. However, this can be improved as it has a lot of problems.
+
+> Qn: What are some of the design problems in this structure or to say how to improve this architecture?
+
+![Example image](fig12.jpeg#center)  
+
+We are see that the `message_api_srv` does not save the msg into db. However, the comsumer would RPC call `messgae_api_srv` again to save the message to DB. This is due to single reponsiblity priciple and make `send_msg` api a public api where we build another api called `storage_msg_body` for internal service RPC call.
+
+- Biz side only need to call `send_msg` and msg dumped to mq
+- Sending is marked success and biz side can display send success to user
+- MQ will preserve everything on disk as long as the producing is successful. The following process is none of sending side's business.  
+- This makes sure the user side will display send success immediately
+- The consumer would do rpc call `storage_msg_body` to save msg to db and do other following calls before marking MQ as comsumption successful.
+- This guarantees no data loss
+- MQ is in time order partitioned by hashing sender id and this gurantees msg sequence consistency
+
+The second difference is that the `msg_comsumer` acts as a producer to produce events to `inbox_kafka` and the same event is consumed by it self and call inbox_api_srv to save user inbox. Why we have duplicated level of MQ? This is because of the group msg case. If the group has a lot of users using it. A msg sent to the group would have to inform a lot of people. So this process would be time costly so we feed this into the user inbox kafka as evets to help reduce the comsumption pressure of the previous `msg_kafka` and to improve consumption speed.
+
+> Qn, why we need to duplicate inbox rpc event call and why not combine it into one api call called multi_inbox_insert or somethings?
+
+
