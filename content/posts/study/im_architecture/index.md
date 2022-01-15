@@ -1,7 +1,7 @@
 ---
 author: "LZZ"
 title: "How Does Instant Messaging Work? (Holistic IM System Introduction)"
-date: "2022-01-16"
+date: "2022-01-15"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
 summary: "This essay took me one week to finish writing. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
