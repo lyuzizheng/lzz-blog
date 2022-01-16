@@ -1,19 +1,19 @@
 ---
 author: "LZZ"
-title: "How Does Instant Messaging Work? (Holistic IM System Introduction)"
+title: "How Does Instant Messaging Work? (A Holistic IM Backend Intro)"
 date: "2022-01-15"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
-summary: "This essay took me one week to finish writing. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
+summary: "This essay took me two week to finish writing. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
 draft: false
-ShowToc: false
+ShowToc: true
 TocOpen: false
 cover:
     image: "cover.jpeg"
     relative: true
 
 ---
-This essay I will start from a view of PM to define what user's need for a simple instant messaging service as well as a perspective of SWE on how to implement these features (backend) in a robust and reliable way.
+This essay I will start from a view of PM to define what user's need for a simple instant messaging service as well as a perspective of SWE on how to implement these features (backend) in a robust and reliable way. It will take somt time to read and understand however it is followed by figures step by step. Do leave comments if u have queires.
 
 ## What is "IM"  
 
@@ -168,7 +168,7 @@ Now we have a `msg_id` to pass around our microservices instead of a huge messag
 
 > Qn: Is that all we nned for sending/storing a message? (Not including push msg to the other user)  
 
-### Basic Message Retriving (Inbox Design)
+### Basic Message Post Send Processing (Inbox Design)
 
 As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation setting they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a thing called inbox to arrange all messages sequentially.**
 
@@ -197,7 +197,12 @@ To make a robust system and optimise through put. We choose to inplement both in
 
 ![Example image](fig11.jpeg#center)  
 
-For all messgae sending event, we feed it into a message_queue and prepare a comsumer group service lets say `message_consumer`. `msg_consumer` consumes user messages sent out by `message_api_srv` from `msg_kafka`. `msg_consumer` tells `inbox_api_srv` to store the index to inboxes database. The database we only store the index of the message body as otherwise the inbox would be huge. However, this can be improved as it has a lot of problems.
+For all messgae sending event, we feed it into a message_queue and prepare a comsumer group service lets say `message_consumer`.  
+
+- `msg_consumer` consumes user messages sent out by `message_api_srv` from `msg_kafka`.  
+- `msg_consumer` call `conv_api_src` to fetch get delivery details and delivery users (who is involved in the conversation).  
+- `msg_consumer` tells `inbox_api_srv` to store the index to inboxes database. 
+- The database we only store the index of the message body as otherwise the inbox would be huge. However, this can be improved as it has a lot of problems.
 
 > Qn: What are some of the design problems in this structure or to say how to improve this architecture?
 
@@ -217,4 +222,41 @@ The second difference is that the `msg_comsumer` acts as a producer to produce e
 
 > Qn, why we need to duplicate inbox rpc event call and why not combine it into one api call called multi_inbox_insert or somethings?
 
+### Basic Message Retriving (Long Connection & Push Notification)
+
+Long Connection (Web Socket) is a commonly for client side to synchronise data with server side as it is a two way communication that the server can actively push data to the mobile clients. We are not discussing about the connection pool management on the server side long connection as it is not related to IM. We are talking about long connection can fulfill two things
+
+- Client send new messages or every other request related to IM. Instead of HTTP, using WS can save repeated connection establishment procedure.
+- Server push new messages to the client when the client's inbox in updated.  
+- Long conenction is usually maintained by heartbeat schema
+
+![Example image](fig13.png#center)  
+
+However, there are cases that long connection is not stable and disconnects. The message sending process can then be replaced by HTTP request. The msg pushing request can only be replace by:
+
+Push Notification, which is an unreliable push service introduced by Phone Companys, such as APNS for iOS/iPhone, FCM for Android in regions outside of China and other customised push service MiPush or HuaweiPush in China.  
+
+Therefore we have this structure:  
+![Example image](fig15.jpeg#center)  
+ 
+- `http_gateway`External HTTP request entrypoint /short connection
+- `long_conn_srv`Long Connection through Web-Socket connection between the mobile client and the
+- `aip_gateway_srv` rpc apigateway for all routes
+- `biz_callback_srv` Customised for customers, when any API endpoints in the api.gateway is called by APP users. It could trigger a customised callback function that such API is called.  
+
+![Example image](fig16.jpeg#center)  
+
+- `push_srv` Verify whether we should push the notification to the user or not: depending on the user conversation setting, user setting, appid setting, as well as the long connection status!
+- IM would try long connection Frontier first, then use offline push.
+
+However, since I have mentioned offline push notification is not reliable? Why?  
+
+- User may pause the notification
+- User may not click the notification -> Notificaiton content wont arrive the app.  
+
+Therefore, when the client receives the messages from push notification, and when user clicks it app should do a HTTP pull request from the server to retrieve the latest msg before just using the push message as the latest one and display it to server.
+
+![Example image](fig14.png#center)  
+
+This is because the message should be arranged in timely order and a missing push notification would result in the later messages be mistaken and leads to message hole isssues.
 
