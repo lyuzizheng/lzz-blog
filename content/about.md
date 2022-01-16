@@ -5,13 +5,14 @@ url: "/about"
 
 author: "Lyu Zizheng"
 
-date: "2021-05-13"
+date: "2022-01-20"
 description: "Backend Engineer - Platform Services"
 
 ---
-## Summary
 
-Zizheng is a postive and confident person who constantly learn, review, and improve himself. Zizheng has a decisive and logical mind to solve problems; And a sensitive and aesthetic heart to feel, communicate and inspire the people around him.
+## Pricipals
+
+*Always believe that a good software engineer must be a good product owner with client side perspectice. Always belive in engineering ethics and dream to work and contritbute to things that do good to societies.*  
 
 ## Education and Experiences
 
@@ -19,18 +20,17 @@ Zizheng is a postive and confident person who constantly learn, review, and impr
 
 - Aug 2017 - May 2021
 - B.Eng. Computer Engineering
-- 🏆 Full NTU Science and Engineering Undergraduate Merit Scholarship  
+- Full NTU Science and Engineering Undergraduate Merit Scholarship  
 
-### Bytedance
+### ByteDance
 
 - Aug 2021 - Now Backend Software Engineer
-  - IM_CLOUD Team, maintaining Tiktok IM Backend Services
+  - TikTok Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver.
+  - TikTok Location System Cloud Platform, IP geolocation.
 - Jan 2021 - May 2021 Software Engineer Intern
-  - Developing and Maintaining company PaaS service, API Gateway to handle million level QPS
+  - PaaS Service Team, API Gateway
   - Successfully sustain the Chinese New Year Campaign
-  - Handling Oncall From Internal Users
-  - Developed Self Diagnosis Tools and Usage Estiamation Tool for API Gateway Service
-  - Reconstructed 20 pieces of product documentation for entire team
+  - Developed Self Diagnosis Tools and Usage Estimation Tool for AGW users
 
 ### uWave  
 
@@ -44,14 +44,14 @@ Zizheng is a postive and confident person who constantly learn, review, and impr
 
 - May 2020 - Jul 2020 3Mon
 - Software Engineer Summer Inern
-- Function as both Scrum Master and Product owner of two projects participated, Visa Global Case Challenge and Visa Global Hackathon. Eventually, won the 1st Runner Up Prize of the Visa Global Intern Hackathon with a new payment solution idea and prototype among 60 teams.
+- Scrum Master and Product owner of two projects participated events, Visa Global Case Challenge and Visa Global Hackathon.
+- 1st Runner Up Prize of the Visa Global Intern Hackathon among 60 teams.
 
 ### Transforma Robotics  
 
 - Jun 2019 - Dec 2019 7Mon  
 - Software Engineer Intern (First Job)
 - Worked as the only developer who designed, structured, wrote code and documentation, tested and deployed the Android Application (Java) used by the company. A functional application successfully finished its demonstration to company customers in less than two months from the beginning. Now it is used as a product by the company.
-- Studied, Analysed the ROS communication protocol and developed a reusable library for future development
 
 ## Contact
 
