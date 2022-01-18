@@ -25,8 +25,8 @@ description: "Backend Engineer - Platform Services"
 ### ByteDance
 
 - Aug 2021 - Now Backend Software Engineer
-  - TikTok Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver.
-  - TikTok Location System Cloud Platform, IP geolocation.
+  - TikTok Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver. 
+  - TikTok Location System Cloud Platform, IP geolocation. Only Oversear Member tanking Ip Geolocation Team Biz.
 - Jan 2021 - May 2021 Software Engineer Intern
   - PaaS Service Team, API Gateway
   - Successfully sustain the Chinese New Year Campaign
