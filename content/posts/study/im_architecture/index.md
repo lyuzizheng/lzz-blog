@@ -4,7 +4,7 @@ title: "How Does Instant Messaging Work? (A Holistic IM Backend Intro)"
 date: "2022-01-15"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
-summary: "This essay took me two week to finish writing. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
+summary: "This essay takes me one moth to finish writing, drawing figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
 draft: false
 ShowToc: true
 TocOpen: false
@@ -18,6 +18,8 @@ This essay I will start from a view of PM to define what user's need for a simpl
 ## What is "IM"  
 
 ### Basic "IM" introduction  
+
+![Example image](fig17.png#center)  
 
 IM means instant messaging, many APPs support Instant messaging function. Tipical IM Applications include Messenger, WhatsApp, Telegram and many more other small . The most simple scenario is that User A would love to send message to User B.  
 
@@ -168,7 +170,7 @@ Now we have a `msg_id` to pass around our microservices instead of a huge messag
 
 > Qn: Is that all we nned for sending/storing a message? (Not including push msg to the other user)  
 
-### Basic Message Post Send Processing (Inbox Design)
+### Basic Message Processing (Inbox Design)
 
 As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation setting they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a thing called inbox to arrange all messages sequentially.**
 
@@ -201,14 +203,14 @@ For all messgae sending event, we feed it into a message_queue and prepare a com
 
 - `msg_consumer` consumes user messages sent out by `message_api_srv` from `msg_kafka`.  
 - `msg_consumer` call `conv_api_src` to fetch get delivery details and delivery users (who is involved in the conversation).  
-- `msg_consumer` tells `inbox_api_srv` to store the index to inboxes database. 
+- `msg_consumer` tells `inbox_api_srv` to store the index to inboxes database.  
 - The database we only store the index of the message body as otherwise the inbox would be huge. However, this can be improved as it has a lot of problems.
 
 > Qn: What are some of the design problems in this structure or to say how to improve this architecture?
 
 ![Example image](fig12.jpeg#center)  
 
-We are see that the `message_api_srv` does not save the msg into db. However, the comsumer would RPC call `messgae_api_srv` again to save the message to DB. This is due to single reponsiblity priciple and make `send_msg` api a public api where we build another api called `storage_msg_body` for internal service RPC call.
+We can see that the `message_api_srv` does not save the msg into db. However, the comsumer would RPC call `messgae_api_srv` again to save the message to DB. This is due to single reponsiblity priciple and make `send_msg` api a public api where we build another api called `storage_msg_body` for internal service RPC call.
 
 - Biz side only need to call `send_msg` and msg dumped to mq
 - Sending is marked success and biz side can display send success to user
@@ -259,4 +261,27 @@ Therefore, when the client receives the messages from push notification, and whe
 ![Example image](fig14.png#center)  
 
 This is because the message should be arranged in timely order and a missing push notification would result in the later messages be mistaken and leads to message hole isssues.
+
+## Basic Message Organisation (Inbox Index)  
+
+It is curcial that the messages sent out by sender are will stored by receiver in a strictly ordered manner by time. So, we need to make sure everything that goes into the inbox database are indexed with a unique **monotonic increasing manner**, for every conversation and for every receiver.
+
+Also think of a situation in you app, the app knows which messages you havent read and mark them as red dots beside every conversation. This is because the app remembers the latest conversation index you have read for every conversation you have.
+
+![Example image](fig18.jpeg#center)
+
+- Firstly we design an index system for every inbox we have and every message will be given not only an `msg_id` by an `conv_index` and `user_index` which represents the position of every msg in the inbox
+- Also we create a `read_index` for every conversation and every covnersatino member and it marks the latest read position of the person.
+- When the client receives a new message. It finds out which convesation it is from and insert it into respective conversation and increase the local index by one.
+
+> Qn: What if this message (index 766) is lost by the client and next message 767 is received by the client?
+> An: We design the index to be a monolistic increasing way with consecutive number (int64 enough) and if the client detects there is empty gap between previous index and the receive index. It should call api to pull the missing one before insert the latest one to the db/covnersation
+
+Meanwhile the `msg_api_srv` should support a new api called `pull_new_msg` for client to actively pull for new msgs if the long connectino is not stable. The newly updated architecture is shown below with the read index database established
+
+![Example image](fig19.jpeg#center)
+
+## Globalisation and Multi Regional DataCenter 
+
+![Example image](fig20.jpeg#center)
 
