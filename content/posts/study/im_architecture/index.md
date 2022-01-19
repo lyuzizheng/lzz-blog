@@ -285,3 +285,4 @@ Meanwhile the `msg_api_srv` should support a new api called `pull_new_msg` for c
 
 ![Example image](fig20.jpeg#center)
 
+![Example image](fig21.jpeg#center)
