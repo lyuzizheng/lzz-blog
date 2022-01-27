@@ -13,7 +13,7 @@ cover:
     relative: true
 
 ---
-This essay takes me one month to finish writing, drawing figures. I will start from a view of PM to define what user's need for a simple instant messaging service as well as the perspective of an SWE to design how to implement these features (backend) in a robust and reliable way. It will take some time to read and understand however it is followed by figures step by step. Do leave comments if u have any queires.
+This essay takes me one month to write, and draw figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE to demonstrate how to implement these features (backend) in a robust and reliable way. It will take some time to read and understand however it is followed by figures step by step. Do leave comments if u have any queires.
 
 ## What is "IM"  
 
