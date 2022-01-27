@@ -36,14 +36,14 @@ In this case, everyone would store the message **on their phone** and send direc
 - **A** send message to server and server should store the message
 - **B** should be notified by the server and receive the message sent by A  
 
-In this case, we need a mechanism that informs B about the new message. So we need a push notification server that pushes new messages to your notification center on the phone. (Qn: Why pooling is not suitable for a phone? Answer in comments)  
+In this case, we need a mechanism that informs B about the new message. So we need a push notification server that pushes new messages to your notification center on the phone. (Qn: Why constant pulling is not suitable for a phone application? Answer in comments)  
 
 > 📍 Feature (Messaging):  
 >
 > 1. Message Storage  
-> 2. Push Notification (APNS + FCM) 
+> 2. Push Notification (APNS + FCM)  
 
-After this, we can push further on the messaging system. For example, we dont wanna send a push notification to **B's** notification center when **B** is in chat with **A**. We want the message to popout directly. Therefore, we need a mechanism to detect whether B is online and directly send the message to B's app. Things like "B is Typing" "Seen By B" can also be fulfilled.  
+After this, we can push further on the messaging system. For example, we dont wanna send a push notification to **B's** notification center when **B** is in chat with **A**. We want the message to pop-out directly in the chat page. Therefore, we need a mechanism to detect whether B is online and directly send the message to B's app. Things like "B is Typing" "Seen By B" should also be fulfilled.  
 
 > 📍 Feature (Messaging):  
 >
@@ -55,14 +55,14 @@ After talking about the connection issue. We can think about storage issues. Wha
 
 ![Draft Design](fig3.jpeg#center)  
 
-How do we tell which msg belongs to conversation between which two users? How do we know which message to fetch if A opens the chat with different people like C, D ,E. Therefore, we need more information to be stored. The conversation information (chat info)-- the message sent to the server belongs to the conversation from which two people.  
+How do we tell the conversation of which two users that a msg belongs to? How do we know which message to fetch if A opens the chat with different people like C, D ,E. Therefore, we need more information to be stored. The conversation information (chat info) -- the message sent to the server belongs to the conversation of which two people.  
 
 > 📍 **Feature (Conversation):**
 >
 > 1. **Conversation Creation/Deletion**
 > 2. **Mesage Linking to Conversation**  
 
-Now we can support more features. With a conversation entity created and stored, we can customise functions that belong to particular conversation. For example, I would love to customise conversation background/mute conversation/prioritise conversation. Most Importantly, with the idea of a conversation object. **I could turn a one-on-one conversation into a multiple people chat--A Group Chat**  
+Now we can support more features. With a conversation entity created and stored, we can customise functions that belong to a particular conversation. For example, I would love to customise conversation background/mute conversation/prioritise conversation. Most importantly, with the idea of a conversation entity. **I could turn a one-on-one conversation into a multiple people senaria--A Group Chat**  
 
 ### Group Chat Scenerio  
 
