@@ -21,19 +21,19 @@ This essay takes me one month to write, and draw figures. I will start from the 
 
 ![IM ScreenShot](fig17.png#center)  
 
-IM means instant messaging, many APPs support Instant messaging function. Tipical IM Applications include Messenger, WhatsApp, Telegram and many more other small . The most simple scenario is that User A would love to send message to User B.  
+IM means instant messaging, many APPs support instant messaging function. Tipical IM Applications include Messenger, WhatsApp, Telegram and many more other small applications. The most simple scenario is that User A would love to send messages to User B.  
 
-In this simple case, what we can think about fulfilling the function is that:  
+In this simple case, what we can think about to fulfill the function is this:  
 
 ![Draft Design](fig1.jpeg#center)  
 
-In this case, everyone would store the message **on their phone** and send directly to other people's phone. However, this is a serverless solution and it is impossible for huge Apps like TikTok. So what we can think of the usecases:  
+In this case, everyone would store the message **on their phone** and send directly to other person's phone. However, this is a serverless solution and it is impossible for huge Apps like TikTok. So what we can think of is this usecase:  
 
 ![Draft Design](fig2.jpeg#center)  
 
 ### Simple One-On-One Conversation Scenerio  
 
-- **A** send message to server and server and server should store the message
+- **A** send message to server and server should store the message
 - **B** should be notified by the server and receive the message sent by A  
 
 In this case, we need a mechanism that informs B about the new message. So we need a push notification server that pushes new messages to your notification center on the phone. (Qn: Why pooling is not suitable for a phone? Answer in comments)  
