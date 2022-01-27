@@ -1,10 +1,10 @@
 ---
 author: "LZZ"
 title: "How Does Instant Messaging Work? (A Holistic IM Backend Intro)"
-date: "2022-01-15"
+date: "2022-01-27"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
-summary: "This essay takes me one moth to finish writing, drawing figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of a SWE on how to implement these features (backend) in a robust and reliable way."
+summary: "This essay takes me one month to finish writing, drawing figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of an SWE to design how to implement these features (backend) in a robust and reliable way."
 draft: false
 ShowToc: true
 TocOpen: false
@@ -13,23 +13,23 @@ cover:
     relative: true
 
 ---
-This essay I will start from a view of PM to define what user's need for a simple instant messaging service as well as a perspective of SWE on how to implement these features (backend) in a robust and reliable way. It will take somt time to read and understand however it is followed by figures step by step. Do leave comments if u have queires.
+This essay takes me one month to finish writing, drawing figures. I will start from a view of PM to define what user's need for a simple instant messaging service as well as the perspective of an SWE to design how to implement these features (backend) in a robust and reliable way. It will take some time to read and understand however it is followed by figures step by step. Do leave comments if u have any queires.
 
 ## What is "IM"  
 
 ### Basic "IM" introduction  
 
-![Example image](fig17.png#center)  
+![IM ScreenShot](fig17.png#center)  
 
 IM means instant messaging, many APPs support Instant messaging function. Tipical IM Applications include Messenger, WhatsApp, Telegram and many more other small . The most simple scenario is that User A would love to send message to User B.  
 
 In this simple case, what we can think about fulfilling the function is that:  
 
-![Example image](fig1.jpeg#center)  
+![Draft Design](fig1.jpeg#center)  
 
 In this case, everyone would store the message **on their phone** and send directly to other people's phone. However, this is a serverless solution and it is impossible for huge Apps like TikTok. So what we can think of the usecases:  
 
-![Example image](fig2.jpeg#center)  
+![Draft Design](fig2.jpeg#center)  
 
 ### Simple One-On-One Conversation Scenerio  
 
@@ -53,7 +53,7 @@ After this, we can push further on the messaging system. For example, we dont wa
 
 After talking about the connection issue. We can think about storage issues. What if A has a lot of conversation with many other people: C, D, E...  
 
-![Example image](fig3.jpeg#center)  
+![Draft Design](fig3.jpeg#center)  
 
 How do we tell which msg belongs to conversation between which two users? How do we know which message to fetch if A opens the chat with different people like C, D ,E. Therefore, we need more information to be stored. The conversation information (chat info)-- the message sent to the server belongs to the conversation from which two people.  
 
@@ -74,11 +74,11 @@ Inside a group chat, we could add people, remove people. And therefore, the conv
 > 2. Mesage Linking to Conversation
 > 3. **Add people/Remove People**  
 
-![Example image](fig4.jpeg#center)  
+![Draft Design](fig4.jpeg#center)  
 
 Within the group chat, we could update the group chat settings, such as group name, group photo, group announcement, group member alias, group member role: Who is the admin? Who is owner? Do we allow team member to add new members? Need owner's verification to add new member? What if I have personal preference for the conversation such as I would love to mute this group chat ~ Therefore, we need:  
 
-![Example image](fig5.jpeg#center)  
+![Draft Design](fig5.jpeg#center)  
 
 We may need up to 3 tables to store the related information about the conversation. One table storing the latest conversation member UserID; One Storing the personal configuration to the chat/group chat; And the common chat configuration for all people inside the conversation  
 
@@ -128,7 +128,7 @@ So we need to have bullet point 5 added:
 
 To fix the previous two problems, we can have an inbox design that storing all personal messages seperately! **Use some kind of message duplication to improve reading speed.**  
 
-![Example image](fig6.jpeg#center)  
+![Draft Design](fig6.jpeg#center)  
 
 Now we have a general IM design in our mind. Let's take a look at what im_cloud actually looks like! Remember the features we need to implement:  
 
@@ -150,7 +150,7 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 
 ### Basic Message Sending
 
-![Example image](fig7.jpeg#center)  
+![Simple Design With DB](fig7.jpeg#center)  
 
 - Provide API `sendMessage`/ `loadMessage`
 - Provide API `recallMessage`/`deleteMessage`
@@ -161,7 +161,7 @@ Now we have a general IM design in our mind. Let's take a look at what im_cloud 
 
 Now we have a `msg_id` to pass around our microservices instead of a huge message body. A message body may be a picture, a voice message or a lopng text. A msg_id is more suitable to represent a single message and pass around and it saves space. After we have a simple messaging service, we need a conversation management service.
 
-![Example image](fig8.jpeg#center)  
+![Simple Design With Conversation](fig8.jpeg#center)  
 
 - Provide API `create_conversation`/ `delete_conversation`
 - Provide API `add_member`/`delete_member`
@@ -174,30 +174,30 @@ Now we have a `msg_id` to pass around our microservices instead of a huge messag
 
 As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation setting they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a thing called inbox to arrange all messages sequentially.**
 
-Lets recall our draft design: ![Example image](fig6.jpeg#center)  
+Lets recall our draft design: ![Draft Design](fig6.jpeg#center)  
 So a inbox is like email inbox, or a physical mail box, we stack new messges to the inbox so msgs are arranged in a timely order. Theare are two modes of inbox design that are commonly used:
 
 - **Push Mode (写扩散)**
 - **Pull Mode (读扩散)**  
 
-And they have their own advantages and disadvantanges and we take a look.
+And they have their own advantages and disadvantanges so we take a look.
 
 > Pull Mode (读扩散)
 > - Every conversation would have an inbox and and when A is checking his inbox. A read opeartion would iterate all those conversaiton inbox that is related to A and pull the messages he hasnt read.  
 > - Pros: Every message only requires one write to the inbox in addition to the actual message storage. Every Inbox contains the messages that is solely for each conversation and its easy to fetch history messages of one chat.
 > - Cons: Difficult/Heavy to Read all messages of that single person
-> ![Example image](fig9.png#center)  
+> ![PUll Mode](fig9.png#center)  
 > In the figure, the inbox is a Zset (ordered set, choose ur db wisly) and msgs are appended in a time order
 > ---
 > Push Mode (写扩散)
 > - Push Mode pushes all messages that person involves into his Inbox Set, order by message timeline. This operation is done when new message is produced. One only need to fetch his messages in a timeline set from his inbox.  
 > - Pros: Fast reading of one's inbox list. Easy for cold start/fresh reinstall online data fetching.
 > - Cons: Writing of new messages to private inbox can be heavy, especially for group chat. e.g. sending a msg to a group with 500 members would result 500 updates event of the user inbox. Also its hard to retrieve messages from one conversation and need to do filtering query.
-> ![Example image](fig10.png#center)  
+> ![Push Mode](fig10.png#center)  
 
 To make a robust system and optimise through put. We choose to inplement both inbox and take both advantages! See the updated design:
 
-![Example image](fig11.jpeg#center)  
+![Message Inbox Design](fig11.jpeg#center)  
 
 For all messgae sending event, we feed it into a message_queue and prepare a comsumer group service lets say `message_consumer`.  
 
@@ -208,7 +208,7 @@ For all messgae sending event, we feed it into a message_queue and prepare a com
 
 > Qn: What are some of the design problems in this structure or to say how to improve this architecture?
 
-![Example image](fig12.jpeg#center)  
+![Inbox Structure](fig12.jpeg#center)  
 
 We can see that the `message_api_srv` does not save the msg into db. However, the comsumer would RPC call `messgae_api_srv` again to save the message to DB. This is due to single reponsiblity priciple and make `send_msg` api a public api where we build another api called `storage_msg_body` for internal service RPC call.
 
@@ -232,21 +232,21 @@ Long Connection (Web Socket) is a commonly for client side to synchronise data w
 - Server push new messages to the client when the client's inbox in updated.  
 - Long conenction is usually maintained by heartbeat schema
 
-![Example image](fig13.png#center)  
+![Message Flow](fig13.png#center)  
 
 However, there are cases that long connection is not stable and disconnects. The message sending process can then be replaced by HTTP request. The msg pushing request can only be replace by:
 
 Push Notification, which is an unreliable push service introduced by Phone Companys, such as APNS for iOS/iPhone, FCM for Android in regions outside of China and other customised push service MiPush or HuaweiPush in China.  
 
 Therefore we have this structure:  
-![Example image](fig15.jpeg#center)  
+![API Gateway Structure](fig15.jpeg#center)  
  
 - `http_gateway`External HTTP request entrypoint /short connection
 - `long_conn_srv`Long Connection through Web-Socket connection between the mobile client and the
 - `aip_gateway_srv` rpc apigateway for all routes
 - `biz_callback_srv` Customised for customers, when any API endpoints in the api.gateway is called by APP users. It could trigger a customised callback function that such API is called.  
 
-![Example image](fig16.jpeg#center)  
+![Message Receiving](fig16.jpeg#center)  
 
 - `push_srv` Verify whether we should push the notification to the user or not: depending on the user conversation setting, user setting, appid setting, as well as the long connection status!
 - IM would try long connection Frontier first, then use offline push.
@@ -258,7 +258,7 @@ However, since I have mentioned offline push notification is not reliable? Why?
 
 Therefore, when the client receives the messages from push notification, and when user clicks it app should do a HTTP pull request from the server to retrieve the latest msg before just using the push message as the latest one and display it to server.
 
-![Example image](fig14.png#center)  
+![Message Receiveing](fig14.png#center)  
 
 This is because the message should be arranged in timely order and a missing push notification would result in the later messages be mistaken and leads to message hole isssues.
 
@@ -268,7 +268,7 @@ It is curcial that the messages sent out by sender are will stored by receiver i
 
 Also think of a situation in you app, the app knows which messages you havent read and mark them as red dots beside every conversation. This is because the app remembers the latest conversation index you have read for every conversation you have.
 
-![Example image](fig18.jpeg#center)
+![Inbox Design](fig18.jpeg#center)
 
 - Firstly we design an index system for every inbox we have and every message will be given not only an `msg_id` by an `conv_index` and `user_index` which represents the position of every msg in the inbox
 - Also we create a `read_index` for every conversation and every covnersatino member and it marks the latest read position of the person.
@@ -279,10 +279,58 @@ Also think of a situation in you app, the app knows which messages you havent re
 
 Meanwhile the `msg_api_srv` should support a new api called `pull_new_msg` for client to actively pull for new msgs if the long connectino is not stable. The newly updated architecture is shown below with the read index database established
 
-![Example image](fig19.jpeg#center)
+![Conversation Database](fig19.jpeg#center)
 
-## Globalisation and Multi Regional DataCenter 
+## Globalisation and Multi Regional DataCenter  
 
-![Example image](fig20.jpeg#center)
+Since our users are located around the world, and our data is stored in one region. This means if our data center is lcoated in Singapore. Two Amarican would have great latency to chate with each other. Also the cost of overseas data transfer is expensive. If we are to put the Datacenter at the US, Indian users would suffer using our services. Also, in case of one data center failure (should not happen) user can also switch to another data center for emergency use.
 
-![Example image](fig21.jpeg#center)
+We need to design a multi-data center architecture to fulfill these requirements. We adjust the current structure to feed most of events in API gateway to a message queue called `sync_kafka` and use a `sync_consumer` to consume it. The best part of this is that this queue is mirrorred to other datacenter and consumed by the `sync_consumer` in other data center. Demonstrated in below figure
+
+![Data Center Synchronisation Structure](fig20.jpeg#center)  
+
+In this design, the `sync_consumer` will consume from all mirror topics that comes from other datacenter as well as the based topci that is from the same datacenter. However all data is discarded as we dont need these enents in same datacenter. This is because `api_gateway_srv` will handle these in direct RPC call. Also not all actions initiated by user will be synchronised. Only those that will edit the state of the server will be feed to the kakfa, for instance, `send_message` action will be synchronised as `fetch_message` will not be synced. 
+
+![Multi DataCenter](fig21.jpeg#center)  
+
+In this way, all data are replicated and stored in multi data center architecture and we empower users to only retrieve chat data from his own datacenter(depends on his account registration location).  
+
+## Recent Converstaion Order
+
+Imagine a case where you app just reinstalled on you phone and you open the inbox the first time. We would love to load your inbox as fast as possible. However, you have been away for a while and latest 1000 messages are all from a single group chat. If we load the most recent messages for you, you would only see one chat in your inbox. Therefore, its necessary to maintain a conversation rank order list from the server side marking the most recent chat that involves you.  
+
+![Conversation Rank Structure](fig22.jpeg#center)  
+
+## Summary  
+
+Remember this?  
+
+> 📍 **Feature (Messaging):**  
+>
+> 1. Message Storage  
+> 2. Push Notification (APNS + FCM)  
+> 3. Long Connection Notification/Online Status Detection  
+>
+> 📍 **Feature (Conversation):**
+>
+> 1. Conversation Creation/Deletion
+> 2. Mesage Linking to Conversation
+> 3. Add people/Remove People  
+> 4. Chat Management(Chat Bot, Chat File Space, Chat People Managing)
+> 5. Ordered Chat List with **fast fetching of all peronsal history messages**  
+
+We have now implemented all features in this list and can tell the PM: Hey I have got all you want!!!  
+
+## Left Over Issues
+
+However there are a lot of systematic issue in this huge architecture.
+
+Which consitency level do we provide and how do we achieve that?
+How do we maintain high availability of our service?
+Do we provide partition tolerance? How to avoid key components of the system to fail or lag?
+
+I am still learning on these issues and will write another essay regarding these issues! Chill~
+
+## Acknowledgement
+
+My Senior Rance Ren on providing insights and [如何设计一个亿级消息量的 IM 系统-技术圈](https://jishuin.proginn.com/p/763bfbd59be4)
