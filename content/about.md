@@ -12,7 +12,7 @@ description: "Backend Engineer - Platform Services"
 
 ## Pricipals
 
-*Always believe that a good software engineer must be a good product owner with client side perspectice. Always belive in engineering ethics and dream to work and contritbute to things that do good to societies.*  
+*I always believe that a good software engineer should be a good product owner with user perspective and actively practises code of conduct. I hope to become a good software engineer that contritbuts to exciting products that do good to societies.*  
 
 ## Education and Experiences
 
@@ -25,11 +25,10 @@ description: "Backend Engineer - Platform Services"
 ### ByteDance
 
 - Aug 2021 - Now Backend Software Engineer
-  - TikTok Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver. 
-  - TikTok Location System Cloud Platform, IP geolocation. Only Oversear Member tanking Ip Geolocation Team Biz.
+  - TikTok Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver.  
+  - TikTok Location System Cloud Platform, IP geolocation product owner for overseas Tiktok Biz.
 - Jan 2021 - May 2021 Software Engineer Intern
-  - PaaS Service Team, API Gateway
-  - Successfully sustain the Chinese New Year Campaign
+  - API Gateway Cloud Platform
   - Developed Self Diagnosis Tools and Usage Estimation Tool for AGW users
 
 ### uWave  
@@ -37,7 +36,7 @@ description: "Backend Engineer - Platform Services"
 - Aug 2019 - Jan 2021  
 - Co-Founder, Full Stack Engineer
 - Works from Client-Side Flutter App to Backend Spring Boot Microservices  
-- Revamped and the entire app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices.
+- Revamped the app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices.
 - Website: <https://uwave.sg/#/>
 
 ### VISA Inc  

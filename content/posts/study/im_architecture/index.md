@@ -4,7 +4,7 @@ title: "How Does Instant Messaging Work? (A Holistic IM Backend Intro)"
 date: "2022-01-27"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
-summary: "This essay takes me one month to finish writing, drawing figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of an SWE to design how to implement these features (backend) in a robust and reliable way."
+summary: "This essay takes me one month to finish writing, drawing figures. I will start from the view of a PM to define what user's need for a simple instant messaging service as well as the perspective of an SWE to elaborate how to implement these features (backend) in a robust and reliable way."
 draft: false
 ShowToc: true
 TocOpen: false
@@ -94,13 +94,13 @@ We may need up to 3 tables to store the related information about the conversati
 Now we have our conversation ready and message storage ready. One serious problem is emerging. We need to know whether user has read the messages sent to the conversation and list out all unread messages/conversations in their chatting list. Technical solution is simplier for a one-on-one chat. **However, for a group chat, if there are thousands of messages and different member has their reading position.** We need a place to store all these current reading position.
 Wait!  
 
-There is another problem. Since data sets get big and all messages are stored in one database. If one is to fetch all his conversation information and all group chats messages using this current mode. **This task will cause considerable amount of delay when fetching messages belonging to you** Why? Let's take a look of this situation that, I wanna query for all my msgs grouped in every conversation with the messges in time order and the conversation also in latest replied order. How am I supposed to write this SQL?
+There is another problem. Since data sets get big and all messages are stored in one database. If one is to fetch all his conversation information and all group chats messages using this current mode, **it will cause considerable amount of delay when fetching your messages** Why? Let's take a look of this situation that, I wanna query for all my msgs grouped in every conversation with the messges in time order and the conversation also in latest replied order. How am I supposed to write this SQL?
 
 ```sql
 ## Sample and poorly written
 select
-conv.conversation_id,
-collectlist(message_table.msg)
+    conv.conversation_id,
+    collectlist(message_table.msg)
 from
 (
     select
@@ -108,11 +108,16 @@ from
     from conversation_table
     where user_id = 00000
 ) conv
-left join message_table
-on conv.conv_id = message_table.conv_id 
-group by conv.conversation_id
-order by ??
-limit ??
+left join 
+    message_table
+on 
+    conv.conv_id = message_table.conv_id 
+group by 
+    conv.conversation_id
+order by 
+    ??
+limit 
+    ??
 ```
 
 I dont know how to write this, cos its so complicated and we know it will take long to query.  
@@ -172,10 +177,10 @@ Now we have a `msg_id` to pass around our microservices instead of a huge messag
 
 ### Basic Message Processing (Inbox Design)
 
-As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation setting they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a thing called inbox to arrange all messages sequentially.**
+As mentioned above, delivering messages to everyone according to which conversation is involved and what conversation settings they are using can be troublesome. Its hard to do query from msg table and conversatin table. So we choose to **use more space to save more time: We allocate a new database called inbox to arrange all messages sequentially.**
 
 Lets recall our draft design: ![Draft Design](fig6.jpeg#center)  
-So a inbox is like email inbox, or a physical mail box, we stack new messges to the inbox so msgs are arranged in a timely order. Theare are two modes of inbox design that are commonly used:
+So a inbox is like email inbox, or similar to a physical mail box in real life, we stack new messges to your inbox so msgs are arranged in a timely order. Theare are two modes of inbox design that are commonly used:
 
 - **Push Mode (写扩散)**
 - **Pull Mode (读扩散)**  
