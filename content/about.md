@@ -30,19 +30,27 @@ description: "Backend Engineer - Platform Services"
 
 ### ByteDance
 
-- Aug 2021 - Now Backend Software Engineer
-  - Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver. We provide IM SaaS product for TikTok.  
-  - Location System Cloud Platform, IP geolocation product owner for overseas Biz. We provide location service for TikTok.
-- Jan 2021 - May 2021 Software Engineer Intern
-  - API Gateway(AGW) Cloud Platform. We provide PaaS product for company users.
-  - Developed Self Diagnosis Tools and Usage Estimation Tool for AGW
+Aug 2021 - Now Backend Software Engineer  
+
+- Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver  
+
+  - Maintain TikTok Instant Messaging Go microservices, handling global oncall.
+  - Build features such as multi-datacenter synchronisation that empowers seemless experience for global TikTok users; Built message loss troubleshooting tool that analyse complicated data loss issue automatically.
+- Location System Cloud Platform, IP geolocation product owner for overseas Biz.  
+  - Work as a one man team, mentoring an intern, building foundation for location team in Singapore, establish online, offline task standards and alerts, building CICD flow and automation process.
+  - Build ASEAN IP Geolocation features to improve location accuracy by great percents. Optimising IP Geolocation Services latency
+
+Jan 2021 - May 2021 Software Engineer Intern  
+
+  - API Gateway(AGW) Cloud Platform. We provide routing, rate limiting, protocol conversion and other PaaS products for company users.  
+    - Developed Self Diagnosis Tools and Usage Estimation Tool for AGW
 
 ### uWave  
 
 - Aug 2019 - Jan 2021  
 - Co-Founder, Full Stack Engineer
-- Works from Client-Side Flutter App to Backend Spring Boot Microservices  
-- Revamped the app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices.
+- Works from Client-Side Flutter App to Backend Spring Boot Microservices including push notification services, authorisation service
+- Revamped the app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices. Achieved 4k daily active users in late 2020
 - Website: <https://uwave.sg/#/>
 
 ### VISA Inc  
