@@ -1,4 +1,4 @@
-baseURL: https://lzz-blog.web.app/
+baseURL: https://brabalawuka.xyz/
 languageCode: en-us
 title: Brabalawuka's Blog
 description: Blog Site of Brabalawuka, trying to be an interesing developer. Sharing learnings and thoughts~
@@ -73,7 +73,7 @@ params:
     cover:
         responsiveImages: false
         hiddenInList: false # hide on list pages and home
-        hiddenInSingle: true # hide on single page
+        hiddenInSingle: false # hide on single page
 
 
   
@@ -83,6 +83,7 @@ params:
     ShowCodeCopyButtons: true
     ShowBreadCrumbs: false
     comments: true
+    images: ["cover.JPG"]
 
 
 
