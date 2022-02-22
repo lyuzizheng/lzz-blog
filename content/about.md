@@ -6,7 +6,7 @@ url: "/about"
 author: "Lyu Zizheng"
 
 date: "2022-01-15"
-description: "Backend Engineer - Platform Services"
+description: "Backend Engineer - Central Product Platform"
 
 ---
 
@@ -30,7 +30,7 @@ description: "Backend Engineer - Platform Services"
 
 ### ByteDance
 
-Aug 2021 - Now Backend Software Engineer  
+Aug 2021 - Now (Backend Software Engineer - Central Product Platform) 
 
 - Instant Messaging Cloud Platform. Sep-Oct Bi-Month Spot Bonus Receiver  
 
@@ -40,38 +40,41 @@ Aug 2021 - Now Backend Software Engineer
   - Work as a one man team, mentoring an intern, building foundation for location team in Singapore, establish online, offline task standards and alerts, building CICD flow and automation process.
   - Build ASEAN IP Geolocation features to improve location accuracy by great percents. Optimising IP Geolocation Services latency
 
-Jan 2021 - May 2021 Software Engineer Intern  
+Jan 2021 - May 2021 (Software Engineer Intern - Central Product Platform)  
 
-  - API Gateway(AGW) Cloud Platform. We provide routing, rate limiting, protocol conversion and other PaaS products for company users.  
+- API Gateway(AGW) Cloud Platform. We provide routing, rate limiting, protocol conversion and other PaaS products for company users.  
+
     - Developed Self Diagnosis Tools and Usage Estimation Tool for AGW
 
 ### uWave  
 
-- Aug 2019 - Jan 2021  
-- Co-Founder, Full Stack Engineer
-- Works from Client-Side Flutter App to Backend Spring Boot Microservices including push notification services, authorisation service
-- Revamped the app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices. Achieved 4k daily active users in late 2020
-- Website: <https://uwave.sg/#/>
+- Aug 2019 - Jan 2021 (Co-Founder, Full Stack Engineer)  
+
+  - Works from Client-Side Flutter App to Backend Spring Boot Microservices including push notification services, authorisation service
+  - Revamped the app’s technical structure to the new stack, adapting the new Spring Cloud backend microservices. Achieved 4k daily active users in late 2020
+  - Website: <https://uwave.sg/#/>
 
 ### VISA Inc  
 
-- May 2020 - Jul 2020 3Mon
-- Software Engineer Summer Inern
-- Scrum Master and Product owner of two projects participated events, Visa Global Case Challenge and Visa Global Hackathon.
-- 1st Runner Up Prize of the Visa Global Intern Hackathon among 60 teams.
+- May 2020 - Jul 2020 (Software Engineer Summer Inern)  
+
+  - Scrum Master and Product owner of two projects participated events, Visa Global Case Challenge and Visa Global Hackathon.
+  - 1st Runner Up Prize of the Visa Global Intern Hackathon among 60 teams.
 
 ### Transforma Robotics  
 
-- Jun 2019 - Dec 2019 7Mon  
-- Software Engineer Intern (First Job)
-- Worked as the only developer who designed, structured, wrote code and documentation, tested and deployed the Android Application (Java) used by the company. A functional application successfully finished its demonstration to company customers in less than two months from the beginning. Now it is used as a product by the company.
+- Jun 2019 - Dec 2019 (Software Engineer Intern (First Job))  
+
+  - Worked as the only developer who designed, structured, wrote code and documentation, tested and deployed the Android Application (Java) used by the company.  
+  - A functional application successfully finished its demonstration to company customers in less than two months from the beginning. Now it is used as a product by the company.
 
 ## Skills
 
-- Some Golang progamming skills
-- Know some basic SQL
-- Know some basic backend software components
-- Know some basic code practices
+- Some Golang/Java/Dart progamming skills
+- Know some basic RDB/KVDB/  
+- Know some basic backend software components, e.g MQ, Cache
+- Know some basic Distributed System Knowledge
+- Know some basic CICD/Docker/Microservice
 
 ## Contact
 

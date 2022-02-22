@@ -1,7 +1,7 @@
-baseURL: https://lzz-blog.web.app/
+baseURL: https://brabalawuka.xyz/
 languageCode: en-us
-title: LzzBlog
-description: Blog Site of Lyu Zizheng. All random thoughts~
+title: Brabalawuka's Blog
+description: Blog Site of Brabalawuka, trying to be an interesing developer. Sharing learnings and thoughts~
 paginate: 10
 theme: PaperMod
 
@@ -44,7 +44,7 @@ params:
     defaultTheme: auto # to switch between dark or light according to browser theme
 
     homeInfoParams:
-        Title: "Zizheng'Place"
+        Title: "Brabalawuka'Blog"
         Content: >
             让生活有趣一点~  
 
@@ -52,14 +52,14 @@ params:
 
 
     socialIcons:
-        - name: github
-          url: "https://github.com/Brabalawuka"
         - name: Twitter
           url: "https://twitter.com/lyuzizheng"
         - name: LinkedIn
           url: "https://www.linkedin.com/in/zizheng-lyu-84404912a/"
         - name: Instagram
           url: "https://www.instagram.com/lyuzizheng"
+        - name: github
+          url: "https://github.com/Brabalawuka"
 
     fuseOpts:
         isCaseSensitive: false
@@ -73,7 +73,7 @@ params:
     cover:
         responsiveImages: false
         hiddenInList: false # hide on list pages and home
-        hiddenInSingle: true # hide on single page
+        hiddenInSingle: false # hide on single page
 
 
   
@@ -83,6 +83,7 @@ params:
     ShowCodeCopyButtons: true
     ShowBreadCrumbs: false
     comments: true
+    images: ["cover.JPG"]
 
 
 
