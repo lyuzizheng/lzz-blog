@@ -6,7 +6,7 @@ url: "/about"
 author: "Lyu Zizheng"
 
 date: "2022-01-15"
-description: "Backend Engineer - Central Product Platform"
+description: "Backend Engineer - Learning, Writing and Creating"
 
 ---
 
@@ -37,7 +37,7 @@ Aug 2021 - Now (Backend Software Engineer - Central Product Platform)
   - Maintain TikTok Instant Messaging Go microservices, handling global oncall.
   - Build features such as multi-datacenter synchronisation that empowers seemless experience for global TikTok users; Built message loss troubleshooting tool that analyse complicated data loss issue automatically.
 - Location System Cloud Platform, IP geolocation product owner for overseas Biz.  
-  - Work as a one man team, mentoring an intern, building foundation for location team in Singapore, establish online, offline task standards and alerts, building CICD flow and automation process.
+  - Work as a one man team, mentoring an intern, building foundation for location business in Singapore, establish online, offline task standards and alerts, building CICD flow and automation process.
   - Build ASEAN IP Geolocation features to improve location accuracy by great percents. Optimising IP Geolocation Services latency
 
 Jan 2021 - May 2021 (Software Engineer Intern - Central Product Platform)  
