@@ -1,10 +1,11 @@
 ---
 author: "LZZ"
-title: "爱情"
-date: "2021-09-21"
+title: "爱情 「Archive」"
+date: "1970-01-01"
 tags: ["爱情", "矫情"]
 categories: ["随笔"]
 summary: "凌晨睡不着，CTMD"
+hide: true
 ---
 
 **A:** 为什么爱情可以这么复杂，这个妹子/汉子好吸引我，我想了解ta的全部，我要找ta聊天！我要和ta约会！我要跟ta讲出来！  
@@ -53,4 +54,4 @@ summary: "凌晨睡不着，CTMD"
 
 ---
 
-完
+完 2021-09-21
