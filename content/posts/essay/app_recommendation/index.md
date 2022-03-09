@@ -5,7 +5,7 @@ date: "2022-03-05"
 tags: ["iOS", "MacOS","Android","Windows","App"]
 categories: ["随笔"]
 ShowToc: false
-draft: true
+#draft: true
 TocOpen: false
 summary: "从第一天开始用智能手机，用电脑，我无时无刻不在思考和体验和追求好的软件产品。今天我想给大家做一些推荐了，我觉得美好的东西需要分享。可是什么才算是美好的产品呢？"
 cover:
@@ -16,9 +16,16 @@ cover:
 
 从第一天开始用智能手机，用电脑，我无时无刻不在思考和体验和追求好的软件产品。在这个各种软件产品良莠不齐，信息熵爆炸的今天，我想给大家做一些个人推荐了，我觉得美好的东西需要分享，美好的东西需要更多人知道。可是什么才算是好的产品呢？作为一个Software Engineer我对好的软件的定义是多元化的，它可以拥有好看的外观和流畅的UI,让你用它的时候心情愉悦；它可以非常的好用，提供的功能和信息是必不可少，直击痛点的；再或者它的存在有着初心和坚守，有着触动灵魂的魅力，让你感受到开发者的温度，一个好的软件可能有一些缺点，但是绝对有不少闪光之处。所以这篇文章里面的产品与软件我不会进行打分，里面的东西有着强烈的个人喜好。  
 
+---  
+
 ## Sesterce - 让「共享记账」变得轻松  
 
-平台：Android, iOS  
+![SesterceApp](fig1.png#center)
+
+平台: [Android](https://play.google.com/store/apps/details?id=io.sesterce.androidapp), [iOS](https://apps.apple.com/app/sesterce/id1239566667?platform=iphone)  
+官网: [Sesterce.io](https://sesterce.io/)
+
+![SesterceApp](fig2.jpg#center)
 
 ---  
 
