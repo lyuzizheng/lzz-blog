@@ -83,7 +83,7 @@ params:
     ShowCodeCopyButtons: true
     ShowBreadCrumbs: false
     comments: true
-    images: ["cover.JPG"]
+    images: ["cover.JPEG"]
 
 
 
