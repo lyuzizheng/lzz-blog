@@ -7,7 +7,9 @@ author: "Lyu Zizheng"
 
 date: "2022-01-15"
 description: "Backend Engineer - Learning, Writing and Creating"
-
+cover:
+    image: "cover.JPEG"
+    relative: true
 ---
 
 ## Pricipals
