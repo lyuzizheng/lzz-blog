@@ -71,7 +71,7 @@ params:
         keys: ["title", "permalink", "summary", "content"]
 
     cover:
-        responsiveImages: false
+        responsiveImages: true
         hiddenInList: false # hide on list pages and home
         hiddenInSingle: false # hide on single page
 

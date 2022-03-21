@@ -1,6 +1,6 @@
 ---
 author: "LZZ"
-title: "从观察老板的面试别人说起--Weighted Random Sampling算法"
+title: "从观察老板面试别人说起--Weighted Random Sampling算法"
 date: "2022-03-17"
 tags: ["学习", "Algorithm"]
 categories: ["笔记"]
@@ -9,7 +9,7 @@ draft: false
 ShowToc: false
 TocOpen: false
 cover:
-    image: "cover.png"
+    image: "cover.JPG"
     relative: true
 
 ---
