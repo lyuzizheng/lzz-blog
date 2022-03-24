@@ -92,7 +92,7 @@ func getLuckyDrawFunc(prizeMap map[int][]string) func()string {
   rand.Seed(time.Now().UnixNano())
   //return the func that used to do lucky draw
   return func() string {
-    random := rand.Intn(current+1)
+    random := rand.Intn(current)
     //Binary Search the prizeRange
     low := 0
     high := len(prizeRange) - 1
@@ -117,22 +117,20 @@ func getLuckyDrawFunc(prizeMap map[int][]string) func()string {
 
 ## 后调 —— Algorithms are sexy
 
-回到家后, 我思考了很久更优秀的解法，也问了朋友相关解法。最后，朋友发给的我一篇文章令我动容，令我感触最深。文章中介绍了两种极致的加权随机采样算法，它们太优美了；让人不得不惊叹创造者的思想。这篇文章主要用通俗的方法来介绍这两种算法的魅力。 
+之所以Binary Search不算最优秀的一种接法是因为在二分查找，移动指针的时候很容易出现+1，-1等指针错误或者index out of range error。所以我思考了很久更优秀的解法，也问了朋友能不能提供一些想法，可是我们都没有更好的灵感。最后，朋友发给的我一篇文章令我非常动容，令我感触最深。更优秀的算法出现了：这篇文章介绍了两种极致的加权随机采样算法，它们太优美了；让人不得不惊叹创造者的思想。所以下面的部分我主要用通俗的方法来介绍这两种算法的魅力。 
 
 ### The Hopscotch Selection  
 
 我们回顾下linear search算法，核心原理是产生一个从0到1随机数比如0.687，然后挨个减去我们的候选几率直到这个随机数比候选几率小，就找到了对应的选项。首先我们把用float64代表的几率换成int权重，然后相加起来拿到权重和也能进行这样的算法运算；前提是所有的权重加起来能不超过int64的限制。那么HopScotch的精华在于哪里呢，当然在于Hop了~
 
 ```go
-//Interface has the format of prize name and weight
+//interface{} has the format of prize name and weight
 type PrizeCollection [][]interface{}
 
 var a = PrizeCollection{
   {"Dyson",1},
   {"iPhone",1},
   {"XBox", 2},
-  //.....
-  //other prizes with their weights
 }
 
 func getHopScotchFunc(collection PrizeCollection) func() string {
@@ -140,15 +138,17 @@ func getHopScotchFunc(collection PrizeCollection) func() string {
   sort.Slice(collection, func(i, j int) bool {
     return collection[j][1].(int) < collection[i][1].(int)
   })
+  sum := 0
   collectionWeightSum := make([]int, len(collection))
   for i := 0; i < len(collection); i++ {
-    collectionWeightSum[i] += collection[i][1].(int)
+    sum += collection[i][1].(int)
+    collectionWeightSum[i] = sum
   }
+
   rand.Seed(time.Now().UnixNano())
   //return the func that used to do lucky draw
   return func() string {
-    target := rand.Intn(collectionWeightSum[len(collectionWeightSum)-1] + 1)
-    //Binary Search the prizeRange
+    target := rand.Intn(collectionWeightSum[len(collectionWeightSum)-1])
     guessIndex := 0
     for true {
       if collectionWeightSum[guessIndex] > target {
@@ -162,5 +162,17 @@ func getHopScotchFunc(collection PrizeCollection) func() string {
     return collection[guessIndex][0].(string)
   }
 }
-```
-### The Alias Method -- Ultimate Form
+```  
+
+算法的第一部分首先要求input是一个map或者所有的奖品对应的名字和权重，之所以要一一对应是因为我们要做sorting，把所有的权重逆向排序，然后一次向家所有的权重，依然是不能超过int64的限制。排序的好处是什么呢？如果是linear search，权重大的在前面的话会减少搜索的次数，因为权重大的更有可能被选中。linearsearch的核心在于依次减去权重，是一个O(n)的时间复杂度。所以HopScotch算法在于减去权重的过程中进行跳跃，也就是运用了排序后，后面的数字一定比前面小的原理。比如我随机生成了一个数576，第一个数的权重为100。那么，在我不知道576应该落在哪个区间的情况下我可以使用跳跃：(576-100)/100 = 4 我知道后面所有的权重都比当前权重小，也就是说我在拿到576的情况下，我可以至少向后跳跃4个选项而不用去计算这些权重是什么，从而达到了一种远小于O(n)的时间复杂的。
+
+当然这个算法的best case在于所有的权重的一样的情况，那么我们100%只需要O(1)的时间就能选到。worst case在于权重为2的次方依次递减：32,16,8,4,2,1，这就意味着我们每次只能跳跃1个。这个时候时间复杂度接近于linear search。但是！如果是这样的权重分布的话，本身被选中后面的几率就是很小的。作者也对这个算法进行了Benchmark,分别从不同的weight distribution 进行测试，可以看到这个算法表现是非出色：
+
+![similar weight](uniform_performance.png#center)
+![similar weight](similar_performance.png#center)
+![similar weight](pareto_performance.png#center)
+![similar weight](exponential_performance.png#center)
+
+### The Alias Method -- Ultimate Form  
+
+Alias Method 是一个极其优美的O(1)复杂度的算法
