@@ -154,9 +154,13 @@ func getHopScotchFunc(collection PrizeCollection) func() string {
       if collectionWeightSum[guessIndex] > target {
         break
       }
+      //Retrieve the actual weight of that index
       currentWeight := collection[guessIndex][1].(int)
+      //Calculate the difference between the current sum and the target
       hopDistance := target - collectionWeightSum[guessIndex]
+      //Calculate the safe distance (indice) to jump
       hopIndex := 1 + hopDistance/currentWeight
+      //Jump
       guessIndex += hopIndex
     }
     return collection[guessIndex][0].(string)
@@ -175,4 +179,128 @@ func getHopScotchFunc(collection PrizeCollection) func() string {
 
 ### The Alias Method -- Ultimate Form  
 
-Alias Method 是一个极其优美的O(1)复杂度的算法
+下面我们就迎来了Alias Method，它是一个极其优美的O(1)复杂度的算法，既然是复杂度为O(1)的算法，他必须在常数时间内找到这个随机数归属的index和这个index所属的candidate。所以我们需要找到一种mapping的算法，这也就是Alias Method的精华所在：
+
+```go  
+func getAliasFunc(collection PrizeCollection) func()string {
+  totalPrizeNum := len(collection)
+  sum := 0
+  for i := 0; i < len(collection); i++ {
+    sum += collection[i][1].(int)
+  }
+  //Get Average
+  average	:= float64(sum) / float64(totalPrizeNum)
+  //Aliases is a array of [float, int] so we use interface{}
+  aliases := make([][]interface{}, totalPrizeNum)
+  //Initialisaition
+  for i := 0; i < totalPrizeNum; i++ {
+    aliases[i] = []interface{}{1.0, 0.0}
+  }
+  //U can check the explanation first before coming back~
+  bigWeights := make([][]interface{},0)
+  smallWeights := make([][]interface{},0)
+  for index, prizeItem := range collection {
+    if float64(prizeItem[1].(int)) < average {
+      smallWeights = append(smallWeights, []interface{}{index, float64(prizeItem[1].(int)) / average })
+    } else {
+      bigWeights = append(bigWeights, []interface{}{index, float64(prizeItem[1].(int)) / average })
+    }
+  }
+  bigWeightsPosition := 0
+  for i := 0; i < len(smallWeights); i++ {
+    aliases[smallWeights[i][0].(int)] = []interface{}{smallWeights[i][1].(float64), bigWeights[bigWeightsPosition][0].(int)}
+    bigWeights[bigWeightsPosition][1] = bigWeights[bigWeightsPosition][1].(float64) - (1 - smallWeights[i][1].(float64))
+    if bigWeights[bigWeightsPosition][1].(float64) <= 1 {
+      smallWeights = append(smallWeights, bigWeights[bigWeightsPosition])
+      bigWeightsPosition++
+      if bigWeightsPosition >= len(bigWeights) {
+        break
+      }
+    }
+  }
+  //---------------------------return the func that used to do lucky draw
+  rand.Seed(time.Now().UnixNano())
+  return func() string {
+    target := rand.Float64()*float64(len(collection))
+    targetAlias := int(target)
+    targetWeight := target - float64(targetAlias)
+    if targetWeight < aliases[targetAlias][0].(float64) {
+      return collection[targetAlias][0].(string)
+    } else {
+      return collection[aliases[targetAlias][1].(int)][0].(string)
+    }
+  }
+}
+
+```
+
+由于golang缺乏复杂的数据结构和好用的mothod，代码比较不可读，奉上python版本：
+
+```python
+def prepare_aliased_randomizer(weights):
+    N = len(weights)
+    avg = sum(weights)/N
+    aliases = [(1, None)]*N
+    smalls = ((i, w/avg) for i,w in enumerate(weights) if w < avg)
+    bigs = ((i, w/avg) for i,w in enumerate(weights) if w >= avg)
+    small, big = next(smalls, None), next(bigs, None)
+    while big and small:
+        aliases[small[0]] = (small[1], big[0])
+        big = (big[0], big[1] - (1-small[1]))
+        if big[1] < 1:
+            small = big
+            big = next(bigs, None)
+        else:
+            small = next(smalls, None)
+
+    def weighted_random():
+        r = random()*N
+        i = int(r)
+        odds, alias = aliases[i]
+        return alias if (r-i) > odds else i
+
+    return weighted_random
+```  
+
+这个算法的核心原理是把候选人按照候选的Average的weight进行分治。假设我们有以下几种候选和对应的weight:  
+
+```go
+var a = PrizeCollection{
+  {"Dyson",1},   //20%几率
+  {"iPhone",1},  //20%几率
+  {"Nothing",3}, //60%几率
+}
+//创造n个候选Bucket,n = len(PrizeCollection)
+aliases: [{候选Bucket0}, {候选Bucket1}, {候选Bucket2}]
+
+//所以这三种奖品的平均值为
+avg := 1+1+3/3 = 5/3
+
+small = [
+  {"Dyson","候选Bucket0","weight/avg => 3/5"}, 
+  {"iPhone","候选Bucket1","weight/avg => 3/5"}，
+]
+big = [
+  {"Nothing","候选Bucket2","weight/avg => 9/5"}
+]
+```  
+
+所有比平均值小的会被分到一个组，所有比平均值大的会被分到另一个组，精华来了，我们可以**把每个小于Avg的候选人放进他们所在的那个index的Bucket**,但是每个Bucket容量为多少呢？容量为Avg,我们用1代表，小于Avg的候选人所占部分在数组中用一个小数代表！那说明我们还有一些富裕地方（Dyson只占一个Bucket的3/5）。那么我们可以为**每个小于平均值的的Bucket配平一部分权重大的候选人（把大的拆分进每个小候选人）从而填平的状态**  
+
+```go
+//我们率先用候选bucket2填平候选bucket0所在的Dyson
+aliases: [{3/5, "填平部分来自候选Bucket2"}, {候选Bucket1}, {候选Bucket2}]
+//then 现在的候选Bucket2对应的 {"Nothing","候选Bucket2","9/5 - 2/5 => 7/5"},他任然大于1
+//then 继续配平
+aliases: [{3/5, "填平部分来自候选Bucket2"}, {3/5, "填平部分来自候选Bucket2"}, {5/5，没有填平}]
+```  
+
+所以我们生成一个从0到bucket数量的float假设为1.85，我们就知道1.85会分配到Bucket1，但是其中的0.85是bucket中的哪部分呢？3/5的部分来自于本Bucket（也就是iphone），2/5的部分来自于Bucket2的填平(也就是Nothing)，0.85>3/5所以是来自Bucket2的部分！按照这样，我们就能用随机数的整数部分表示选到了哪个桶，Bucket下标来表示当前Bucket桶所在的Prize是什么，然后用随机数的小数部分来获取我们到底使用这个桶的哪个部分，如果是填平部分我们就选择填平部分的那个Bucket！！再回去看一看这个算法是不是很清楚了呢！  
+
+我惊叹于这个算法的核心魅力在于mapping，巧妙的利用了数组下标作为当前Bucket的index，数组只存两个值一个是当前Bucket的阈值，另一个是用于填平当前Bucket的另外一个Bucket的下标。从而实现了O(1)的时间复杂度
+
+## 后记  
+
+如果你看到了这里说明你对知识的好奇超过了我惨淡的文笔。记录算法的学习过程能够帮助一个程序员加深印象。同时也能够锻炼我将思维转化成有结构的文字的能力。希望自己能够保持这份好奇继续了解更多吧~~  
+
+25 March 2022
