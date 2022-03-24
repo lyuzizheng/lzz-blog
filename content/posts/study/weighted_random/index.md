@@ -4,7 +4,7 @@ title: "从一次面试旁观说起--Weighted Random Sampling算法"
 date: "2022-03-17"
 tags: ["学习", "Algorithm"]
 categories: ["笔记"]
-summary: "前两天老板面试别人我去做了旁观，我觉得他出得题太简单了。可是后来被生生的打脸了，他说：一道好的面试题一定是深入浅出的，让面试者不断发掘更优秀的解题办法，这个过程才是Engineer的能力，而不是上来一道不负责任的翻转红黑树。"
+summary: "前两天老板面试别人我去做了旁观，我觉得他出得题太简单了。可是后来被生生的打脸了，他说：一道好的面试题一定是深入浅出的，让面试者不断发掘更优秀的解题办法，这个过程才是Engineer的能力，而不是上来一道Leetcode Hard"
 draft: false
 ShowToc: false
 TocOpen: false
