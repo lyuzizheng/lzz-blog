@@ -119,7 +119,7 @@ func getLuckyDrawFunc(prizeMap map[int][]string) func()string {
 
 之所以Binary Search不算最优秀的一种接法是因为在二分查找，移动指针的时候很容易出现+1，-1等指针错误或者index out of range error。所以我思考了很久更优秀的解法，也问了朋友能不能提供一些想法，可是我们都没有更好的灵感。最后，朋友发给的我一篇文章令我非常动容，令我感触最深。更优秀的算法出现了：这篇文章介绍了两种极致的加权随机采样算法，它们太优美了；让人不得不惊叹创造者的思想。所以下面的部分我主要用通俗的方法来介绍这两种算法的魅力。 
 
-### The Hopscotch Selection  
+### [The Hopscotch Selection](https://blog.bruce-hill.com/a-faster-weighted-random-choice)
 
 我们回顾下linear search算法，核心原理是产生一个从0到1随机数比如0.687，然后挨个减去我们的候选几率直到这个随机数比候选几率小，就找到了对应的选项。首先我们把用float64代表的几率换成int权重，然后相加起来拿到权重和也能进行这样的算法运算；前提是所有的权重加起来能不超过int64的限制。那么HopScotch的精华在于哪里呢，当然在于Hop了~
 
@@ -177,7 +177,7 @@ func getHopScotchFunc(collection PrizeCollection) func() string {
 ![similar weight](pareto_performance.png#center)
 ![similar weight](exponential_performance.png#center)
 
-### The Alias Method -- Ultimate Form  
+### [The Alias Method -- Ultimate Form](https://www.keithschwarz.com/darts-dice-coins/)
 
 下面我们就迎来了Alias Method，它是一个极其优美的O(1)复杂度的算法，既然是复杂度为O(1)的算法，他必须在常数时间内找到这个随机数归属的index和这个index所属的candidate。所以我们需要找到一种mapping的算法，这也就是Alias Method的精华所在：
 
@@ -302,5 +302,8 @@ aliases: [{3/5, "填平部分来自候选Bucket2"}, {3/5, "填平部分来自候
 ## 后记
 
 如果你看到了这里说明你对知识的好奇超过了我惨淡的文笔。记录算法的学习过程能够帮助一个程序员加深印象。同时也能够锻炼我将思维转化成有结构的文字的能力。希望自己能够保持这份好奇继续了解更多吧~~  
+
+> [A Faster Weighted Random Choice](https://blog.bruce-hill.com/a-faster-weighted-random-choice) Bruce Hill February 2, 2017  
+> [Darts, Dice, and Coins: Sampling from a Discrete Distribution](https://www.keithschwarz.com/darts-dice-coins/) Keith Schwarz December 29, 2011
 
 25 March 2022
