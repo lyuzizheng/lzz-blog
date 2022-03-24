@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "从一次面试旁观说起--Weighted Random Sampling算法"
 date: "2022-03-17"
 tags: ["学习", "Algorithm"]
