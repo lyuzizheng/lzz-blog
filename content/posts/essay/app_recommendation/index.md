@@ -5,7 +5,7 @@ date: "2022-03-05"
 tags: ["iOS", "MacOS","Android","Windows","App"]
 categories: ["随笔"]
 ShowToc: false
-#draft: true
+draft: true
 TocOpen: false
 summary: "从第一天开始用智能手机，用电脑，我无时无刻不在思考和体验和追求好的软件产品。今天我想给大家做一些推荐了，我觉得美好的东西需要分享。可是什么才算是美好的产品呢？"
 cover:
