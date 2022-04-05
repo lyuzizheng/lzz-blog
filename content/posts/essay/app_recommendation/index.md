@@ -1,7 +1,7 @@
 ---
 author: "LZZ"
 title: "记录，收集，推荐，美好的产品与App"
-date: "2022-03-05"
+date: "2022-04-03"
 tags: ["iOS", "MacOS","Android","Windows","App"]
 categories: ["随笔"]
 ShowToc: false
@@ -36,15 +36,22 @@ cover:
 
 ## DAMA - 在分享图片时保护你的隐私，「智能打码」
 
-平台：iOS
+平台: [iOS](https://apps.apple.com/cn/app/id1534690075)  
+价格: 0.99SGD  
+
+DAMA -> 打码——这个名字听起来就很吸引人，好记又新颖。作为这个App开发者的小粉丝之一 [@Baye](https://twitter.com/waylybaye)，推荐这款软件的理由就是它非常的智能，使用方法也非常简单，就是分享图片的时候在iOS的分享菜单中选择使用DAMA进行标记即可，DAMA会「离线」算法智能识别，然后遮盖住你想要遮盖住的信息，移除照片中的技术及地点信息，之后可以替换你原来的截图并且进行分享。
+
+![DAMA](fig3.png#center)  
 
 ---  
 
 ## 后续 - 让互联网「拥有记忆」  
 
-平台：iOS
+> 「人与权力的斗争，就是记忆与遗忘的抗争。」——米兰﹒昆德拉 《笑忘书》  
 
-> 「人与权力的斗争，就是记忆与遗忘的抗争。」——米兰﹒昆德拉 《笑忘书》
+平台: [iOS](https://apps.apple.com/app/sesterce/id1239566667?platform=iphone)  
+官网: [Sesterce.io](https://sesterce.io/)  
+价格: 免费
 
 ## 端传媒 - 原创深度报道和评论，区分「情绪」「观点」「立场」  
 
