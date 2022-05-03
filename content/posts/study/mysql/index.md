@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "MySQL学习笔记"
 date: "2021-07-23"
 draft: true

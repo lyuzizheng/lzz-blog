@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "从一个又一个目标中停下来"
 date: "2021-05-15"
 tags: ["计划", "思考"]

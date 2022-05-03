@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "Interesting Golang \"Passed by Value\" & \"Passed By Pointer Value\""
 date: "2021-09-08"
 tags: ["学习", "Golang"]

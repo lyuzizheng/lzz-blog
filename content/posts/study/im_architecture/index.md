@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "How Does Instant Messaging Work? (A Holistic IM Backend Intro)"
 date: "2022-01-27"
 tags: ["学习", "IM", "Architecture"]
