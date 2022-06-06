@@ -5,7 +5,7 @@ date: "2022-05-03"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
 summary: "This essay is a follow up introduction on IM Architecutre. We will discuss some common consistency, avilability and partition tolerance issues we face in a multi-datacenter, distributed architecture of the IM system. We will also discuss how we tackle with thess issues in the service implementation to acieve high avaliblity and parition tolerance meanwhile achieving final consistency."
-draft: true
+draft: false
 ShowToc: true
 TocOpen: false
 cover:
@@ -21,10 +21,16 @@ We assume u would love to know about IM that serves for millions of people aroun
 
 Why do we need more then one datacenter? A multi-data center architecture (lets say `DC-A` and `DC-B`)is necessary as in if one datacenter (`DC-A`) becomes unavailiable, we can redirect to the users from `DC-A` to `DC-B`. However, this is a `master(main)-salve(follower)` mode that all users are still using a single datacenter where as the other one acts as the backup. This mode is simple as we can constantly sync data from master to slave just based on all request sequence. However When a robust IM-System would love to provide service for global users with great user experiences, every user should be served by the data center that is closer to him. This is to reduce latency as for some region that is remote. These people has week internet connection and it is unstable for them to request from datacenters located at the other side of the ocean and await for loading ring spinning for seconds on their screen. Therefore, our master-slave architecture is not very suitable in this situation.  
 
-We need a multi-master architecure, which means data writes and retrives from different datacenters. For example, if a user from SG would love to start a chatting with a user from the US. Your server should be able to handle this.  
+We need a **multi-master** architecure, which means we support data writes and retrives from different datacenters at the same time. For example, if a user from SG would love to start a chatting with a user from the US. Your server should be able to handle this. Apprantly, if u have any experience in synchronisation in distributed systems, u know how troublesome this is to achieve some level of consistency.
 
 ![Draft Design](fig1.png#center)  
 
 There should be two sets of your microservices and each of them can operate independently as a complete IM system and here comes the question, how should the SG use sends messages to US if he is using `DC-A` and the US user is using `DC-B`? We need a system that does data synchronisation between the two datacenter. And during the synchronisation we need to achieve the following goals:  
 
-> 
+### Objectives  
+
+> 1. Support `SG-UserA` to communicate with `US-UserB` in one App that communicates with their own DataCenter lets say A would send and retrieve messages from `DC A` and B would write and accepts responses from `DC-B`  
+> 2. There shouldnt be any IM message gets lost when A is chatting with B although they are from different DC  
+> 3. A can smoothly change to another DC incase of DC outrage happens (assume DC switch can be done by APP client using different domain)  
+> 4. Messages must be in order and cannot be out of order during data synchronisation or DC switch.  
+
