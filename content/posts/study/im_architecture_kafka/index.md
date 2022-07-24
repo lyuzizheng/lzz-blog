@@ -1,6 +1,6 @@
 ---
 author: "Brabalawuka"
-title: "Evnet Based Multi-DataCenter Synchronisation in IM System"
+title: "[WIP] Event Based Multi-DataCenter Synchronisation in IM System"
 date: "2022-05-03"
 tags: ["学习", "IM", "Architecture"]
 categories: ["笔记"]
