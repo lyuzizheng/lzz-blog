@@ -63,7 +63,7 @@ WEB版: [后续·有记忆的新闻](https://houxu.app/)
 
 > 2022年3月21日一架搭载133人的客机在广西藤县发生事故  
 
-这个仅仅是一个月前的事情，虽然说事故原因仍然在调查中，可是还有多少人依然记得这件事并且持续关注呢？  
+这个仅仅是几个月前的事情，虽然说事故原因仍然在调查中，可是还有多少人依然记得这件事并且持续关注呢？  
 快节奏的生活变化是客观事实，信息量爆炸也是客观事实。在这个时代，让民众们自己选择记得并持续关注热点事件对于我们来说成本的确高昂。所以，「后续」这款APP的存在帮助我们选择记忆，帮助我们在发生的一系列事件中下寻找问题。  
 
 ![HouXu](fig4.png#center)  
@@ -71,23 +71,25 @@ WEB版: [后续·有记忆的新闻](https://houxu.app/)
 > 因为某些原因「后续」无法在 App Store 中国区下载，中国区用户可以在 TestFlight 上安装。 TestFlight 是苹果官方发布的的用于测试版应用分发的渠道。 [-> TestFlight](https://testflight.apple.com/join/KyZUvXYo)
 
 
-
-
-## 端传媒 - 原创深度报道和评论，区分「信息」「观点」「立场」  
-
 ## Vanced - 我叫没有广告的Youtube  
 
-平台： Android  
+平台： [Android](https://vancedapp.com/)  
+价格: 免费
+> Youtubed Vanced 已经在 3月18日从官网和github下架， 有需要的可以从备份链接下载APK [备份链接](https://github.com/cuynu/ytvanced) 
+
+YouTube Vanced 通过安装魔改版谷歌服务和魔改版Youtube应用实现去除广告，息屏播放，后台播放等等功能。原则上侵害了Youtube的权益，但是因为实在是太好用了我也真香了一次。。。。
+
+![DAMA](fig7.jpg#center)  
 
 ## Habit Loop - 简洁免费是我的核心优势,「日常打卡」  
 
 平台： Android  
 
-## PocketCast - 好用的泛用性播客客户端
-
 ## 谜底时钟 - 我TM就是颜控你能把我怎么样？「颜值即正义」 
 
 平台：iOS, MacOS, iPadOS
+
+## PocketCast - 好用的泛用性播客客户端
 
 ## Shadowrocket - 更新勤快的开发者，「懂得都懂」的必要产品
 
