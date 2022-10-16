@@ -22,6 +22,7 @@ cover:
 
 ![SesterceApp](fig1.png#center)
 
+
 平台: [Android](https://play.google.com/store/apps/details?id=io.sesterce.androidapp), [iOS](https://apps.apple.com/app/sesterce/id1239566667?platform=iphone)  
 官网: [Sesterce.io](https://sesterce.io/)  
 价格: 免费
@@ -29,6 +30,7 @@ cover:
 共享记账需求大概是合租人、小团体的绕不开的问题，我也尝试过一些解决方案但是都没有这个APP如此亮眼。这是一款从颜值到功能性到技术层面都十分优秀的共享记账软件。一个工具性软件的必要属性就是不侵入性（non-intrusive），意思是我希望它只提供作为工具的必要功能，任何多余的东西都最好不要有，比如社交啊，打卡积分啊等一系列产品经理附加上去的令人反感的功能。Sesterce做到了，他甚至做得更好：开APP即用，你连注册都不需要注册即可和你的朋友们、出租屋的室友们进行记账共享。任何人可以随时创建一个Group，Sesterce使用一个ID来记录一个共享Group，任何人只需要输入这个ID+密码就可以加入，并且在里面进行记账活动。
 
 ![SesterceApp](fig2.jpg#center)  
+
 
 功能上，应有尽有：支持记账汇总，支持创建自定义消费类别，支持自动优化还钱逻辑，支持抹零，支持多币种，支持导出账单数据库等等等。相比于Splitwise等应用复杂的登陆，分享甚至收费的使用场景，Sesterce可以说我是吹爆了。
 
