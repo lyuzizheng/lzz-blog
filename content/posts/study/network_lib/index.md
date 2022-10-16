@@ -90,3 +90,228 @@ int main(int argc , char *argv[])
 - To create a server, u need 4 init step: `create -> bind -> for loop listen -> accept a con -> read...`
 - `Accept()` function delivers you a socket from a queue of already accepted connections (TCP handshake finished). While the queue is empty, it blocks.
 
+### Issues:
+
+- And how to handle a single connection? (How to read and write data from the `connfd`)
+- `Connfd` is a new file descriptor returned by the accept function. How to manage several connections? 
+- How to manage `fd` life cycle? When do we delete it?
+
+## Network IO Model
+
+Network IO has two kinds, synchronous and asynchronous. The difference is that whether the use process has to wait for the data copying form the kernel space to user space buffer. 
+
+### Blocking IO Socket (Sync)
+
+```c
+for ( ; ; ){
+    c = sizeof(struct sockaddr_in);
+    //Get a new socketfd from the 
+    connfd = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c);
+    //Block here and await receive returns the data buffer
+    int recvlen = recv(connfd, buf, RECV_BUF_SIZE,0)
+}
+```
+
+![Blocking](fig3.svg#center) 
+
+If ur user buffer is too small for the socket buffer received size, u need to call recv several times to receive all data. This is inconvenient.
+> Is the socket buffer the TCP sliding window? I actually dont now
+
+### "Non" Blocking IO Socket (Sync)
+
+Its not true non blocking for data read. Its non blocking for data ready checking
+
+```c
+// Change Socket to Non Blocking
+int main(int argc , char *argv[])
+{
+    //...
+    //Create socket FD
+    listenfd = socket(AF_INET , SOCK_STREAM , 0);
+    //Change to Non Blocking Sample
+    fcntl(sock_fd, F_SETFL, fdflags | O_NONBLOCK);
+    //Loop call
+    while(1)  {  
+        int recvlen = recv(sock_fd, recvbuf, RECV_BUF_SIZE) ; 
+        ......
+    }
+    //When system returns error like connection failed/terminated
+    close(connfd); 
+    close(listenfd)
+    //Other Logics
+    return 0;
+}
+```
+
+![TCP Archi](fig4.svg#center) 
+
+#### Insights:
+
+- Handle a single connection by blocking IO or non blocking IO
+- We use polling for non-blocking IO 
+
+#### Issues:
+
+- Still dont know how to manage multiple connections `connfd` on single `listenfd`
+- Polling looks so stupid
+
+### "Non" Blocking IO API (select, poll, epoll in Linux) (Sync)
+
+We now see how Linux helps us manage multiple connections (whether there is data in connfd). 
+Other systems like MacOS (UNIX based will use kqueue) will be omitted here
+
+> In Chinese context, this is commonly called **IO Multiplexing** (IO多路复用) and it is most commonly used is a lot of network libraries
+
+#### Select
+
+```c
+//return num of ready fds
+int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+```
+
+- We omit the source code sample here as its getting complicated
+- The `select` has  `fd_set` which is a fixed size buffer (max 1024 why?) to store all accepted connfd we accepted. Once any of the fd is ready for `recv()`, it will inform our user about it. So that we wont block at the `recv()` function
+- The thing is that when the `fd` is ready, it will amend the fd status in the `fd_set` to tell user that connfd is ready. However, it wont tell us which one, so we need to do the for loop on the fd_set to check int `FD_ISSET(int fd, fd_set *fdset)`; 
+- After checking, we need to put these fds back to the new fd_set to ask system to mange it. So it take O(n) * 2 time for checking and 2 times of data copying.
+
+#### Poll
+
+- `int poll (struct pollfd *fds, unsigned long nfds, int timeout);`
+- Poll function improves the size limit of the array by using the pollfd field to mark the connfd array length. The first para is the first connfd pointer
+- However, when the function returns, (the number of ready connfd), poll still dont tell us which one is ready.  
+
+#### Select and Poll Issues:  
+
+- `select` and `poll` becomes heavy when there are a lot of client connfd as every time we call is (we do for loop on these functions `O(n)*2`) we copy the all the connfds out **from the kernel space to userspace and we still need to check on all the connfds we have and see which one is ready. If we have 10000 connfds. Data copy will occupy huge CPU**.  
+- Also, the kernel is doing another O(n) checking on all the connfd to check whether the fd is ready for event
+
+#### Epoll
+
+```c
+typedef union epoll_data {
+    int      fd;
+    //...
+} epoll_data_t;
+
+struct epoll_event {
+    uint32_t     events;    /* Epoll events */
+    epoll_data_t data;      /* User data variable */
+};
+//Core functions
+int epoll_create(int size);
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout); // ready events will be stored in the array we passed in
+```
+
+- `epoll_create`: Create an epoll instance (`epollfd`) and all rest operations are based on that instance
+- `epoll_ctl`: We ask the epoll instance to take care of the `connfd` or `listenfd` we have，by using operation like op(`ADD/DEL/...`), and we declare what kind of events we wanna pay attention to (`EPOLLIN/EPOLLOUT/...`)。
+- `epoll_wait`: Block until there is event ready for any fd in the epollfd, the reutrn value are the number of ready events and the **ready ones will be stored in the array we passed in**
+- **ET or LT**
+
+  - To use `epoll_wait`, we must know it has two modes: Edge trigger and Level Trigger.
+  - ET will trigger epoll events only once when there is event occurring (e.g. readable)
+  - LT will trigger every time if the event can be carried out (e.g. Reading of the connfd buffer is not finished) If the package is huge, and the copying of data has not finished before the next call of epoll_wait occurs, it will trigger again and return the  connfd ready event back
+
+```
+Level Triggered:
+        ......
+        |    |
+________|    |_________
+
+
+Edge Triggered:
+         .____
+         |    |
+________.|    |_________
+```
+
+- Epoll Events
+  - `EPOLLIN`: readable
+  - `EPOLLOUT`: writable
+  - `EPOLLIN` + `EPOLLRDHUP：`
+    - FIN Packet from other side (close or shutdown)
+  - `EPOLLIN`+`EPOLLHUP`+`EPOLLRDHUP`
+  - `EPOLLIN`+`EPOLLRDHUP`+`EPOLLHUP`+`EPOLLERR`
+  - When checking, we check a combination of events
+
+#### Epoll Insights:  
+
+- Epoll prevents the user sapce <-> kennel space copyig of the `connfd` for every epoll_waitwe call and thus saves CPU (epoll uses a red-black tree to store all the `connfd` and takes O(logn) to insert and delete)
+- Epoll prevents `O(n)` checking of ready `connfd` by returning the ready event directly to u. This is done through a system callback registered by the epoll to the system on every `connfd` it has epoll
+
+### Asynchronous IO
+
+- Omitted here can do self research if interested
+
+## Handler Model  
+
+To summarise what we have learnt:
+
+- We create a listener fd and listen networking events
+- We create a connfd accept new connection established events on listener fd
+- We use higher level system API to help us manage two things:
+  - Whether the is new connection of socket listenfd
+  - Whether every connfd is readable / closed ....
+
+### Reactor
+
+![Reactor](fig5.svg#center) 
+
+### Proactor 
+
+Omitted as its about Aynchronous Network IO pattern and we dont use it 
+
+# NetWrok Library
+
+The core funciton of a net library is to monitor/listen the status of a huge amount of connfds(via syscall) and respond to the status change/ event triggered efficiently and securely.
+
+![TCP Archi](fig6.svg#center)  
+
+## golang/net
+
+Packages using net as default net library (redis, sarama, kite, grpc....)
+
+### TCP Server  
+
+Talk is cheap, show me the code  
+
+```go
+package main
+
+import (
+        "log"
+        "net"
+)
+
+func main() {
+        //create listener
+        listen, err := net.Listen("tcp", ":8888")
+        if err != nil {
+                log.Println("listen error: ", err)
+                return
+        }
+        for {   //block here to create connection
+                conn, err := listen.Accept()
+                if err != nil {
+                        log.Println("accept error: ", err)
+                        break
+                }
+                // start a new goroutine to handle the new connection.
+                go HandleConn(conn)
+        }
+}
+ 
+func HandleConn(conn net.Conn) {
+        defer conn.Close()
+        packet := make([]byte, 1024)
+        for {   // block here if socket is not available for reading data.
+                n, err := conn.Read(packet)
+                if err != nil {
+                        log.Println("read socket error: ", err)
+                        return
+                }
+                // same as above, block here if socket is not available for writing.
+                _, _ = conn.Write(packet[:n])
+        }
+}
+```
