@@ -1,6 +1,6 @@
 ---
 author: "LZZ"
-title: "Interesting Empty Struct Context Key"
+title: "Journey of an RPC call at server-- from Unix Socket to Go Handler"
 date: "2022-08-04"
 tags: ["学习", "Golang"]
 categories: ["笔记"]
@@ -9,7 +9,7 @@ draft: false
 ShowToc: false
 TocOpen: false
 cover:
-    image: "cover.png"
+    image: "cover.jpeg"
     relative: true
 
 ---
@@ -18,7 +18,7 @@ I used to encounter an interesting increase in latency after I upgrade the netwo
 
 # Beginning
 
-When we write a KiteX/gRPC handler, we usually just implement the method of the generated code, however, I will only use Kite, right now KiteX as an Example since its widely used in our comapny. KiteX is a high perfromance go RPC framework developed by TikTok.
+When we write a [KiteX](https://github.com/cloudwego/kitex)/gRPC handler, we usually just implement the method of the generated code, however, I will only use Kite, right now KiteX as an Example since its widely used in our comapny. KiteX is a high perfromance go RPC framework developed by TikTok.
 
 ```go
 //kite: file: handler.go
