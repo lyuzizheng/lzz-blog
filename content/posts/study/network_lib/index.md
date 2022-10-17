@@ -4,7 +4,7 @@ title: "Interesting Empty Struct Context Key"
 date: "2022-08-04"
 tags: ["学习", "Golang"]
 categories: ["笔记"]
-summary: "I used to encounter an interesting increase in latency after I upgrade the network library dependency of my service. The reason was that the pollers of Netpoll occupy too much cpu. However, I could barely understand what happened in the networking part of the framework. So this session I will do a rough introduction on network packages"
+summary: "I used to encounter an intriggering issue, the Redis call has an increase in latency after I upgrade the network library dependency of my service RPC framework. The reason was that the pollers of RPC networker library occupy too much CPU and it grabs the default Redis netpoller's CPU schedule. However, I could barely understand what happened in the networking part of the framework. So this session I will do a rough introduction on network packages"
 draft: false
 ShowToc: false
 TocOpen: false
@@ -315,3 +315,119 @@ func HandleConn(conn net.Conn) {
         }
 }
 ```
+
+Do you still recall the original socket programming when we create a `listenerfd` and accept an `connfd`
+Does it looks a bit similar as the basic socket programming (listen -> bind -> accept -> read -> write -> close). However this net package look like a blocking pattern but its internals arr of great difference. 
+
+- Its a fake **blocking pattern** when writing go code but a very smart **non-blocking io multiplexing** using different kenel commands from internal. This helps eases developers' effort in writing code. Developers do not have to care about context switch, goroutine scheduling and kernel network handling. Go netpoller is based on epoll/kqueue/iocp depending on which operating system it uses.
+
+#### Insights
+
+- Its uses `epoll` et mode in the bottom layer to handler `listenerfd` and  `connfd` 
+- Every `listernerfd` and `connfd` corresponds to a goroutine and uses a goroutine to handle each connection. However, `listernerfd` only has one and its using main goroutine to do accept()
+- `net.Listen("tcp", ":8888")` returns a `*TCPListener`, its a struct that implements the `net.Listener` interface.  listener.Accept() would create a new struct instance `*TCPConn` that implements net.Conn interface and it contains `net.conn` struct. 
+- So we know `*TCPListener *TCPConn` are supposed to contain these two `listenerfd` and  `connfd`. So after read the source code, the fd are actually wrapped by a struct called `netFD` netFD contains a  `poll.FD` struct，and `poll.FD` caontains two things `Sysfd` and `pollDesc`.
+- Sysfd are the actual `listenerfd` and  `connfd` and pollDesc is an operator that controls the read write timeout and all other scheduling things.
+
+![Net Package](fig7.jpeg#center)  
+
+> Question: Is blocking wasting CPU resources?  
+
+### Core Structs  
+
+```go
+// TCPListener is a TCP network listener. Clients should typically
+// use variables of type Listener instead of assuming TCP.
+type TCPListener struct {
+        fd *netFD
+        lc ListenConfig
+}
+
+// TCPConn is an implementation of the Conn interface for TCP network
+// connections.
+type TCPConn struct {
+        conn
+}
+ 
+// Conn
+type conn struct {
+        fd *netFD
+}
+```
+
+How dose netFD works
+
+```go
+// Network file descriptor.
+type netFD struct {
+        pfd poll.FD
+ 
+        // immutable until Close
+        family      int
+        sotype      int
+        isConnected bool // handshake completed or use of association with peer
+        net         string
+        laddr       Addr
+        raddr       Addr
+}
+ 
+// FD is a file descriptor. The net and os packages use this type as a
+// field of a larger type representing a network connection or OS file.
+type FD struct {
+        // Lock sysfd and serialize access to Read and Write methods.
+        fdmu fdMutex
+        // System file descriptor. Immutable until Close.
+        Sysfd int
+        // I/O poller.
+        pd pollDesc
+        // Writev cache.
+        //...... other fields
+}
+```
+
+### net.Listen
+
+![NetListener](fig8.jpeg#center)  
+
+- After call `net.Listen`, the bottom layer will create an `listenfd`  and use it to initialize the listener's `netFD`, and then call the `netFD`'s `listenStream` method to complete the bind &listen operation on the socket and then call init of `netFD` (mainly for the pollDesc initialization), the call chain is `runtime.runtime _pollServerInit -- > runtime.poll _runtime_pollServerInit -- > runtime.netpollInit`, the main things are: 
+  - Call `epollcreate1` to create an epoll instance `epfd`, which is used as the only event-loop for the entire runtime; 
+  - Call `netpollopen` to register the listenfd to the netpoll  
+
+### net.Accept  
+
+![NetAccept](fig9.jpeg#center)  
+
+- `netFD` will create a `connFD` when its `listenFD` is ready to accept new connection
+- `netFD` will go through the same init process on new connFD and add to epoll for listening
+- When there is no new connection which will get `EAGIN` err, `nefFD` will call `pollDESC.waitRead` to park the current goroutine, until the epoll informs that the `listenFD` is ready, the waitRead will return and accept new connection  
+
+### conn.Read
+
+[conn.Read](fig10.jpeg#center)  
+
+- netpollBlock would park the current goroutine and the detail is not elaborated (too complicated)
+
+### netPoll  
+
+[netPoll](fig11.png#center)  
+
+- Since Accept()/Read() goroutine wouble be parked by the netpollblock and therefore we need to a function that detect which one is ready
+- `netpoll()` would call `epollwait()` to constantly get ready to run connfd and listenfd so that the netpoll would know which corresponding fd is ready
+- `Netpoll` would retriece the `pollDesc` from the epollevent which saves the corresponding goroutine information 
+- `Netpoll` would then put that goroutine in to the readlist for runing
+
+- `Netpoll` is not constanly running, its called by the schedule at various places such as runtime.schedule()
+- `sysmon` will ensure `netpoll` get called very often  
+
+### Issues:  
+
+- Reactor Model: One Reactor Multi Hander (goroutine) model and when connection is great on one machine, **it will affect the performance of the programme**
+- **Doesnt Support ZeroCopy**, conn.Read(b []byte) will carry out a memory copy from kernel to user sapce then  when we do unmarshalling of the byte, usually we will copy the data again since the memory allocated for the struct is not same as the one read from the network library
+-` net.Conn` **wont be closed by the server unless we read it and detect the error**, since we are using epoll and when the other end closes the connection, the server side connection will still be there
+
+## [cloudwego/netpoll](https://github.com/cloudwego/netpoll)  
+
+This package is the default network package of the TikTok' Go RPC framework [Kitex](https://github.com/cloudwego/kitex), which is a high performance (better than GRPC) framework for TikTok backends. So why it is better than the default network library.
+
+
+
