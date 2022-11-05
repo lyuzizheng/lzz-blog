@@ -1,7 +1,7 @@
 ---
 author: "Brabalawuka"
 title: "作为开发IM(即时通讯)的程序员，我越来越讨厌IM了"
-date: "2022-06-06"
+date: "2022-06-07"
 tags: ["IM", "思考"]
 categories: ["随笔"]
 summary: "作为一个开发IM的后端程序员，我越来越开始讨厌IM这个东西。当它无处不在时，它会阻碍信息的传播。"

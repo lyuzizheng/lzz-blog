@@ -53,11 +53,11 @@ params:
 
     socialIcons:
         - name: Twitter
-          url: "https://twitter.com/lyuzizheng"
+          url: "https://twitter.com/brabalawuka"
         - name: LinkedIn
           url: "https://www.linkedin.com/in/zizheng-lyu-84404912a/"
         - name: Instagram
-          url: "https://www.instagram.com/lyuzizheng"
+          url: "https://www.instagram.com/brabalawuka"
         - name: github
           url: "https://github.com/Brabalawuka"
 
