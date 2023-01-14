@@ -9,7 +9,7 @@ draft: false
 ShowToc: true
 TocOpen: true
 cover:
-    image: "cover.jpeg"
+    image: "cover.svg"
     relative: true
 
 ---
