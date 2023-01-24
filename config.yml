@@ -86,6 +86,11 @@ params:
     images: ["cover.JPEG"]
 
 
+    Instagram:
+      appId: "863441064943702"
+      clientToken: "2613058ab9efc1001bd60634a1abae14"
+
+
 
 outputs:
     home:
