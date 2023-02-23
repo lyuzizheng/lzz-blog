@@ -13,7 +13,7 @@ cover:
     relative: true
 
 ---
-This essay is a follow up introduction on [IM Architecutre](https://brabalawuka.xyz/posts/study/im_architecture/) . We will discuss some common issues we will face in a multi-datacenter architecture of the IM system. These issues involves consistency, avilability and partition tolerance issues in the distributed systems. We will also discuss how we tackle with thess issues in the service implementation to acieve final consistency with a key component called Kafka. It will take some time to read and understand however it is followed by figures step by step. Do leave comments if u have any queires. 
+This essay is a follow up introduction on [IM Architecutre](https://brabalawuka.cc/posts/study/im_architecture/) . We will discuss some common issues we will face in a multi-datacenter architecture of the IM system. These issues involves consistency, avilability and partition tolerance issues in the distributed systems. We will also discuss how we tackle with thess issues in the service implementation to acieve final consistency with a key component called Kafka. It will take some time to read and understand however it is followed by figures step by step. Do leave comments if u have any queires. 
 
 We assume u would love to know about IM that serves for millions of people around the globe but not for a single country.
 
