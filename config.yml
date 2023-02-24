@@ -43,6 +43,9 @@ params:
     # defaultTheme: dark
     defaultTheme: auto # to switch between dark or light according to browser theme
 
+    assets:
+        disableFingerprinting: true
+
     homeInfoParams:
         Title: "Brabalawuka'Blog"
         Content: >
