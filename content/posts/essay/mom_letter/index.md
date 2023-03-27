@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "\"给儿子的一封信\""
 date: "2022-01-01"
 tags: ["家书", "日记", "母亲"]

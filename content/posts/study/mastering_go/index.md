@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "Mastering Go学习笔记"
 date: "2021-07-23"
 tags: ["学习", "Golang"]

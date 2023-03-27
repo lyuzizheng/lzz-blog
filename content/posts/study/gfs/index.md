@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "Introduction to the Google File System (GFS)"
 date: "2023-01-05"
 tags: ["学习", "Operating System"]

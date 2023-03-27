@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "爱情 「Archive」"
 date: "1970-01-01"
 tags: ["爱情", "矫情"]

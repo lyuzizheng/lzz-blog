@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "Interesting Empty Struct Context Key"
 date: "2021-10-17"
 tags: ["学习", "Golang"]

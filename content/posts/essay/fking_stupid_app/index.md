@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "【持续更新】十年脑血栓也设计不出来的APP逻辑"
 date: "2021-08-27"
 tags: ["吐槽", "日记"]

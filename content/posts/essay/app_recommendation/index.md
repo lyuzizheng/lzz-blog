@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "[WIP] 记录，收集，推荐，美好的产品与App"
 date: "2022-04-03"
 tags: ["iOS", "MacOS","Android","Windows","App"]

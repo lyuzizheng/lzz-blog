@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "Bytedance Crush Course学习笔记"
 date: "2021-10-03"
 tags: ["学习", "Golang"]

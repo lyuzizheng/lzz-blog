@@ -1,5 +1,5 @@
 ---
-author: "LZZ"
+author: "Brabalawuka"
 title: "2022总结 ---- 和解与寻找，工作与爱情"
 date: "2023-01-23"
 tags: ["工作","爱情", "矫情"]

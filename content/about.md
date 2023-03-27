@@ -20,7 +20,8 @@ cover:
 - *should actively practise code of conduct*
 - *should be excited about new technologies and welcome changes*
 
-*I hope to become a good software engineer that contritbuts to exciting products that do good to societies.*  
+*I hope to become a good software engineer.*  
+*And I can build exciting products that do good to societies.*  
 
 ## Education and Experiences
 
