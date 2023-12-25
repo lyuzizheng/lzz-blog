@@ -6,9 +6,9 @@ tags: ["工作","爱情", "矫情"]
 categories: ["随笔"]
 summary: "今天是2022大年初一，窗外细雨绵绵---也是非常适合写作的日子。2022年对我来说也是非常特殊的一年，有情绪化的混乱，有和解前的茫然，也有做出选择后的坚定与和解。最重要的两个词汇是和解与寻找，我解答了自己在2021年底留下的问题同时也在不断寻找和放弃中度过了2022年。"
 hide: false
-draft: false
+draft: true
 cover:
-    image: "cover.jpg"
+    image: "cover.JPG"
     relative: true
     alt: "2022年终总结"
 
