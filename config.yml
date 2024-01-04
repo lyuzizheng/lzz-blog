@@ -13,6 +13,9 @@ buildExpired: false
 enableEmoji: true
 googleAnalytics: G-65QJ8P8DW0
 
+services:
+  googleAnalytics:
+    ID: G-65QJ8P8DW0
 minify:
     disableXML: true
     # minifyOutput: true
