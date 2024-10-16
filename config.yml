@@ -81,6 +81,11 @@ params:
         responsiveImages: true
         hiddenInList: false # hide on list pages and home
         hiddenInSingle: false # hide on single page
+    customRSSFeeds:
+      - name: "Brabalawuka's Blog"
+        url: "https://brabalawuka.cc/index.xml"
+        description: "Blog Site of Brabalawuka, trying to be an interesing developer. Sharing learnings and thoughts~"
+        feed_id: "5255442307418297+userId:66026363247791104"
 
 
   
@@ -90,7 +95,7 @@ params:
     ShowCodeCopyButtons: true
     ShowBreadCrumbs: false
     comments: true
-    images: ["cover.JPEG"]
+    images: ["cover.JPEG", "avatar.JPG"]
 
 
     Instagram:

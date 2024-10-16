@@ -47,14 +47,23 @@
   <channel>
     <title>{{ if eq .Title site.Title }}{{ site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ site.Title }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
-    <description>Recent content {{ if ne .Title site.Title }}{{ with .Title }}in {{ . }} {{ end }}{{ end }}on {{ site.Title }}</description>
+    <description>Recent sharing and thoughs {{ if ne .Title site.Title }}{{ with .Title }}in {{ . }} {{ end }}{{ end }}on {{ site.Title }}</description>
     {{- with site.Params.images }}
     <image>
       <title>{{ site.Title }}</title>
-      <url>{{ index . 0 | absURL }}</url>
-      <link>{{ index . 0 | absURL }}</link>
+      {{- if ge (len .) 2 }}
+        <url>{{ index . 1 | absURL }}</url>
+        <link>{{ index . 1 | absURL }}</link>
+      {{- else }}
+        <url>{{ index . 0 | absURL }}</url>
+        <link>{{ index . 0 | absURL }}</link>
+      {{- end }}
     </image>
     {{- end }}
+    <follow_challenge>
+      <feedId>52554423074188297</feedId>
+      <userId>66026363247791104</userId>
+    </follow_challenge>
     <generator>Hugo -- gohugo.io</generator>
     <language>{{ site.Language.LanguageCode }}</language>{{ with $authorEmail }}
     <managingEditor>{{.}}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $authorEmail }}
