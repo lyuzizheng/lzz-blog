@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { Printer } from "lucide-react";
+import { FileDown, Printer } from "lucide-react";
 
 /**
  * BRAWUKA-39 · PrintResumeButton：一键打印 / 导出 PDF。
@@ -16,5 +15,22 @@ export function PrintResumeButton() {
       <Printer className="h-3 w-3 text-ink-dominant" />
       <span>PRINT / PDF // 导出</span>
     </button>
+  );
+}
+
+/**
+ * BRAWUKA-45 · DownloadResumeButton：猎头零成本直链下载真实 PDF。
+ * 与打印预览并列，构成雇主端双入口；文件由 `public/resume.pdf` 提供。
+ */
+export function DownloadResumeButton() {
+  return (
+    <a
+      href="/resume.pdf"
+      download="Zizheng-Lyu-Resume.pdf"
+      className="no-print inline-flex cursor-pointer items-center gap-1.5 rounded-xs border border-safelight/60 bg-safelight/10 px-2.5 py-1 font-telemetry text-[11px] text-text-primary transition-colors hover:border-safelight"
+    >
+      <FileDown className="h-3 w-3 text-safelight" />
+      <span>DIRECT DOWNLOAD // 直链下载</span>
+    </a>
   );
 }

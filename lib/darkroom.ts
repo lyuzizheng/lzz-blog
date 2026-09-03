@@ -1,5 +1,8 @@
 /**
  * BRAWUKA-38 · The Darkroom dataset & EXIF engine.
+ * BRAWUKA-45 · Dataset decoupled: frames live in `content/photos.json`
+ * (plain data, no TypeScript). Adding a photo = append one JSON object +
+ * drop the file into `public/darkroom/`; no business-logic edits.
  *
  * Photos are described structurally (EXIF + chemistry + aspect) so every
  * plate reserves layout space before pixels arrive (Zero CLS). `src` is
@@ -8,6 +11,7 @@
  * When real captures land in `public/darkroom/` (WebP/AVIF + blur
  * placeholder), only the `src` field changes; nothing else moves.
  */
+import photosData from "../content/photos.json";
 
 export interface DarkroomExif {
   readonly camera: string;
@@ -61,41 +65,37 @@ function shimmer(w: number, h: number, seed: number): string {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
-function entry(
-  id: string,
-  title: string,
-  frame: string,
-  alt: string,
-  width: number,
-  height: number,
-  exif: DarkroomExif,
-  chemistry: string,
-  src?: string,
-): DarkroomPhoto {
-  const seed = id.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
-  return { id, title, frame, alt, width, height, exif, chemistry, src, blurDataURL: shimmer(24, Math.max(8, Math.round((24 * height) / width)), seed) };
+type PhotoJsonEntry = Omit<DarkroomPhoto, "blurDataURL">;
+interface PhotosJsonFile {
+  readonly photos: ReadonlyArray<PhotoJsonEntry>;
 }
-
-export const DARKROOM_PHOTOS: ReadonlyArray<DarkroomPhoto> = [
-  entry("sg-merlion-blue", "狮城蓝调时刻", "FRAME 01", "Singapore skyline at blue hour, duotone specimen", 4, 3,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 35mm F1.4 GM", focal: "35mm", aperture: "f/1.4", shutter: "1/250s", iso: "ISO 100", ev: "EV 8.9", takenAt: "2026.08.14 19:42 +08:00", gps: "1°17'N 103°51'E" },
-    "ILFORD WARMTONE FB · Multigrade 1+9 · 20.5°C"),
-  entry("ntu-dawn-chem", "南洋破晓药水", "FRAME 07", "Campus lake at dawn, long exposure specimen", 3, 4,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 24-70mm F2.8 GM II", focal: "24mm", aperture: "f/8.0", shutter: "1/15s", iso: "ISO 100", takenAt: "2026.05.02 06:18 +08:00", gps: "1°20'N 103°40'E" },
-    "KODAK D-76 · 1+1 · 20.0°C"),
-  entry("tiktok-war-room", "战役暗房一角", "FRAME 12", "Engineering war-room interior, available light specimen", 16, 9,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 35mm F1.4 GM", focal: "35mm", aperture: "f/2.0", shutter: "1/125s", iso: "ISO 800", takenAt: "2026.07.30 22:05 +08:00" },
-    "ILFORD HP5+ · HC-110 Dil.B · 21.0°C"),
-  entry("reel-coast-grain", "海岸颗粒卷", "FRAME 18", "Coastline with film grain, telephoto specimen", 3, 2,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 70-200mm F2.8 GM II", focal: "135mm", aperture: "f/4.0", shutter: "1/500s", iso: "ISO 200", takenAt: "2026.06.21 17:56 +08:00", gps: "1°15'N 103°49'E" },
-    "FUJI ACROS 100 · Rodinal 1+50 · 20.0°C"),
-  entry("night-market-neon", "夜市安全灯", "FRAME 24", "Night market stalls under tungsten light specimen", 4, 5,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 50mm F1.2 GM", focal: "50mm", aperture: "f/1.2", shutter: "1/320s", iso: "ISO 1600", takenAt: "2026.09.01 21:12 +08:00" },
-    "CINESTILL 800T · C-41 · 38.0°C"),
-  entry("atelier-still-life", "印社静物台", "FRAME 31", "Print atelier still life, top-down specimen", 1, 1,
-    { camera: "Sony A7M4 · ILCE-7M4", lens: "FE 35mm F1.4 GM", focal: "35mm", aperture: "f/5.6", shutter: "1/60s", iso: "ISO 100", takenAt: "2026.08.02 10:24 +08:00" },
-    "ILFORD MGIV FB · Multigrade 1+14 · 20.5°C"),
-];
+function isPhotoJsonEntry(value: unknown): value is PhotoJsonEntry {
+  if (typeof value !== "object" || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.id === "string" &&
+    typeof v.title === "string" &&
+    typeof v.frame === "string" &&
+    typeof v.alt === "string" &&
+    typeof v.width === "number" &&
+    typeof v.height === "number" &&
+    typeof v.chemistry === "string" &&
+    typeof v.exif === "object" &&
+    v.exif !== null
+  );
+}
+function entry(raw: PhotoJsonEntry): DarkroomPhoto {
+  const seed = raw.id.split("").reduce((n, c) => n + c.charCodeAt(0), 0);
+  return {
+    ...raw,
+    blurDataURL: shimmer(24, Math.max(8, Math.round((24 * raw.height) / raw.width)), seed),
+  };
+}
+const photoEntries = (photosData as PhotosJsonFile).photos;
+if (!Array.isArray(photoEntries) || !photoEntries.every(isPhotoJsonEntry)) {
+  throw new Error("[darkroom] content/photos.json is malformed: expected { photos: PhotoJsonEntry[] }");
+}
+export const DARKROOM_PHOTOS: ReadonlyArray<DarkroomPhoto> = photoEntries.map(entry);
 
 /* ------------------------------------------------------------------ */
 /* EXIF telemetry: format + fault-tolerant parse                       */

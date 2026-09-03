@@ -6,6 +6,7 @@ import {
   SpotlightCard,
   ProjectsBento,
 } from "@/components/motion";
+import { SiteHeader, SiteFooter } from "@/components/site";
 import { IdentityFilter } from "@/components/home/identity-filter";
 import {
   Button,
@@ -49,42 +50,7 @@ export default function HomePage() {
   return (
     <div className="relative flex min-h-screen flex-col justify-between">
       {/* Precision Top Registration Ruler & Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/85 backdrop-blur-md transition-colors duration-300">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          {/* Logo & Physical Coordinates */}
-          <div className="flex items-center gap-3">
-            <span className="font-display text-lg font-bold tracking-tight text-primary">
-              LZZ ATELIER
-            </span>
-            <span className="hidden font-telemetry text-[11px] text-muted sm:inline-block">
-              / 01°20&apos;N 103°49&apos;E / 2026.09
-            </span>
-          </div>
-
-          {/* Navigation Links */}
-          <nav className="flex items-center gap-2 sm:gap-4 font-body text-xs">
-            <Link
-              href="/resume"
-              className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
-            >
-              <Compass className="h-3 w-3 text-ink-dominant" />
-              <span>RESUME // 航线</span>
-            </Link>
-            <Link
-              href="/photography"
-              className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
-            >
-              <Camera className="h-3 w-3 text-ink-dominant" />
-              <span>DARKROOM // 暗房</span>
-            </Link>
-            <span className="hidden text-muted md:inline-flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2 py-0.5 rounded-xs">
-              <Activity className="h-3 w-3 text-safelight" />
-              120FPS · ZERO CLS
-            </span>
-            <SafelightSwitch />
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Main Atelier Stage */}
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-8 sm:px-6 sm:py-16">
@@ -213,9 +179,17 @@ export default function HomePage() {
           </div>
         </div>
         {/* Section 2.5: Featured Expeditions (BRAWUKA-39 Project Radar) */}
-        <div className="mb-16">
+        <div id="projects" className="mb-16 scroll-mt-20">
           <ProjectsBento />
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 flex flex-wrap justify-end gap-4">
+            <a
+              href="/resume.pdf"
+              download="Zizheng-Lyu-Resume.pdf"
+              className="inline-flex items-center gap-1 font-telemetry text-[11px] tracking-[0.14em] text-muted transition-colors hover:text-primary"
+            >
+              PDF // 直链下载
+              <ArrowRight className="h-3 w-3" />
+            </a>
             <Link
               href="/resume"
               className="inline-flex items-center gap-1 font-telemetry text-[11px] tracking-[0.14em] text-muted transition-colors hover:text-primary"
@@ -289,19 +263,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Atelier Footer */}
-      <footer className="w-full border-t border-border-plate bg-substrate py-6 font-telemetry text-xs text-muted">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6">
-          <div className="flex items-center gap-2">
-            <span>© 2026 Zizheng Lyu · The Digital Darkroom & Print Atelier</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>NEXT.JS 15 (APP ROUTER)</span>
-            <span>TURBOPACK</span>
-            <span>LENIS KINETIC</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

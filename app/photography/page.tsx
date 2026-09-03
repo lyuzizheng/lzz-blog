@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Aperture, ArrowLeft } from "lucide-react";
+import { Aperture } from "lucide-react";
 import { DarkroomGallery } from "@/components/motion/darkroom";
-import { SafelightSwitch, Badge } from "@/components/ui";
-
+import { SiteHeader, SiteFooter } from "@/components/site";
 export const metadata: Metadata = {
   title: "摄影暗房 · The Darkroom — LZZ Atelier",
   description:
@@ -13,23 +11,7 @@ export const metadata: Metadata = {
 export default function PhotographyPage() {
   return (
     <div className="relative flex min-h-screen flex-col justify-between">
-      <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/85 backdrop-blur-md transition-colors duration-300">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-1.5 font-telemetry text-[11px] text-secondary hover:text-primary">
-              <ArrowLeft className="h-3 w-3" />
-              <span>ATELIER // 门厅</span>
-            </Link>
-            <span className="font-display text-lg font-bold tracking-tight text-primary">
-              THE DARKROOM
-            </span>
-          </div>
-          <nav className="flex items-center gap-2 sm:gap-4">
-            <Badge variant="telemetry">EXIF PROBE · ACTIVE</Badge>
-            <SafelightSwitch />
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-8 sm:px-6 sm:py-12">
         <section className="relative mb-8 overflow-hidden rounded-lg border border-border-plate bg-surface p-6 sm:p-10">
@@ -53,12 +35,7 @@ export default function PhotographyPage() {
         <DarkroomGallery />
       </main>
 
-      <footer className="w-full border-t border-border-plate bg-substrate py-6 font-telemetry text-xs text-muted">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6">
-          <span>© 2026 Zizheng Lyu · The Darkroom Chamber</span>
-          <span>SONY A7M4 · FE 35mm F1.4 GM · ILFORD WARMTONE FB</span>
-        </div>
-      </footer>
+      <SiteFooter variant="darkroom" />
     </div>
   );
 }
