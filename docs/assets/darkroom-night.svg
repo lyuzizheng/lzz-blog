@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <defs>
+    <!-- Night grain & darkroom safelight glow -->
+    <filter id="safelightGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <radialGradient id="redSafelightRadiance" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#E54B4B" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#E54B4B" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0D0E11" stop-opacity="0" />
+    </radialGradient>
+
+    <pattern id="halftonePatternNight" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="4" fill="#E54B4B" fill-opacity="0.3" />
+      <circle cx="8" cy="8" r="2" fill="#E54B4B" fill-opacity="0.8" />
+    </pattern>
+
+    <pattern id="halftoneDenseNight" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="4.5" fill="#E54B4B" fill-opacity="0.9" />
+    </pattern>
+  </defs>
+
+  <!-- Substrate: Obsidian Deep Carbon #0D0E11 -->
+  <rect width="1200" height="1600" fill="#0D0E11" />
+
+  <!-- Ambient Red Safelight Halo in Darkroom -->
+  <rect width="1200" height="1600" fill="url(#redSafelightRadiance)" />
+
+  <!-- Darkroom Outer Frame & Red Safe-Light Trim Marks -->
+  <g stroke="#E54B4B" stroke-width="1.5" opacity="0.75">
+    <line x1="40" y1="60" x2="100" y2="60" />
+    <line x1="60" y1="40" x2="60" y2="100" />
+    <circle cx="60" cy="60" r="14" fill="none" />
+    <line x1="1100" y1="60" x2="1160" y2="60" />
+    <line x1="1140" y1="40" x2="1140" y2="100" />
+    <circle cx="1140" cy="60" r="14" fill="none" />
+    <line x1="40" y1="1540" x2="100" y2="1540" />
+    <line x1="60" y1="1500" x2="60" y2="1560" />
+    <circle cx="60" cy="1540" r="14" fill="none" />
+    <line x1="1100" y1="1540" x2="1160" y2="1540" />
+    <line x1="1140" y1="1500" x2="1140" y2="1560" />
+    <circle cx="1140" cy="1540" r="14" fill="none" />
+  </g>
+
+  <!-- Top Metadata Bar (Safelight Status & Mode) -->
+  <g font-family="'Courier New', 'SF Mono', monospace" font-size="13" letter-spacing="2" fill="#E54B4B">
+    <circle cx="70" cy="95" r="5" fill="#E54B4B" filter="url(#safelightGlow)" />
+    <text x="90" y="100" font-weight="700">KODAK SAFELIGHT FILTER 1A · 650NM CUTOFF</text>
+    <text x="620" y="100" text-anchor="middle" fill="#F3E8D6" opacity="0.8">DARKROOM CHAMBER · LATENT IMAGE EMULSION</text>
+    <text x="1110" y="100" text-anchor="end" font-weight="700" fill="#E54B4B">NIGHT MODE</text>
+    <line x1="90" y1="118" x2="1110" y2="118" stroke="#E54B4B" stroke-width="2" />
+  </g>
+
+  <!-- Left Ruler Scale (Darkroom Enlarger Height Column in CM) -->
+  <g stroke="#E54B4B" opacity="0.5" stroke-width="1">
+    <line x1="90" y1="150" x2="90" y2="1480" />
+    <line x1="90" y1="200" x2="105" y2="200" />
+    <line x1="90" y1="300" x2="115" y2="300" stroke-width="2" />
+    <line x1="90" y1="400" x2="105" y2="400" />
+    <line x1="90" y1="500" x2="115" y2="500" stroke-width="2" />
+    <line x1="90" y1="600" x2="105" y2="600" />
+    <line x1="90" y1="700" x2="115" y2="700" stroke-width="2" />
+    <line x1="90" y1="800" x2="105" y2="800" />
+    <line x1="90" y1="900" x2="115" y2="900" stroke-width="2" />
+    <line x1="90" y1="1000" x2="105" y2="1000" />
+    <line x1="90" y1="1100" x2="115" y2="1100" stroke-width="2" />
+    <line x1="90" y1="1200" x2="105" y2="1200" />
+    <line x1="90" y1="1300" x2="115" y2="1300" stroke-width="2" />
+    <line x1="90" y1="1400" x2="105" y2="1400" />
+  </g>
+
+  <!-- Giant Editorial Headline: Safelight Tension -->
+  <g font-family="'Didot', 'Playfair Display', 'Georgia', serif" fill="#E54B4B">
+    <text x="120" y="240" font-size="110" font-weight="900" letter-spacing="-2">SAFELIGHT</text>
+    <text x="120" y="340" font-size="106" font-weight="900" font-style="italic" fill="#F3E8D6" letter-spacing="-1">DARKROOM</text>
+  </g>
+
+  <!-- Phosphor Badge: Darkroom Warning Label -->
+  <g transform="translate(840, 160)">
+    <rect x="0" y="0" width="270" height="54" rx="4" fill="#18191E" stroke="#E54B4B" stroke-width="2" />
+    <circle cx="28" cy="27" r="7" fill="#E54B4B" filter="url(#safelightGlow)" />
+    <text x="50" y="33" fill="#E54B4B" font-family="'Courier New', monospace" font-size="13" font-weight="800" letter-spacing="1.5">SAFE-LIGHT ACTIVE</text>
+  </g>
+
+  <!-- The Darkroom Developing Tray & Inverted Negative (Focal Event) -->
+  <g transform="translate(140, 400)">
+    <!-- Enlarger Easel Base Frame with Phosphor Guides -->
+    <rect x="0" y="0" width="970" height="680" rx="10" fill="#14151B" stroke="#E54B4B" stroke-width="3" />
+
+    <!-- Top Film Sprocket Border in Inverted Negative Aesthetic -->
+    <rect x="0" y="0" width="970" height="80" fill="#1A1B22" stroke="#E54B4B" stroke-width="1"/>
+    <g fill="#0D0E11" stroke="#E54B4B" stroke-width="1.5">
+      <rect x="30" y="18" width="40" height="44" rx="6" />
+      <rect x="120" y="18" width="40" height="44" rx="6" />
+      <rect x="210" y="18" width="40" height="44" rx="6" />
+      <rect x="300" y="18" width="40" height="44" rx="6" />
+      <rect x="390" y="18" width="40" height="44" rx="6" />
+      <rect x="480" y="18" width="40" height="44" rx="6" />
+      <rect x="570" y="18" width="40" height="44" rx="6" />
+      <rect x="660" y="18" width="40" height="44" rx="6" />
+      <rect x="750" y="18" width="40" height="44" rx="6" />
+      <rect x="840" y="18" width="40" height="44" rx="6" />
+      <rect x="910" y="18" width="40" height="44" rx="6" />
+    </g>
+
+    <!-- Bottom Film Sprocket Border -->
+    <rect x="0" y="600" width="970" height="80" fill="#1A1B22" stroke="#E54B4B" stroke-width="1"/>
+    <g fill="#0D0E11" stroke="#E54B4B" stroke-width="1.5">
+      <rect x="30" y="618" width="40" height="44" rx="6" />
+      <rect x="120" y="618" width="40" height="44" rx="6" />
+      <rect x="210" y="618" width="40" height="44" rx="6" />
+      <rect x="300" y="618" width="40" height="44" rx="6" />
+      <rect x="390" y="618" width="40" height="44" rx="6" />
+      <rect x="480" y="618" width="40" height="44" rx="6" />
+      <rect x="570" y="618" width="40" height="44" rx="6" />
+      <rect x="660" y="618" width="40" height="44" rx="6" />
+      <rect x="750" y="618" width="40" height="44" rx="6" />
+      <rect x="840" y="618" width="40" height="44" rx="6" />
+      <rect x="910" y="618" width="40" height="44" rx="6" />
+    </g>
+    <text x="50" y="592" fill="#E54B4B" font-family="'Courier New', monospace" font-size="12" font-weight="700" letter-spacing="3">▶ KODAK TRI-X 400 · PANCHROMATIC LATENT NEGATIVE</text>
+    <text x="790" y="592" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="12" font-weight="800">EXP 24B · DEV D-76</text>
+
+    <!-- Hero Image Area (Screened Inverted Halftone Under Enlarger Light) -->
+    <g transform="translate(40, 100)">
+      <rect x="0" y="0" width="890" height="470" fill="url(#halftonePatternNight)" />
+
+      <!-- High Contrast Inverted Film Negative Composition -->
+      <path d="M 120 470 L 120 280 C 120 220 180 180 250 180 L 450 180 C 520 180 560 220 560 280 L 560 470 Z" fill="#E54B4B" fill-opacity="0.85" />
+      
+      <!-- Lens Element Concentric Luminous Rings -->
+      <circle cx="340" cy="270" r="130" fill="none" stroke="#E54B4B" stroke-width="16" />
+      <circle cx="340" cy="270" r="110" fill="none" stroke="#0D0E11" stroke-width="4" />
+      <circle cx="340" cy="270" r="85" fill="none" stroke="#F3E8D6" stroke-width="12" />
+      <circle cx="340" cy="270" r="50" fill="url(#halftoneDenseNight)" />
+      <circle cx="340" cy="270" r="28" fill="#E54B4B" />
+      <circle cx="355" cy="255" r="10" fill="#F3E8D6" filter="url(#safelightGlow)" />
+
+      <!-- Chemical developing bath ripples (fluorescent safe-light reflection) -->
+      <path d="M 0 380 Q 200 340 400 380 T 890 360 L 890 470 L 0 470 Z" fill="#E54B4B" fill-opacity="0.35" />
+      <path d="M 0 420 Q 250 390 500 420 T 890 400 L 890 470 L 0 470 Z" fill="#F3E8D6" fill-opacity="0.2" />
+
+      <!-- Latent Image Developing in Solution -->
+      <rect x="520" y="80" width="330" height="340" rx="4" fill="#181920" stroke="#E54B4B" stroke-width="3" />
+      <rect x="540" y="100" width="290" height="260" fill="url(#halftoneDenseNight)" />
+      <path d="M 540 360 L 680 140 L 830 360 Z" fill="#E54B4B" fill-opacity="0.95" />
+      <path d="M 680 140 L 760 140 L 830 360 L 750 360 Z" fill="#F3E8D6" fill-opacity="0.85" />
+      <text x="545" y="385" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="11" font-weight="700">LATENT IMAGE EMULSION [STAGE 3/4]</text>
+
+      <!-- Mechanical Crop Reticle & Darkroom Enlarger Focus Scope -->
+      <g stroke="#F3E8D6" stroke-width="2" opacity="0.85">
+        <line x1="340" y1="80" x2="340" y2="120" />
+        <line x1="340" y1="420" x2="340" y2="460" />
+        <line x1="150" y1="270" x2="190" y2="270" />
+        <line x1="490" y1="270" x2="530" y2="270" />
+        <circle cx="340" cy="270" r="160" fill="none" stroke-dasharray="8,8" stroke="#E54B4B" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Phosphor Monospace Darkroom Telemetry Block -->
+  <g transform="translate(140, 1120)">
+    <line x1="0" y1="0" x2="970" y2="0" stroke="#E54B4B" stroke-width="3" />
+
+    <!-- Column 1: Precision Timer & Timer Relays -->
+    <g transform="translate(0, 35)">
+      <text x="0" y="0" fill="#E54B4B" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">CHRONOMETRIC TIMER</text>
+      <text x="0" y="30" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="22" font-weight="700">08:30.00 ELAPSED</text>
+      <text x="0" y="55" fill="#E54B4B" font-family="'Courier New', monospace" font-size="14" opacity="0.9">Interval: 30s Inversion Cycle</text>
+      <text x="0" y="78" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="13" opacity="0.6">Relay Status: Solenoid Open</text>
+    </g>
+
+    <!-- Column 2: Chemistry Temperature & Bath Controls -->
+    <g transform="translate(360, 35)">
+      <text x="0" y="0" fill="#E54B4B" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">THERMODYNAMICS &amp; BATHS</text>
+      <g font-family="'Courier New', monospace" font-size="18" font-weight="700" fill="#F3E8D6">
+        <text x="0" y="30">DEV: 20.0°C ± 0.2°C</text>
+        <text x="0" y="55" font-size="14" fill="#E54B4B">STOP BATH: 30s · FIX: 5m00s</text>
+        <text x="0" y="78" font-size="13" opacity="0.6">WASH: Hypo Clearing Agent 2m</text>
+      </g>
+    </g>
+
+    <!-- Column 3: Optical Enlarger Settings -->
+    <g transform="translate(720, 35)">
+      <text x="0" y="0" fill="#E54B4B" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">BESELER 45M ENLARGER</text>
+      <text x="0" y="30" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="18" font-weight="700">Rodenstock 50mm f/2.8</text>
+      <text x="0" y="55" fill="#E54B4B" font-family="'Courier New', monospace" font-size="14" opacity="0.9">Working Aperture: f/8.0</text>
+      <text x="0" y="78" fill="#F3E8D6" font-family="'Courier New', monospace" font-size="13" opacity="0.6">Column Elevation: 42.5 cm</text>
+    </g>
+  </g>
+
+  <!-- Editorial Philosophy Text & Night Manifesto -->
+  <g transform="translate(140, 1290)">
+    <line x1="0" y1="0" x2="970" y2="0" stroke="#E54B4B" stroke-width="1" opacity="0.3" />
+    <text x="0" y="35" fill="#F3E8D6" font-family="'Didot', 'Playfair Display', serif" font-size="28" font-style="italic" font-weight="600">
+      "In the obsidian safe-light, silver crystals quietly record what the eye was too hasty to notice."
+    </text>
+    
+    <g transform="translate(0, 70)" font-family="'Helvetica Neue', 'Arial', sans-serif" font-size="13" fill="#F3E8D6" opacity="0.75" line-height="1.6">
+      <text x="0" y="0">Safe-light Darkroom mode flips the digital canvas into an active chemical darkroom. Photons are controlled,</text>
+      <text x="0" y="22">monochrome boundaries become razor-sharp, and every line of code behaves like an exposure timer.</text>
+      <text x="0" y="44">Dark obsidian substrate #0D0E11 with Kodak Safelight red #E54B4B prevents latent image fogging.</text>
+    </g>
+
+    <!-- Barcode in Night Mode -->
+    <g transform="translate(760, 45)">
+      <g fill="#E54B4B">
+        <rect x="0" y="0" width="3" height="40" />
+        <rect x="6" y="0" width="1.5" height="40" />
+        <rect x="11" y="0" width="5" height="40" />
+        <rect x="20" y="0" width="2" height="40" />
+        <rect x="25" y="0" width="6" height="40" />
+        <rect x="35" y="0" width="2" height="40" />
+        <rect x="42" y="0" width="4" height="40" />
+        <rect x="50" y="0" width="1.5" height="40" />
+        <rect x="56" y="0" width="6" height="40" />
+        <rect x="67" y="0" width="3" height="40" />
+        <rect x="74" y="0" width="4" height="40" />
+        <rect x="83" y="0" width="2" height="40" />
+        <rect x="88" y="0" width="5" height="40" />
+        <rect x="98" y="0" width="3" height="40" />
+        <rect x="105" y="0" width="6" height="40" />
+        <rect x="115" y="0" width="2" height="40" />
+        <rect x="122" y="0" width="4" height="40" />
+        <rect x="130" y="0" width="7" height="40" />
+        <rect x="142" y="0" width="2" height="40" />
+        <rect x="150" y="0" width="5" height="40" />
+      </g>
+      <text x="75" y="55" fill="#E54B4B" font-family="'Courier New', monospace" font-size="10" text-anchor="middle" letter-spacing="1">978-7-SAFELIGHT-02</text>
+    </g>
+  </g>
+
+  <!-- Footer Navigation Indicators -->
+  <g transform="translate(140, 1490)" font-family="'Courier New', monospace" font-size="12" fill="#E54B4B" opacity="0.75">
+    <text x="0" y="0">[SAFELIGHT MODE: ARMED]</text>
+    <text x="360" y="0">SUBSTRATE: #0D0E11 · INKS: #E54B4B / #F3E8D6</text>
+    <text x="970" y="0" text-anchor="end">PRESS [D] TO TOGGLE DAYLIGHT</text>
+  </g>
+</svg>

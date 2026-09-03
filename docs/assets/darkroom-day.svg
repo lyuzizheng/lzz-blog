@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <defs>
+    <!-- Paper texture & halftone filters -->
+    <filter id="filmGrain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="noise" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.05 0" in="noise" result="grain" />
+      <feBlend mode="multiply" in="SourceGraphic" in2="grain" />
+    </filter>
+    
+    <pattern id="halftonePatternDay" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="4" fill="#2148B8" fill-opacity="0.25" />
+      <circle cx="8" cy="8" r="2" fill="#2148B8" fill-opacity="0.6" />
+    </pattern>
+
+    <pattern id="halftoneDenseDay" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="5" fill="#2148B8" fill-opacity="0.75" />
+    </pattern>
+
+    <pattern id="sprocketPattern" width="60" height="90" patternUnits="userSpaceOnUse">
+      <rect x="15" y="15" width="30" height="42" rx="6" fill="#FAFAF7" stroke="#2148B8" stroke-width="2"/>
+      <text x="30" y="75" fill="#2148B8" font-size="9" font-family="'Courier New', monospace" text-anchor="middle" font-weight="700">24A</text>
+    </pattern>
+  </defs>
+
+  <!-- Substrate: Neutral White #FAFAF7 -->
+  <rect width="1200" height="1600" fill="#FAFAF7" filter="url(#filmGrain)" />
+
+  <!-- Outer Print Atelier Registration & Trim Marks -->
+  <g stroke="#2148B8" stroke-width="1.5" opacity="0.65">
+    <!-- Top Left -->
+    <line x1="40" y1="60" x2="100" y2="60" />
+    <line x1="60" y1="40" x2="60" y2="100" />
+    <circle cx="60" cy="60" r="14" fill="none" />
+    <!-- Top Right -->
+    <line x1="1100" y1="60" x2="1160" y2="60" />
+    <line x1="1140" y1="40" x2="1140" y2="100" />
+    <circle cx="1140" cy="60" r="14" fill="none" />
+    <!-- Bottom Left -->
+    <line x1="40" y1="1540" x2="100" y2="1540" />
+    <line x1="60" y1="1500" x2="60" y2="1560" />
+    <circle cx="60" cy="1540" r="14" fill="none" />
+    <!-- Bottom Right -->
+    <line x1="1100" y1="1540" x2="1160" y2="1540" />
+    <line x1="1140" y1="1500" x2="1140" y2="1560" />
+    <circle cx="1140" cy="1540" r="14" fill="none" />
+  </g>
+
+  <!-- Top Metadata Bar (Cobalt Plate) -->
+  <g font-family="'Courier New', 'SF Mono', monospace" font-size="13" letter-spacing="2" fill="#2148B8">
+    <text x="90" y="100" font-weight="700">LZZ BLOG · DIGITAL ATELIER</text>
+    <text x="600" y="100" text-anchor="middle" opacity="0.8">SPECIMEN NO. 01 · VOL. 2026</text>
+    <text x="1110" y="100" text-anchor="end" font-weight="700">DUOTONE RISOGRAPH</text>
+    <line x1="90" y1="118" x2="1110" y2="118" stroke="#2148B8" stroke-width="2" />
+  </g>
+
+  <!-- Left Ruler Scale (Print Calibration) -->
+  <g stroke="#2148B8" opacity="0.4" stroke-width="1">
+    <line x1="90" y1="150" x2="90" y2="1480" />
+    <!-- Ticks -->
+    <line x1="90" y1="200" x2="105" y2="200" />
+    <line x1="90" y1="300" x2="115" y2="300" stroke-width="2" />
+    <line x1="90" y1="400" x2="105" y2="400" />
+    <line x1="90" y1="500" x2="115" y2="500" stroke-width="2" />
+    <line x1="90" y1="600" x2="105" y2="600" />
+    <line x1="90" y1="700" x2="115" y2="700" stroke-width="2" />
+    <line x1="90" y1="800" x2="105" y2="800" />
+    <line x1="90" y1="900" x2="115" y2="900" stroke-width="2" />
+    <line x1="90" y1="1000" x2="105" y2="1000" />
+    <line x1="90" y1="1100" x2="115" y2="1100" stroke-width="2" />
+    <line x1="90" y1="1200" x2="105" y2="1200" />
+    <line x1="90" y1="1300" x2="115" y2="1300" stroke-width="2" />
+    <line x1="90" y1="1400" x2="105" y2="1400" />
+  </g>
+
+  <!-- Giant Editorial Headline (High Tension Scale Jump) -->
+  <g font-family="'Didot', 'Playfair Display', 'Georgia', serif" fill="#2148B8">
+    <text x="120" y="240" font-size="110" font-weight="900" letter-spacing="-2">THE DIGITAL</text>
+    <text x="120" y="340" font-size="106" font-weight="900" font-style="italic" letter-spacing="-1">DARKROOM</text>
+  </g>
+
+  <!-- Accent Badge: Terracotta Stamp -->
+  <g transform="translate(860, 160)">
+    <rect x="0" y="0" width="250" height="54" rx="4" fill="#C65F38" />
+    <text x="125" y="33" fill="#FAFAF7" font-family="'Courier New', monospace" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="2">DAYLIGHT ATELIER</text>
+  </g>
+
+  <!-- 35mm Film Strip & Sprocket Frame (The Focal Event: Decisive Mechanical Crop) -->
+  <g transform="translate(140, 400)">
+    <!-- Film Border Strip Base -->
+    <rect x="0" y="0" width="970" height="680" rx="10" fill="#2148B8" fill-opacity="0.06" stroke="#2148B8" stroke-width="3" />
+
+    <!-- Top Film Sprocket Border -->
+    <rect x="0" y="0" width="970" height="80" fill="#2148B8" />
+    <!-- Sprocket holes cutout -->
+    <g fill="#FAFAF7">
+      <rect x="30" y="18" width="40" height="44" rx="6" />
+      <rect x="120" y="18" width="40" height="44" rx="6" />
+      <rect x="210" y="18" width="40" height="44" rx="6" />
+      <rect x="300" y="18" width="40" height="44" rx="6" />
+      <rect x="390" y="18" width="40" height="44" rx="6" />
+      <rect x="480" y="18" width="40" height="44" rx="6" />
+      <rect x="570" y="18" width="40" height="44" rx="6" />
+      <rect x="660" y="18" width="40" height="44" rx="6" />
+      <rect x="750" y="18" width="40" height="44" rx="6" />
+      <rect x="840" y="18" width="40" height="44" rx="6" />
+      <rect x="910" y="18" width="40" height="44" rx="6" />
+    </g>
+
+    <!-- Bottom Film Sprocket Border -->
+    <rect x="0" y="600" width="970" height="80" fill="#2148B8" />
+    <g fill="#FAFAF7">
+      <rect x="30" y="618" width="40" height="44" rx="6" />
+      <rect x="120" y="618" width="40" height="44" rx="6" />
+      <rect x="210" y="618" width="40" height="44" rx="6" />
+      <rect x="300" y="618" width="40" height="44" rx="6" />
+      <rect x="390" y="618" width="40" height="44" rx="6" />
+      <rect x="480" y="618" width="40" height="44" rx="6" />
+      <rect x="570" y="618" width="40" height="44" rx="6" />
+      <rect x="660" y="618" width="40" height="44" rx="6" />
+      <rect x="750" y="618" width="40" height="44" rx="6" />
+      <rect x="840" y="618" width="40" height="44" rx="6" />
+      <rect x="910" y="618" width="40" height="44" rx="6" />
+    </g>
+    <!-- Film Edge Annotations -->
+    <text x="50" y="592" fill="#2148B8" font-family="'Courier New', monospace" font-size="12" font-weight="700" letter-spacing="3">▶ KODAK PORTRA 400 · 35MM EXPOSURE SAFETY FILM</text>
+    <text x="820" y="592" fill="#C65F38" font-family="'Courier New', monospace" font-size="12" font-weight="800">ISO 400 / 27°</text>
+
+    <!-- Hero Image Area (Screened Halftone Film Exposure: Photographer at Work) -->
+    <g transform="translate(40, 100)">
+      <!-- Halftone Screened Base -->
+      <rect x="0" y="0" width="890" height="470" fill="url(#halftonePatternDay)" />
+
+      <!-- High Contrast Photographic Silhouette Composition in Cobalt & Terracotta -->
+      <!-- Camera Silhouette & Hands in Darkroom Developing Tray -->
+      <path d="M 120 470 L 120 280 C 120 220 180 180 250 180 L 450 180 C 520 180 560 220 560 280 L 560 470 Z" fill="#2148B8" fill-opacity="0.85" />
+      
+      <!-- Lens Element Glass Multi-ring -->
+      <circle cx="340" cy="270" r="130" fill="none" stroke="#2148B8" stroke-width="16" />
+      <circle cx="340" cy="270" r="110" fill="none" stroke="#FAFAF7" stroke-width="4" />
+      <circle cx="340" cy="270" r="85" fill="none" stroke="#C65F38" stroke-width="12" />
+      <circle cx="340" cy="270" r="50" fill="url(#halftoneDenseDay)" />
+      <circle cx="340" cy="270" r="28" fill="#2148B8" />
+      <circle cx="355" cy="255" r="10" fill="#FAFAF7" />
+
+      <!-- Chemical developing wave lines (liquid immersion in tray) -->
+      <path d="M 0 380 Q 200 340 400 380 T 890 360 L 890 470 L 0 470 Z" fill="#2148B8" fill-opacity="0.3" />
+      <path d="M 0 420 Q 250 390 500 420 T 890 400 L 890 470 L 0 470 Z" fill="#C65F38" fill-opacity="0.25" />
+
+      <!-- Developing print emerging from chemical solution -->
+      <rect x="520" y="80" width="330" height="340" rx="4" fill="#FAFAF7" stroke="#2148B8" stroke-width="3" />
+      <!-- Inner print art: Architectural minimalism with halftone -->
+      <rect x="540" y="100" width="290" height="260" fill="url(#halftoneDenseDay)" />
+      <path d="M 540 360 L 680 140 L 830 360 Z" fill="#2148B8" fill-opacity="0.9" />
+      <path d="M 680 140 L 760 140 L 830 360 L 750 360 Z" fill="#C65F38" fill-opacity="0.85" />
+      <text x="545" y="385" fill="#2148B8" font-family="'Courier New', monospace" font-size="11" font-weight="700">PROCESSED ATELIER PRINT #084</text>
+
+      <!-- Mechanical Crop Overlay & Crosshair Focus -->
+      <g stroke="#C65F38" stroke-width="2">
+        <line x1="340" y1="80" x2="340" y2="120" />
+        <line x1="340" y1="420" x2="340" y2="460" />
+        <line x1="150" y1="270" x2="190" y2="270" />
+        <line x1="490" y1="270" x2="530" y2="270" />
+        <circle cx="340" cy="270" r="160" fill="none" stroke-dasharray="8,8" opacity="0.6" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Precision EXIF & Technical Metadata Block (Monospace Tabular Figures) -->
+  <g transform="translate(140, 1120)">
+    <!-- Terracotta accent divider bar -->
+    <line x1="0" y1="0" x2="970" y2="0" stroke="#C65F38" stroke-width="3" />
+
+    <!-- Column 1: Camera & Optics Spec -->
+    <g transform="translate(0, 35)">
+      <text x="0" y="0" fill="#C65F38" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">OPTICAL APPARATUS</text>
+      <text x="0" y="30" fill="#2148B8" font-family="'Courier New', monospace" font-size="18" font-weight="700">Sony A7M4 · ILCE-7M4</text>
+      <text x="0" y="55" fill="#2148B8" font-family="'Courier New', monospace" font-size="14" opacity="0.85">FE 35mm F1.4 GM · G-Master</text>
+      <text x="0" y="78" fill="#2148B8" font-family="'Courier New', monospace" font-size="13" opacity="0.6">Filter: B+W 010 UV MRC Nano</text>
+    </g>
+
+    <!-- Column 2: Exposure Triangle (Tabular Figures) -->
+    <g transform="translate(360, 35)">
+      <text x="0" y="0" fill="#C65F38" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">EXPOSURE TRIANGLE</text>
+      <g font-family="'Courier New', monospace" font-size="18" font-weight="700" fill="#2148B8">
+        <text x="0" y="30">f/1.4 · 1/250s · ISO 100</text>
+        <text x="0" y="55" font-size="14" opacity="0.85">EV 8.9 · Spot Metering</text>
+        <text x="0" y="78" font-size="13" opacity="0.6">Manual Exposure (M) · Daylight 5500K</text>
+      </g>
+    </g>
+
+    <!-- Column 3: Atelier Print Chemistry -->
+    <g transform="translate(720, 35)">
+      <text x="0" y="0" fill="#C65F38" font-family="'Courier New', monospace" font-size="12" font-weight="800" letter-spacing="1">PRINT &amp; CHEMISTRY</text>
+      <text x="0" y="30" fill="#2148B8" font-family="'Courier New', monospace" font-size="18" font-weight="700">ILFORD WARMTONE FB</text>
+      <text x="0" y="55" fill="#2148B8" font-family="'Courier New', monospace" font-size="14" opacity="0.85">Developer: Ilford Multigrade 1+9</text>
+      <text x="0" y="78" fill="#2148B8" font-family="'Courier New', monospace" font-size="13" opacity="0.6">Bath Temp: 20.5°C · Agitation: 60s</text>
+    </g>
+  </g>
+
+  <!-- Editorial Philosophy Text & Monocolor Statement (Typographic Rhythm) -->
+  <g transform="translate(140, 1290)">
+    <line x1="0" y1="0" x2="970" y2="0" stroke="#2148B8" stroke-width="1" opacity="0.3" />
+    <text x="0" y="35" fill="#2148B8" font-family="'Didot', 'Playfair Display', serif" font-size="28" font-style="italic" font-weight="600">
+      "Photography is the crystallization of time; code is the engine of light."
+    </text>
+    
+    <g transform="translate(0, 70)" font-family="'Helvetica Neue', 'Arial', sans-serif" font-size="13" fill="#2148B8" opacity="0.8" line-height="1.6">
+      <text x="0" y="0">Physicality meets fluid dynamics. The Digital Darkroom is an interactive laboratory bridging optics,</text>
+      <text x="0" y="22">silver halide physicality, and modern software engineering. Every artifact is printed on neutral substrate,</text>
+      <text x="0" y="44">retaining ink density, tactile grain, and mathematical precision.</text>
+    </g>
+
+    <!-- Visual Signoff & Barcode -->
+    <g transform="translate(760, 45)">
+      <!-- Custom Barcode Pattern -->
+      <g fill="#2148B8">
+        <rect x="0" y="0" width="3" height="40" />
+        <rect x="6" y="0" width="1.5" height="40" />
+        <rect x="11" y="0" width="5" height="40" />
+        <rect x="20" y="0" width="2" height="40" />
+        <rect x="25" y="0" width="6" height="40" />
+        <rect x="35" y="0" width="2" height="40" />
+        <rect x="42" y="0" width="4" height="40" />
+        <rect x="50" y="0" width="1.5" height="40" />
+        <rect x="56" y="0" width="6" height="40" />
+        <rect x="67" y="0" width="3" height="40" />
+        <rect x="74" y="0" width="4" height="40" />
+        <rect x="83" y="0" width="2" height="40" />
+        <rect x="88" y="0" width="5" height="40" />
+        <rect x="98" y="0" width="3" height="40" />
+        <rect x="105" y="0" width="6" height="40" />
+        <rect x="115" y="0" width="2" height="40" />
+        <rect x="122" y="0" width="4" height="40" />
+        <rect x="130" y="0" width="7" height="40" />
+        <rect x="142" y="0" width="2" height="40" />
+        <rect x="150" y="0" width="5" height="40" />
+      </g>
+      <text x="75" y="55" fill="#2148B8" font-family="'Courier New', monospace" font-size="10" text-anchor="middle" letter-spacing="1">978-7-LZZ-BLOG-01</text>
+    </g>
+  </g>
+
+  <!-- Footer Navigation Indicators -->
+  <g transform="translate(140, 1490)" font-family="'Courier New', monospace" font-size="12" fill="#2148B8" opacity="0.6">
+    <text x="0" y="0">[DAYLIGHT MODE: ACTIVE]</text>
+    <text x="360" y="0">SUBSTRATE: #FAFAF7 · INKS: #2148B8 / #C65F38</text>
+    <text x="970" y="0" text-anchor="end">PRESS [D] TO TOGGLE SAFELIGHT</text>
+  </g>
+</svg>
