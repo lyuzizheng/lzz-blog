@@ -58,6 +58,13 @@ export default function HomePage() {
           {/* Navigation Links */}
           <nav className="flex items-center gap-2 sm:gap-4 font-body text-xs">
             <Link
+              href="/resume"
+              className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
+            >
+              <Compass className="h-3 w-3 text-ink-dominant" />
+              <span>RESUME // 航线</span>
+            </Link>
+            <Link
               href="/posts"
               className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
             >
