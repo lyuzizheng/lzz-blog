@@ -1,12 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   MagneticButton,
   SpotlightCard,
   ProjectsBento,
 } from "@/components/motion";
+import { IdentityFilter } from "@/components/home/identity-filter";
 import {
   Button,
   Badge,
@@ -30,9 +30,14 @@ import {
   BookOpen,
 } from "lucide-react";
 
-export default function HomePage() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "engineer" | "photographer">("all");
+export const metadata: Metadata = {
+  title: "门厅 · LZZ Atelier",
+  description:
+    "Zizheng Lyu — distributed systems engineer & visual storyteller. Next.js 15, Tailwind CSS v4, Lenis kinetic scroll physics.",
+  alternates: { canonical: "/" },
+};
 
+export default function HomePage() {
   const telemetrySample = formatExifTelemetry({
     camera: "Sony A7M4",
     lens: "FE 35mm F1.4 GM",
@@ -116,22 +121,8 @@ export default function HomePage() {
 
             {/* Identity Filter Switcher & EXIF Telemetry */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4">
-              {/* Filter Toggles */}
-              <div className="flex items-center gap-1 rounded-sm border border-border-plate bg-chamber p-1 font-telemetry text-xs">
-                {(["all", "engineer", "photographer"] as const).map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={`px-3 py-1 uppercase rounded-xs transition-colors cursor-pointer ${
-                      activeFilter === filter
-                        ? "bg-substrate text-primary border border-border-strong font-semibold shadow-xs"
-                        : "text-secondary hover:text-primary hover:bg-surface/50"
-                    }`}
-                  >
-                    [{filter}]
-                  </button>
-                ))}
-              </div>
+              {/* Filter Toggles (client island — keeps page server-rendered) */}
+              <IdentityFilter />
 
               {/* Sample EXIF Badge */}
               <div className="flex items-center gap-2">

@@ -79,17 +79,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const url = `/posts/${slug.map((s) => s.toLowerCase()).join("/")}`;
+  const ogSub = `${new Date(post.date).toISOString().slice(0, 10)} · ${(post.tags ?? []).slice(0, 3).join(" / ") || "ESSAY"}`;
+  const ogImage = `/og?title=${encodeURIComponent(post.title)}&sub=${encodeURIComponent(ogSub)}`;
   return {
     title: `${post.title} · LZZ Blog`,
     description: post.summary || post.description || "LZZ Personal Blog & Engineering Atelier",
     keywords: post.tags,
     authors: [{ name: post.author || "Zizheng Lyu" }],
+    alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description: post.summary || post.description,
       type: "article",
       publishedTime: post.date,
+      authors: [post.author || "Zizheng Lyu"],
       tags: post.tags,
+      url,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary || post.description,
+      images: [ogImage],
     },
   };
 }
