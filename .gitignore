@@ -82,3 +82,9 @@ hugo.linux
 
 # Temporary lock file while building
 /.hugo_build.lock
+
+# Next.js
+.next/
+out/
+tsconfig.tsbuildinfo
+.env*.local
