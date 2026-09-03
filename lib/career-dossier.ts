@@ -204,7 +204,7 @@ export const TIMELINE_NODES: TimelineNode[] = [
     summary: "速补银行架构：Cashloan 与 SME Termloan（Java），风控/监管/SDLC；业余构建 RAG+LLM 智能客服 Bot。",
     impact: [],
     archDiagram: null,
-    motionSlot: "act3-pipeline-flow",
+    motionSlot: "act3-ledger-stamp",
     links: [{ label: "Dossier", href: "docs/CAREER_DOSSIER.md" }],
     needsOwner: false,
   },
