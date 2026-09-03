@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import { motion } from "framer-motion";
 import { motionPhysics } from "@/tokens";
 import type { DarkroomPhoto, MonoMode } from "@/lib/darkroom";
@@ -87,9 +88,29 @@ export interface PhotoPlateProps {
 
 export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlateProps) {
   const [probe, setProbe] = useState(false);
-  const [pressTimer, setPressTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  /* Set when a long-press summons the probe: the release click is swallowed
+     so peeking at telemetry on touch never accidentally opens the lightbox.
+     The next tap dismisses the probe instead of opening. */
+  const peekedRef = useRef(false);
+
+  useEffect(
+    () => () => {
+      if (pressTimer.current) clearTimeout(pressTimer.current);
+    },
+    [],
+  );
 
   const open = (): void => onOpen?.(photo);
+
+  const onSelect = (): void => {
+    if (peekedRef.current) {
+      peekedRef.current = false;
+      setProbe(false);
+      return;
+    }
+    open();
+  };
 
   const onKeyDown = (e: React.KeyboardEvent): void => {
     if (e.key === "Enter" || e.key === " ") {
@@ -100,13 +121,22 @@ export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlatePro
 
   /* Long-press (touch) summons the probe without opening the lightbox. */
   const pressStart = (): void => {
-    const t = setTimeout(() => setProbe(true), 450);
-    setPressTimer(t);
+    clearTimeout(pressTimer.current);
+    pressTimer.current = setTimeout(() => {
+      pressTimer.current = undefined;
+      peekedRef.current = true;
+      setProbe(true);
+    }, 450);
   };
   const pressEnd = (wasTap: boolean): void => {
-    if (pressTimer) clearTimeout(pressTimer);
-    setPressTimer(null);
-    if (wasTap && probe) setProbe(false);
+    if (pressTimer.current) {
+      /* Released before the long-press fired: plain tap, click proceeds. */
+      clearTimeout(pressTimer.current);
+      pressTimer.current = undefined;
+      if (wasTap && probe) setProbe(false);
+    }
+    /* After a fired long-press the probe stays up; the release click is
+       swallowed by onSelect and the next tap dismisses it. */
   };
 
   return (
@@ -124,7 +154,7 @@ export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlatePro
       onTouchStart={pressStart}
       onTouchEnd={() => pressEnd(true)}
       onTouchMove={() => pressEnd(false)}
-      onClick={open}
+      onClick={onSelect}
       onKeyDown={onKeyDown}
       tabIndex={0}
       role="button"

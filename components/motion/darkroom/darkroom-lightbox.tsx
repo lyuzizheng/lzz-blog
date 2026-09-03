@@ -150,6 +150,8 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
           className="fixed inset-0 z-[80] flex flex-col"
           onClick={onClose}
         >
+          {/* Dimmed backdrop: drag distance bleeds light back in. */}
+          <motion.div aria-hidden style={{ opacity: backdropOpacity }} className="absolute inset-0 bg-black" />
           {/* Top telemetry bar */}
           <div
             className="relative z-10 flex items-center justify-between px-4 py-3 font-telemetry text-[11px] tracking-[0.14em] text-white/80"

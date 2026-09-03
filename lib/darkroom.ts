@@ -150,7 +150,7 @@ export function parseExifString(input: string): ParsedExif {
   for (const raw of input.split(/[·|]/)) {
     const seg = raw.trim();
     if (!seg) continue;
-    if (APERTURE_RE.test(seg)) out.aperture ??= seg.toLowerCase().startsWith("f") ? seg : seg;
+    if (APERTURE_RE.test(seg)) out.aperture ??= seg;
     else if (SHUTTER_RE.test(seg)) out.shutter ??= seg;
     else if (ISO_RE.test(seg)) out.iso ??= seg.replace(/^iso\s*/i, "");
     else if (FOCAL_RE.test(seg) && !LENS_HINT_RE.test(seg)) out.focal ??= seg;
