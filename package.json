@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "velite && tsc --noEmit",
-    "test": "node scripts/verify-posts.mjs"
+    "test": "node scripts/verify-posts.mjs",
+    "dossier:check": "node scripts/career-dossier.check.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
