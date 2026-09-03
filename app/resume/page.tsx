@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FlightPathTimeline } from "@/components/motion/flight-path";
+import { ResumeDossier, ResumePrint, PrintResumeButton } from "@/components/motion/resume";
 
 export const metadata: Metadata = {
   title: "航线履历 · Flight Path | LZZ Blog",
@@ -11,14 +12,34 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-      <nav className="mb-6 flex items-center justify-between font-telemetry text-[11px] text-muted">
+      <nav className="no-print mb-6 flex items-center justify-between font-telemetry text-[11px] text-muted">
         <Link href="/" className="hover:text-primary">
           ← LZZ ATELIER
         </Link>
-        <span className="tracking-[0.14em]">RESUME // FLIGHT PATH DOSSIER</span>
+        <span className="flex items-center gap-3">
+          <span className="tracking-[0.14em]">RESUME // FLIGHT PATH DOSSIER</span>
+          <PrintResumeButton />
+        </span>
       </nav>
-      <FlightPathTimeline />
-      <footer className="mt-12 border-t border-border-plate pt-4 font-telemetry text-[11px] text-muted">
+      <div className="no-print">
+        <FlightPathTimeline />
+      </div>
+
+      <section className="no-print mt-16" aria-label="Capability dossier">
+        <div className="mb-6 flex items-center justify-between border-b border-border-plate pb-3">
+          <h2 className="font-display text-2xl font-semibold text-primary">
+            Capability Dossier
+          </h2>
+          <span className="font-telemetry text-xs text-muted">
+            {"// INTERACTIVE · SCREEN ONLY"}
+          </span>
+        </div>
+        <ResumeDossier />
+      </section>
+
+      <ResumePrint />
+
+      <footer className="no-print mt-12 border-t border-border-plate pt-4 font-telemetry text-[11px] text-muted">
         数据源 docs/CAREER_DOSSIER.md · lib/career-dossier.ts —— 无数字不编数字，TBD 指标待 owner 确认。
       </footer>
     </div>

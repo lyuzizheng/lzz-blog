@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "velite && tsc --noEmit",
-    "test": "node scripts/verify-posts.mjs && node scripts/flight-path.check.mjs && node scripts/darkroom.check.mjs",
+    "test": "node scripts/verify-posts.mjs && node scripts/flight-path.check.mjs && node scripts/darkroom.check.mjs && node scripts/projects-resume.check.mjs",
     "dossier:check": "node scripts/career-dossier.check.ts"
   },
   "dependencies": {
