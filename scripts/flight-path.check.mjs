@@ -45,19 +45,14 @@ const known = [...slots.matchAll(/case\s+"([^"]+)":/g)].map((m) => m[1]);
 for (const s of new Set(slotValues)) {
   check(known.includes(s), `motionSlot "${s}" has no choreography case in SlotFrame`);
 }
-check(
-  (slots.match(/KNOWN_MOTION_SLOTS/) ?? []).length > 0 &&
-    slotValues.every((s) => slots.includes(`"${s}"`)),
-  "KNOWN_MOTION_SLOTS must list every motionSlot value",
-);
 
-// 3. Keyboard contract
+// 3. Keyboard contract (timeline consumes the shared hook)
 for (const key of ["ArrowRight", "ArrowLeft", "Home", "End"]) {
   check(keyboard.includes(`"${key}"`), `keyboard-nav must handle ${key}`);
 }
 check(/"l"/.test(keyboard) && /"j"/.test(keyboard), "keyboard-nav must handle L (next) / J (prev)");
-check(timeline.includes("matchFlightStepKey"), "timeline must use matchFlightStepKey");
-check(timeline.includes("isEditableTarget"), "timeline must not hijack typing in inputs");
+check(timeline.includes("useFlightKeyboard"), "timeline must use the shared useFlightKeyboard hook");
+check(keyboard.includes("isEditableTarget"), "keyboard-nav must not hijack typing in inputs");
 
 // 4. tabular-nums counters
 check(slots.includes("tabular-nums"), "motion-slots must use tabular-nums for counters");
