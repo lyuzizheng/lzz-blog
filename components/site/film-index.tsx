@@ -32,11 +32,21 @@ const FRAMES: ReadonlyArray<{ code: string; scatter: string; stock: string }> = 
  */
 export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
   const [open, setOpen] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const router = useRouter();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   const close = useCallback(() => setOpen(false), []);
 
+  // CSS gate can't reach the framer-motion panel spring — opt out via matchMedia,
+  // same precedent as components/motion/route-transition.tsx.
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(media.matches);
+    const onChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -46,7 +56,7 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
         return;
       }
       const target = event.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
       const slot = Number.parseInt(event.key, 10);
       if (slot >= 1 && slot <= pillars.length) {
         event.preventDefault();
@@ -78,10 +88,10 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
         {open && (
           <motion.div
             id="film-index-panel"
-            initial={{ opacity: 0, y: -10 }}
+            initial={reducedMotion ? false : { opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ stiffness: 450, damping: 30, mass: 0.8, type: "spring" }}
+            exit={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+            transition={reducedMotion ? { duration: 0 } : { stiffness: 450, damping: 30, mass: 0.8, type: "spring" }}
             className="absolute inset-x-0 top-14 z-40 border-b border-border-plate bg-substrate/95 backdrop-blur-md"
           >
             <nav
