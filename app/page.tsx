@@ -65,11 +65,11 @@ export default function HomePage() {
               <span>RESUME // 航线</span>
             </Link>
             <Link
-              href="/posts"
+              href="/photography"
               className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
             >
-              <BookOpen className="h-3 w-3 text-ink-dominant" />
-              <span>WRITINGS // 归档</span>
+              <Camera className="h-3 w-3 text-ink-dominant" />
+              <span>DARKROOM // 暗房</span>
             </Link>
             <span className="hidden text-muted md:inline-flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2 py-0.5 rounded-xs">
               <Activity className="h-3 w-3 text-safelight" />
