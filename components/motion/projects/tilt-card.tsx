@@ -47,17 +47,16 @@ export function TiltCard({
     ry.set(0);
   };
 
-  if (!active) {
-    return <div className={className}>{children}</div>;
-  }
-
+  // NOTE(BRAWUKA-39 review): 始终渲染同一 motion.div，避免 active 翻转时
+  // div→motion.div 换型导致整卡子树卸载重挂（CLS + Spotlight 状态丢失）。
+  // 降级时仅关闭处理器与 will-change，rotate 值恒为 0 即静态。
   return (
     <motion.div
       ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
+      onMouseMove={active ? handleMove : undefined}
+      onMouseLeave={active ? handleLeave : undefined}
       style={{ rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d" }}
-      className={cn("will-change-transform", className)}
+      className={cn(active && "will-change-transform", className)}
     >
       {children}
     </motion.div>

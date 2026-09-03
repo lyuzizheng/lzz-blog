@@ -56,8 +56,10 @@ check(bento.includes("TBD"), "missing repo must render TBD placeholder, never a 
 for (const status of ["shipped", "operating", "incubating"]) {
   check(projects.includes(`"${status}"`), `status "${status}" must exist`);
 }
-check(projects.includes('"Demo"'), "projects must expose Demo links");
+// NOTE(BRAWUKA-39 review): 只有公开可访问的仓库才配快链；私有/404 的一律留空走 TBD 占位
+//（实测 lyuzizheng/cancan 私有、lyuzizheng/our-village 404；仅 coffeemode 公开 200）。
 check(projects.includes('"PR"'), "projects must expose PR links");
+check(bento.includes("LINKS TBD"), "repo-less cards must render the LINKS TBD fallback");
 check(bento.includes("Badge"), "stack must render as badges");
 
 // 5. Responsive bento spans: single column → 6-col grid with featured/standard

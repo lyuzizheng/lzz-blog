@@ -60,11 +60,10 @@ export const PROJECTS: ProjectEntry[] = [
     status: "operating",
     statusLabel: "OPERATING",
     stack: ["Next.js", "TypeScript", "SQLite", "OCR"],
-    links: [
-      { label: "GitHub", href: "https://github.com/lyuzizheng/cancan", kind: "github" },
-      { label: "Demo", href: "https://github.com/lyuzizheng/cancan#readme", kind: "demo" },
-    ],
-    githubRepo: "lyuzizheng/cancan",
+    // NOTE(BRAWUKA-39 review): lyuzizheng/cancan 是私有仓库，公开访问 404；
+    // 按本文件约束留空，由 owner 确认公开地址后再填。UI 渲染 TBD 占位，不发起请求。
+    links: [],
+    githubRepo: "",
     span: "featured",
   },
   {
@@ -96,11 +95,10 @@ export const PROJECTS: ProjectEntry[] = [
     status: "operating",
     statusLabel: "OPERATING",
     stack: ["Next.js", "Tailwind", "Supabase", "PWA"],
-    links: [
-      { label: "GitHub", href: "https://github.com/lyuzizheng/our-village", kind: "github" },
-      { label: "Demo", href: "https://github.com/lyuzizheng/our-village#readme", kind: "demo" },
-    ],
-    githubRepo: "lyuzizheng/our-village",
+    // NOTE(BRAWUKA-39 review): lyuzizheng/our-village 公开访问 404（仓库不存在或未公开）；
+    // 按本文件约束留空，由 owner 确认公开地址后再填。UI 渲染 TBD 占位，不发起请求。
+    links: [],
+    githubRepo: "",
     span: "standard",
   },
   {
