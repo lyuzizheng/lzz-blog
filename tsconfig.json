@@ -30,6 +30,7 @@
   ],
   "exclude": [
     "node_modules",
-    "legacy_hugo"
+    "legacy_hugo",
+    "scripts"
   ]
 }
