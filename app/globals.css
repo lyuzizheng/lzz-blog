@@ -1,3 +1,4 @@
+@import "katex/dist/katex.min.css";
 @import "tailwindcss";
 
 @layer base {
@@ -279,4 +280,93 @@ html.lenis, html.lenis body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ==========================================================================
+   Shiki Dual-Theme & Code Block Styling
+   ========================================================================== */
+figure[data-rehype-pretty-code-figure] {
+  margin: 1.75rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border-plate);
+  background-color: var(--bg-surface);
+  box-shadow: var(--shadow-plate);
+}
+
+[data-theme="day"] figure[data-rehype-pretty-code-figure] {
+  background-color: #F6F6F2;
+  border-color: rgba(33, 72, 184, 0.2);
+}
+
+[data-theme="night"] figure[data-rehype-pretty-code-figure] {
+  background-color: #121319;
+  border-color: rgba(229, 75, 75, 0.25);
+}
+
+figure[data-rehype-pretty-code-figure] pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+[data-theme="day"] figure[data-rehype-pretty-code-figure] span {
+  color: var(--shiki-light);
+}
+
+[data-theme="night"] figure[data-rehype-pretty-code-figure] span {
+  color: var(--shiki-dark);
+}
+
+/* Inline Code */
+:not(pre) > code {
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85em;
+  background-color: var(--bg-chamber);
+  color: var(--text-primary);
+  border: 1px solid var(--border-plate);
+}
+
+/* Heading Anchor */
+.heading-anchor {
+  margin-left: 0.5rem;
+  opacity: 0;
+  color: var(--ink-dominant);
+  transition: opacity 0.15s ease-in-out;
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+h4:hover .heading-anchor {
+  opacity: 0.75;
+}
+
+.heading-anchor:hover {
+  opacity: 1 !important;
+}
+
+/* Footnotes */
+.footnotes {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--border-plate);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.footnotes ol {
+  padding-left: 1.25rem;
+  list-style-type: decimal;
+}
+
+.data-footnote-backref {
+  margin-left: 0.25rem;
+  color: var(--ink-dominant);
 }

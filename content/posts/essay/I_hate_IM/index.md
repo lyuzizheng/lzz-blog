@@ -9,7 +9,7 @@ cover:
     image: "cover.png"
     relative: true
     alt: "Padlock on a wooden door"
---- 
+---
 
 > 作为一个开发IM的后端程序员，我越来越开始讨厌IM这个东西。他无处不在，他太可怕了，我发现我对IM文字信息的阈值越来越高，我失去了对IM的所有尊重。
 
