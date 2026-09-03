@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   MagneticButton,
   SpotlightCard,
@@ -25,6 +26,7 @@ import {
   Activity,
   Layers,
   Sparkles,
+  BookOpen,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -55,6 +57,13 @@ export default function HomePage() {
 
           {/* Navigation Links */}
           <nav className="flex items-center gap-2 sm:gap-4 font-body text-xs">
+            <Link
+              href="/posts"
+              className="flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2.5 py-1 rounded-xs text-text-primary hover:border-ink-dominant transition-colors"
+            >
+              <BookOpen className="h-3 w-3 text-ink-dominant" />
+              <span>WRITINGS // 归档</span>
+            </Link>
             <span className="hidden text-muted md:inline-flex items-center gap-1.5 font-telemetry text-[11px] border border-border-plate px-2 py-0.5 rounded-xs">
               <Activity className="h-3 w-3 text-safelight" />
               120FPS · ZERO CLS
@@ -134,7 +143,7 @@ export default function HomePage() {
               Core Engineering Pillars
             </h2>
             <span className="font-telemetry text-xs text-muted">
-              // ATELIER SPECIFICATIONS
+              {"// ATELIER SPECIFICATIONS"}
             </span>
           </div>
 

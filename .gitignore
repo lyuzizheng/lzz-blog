@@ -66,11 +66,13 @@ node_modules/
 .env
 
 
-public/
+# Next.js & Velite generated
+.velite/
+public/posts/
+public/static/
 .DS_Store
 
 # Generated files by hugo
-/public/
 /resources/_gen/
 /assets/jsconfig.json
 hugo_stats.json
