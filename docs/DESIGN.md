@@ -15,6 +15,61 @@ LZZ Blog 不再是一个平铺直叙的静态文字载体，而是一间运作�
 - **物料印社（The Print Atelier）**：摒弃廉价的数码霓虹与虚假渐变。界面基于真实的**自适应纸质基底（Adaptive Substrate）**、**物理油墨叠印（Physical Ink Overprint）**与**粗粒半色调网点（Halftone Dots）**构建。
 - **高张力排版（Typographic Tension）**：瑞士国际主义网格，10x 字体尺度阶跃（Editorial Serif 巨幅标题与微观 Tabular Figures 等宽参数并置），以及 35%~45% 呼吸感负空间。
 
+### 1.2 全站信息架构与页面编排 (Information Architecture & Page Topology)
+LZZ Blog 摒弃传统“平铺直叙纯博客流”与“割裂独立的单页”两种极端，采用**「物料印社全景门厅 + 三大专精工坊（The Master Atelier Portal + 3 Specialized Vaults）」**的现代信息拓扑架构：
+
+```text
+                                 ┌────────────────────────┐
+                                 │   全局导航栏 (Header)   │
+                                 │  [LZZ ATELIER] Logo    │
+                                 │  Writings · Photo · CV │
+                                 │  [Safelight ☀/☾ Switch]│
+                                 └───────────┬────────────┘
+                                             │
+                      ┌──────────────────────┴──────────────────────┐
+                      │                                             │
+                      ▼                                             ▼
+          ┌───────────────────────────┐                 ┌───────────────────────────┐
+          │     主页 (Root: `/`)      │                 │   三大专精工坊 (Vaults)    │
+          │ The Master Atelier Canvas │                 │                           │
+          ├───────────────────────────┤                 ├───────────────────────────┤
+          │ 1. The Developing Tray    │                 │ 1. 文章工坊 (`/posts`)    │
+          │    (显影相纸 / 身份双轨切换) │ ──────────────> │    [Tech] · [Life] 双栏   │
+          │                           │                 │    印刷级版式与全文字检索 │
+          │ 2. Featured Expeditions   │                 │                           │
+          │    (精选战役 Bento 物料展台)│ ──────────────> │ 2. 摄影暗房 (`/photo`)    │
+          │                           │                 │    沉浸画廊 · EXIF 探针   │
+          │ 3. Selected Writings      │                 │    Mono-color 双色滤镜    │
+          │    (思想工坊精选长文导流) │                 │                           │
+          │                           │                 │ 3. 航线履历 (`/resume`)   │
+          │ 4. Darkroom Highlights    │ ──────────────> │    35mm 胶片交互时间轴    │
+          │    (暗房精选胶片与机械探针)│                 │    战役档案抽屉与PDF下载  │
+          └───────────────────────────┘                 └───────────────────────────┘
+```
+
+#### 1.2.1 主页定位：全景数字工作室门厅 (The Master Atelier Canvas)
+主页不是干瘪的文章流水账，而是 30 秒内向访客展示全景工程师/创作者/摄影师人格的物理物料展台：
+1. **Hero 显影区 (The Developing Tray)**：
+   - 巨幅 Editorial Serif 标题：`LZZ / Zizheng Lyu — Engineer & Visual Storyteller`；
+   - 35mm 胶片负片画框入水渐显，配有全景身份过滤拨动按钮：`[All] · [Engineer] · [Photographer]`，一键对下方模块产生即时流体过滤。
+2. **精选战役展台 (Featured Expeditions & Dossiers)**：
+   - 提炼 3 大高光代表作（ByteDance TikTok IM 高并发全球多活架构、uWave 创业全栈与 NTU 历程），采用物理印社 Bento Grid 呈现，右上角直通完整航线 `/resume →`。
+3. **思想工坊精选 (Selected Writings & Essays)**：
+   - 精选 4~5 篇重磅长文（技术硬核深度剖析 + 年度生活反思），左侧配有单色孔版网点插图与片齿标号，底部设全量出版物链接 `/posts →`。
+4. **数字暗房精选 (Darkroom Highlights)**：
+   - 3~4 幅高反差胶片摄影作品，悬浮触发机械 EXIF 探针（Sony A7M4 · 35mm F1.4 GM · f/1.4 · 1/250s · ISO 100），底部引导直通暗房展厅 `/photography →`。
+
+#### 1.2.2 专精工坊页设计标准 (Specialized Vaults)
+1. **文章索引页 (`/posts` 或 `/writing`) —— 出版物物料库 (The Printing Archive)**：
+   - 设立两个清晰的阅读通道：`[Technical Studies]`（IM架构、分布式、Go语言深度）与 `[Life & Essays]`（生活随笔、思考与年度总结）；
+   - 采用纯正出版物排版，支持年份倒序、标签筛选与 `Cmd+K` 毫秒级即时检索。
+2. **摄影展厅 (`/photography`) —— 纯粹数字暗房 (The Darkroom Chamber)**：
+   - 全屏无干扰暗房氛围，支持自适应流式砌体（Fluid Masonry）与放映机横卷（Reel View）双重视图；
+   - 每张摄影集成精密机械 EXIF 探针与 `mono-color` 双色印刷滤镜切换；支持键盘方向键无缝浏览与手势轻量下滑退出 Lightbox。
+3. **履历档案 (`/resume` 或 `/about`) —— 航线战役档案 (The Flight Path Dossier)**：
+   - 突破静态简历，采用可滚动的 35mm 航线时空轴（Flight Path Timeline），直观呈现 NTU、Transforma、Visa、uWave 到 ByteDance 的战役里程碑；
+   - 点击卡片展开架构白皮书技术拆解抽屉，并提供一键导出/下载精致排版的出版物级 PDF 简历功能。
+
 ---
 
 ## 2. 11 项深度设计决策 Grill 决议收敛矩阵 (Decisions Matrix)
