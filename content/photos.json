@@ -1,0 +1,117 @@
+{
+  "$schema": "../docs/photos.schema.json",
+  "photos": [
+    {
+      "id": "sg-merlion-blue",
+      "title": "狮城蓝调时刻",
+      "frame": "FRAME 01",
+      "alt": "Singapore skyline at blue hour, duotone specimen",
+      "width": 4,
+      "height": 3,
+      "chemistry": "ILFORD WARMTONE FB · Multigrade 1+9 · 20.5°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 35mm F1.4 GM",
+        "focal": "35mm",
+        "aperture": "f/1.4",
+        "shutter": "1/250s",
+        "iso": "ISO 100",
+        "ev": "EV 8.9",
+        "takenAt": "2026.08.14 19:42 +08:00",
+        "gps": "1°17'N 103°51'E"
+      }
+    },
+    {
+      "id": "ntu-dawn-chem",
+      "title": "南洋破晓药水",
+      "frame": "FRAME 07",
+      "alt": "Campus lake at dawn, long exposure specimen",
+      "width": 3,
+      "height": 4,
+      "chemistry": "KODAK D-76 · 1+1 · 20.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "focal": "24mm",
+        "aperture": "f/8.0",
+        "shutter": "1/15s",
+        "iso": "ISO 100",
+        "takenAt": "2026.05.02 06:18 +08:00",
+        "gps": "1°20'N 103°40'E"
+      }
+    },
+    {
+      "id": "tiktok-war-room",
+      "title": "战役暗房一角",
+      "frame": "FRAME 12",
+      "alt": "Engineering war-room interior, available light specimen",
+      "width": 16,
+      "height": 9,
+      "chemistry": "ILFORD HP5+ · HC-110 Dil.B · 21.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 35mm F1.4 GM",
+        "focal": "35mm",
+        "aperture": "f/2.0",
+        "shutter": "1/125s",
+        "iso": "ISO 800",
+        "takenAt": "2026.07.30 22:05 +08:00"
+      }
+    },
+    {
+      "id": "reel-coast-grain",
+      "title": "海岸颗粒卷",
+      "frame": "FRAME 18",
+      "alt": "Coastline with film grain, telephoto specimen",
+      "width": 3,
+      "height": 2,
+      "chemistry": "FUJI ACROS 100 · Rodinal 1+50 · 20.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 70-200mm F2.8 GM II",
+        "focal": "135mm",
+        "aperture": "f/4.0",
+        "shutter": "1/500s",
+        "iso": "ISO 200",
+        "takenAt": "2026.06.21 17:56 +08:00",
+        "gps": "1°15'N 103°49'E"
+      }
+    },
+    {
+      "id": "night-market-neon",
+      "title": "夜市安全灯",
+      "frame": "FRAME 24",
+      "alt": "Night market stalls under tungsten light specimen",
+      "width": 4,
+      "height": 5,
+      "chemistry": "CINESTILL 800T · C-41 · 38.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 50mm F1.2 GM",
+        "focal": "50mm",
+        "aperture": "f/1.2",
+        "shutter": "1/320s",
+        "iso": "ISO 1600",
+        "takenAt": "2026.09.01 21:12 +08:00"
+      }
+    },
+    {
+      "id": "atelier-still-life",
+      "title": "印社静物台",
+      "frame": "FRAME 31",
+      "alt": "Print atelier still life, top-down specimen",
+      "width": 1,
+      "height": 1,
+      "chemistry": "ILFORD MGIV FB · Multigrade 1+14 · 20.5°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 35mm F1.4 GM",
+        "focal": "35mm",
+        "aperture": "f/5.6",
+        "shutter": "1/60s",
+        "iso": "ISO 100",
+        "takenAt": "2026.08.02 10:24 +08:00"
+      }
+    }
+  ]
+}

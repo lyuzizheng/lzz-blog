@@ -6,14 +6,13 @@ import { posts, type Post } from "#site/content";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { TableOfContents } from "@/components/posts/toc";
 import { MonoColorCover } from "@/components/ui/mono-color-cover";
-import { SafelightSwitch } from "@/components/ui/safelight-switch";
+import { SiteHeader, SiteFooter } from "@/components/site";
 import {
   ArrowLeft,
   Calendar,
   Clock,
   Tag,
   Folder,
-  ArrowRight,
   ChevronLeft,
   BookOpen,
 } from "lucide-react";
@@ -124,34 +123,16 @@ export default async function PostDetailPage({ params }: PageProps) {
   const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 
   return (
-    <div className="relative min-h-screen bg-substrate text-primary transition-colors duration-300">
-      {/* Precision Top Sticky Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/85 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          {/* Back link & breadcrumbs */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/posts"
-              className="flex items-center gap-1.5 rounded border border-border-plate/60 bg-chamber/60 px-2.5 py-1 text-xs font-telemetry text-text-secondary transition-colors hover:border-border-plate hover:text-text-primary"
-            >
-              <ChevronLeft className="h-3.5 w-3.5" />
-              <span>文章归档</span>
-            </Link>
-            <span className="hidden text-xs font-telemetry text-muted sm:inline-block">/</span>
-            <span className="hidden text-xs font-telemetry text-muted uppercase sm:inline-block">
-              {post.category}
-            </span>
-          </div>
-
-          {/* Theme switch */}
-          <div className="flex items-center gap-3">
-            <SafelightSwitch />
-          </div>
-        </div>
-      </header>
-
-      {/* Main Post Container */}
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
+        <Link
+          href="/posts"
+          className="mb-8 inline-flex items-center gap-1.5 rounded border border-border-plate/60 bg-chamber/60 px-2.5 py-1 text-xs font-telemetry text-text-secondary transition-colors hover:border-border-plate hover:text-text-primary"
+        >
+          <ChevronLeft className="h-3.5 w-3.5" />
+          <span>文章归档 · {post.category.toUpperCase()}</span>
+        </Link>
         {/* Article Header & Metadata */}
         <header className="mb-10 max-w-3xl">
           {/* Tags bar */}
@@ -332,6 +313,7 @@ export default async function PostDetailPage({ params }: PageProps) {
           </aside>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

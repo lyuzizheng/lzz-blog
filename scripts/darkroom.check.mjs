@@ -23,10 +23,23 @@ const plate = read("components/motion/darkroom/photo-plate.tsx");
 const gallery = read("components/motion/darkroom/darkroom-gallery.tsx");
 const lightbox = read("components/motion/darkroom/darkroom-lightbox.tsx");
 const page = read("app/photography/page.tsx");
+const chrome = read("components/site/site-header.tsx");
 
-// 1. Dataset: structured EXIF on every photo, ≥6 frames, fixed aspects
-const photoCount = (data.match(/entry\(/g) ?? []).length;
+// 1. Dataset: structured EXIF on every photo, ≥6 frames, fixed aspects.
+// BRAWUKA-45: frames live in content/photos.json (no TS edits to publish);
+// lib/darkroom.ts hydrates them with derived blur placeholders.
+const photosJson = JSON.parse(read("content/photos.json"));
+const photoCount = Array.isArray(photosJson.photos) ? photosJson.photos.length : 0;
 check(photoCount >= 6, `dataset must hold ≥6 photos (got ${photoCount})`);
+check(data.includes("../content/photos.json"), "lib/darkroom.ts must hydrate from content/photos.json");
+for (const photo of photosJson.photos ?? []) {
+  for (const field of ["id", "title", "frame", "alt", "width", "height", "chemistry", "exif"]) {
+    check(photo[field] !== undefined, `photo ${photo.id ?? "?"} must carry ${field}`);
+  }
+  for (const field of ["camera", "lens", "focal", "aperture", "shutter", "iso", "takenAt"]) {
+    check(photo.exif?.[field] !== undefined, `photo ${photo.id ?? "?"} exif must carry ${field}`);
+  }
+}
 for (const field of ["camera", "lens", "focal", "aperture", "shutter", "iso", "takenAt"]) {
   check(data.includes(field), `DarkroomExif must carry ${field}`);
 }
@@ -73,7 +86,7 @@ check(plate.includes('role="button"') && plate.includes("tabIndex"), "plates mus
 
 // 8. Route + nav wiring
 check(page.includes("DarkroomGallery"), "app/photography must render the gallery");
-check(read("app/page.tsx").includes("/photography"), "homepage header must link to /photography");
+check(chrome.includes("/photography"), "site header must link to /photography");
 
 if (failures.length > 0) {
   console.error("darkroom check FAILED:");
