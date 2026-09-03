@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   MagneticButton,
   SpotlightCard,
+  ProjectsBento,
 } from "@/components/motion";
 import {
   Button,
@@ -220,6 +221,20 @@ export default function HomePage() {
             </SpotlightCard>
           </div>
         </div>
+        {/* Section 2.5: Featured Expeditions (BRAWUKA-39 Project Radar) */}
+        <div className="mb-16">
+          <ProjectsBento />
+          <div className="mt-4 flex justify-end">
+            <Link
+              href="/resume"
+              className="inline-flex items-center gap-1 font-telemetry text-[11px] tracking-[0.14em] text-muted transition-colors hover:text-primary"
+            >
+              FULL DOSSIER // 航线履历
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+        </div>
+
 
         {/* Section 3: Design Tokens & Palette Verification Plate */}
         <section className="rounded-lg border border-border-plate bg-surface p-6">
