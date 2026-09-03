@@ -372,6 +372,58 @@ h4:hover .heading-anchor {
 }
 
 /* ==========================================================================
+   BRAWUKA-45 · Scattered Film Strip Unfurl Navigation
+   35mm 负片画格：齿孔 / 帧号 / 暗房编码；扇形微偏经 --scatter 注入，
+   仅 md+ 生效（移动端为平直 Slide Deck，零横向溢出）；悬停显影回正。
+   全部颜色经主题变量，光学自适应；reduced-motion 由全局门禁接管。
+   ========================================================================== */
+.film-frame {
+  --scatter: 0deg;
+  rotate: 0deg;
+  translate: 0 0;
+  transition:
+    rotate 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.38s ease,
+    border-color 0.25s ease;
+  animation: film-frame-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+@media (min-width: 768px) {
+  .film-frame {
+    rotate: var(--scatter);
+  }
+  .film-frame:hover,
+  .film-frame:focus-visible {
+    rotate: 0deg;
+    translate: 0 -6px;
+    border-color: var(--border-plate-strong);
+    box-shadow: var(--shadow-elevated), 0 0 0 1px var(--ink-faint);
+  }
+}
+@media (max-width: 767.98px) {
+  .film-frame:hover,
+  .film-frame:focus-visible {
+    border-color: var(--border-plate-strong);
+  }
+}
+@keyframes film-frame-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.film-sprockets {
+  background-image: radial-gradient(circle at center, var(--bg-substrate) 2.2px, transparent 2.7px);
+  background-size: 11px 100%;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* ==========================================================================
    BRAWUKA-39 · Dual-Mode Resume Print Sheet (@media print A4)
    交互元素 .no-print 全部隐藏；出版级简历 .print-only 仅在打印时显影。
    ========================================================================== */

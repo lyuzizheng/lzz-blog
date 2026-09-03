@@ -1,33 +1,29 @@
 import React from "react";
 import Link from "next/link";
-import { BookOpen, Camera, Compass, Home, LayoutGrid, type LucideIcon } from "lucide-react";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
-import { MobileMenu } from "./mobile-menu";
+import { FilmIndex, type FilmPillar } from "./film-index";
 import { SOCIAL_LINKS } from "./social-links";
 import { SocialBadge } from "./social-badge";
 
-export interface NavPillar {
-  readonly href: string;
-  readonly label: string;
-  readonly icon: LucideIcon;
-}
+export type NavPillar = FilmPillar;
 
 /**
- * BRAWUKA-45 · Five-pillar global navigation. Single source of truth —
- * every route renders this instead of a bespoke header (Zero drift).
+ * BRAWUKA-45 · Five-pillar global navigation (founder spec labels).
+ * Single source of truth — every route renders this (Zero drift).
  */
 export const NAV_PILLARS: ReadonlyArray<NavPillar> = [
-  { href: "/", label: "ATELIER // 门厅", icon: Home },
-  { href: "/#projects", label: "PROJECTS // 作品", icon: LayoutGrid },
-  { href: "/posts", label: "POSTS // 归档", icon: BookOpen },
-  { href: "/photography", label: "DARKROOM // 暗房", icon: Camera },
-  { href: "/resume", label: "RESUME // 航线", icon: Compass },
+  { href: "/", label: "ATELIER // 门厅" },
+  { href: "/#projects", label: "EXPEDITIONS // 作品" },
+  { href: "/posts", label: "DISPATCHES // 归档" },
+  { href: "/photography", label: "DARKROOM // 暗房" },
+  { href: "/resume", label: "FLIGHT PATH // 航线" },
 ];
 
 /**
- * BRAWUKA-45 · Shared sticky site header: logo + coordinates, 5-pillar
- * nav, monochrome social microbadges, safelight switch, mobile drawer.
- * Server-rendered; only the drawer is a client island.
+ * BRAWUKA-45 · Shared sticky site header: logo + coordinates, film-clip
+ * index toggle, monochrome social microbadges, safelight switch.
+ * Server-rendered; the unfurl panel is a client island (fixed h-14,
+ * absolute overlay → Zero CLS).
  */
 export function SiteHeader() {
   return (
@@ -46,27 +42,14 @@ export function SiteHeader() {
           </span>
         </div>
 
-        <nav aria-label="全局导航" className="hidden items-center gap-2 md:flex">
-          {NAV_PILLARS.map((pillar) => (
-            <Link
-              key={pillar.href}
-              href={pillar.href}
-              className="flex items-center gap-1.5 rounded-xs border border-border-plate px-2.5 py-1 font-telemetry text-[11px] text-text-primary transition-colors hover:border-ink-dominant"
-            >
-              <pillar.icon className="h-3 w-3 text-ink-dominant" />
-              <span>{pillar.label}</span>
-            </Link>
-          ))}
-        </nav>
-
         <div className="flex items-center gap-1.5">
+          <FilmIndex pillars={NAV_PILLARS} />
           <div className="mr-1 hidden items-center gap-1.5 xl:flex" aria-label="社交媒体外链">
             {SOCIAL_LINKS.map((link) => (
               <SocialBadge key={link.key} link={link} />
             ))}
           </div>
           <SafelightSwitch />
-          <MobileMenu pillars={NAV_PILLARS.map((pillar) => ({ href: pillar.href, label: pillar.label }))} />
         </div>
       </div>
     </header>
