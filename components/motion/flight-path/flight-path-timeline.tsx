@@ -4,12 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TIMELINE_NODES, NARRATIVE_BEATS, type TimelineNode } from "@/lib/career-dossier";
-import {
-  matchFlightStepKey,
-  stepIndex,
-  isEditableTarget,
-  type FlightStepIntent,
-} from "./keyboard-nav";
+import { useFlightKeyboard } from "./keyboard-nav";
 import { SlotFrame, ImpactCounter, CritiqueCard, usePrefersReducedMotion } from "./motion-slots";
 import { DossierDrawer, isSelfRefLink } from "./dossier-drawer";
 
@@ -80,7 +75,11 @@ export function FlightPathTimeline() {
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
-          onUpdate: (self) => setActiveIndex(Math.round(self.progress * (nodes.length - 1))),
+          onUpdate: (self) => {
+            const i = Math.round(self.progress * (nodes.length - 1));
+            activeRef.current = i;
+            setActiveIndex(i);
+          },
         },
       });
       triggerRef.current = tween.scrollTrigger as ScrollTrigger;
@@ -93,8 +92,11 @@ export function FlightPathTimeline() {
     return () => mm.revert();
   }, [reduced, nodes.length]);
 
+  const activeRef = useRef(0);
   const scrollToNode = useCallback(
     (index: number) => {
+      activeRef.current = index;
+      setActiveIndex(index);
       const trigger = triggerRef.current;
       if (trigger) {
         // Pinned scrub mode: drive the page scroll position directly.
@@ -102,7 +104,6 @@ export function FlightPathTimeline() {
         const distance = trigger.end - trigger.start;
         const top = start + distance * (nodes.length <= 1 ? 0 : index / (nodes.length - 1));
         window.scrollTo({ top, behavior: "auto" });
-        setActiveIndex(index);
         return;
       }
       cardRefs.current[index]?.scrollIntoView({
@@ -115,23 +116,20 @@ export function FlightPathTimeline() {
     [nodes.length, reduced],
   );
 
-  /* Keyboard contract: sync match + arithmetic + one callback (<16ms). */
-  useEffect(() => {
-    const handler = (event: KeyboardEvent): void => {
-      if (event.defaultPrevented || drawerNode !== null) return;
-      if (isEditableTarget(event.target)) return;
-      const intent: FlightStepIntent | null = matchFlightStepKey(event.key);
-      if (!intent) return;
-      event.preventDefault();
-      setActiveIndex((current) => {
-        const next = stepIndex(current, intent, nodes.length);
-        if (next !== current) requestAnimationFrame(() => scrollToNode(next));
-        return next;
-      });
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [nodes.length, scrollToNode, drawerNode]);
+  /* Keyboard contract via the shared hook — sync match + arithmetic (<16ms).
+     enabled=false while the dossier drawer is open. */
+  useFlightKeyboard({
+    count: nodes.length,
+    index: activeIndex,
+    enabled: drawerNode === null,
+    onStep: useCallback(
+      (next: number) => {
+        if (next === activeRef.current) return;
+        scrollToNode(next);
+      },
+      [scrollToNode],
+    ),
+  });
 
   const progress = nodes.length <= 1 ? 100 : (activeIndex / (nodes.length - 1)) * 100;
 
@@ -161,7 +159,7 @@ export function FlightPathTimeline() {
 
       {/* Pinned reel section */}
       <section ref={sectionRef} aria-label="生涯时间轴长卷" className="relative">
-        <div ref={viewportRef} className="overflow-hidden lg:overflow-visible">
+        <div ref={viewportRef} className="overflow-hidden py-1">
           {/* Progress rail */}
           <div className="mb-4 flex items-center gap-3" aria-hidden={false}>
             <span className="font-telemetry text-[11px] text-muted tabular-nums">
