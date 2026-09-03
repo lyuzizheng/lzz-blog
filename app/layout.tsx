@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Newsreader, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScrollProvider, FilmGrainOverlay } from "@/components/motion";
+import { SmoothScrollProvider, FilmGrainOverlay, RouteTransition } from "@/components/motion";
+import { siteConfig } from "@/lib/site";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -24,11 +25,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LZZ Blog · The Digital Darkroom & Print Atelier",
-  description:
-    "Personal digital darkroom & engineering atelier of Zizheng Lyu. Physicality meets fluid dynamics: Next.js 15, Tailwind CSS v4, Lenis smooth scrolling.",
-  keywords: ["Zizheng Lyu", "Next.js 15", "Digital Darkroom", "Print Atelier", "Tailwind CSS v4", "Lenis", "Motion"],
-  authors: [{ name: "Zizheng Lyu" }],
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "LZZ Blog · The Digital Darkroom & Print Atelier",
+    template: "%s · LZZ Blog",
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.atelier,
+    title: "LZZ Blog · The Digital Darkroom & Print Atelier",
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LZZ Blog · The Digital Darkroom & Print Atelier",
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: siteConfig.url,
+    types: {
+      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+    },
+  },
 };
 
 export const viewport: Viewport = {
@@ -58,7 +86,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
             <FilmGrainOverlay />
-            {children}
+            <RouteTransition>{children}</RouteTransition>
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>
