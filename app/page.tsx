@@ -1,266 +1,119 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  MagneticButton,
-  SpotlightCard,
-  ProjectsBento,
-} from "@/components/motion";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/site";
-import { IdentityFilter } from "@/components/home/identity-filter";
-import {
-  Button,
-  Badge,
-  SafelightSwitch,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui";
-import { formatExifTelemetry } from "@/tokens";
-import {
-  Camera,
-  Cpu,
-  Compass,
-  ArrowRight,
-  Terminal,
-  Activity,
-  Layers,
-  Sparkles,
-  BookOpen,
-} from "lucide-react";
+import { FilmUnfurl } from "@/components/home/film-unfurl";
 
 export const metadata: Metadata = {
-  title: "门厅 · LZZ Atelier",
+  title: "Zizheng Lyu — Engineer & Visual Storyteller",
   description:
-    "Zizheng Lyu — distributed systems engineer & visual storyteller. Next.js 15, Tailwind CSS v4, Lenis kinetic scroll physics.",
+    "Zizheng Lyu's personal page: writings on distributed systems, darkroom photography, and the flight path from NTU to ByteDance.",
   alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
-  const telemetrySample = formatExifTelemetry({
-    camera: "Sony A7M4",
-    lens: "FE 35mm F1.4 GM",
-    aperture: "f/1.4",
-    shutter: "1/250s",
-    iso: 100,
-  });
+/**
+ * BRAWUKA-57 · Film-strip personal homepage (founder direction).
+ *
+ * Not a landing page: no bento, no pillar card wall, no token palette.
+ * One centered column — a few film frames up front that develop as you
+ * scroll, then three chapters, each one sentence + one door.
+ * Detail lives on /posts, /photography, /resume — never here.
+ */
+const CHAPTERS = [
+  {
+    index: "01",
+    title: "Writings",
+    note: "关于系统与手艺的长思考。",
+    sentence: "Long-form thinking on distributed systems and craft.",
+    href: "/posts",
+    cta: "Enter the archive",
+  },
+  {
+    index: "02",
+    title: "Darkroom",
+    note: "光子沉淀，时间晶体化。",
+    sentence: "Light, sedimented on film — Sony A7M4 · 35mm F1.4 GM.",
+    href: "/photography",
+    cta: "Enter the darkroom",
+  },
+  {
+    index: "03",
+    title: "Flight Path",
+    note: "从南洋到字节，一帧一帧。",
+    sentence: "NTU to ByteDance, one frame at a time.",
+    href: "/resume",
+    cta: "Open the dossier",
+  },
+] as const;
 
+export default function HomePage() {
   return (
     <div className="relative flex min-h-screen flex-col justify-between">
-      {/* Precision Top Registration Ruler & Navigation */}
       <SiteHeader />
 
-      {/* Main Atelier Stage */}
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-8 sm:px-6 sm:py-16">
-        {/* Section 1: The Developing Tray Hero */}
-        <section className="relative mb-16 overflow-hidden rounded-lg border border-border-plate bg-surface p-6 sm:p-12">
-          {/* Background Halftone Pattern Accent */}
-          <div className="halftone-screen pointer-events-none absolute inset-0 opacity-20" />
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-6">
+        {/* ——— Hero: name, one sentence, film ——— */}
+        <section className="flex min-h-[82vh] flex-col justify-center py-16">
+          <p className="mb-6 font-telemetry text-[11px] uppercase tracking-[0.24em] text-muted">
+            LZZ Atelier // Personal Page
+          </p>
+          <h1 className="font-display text-5xl font-normal leading-[1.02] tracking-tight text-primary sm:text-6xl">
+            Zizheng Lyu
+          </h1>
+          <p className="mt-5 max-w-md font-body text-base leading-relaxed text-muted sm:text-lg">
+            Distributed systems engineer &amp; visual storyteller — writing,
+            photography, and the flight path between.
+          </p>
 
-          <div className="relative z-10 flex flex-col gap-6">
-            {/* Top Telemetry cluster */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-plate pb-4 font-telemetry text-xs text-muted">
-              <div className="flex items-center gap-2">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-safelight" />
-                <span>ARCHETYPE // SPECIMEN 2026-N1</span>
-              </div>
-              <div className="tracking-widest">
-                [DARKROOM CHEMISTRY // ILFORD WARMTONE FB]
-              </div>
-            </div>
-
-            {/* Editorial Headline */}
-            <div className="space-y-3">
-              <p className="font-telemetry text-xs uppercase tracking-widest text-safelight">
-                The Digital Darkroom & Print Atelier
-              </p>
-              <h1 className="font-display text-4xl font-normal leading-[1.05] tracking-tight text-primary sm:text-6xl md:text-7xl">
-                Physicality meets fluid dynamics.
-              </h1>
-              <p className="max-w-2xl font-body text-base text-muted sm:text-lg leading-relaxed">
-                Zizheng Lyu — Distributed systems engineer & visual storyteller.
-                Crafted with Next.js 15, Tailwind CSS v4, React 19, and Lenis kinetic scroll physics.
-              </p>
-            </div>
-
-            {/* Identity Filter Switcher & EXIF Telemetry */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4">
-              {/* Filter Toggles (client island — keeps page server-rendered) */}
-              <IdentityFilter />
-
-              {/* Sample EXIF Badge */}
-              <div className="flex items-center gap-2">
-                <Badge variant="safelight" className="flex items-center gap-1.5 py-1">
-                  <Camera className="h-3 w-3" />
-                  <span>{telemetrySample}</span>
-                </Badge>
-              </div>
-            </div>
+          <div className="mt-12">
+            <FilmUnfurl />
           </div>
         </section>
 
-        {/* Section 2: Core Engineering & Motion Pillars (Bento Grid) */}
-        <div className="mb-16">
-          <div className="mb-6 flex items-center justify-between border-b border-border-plate pb-3">
-            <h2 className="font-display text-2xl font-semibold text-primary">
-              Core Engineering Pillars
-            </h2>
-            <span className="font-telemetry text-xs text-muted">
-              {"// ATELIER SPECIFICATIONS"}
-            </span>
-          </div>
+        {/* ——— Three chapters: one sentence + one door each ——— */}
+        <div className="pb-24">
+          {CHAPTERS.map((chapter) => (
+            <section
+              key={chapter.index}
+              className="border-t border-border-plate py-14 sm:py-16"
+            >
+              <div className="mb-4 flex items-baseline justify-between">
+                <span className="font-telemetry text-xs tracking-[0.2em] text-safelight">
+                  {chapter.index}
+                </span>
+                <span className="font-telemetry text-xs tracking-[0.2em] text-muted">
+                  {chapter.note}
+                </span>
+              </div>
+              <h2 className="font-display text-4xl font-normal tracking-tight text-primary sm:text-5xl">
+                {chapter.title}
+              </h2>
+              <p className="mt-3 font-body text-base leading-relaxed text-muted">
+                {chapter.sentence}
+              </p>
+              <Link
+                href={chapter.href}
+                className="group mt-6 inline-flex items-center gap-1.5 font-telemetry text-xs tracking-[0.18em] text-primary transition-colors hover:text-safelight"
+              >
+                {chapter.cta}
+                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </section>
+          ))}
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {/* Pillar 1: Lenis Kinetic Smooth Scroll */}
-            <SpotlightCard className="flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-safelight">
-                  <Compass className="h-5 w-5" />
-                  <span className="font-telemetry text-xs">LERP 0.08 // 1.2S</span>
-                </div>
-                <h3 className="font-display text-xl font-medium text-primary">
-                  Inertial Kinetic Scrolling
-                </h3>
-                <p className="font-body text-sm text-muted leading-relaxed">
-                  Native Lenis physics integrated with hardware wheel interpolation. Butter-smooth 120fps with automatic graceful fallback for prefers-reduced-motion.
-                </p>
-              </div>
-              <div className="mt-6 border-t border-border-plate pt-3 font-telemetry text-xs text-muted flex items-center justify-between">
-                <span>ZERO CLS GUARANTEE</span>
-                <span className="text-safelight">[ACTIVE]</span>
-              </div>
-            </SpotlightCard>
-
-            {/* Pillar 2: Micro-Interactions & Spring Physics */}
-            <SpotlightCard className="flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-cobalt">
-                  <Sparkles className="h-5 w-5" />
-                  <span className="font-telemetry text-xs">SPRING SNAPPY</span>
-                </div>
-                <h3 className="font-display text-xl font-medium text-primary">
-                  Tactile Spring Micro-Interactions
-                </h3>
-                <p className="font-body text-sm text-muted leading-relaxed">
-                  Magnetic attraction buttons, spotlight cursor radiation, and mechanical tactile feedback driven by motion physics.
-                </p>
-              </div>
-              <div className="mt-6 border-t border-border-plate pt-3">
-                <MagneticButton className="w-full">
-                  <Button variant="safelight" className="w-full flex items-center justify-center gap-2">
-                    <span>Magnetic Spring Test</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </MagneticButton>
-              </div>
-            </SpotlightCard>
-
-            {/* Pillar 3: Dual-Mode Ink Spectrum */}
-            <SpotlightCard className="flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-terracotta">
-                  <Layers className="h-5 w-5" />
-                  <span className="font-telemetry text-xs">DUOTONE 80/20</span>
-                </div>
-                <h3 className="font-display text-xl font-medium text-primary">
-                  Dual-Mode Optical Inks
-                </h3>
-                <p className="font-body text-sm text-muted leading-relaxed">
-                  Daylight Print Atelier (#FAFAF7 + Cobalt Blue + Terracotta) and Safelight Darkroom (#0D0E11 + Kodak Red + Luminescent Cream).
-                </p>
-              </div>
-              <div className="mt-6 border-t border-border-plate pt-3 font-telemetry text-xs flex items-center justify-between text-muted">
-                <span>DARKROOM RED / COBALT BLUE</span>
-                <span className="text-terracotta">[RESOLVED]</span>
-              </div>
-            </SpotlightCard>
-          </div>
-        </div>
-        {/* Section 2.5: Featured Expeditions (BRAWUKA-39 Project Radar) */}
-        <div id="projects" className="mb-16 scroll-mt-20">
-          <ProjectsBento />
-          <div className="mt-4 flex flex-wrap justify-end gap-4">
+          {/* ——— Colophon ——— */}
+          <footer className="flex items-center justify-between border-t border-border-plate pt-6 font-telemetry text-[10px] tracking-[0.18em] text-muted">
+            <span>SET IN NEWSREADER &amp; GEIST MONO</span>
             <a
-              href="/resume.pdf"
-              download="Zizheng-Lyu-Resume.pdf"
-              className="inline-flex items-center gap-1 font-telemetry text-[11px] tracking-[0.14em] text-muted transition-colors hover:text-primary"
+              href="/feed.xml"
+              className="inline-flex items-center gap-1 transition-colors hover:text-primary"
             >
-              PDF // 直链下载
-              <ArrowRight className="h-3 w-3" />
+              RSS
+              <ArrowUpRight className="h-3 w-3" />
             </a>
-            <Link
-              href="/resume"
-              className="inline-flex items-center gap-1 font-telemetry text-[11px] tracking-[0.14em] text-muted transition-colors hover:text-primary"
-            >
-              FULL DOSSIER // 航线履历
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+          </footer>
         </div>
-
-
-        {/* Section 3: Design Tokens & Palette Verification Plate */}
-        <section className="rounded-lg border border-border-plate bg-surface p-6">
-          <div className="mb-4 flex items-center justify-between border-b border-border-plate pb-3">
-            <h3 className="font-display text-lg font-medium text-primary">
-              Design Tokens Palette & Verification
-            </h3>
-            <Badge variant="telemetry">TAILWIND V4 + REACT 19</Badge>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-7 font-telemetry text-xs">
-            {/* Color 1: Obsidian */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#0D0E11" }} />
-              <span className="font-semibold text-primary">Obsidian</span>
-              <span className="text-[10px] text-muted">#0D0E11</span>
-            </div>
-
-            {/* Color 2: Cold Gray */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#22242A" }} />
-              <span className="font-semibold text-primary">Border Cold</span>
-              <span className="text-[10px] text-muted">#22242A</span>
-            </div>
-
-            {/* Color 3: Highlight Text */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#F4F4F5" }} />
-              <span className="font-semibold text-primary">Highlight</span>
-              <span className="text-[10px] text-muted">#F4F4F5</span>
-            </div>
-
-            {/* Color 4: Safelight Red */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#E54B4B" }} />
-              <span className="font-semibold text-primary">Safelight Red</span>
-              <span className="text-[10px] text-muted">#E54B4B</span>
-            </div>
-
-            {/* Color 5: Phosphor Cream */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#F3E8D6" }} />
-              <span className="font-semibold text-primary">Phosphor</span>
-              <span className="text-[10px] text-muted">#F3E8D6</span>
-            </div>
-
-            {/* Color 6: Cobalt Blue */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#2148B8" }} />
-              <span className="font-semibold text-primary">Cobalt Blue</span>
-              <span className="text-[10px] text-muted">#2148B8</span>
-            </div>
-
-            {/* Color 7: Terracotta */}
-            <div className="flex flex-col gap-2 rounded border border-border-plate bg-chamber p-3">
-              <div className="h-10 w-full rounded border border-white/10" style={{ backgroundColor: "#C65F38" }} />
-              <span className="font-semibold text-primary">Terracotta</span>
-              <span className="text-[10px] text-muted">#C65F38</span>
-            </div>
-          </div>
-        </section>
       </main>
 
       <SiteFooter />

@@ -90,8 +90,12 @@ check(printButton.includes("window.print()"), "print button must call window.pri
 check(resumePage.includes("PrintResumeButton") && resumePage.includes("ResumePrint") && resumePage.includes("ResumeDossier"), "resume page must mount all three dual-mode parts");
 check(resumePage.includes("FlightPathTimeline"), "resume page must keep the flight path timeline");
 
-// 8. Homepage radar wiring
-check(home.includes("ProjectsBento"), "homepage must render ProjectsBento");
+// 8. Homepage film-strip wiring (BRAWUKA-57: personal page, not a landing page)
+check(!home.includes("ProjectsBento"), "homepage must not render ProjectsBento");
+check(!home.includes("SpotlightCard") && !home.includes("Pillars"), "homepage must not render pillar card walls");
+check(home.includes("FilmUnfurl"), "homepage must render the FilmUnfurl hero");
+check(home.includes("/posts"), "homepage must link onward to /posts");
+check(home.includes("/photography"), "homepage must link onward to /photography");
 check(home.includes("/resume"), "homepage must link onward to /resume");
 
 if (failures.length > 0) {

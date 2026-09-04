@@ -8,12 +8,10 @@ import { SocialBadge } from "./social-badge";
 export type NavPillar = FilmPillar;
 
 /**
- * BRAWUKA-45 · Five-pillar global navigation (founder spec labels).
- * Single source of truth — every route renders this (Zero drift).
+ * BRAWUKA-57 · Four-pillar global navigation (/#projects retired with the bento).
  */
 export const NAV_PILLARS: ReadonlyArray<NavPillar> = [
   { href: "/", label: "ATELIER // 门厅" },
-  { href: "/#projects", label: "EXPEDITIONS // 作品" },
   { href: "/posts", label: "DISPATCHES // 归档" },
   { href: "/photography", label: "DARKROOM // 暗房" },
   { href: "/resume", label: "FLIGHT PATH // 航线" },
