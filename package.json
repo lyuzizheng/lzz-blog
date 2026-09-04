@@ -5,11 +5,17 @@
   "scripts": {
     "dev": "velite dev & next dev --turbopack",
     "build": "velite && next build",
+    "build:worker": "opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "velite && tsc --noEmit",
     "test": "node scripts/case-sensitive-assets.check.mjs && node scripts/verify-posts.mjs && node scripts/flight-path.check.mjs && node scripts/darkroom.check.mjs && node scripts/projects-resume.check.mjs && node scripts/seo-finish.check.mjs",
-    "dossier:check": "node scripts/career-dossier.check.ts"
+    "dossier:check": "node scripts/career-dossier.check.ts",
+    "preview": "opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --include-runtime false",
+    "pages:validate": "wrangler pages project validate .open-next/assets",
+    "health:check": "node scripts/cf-health-check.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
@@ -31,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
+    "@opennextjs/cloudflare": "^1.20.6",
     "@tailwindcss/postcss": "^4.0.9",
     "@types/katex": "^0.16.8",
     "@types/mdast": "^4.0.4",
@@ -52,6 +59,7 @@
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "unist-util-visit": "^5.1.0",
-    "velite": "^0.4.0"
+    "velite": "^0.4.0",
+    "wrangler": "^4.129.0"
   }
 }
