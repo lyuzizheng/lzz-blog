@@ -11,7 +11,7 @@ function formatClock(date: Date): string {
 /**
  * BRAWUKA-54 · Live edge-probe island for `/status`.
  * Polls `/api/health` on mount, ticks a local clock every second,
- * exits on `Escape`. Silent when JS is reduced-motion free — no animation.
+ * exits on `Escape`. No entrance animation — honors reduced-motion.
  */
 export function StatusConsole({ initial }: { initial: HealthPayload }) {
   const router = useRouter();
@@ -63,7 +63,7 @@ export function StatusConsole({ initial }: { initial: HealthPayload }) {
         <span className="flex items-center gap-2 font-telemetry text-[11px] tracking-[0.14em] text-muted">
           <span
             aria-hidden
-            className="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-400"
+            className="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none"
           />
           <span className="text-emerald-400">OPERATIONAL</span>
         </span>
