@@ -23,7 +23,7 @@ function StarsBadge({ repo }: { repo: string }) {
     fetch(`https://api.github.com/repos/${repo}`, {
       headers: { Accept: "application/vnd.github+json" },
     })
-      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => (res.ok ? (res.json() as Promise<{ stargazers_count?: number }>) : null))
       .then((data) => {
         if (!cancelled && data && typeof data.stargazers_count === "number") {
           setStars(formatStars(data.stargazers_count));

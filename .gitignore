@@ -90,3 +90,7 @@ hugo.linux
 out/
 tsconfig.tsbuildinfo
 .env*.local
+
+# Cloudflare & OpenNext
+.open-next/
+.wrangler/
