@@ -2,6 +2,9 @@
   "name": "lzz-blog",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "velite dev & next dev --turbopack",
     "build": "velite && next build",
