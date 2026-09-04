@@ -2,6 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "lzz-blog",
   "main": ".open-next/worker.js",
+  "workers_dev": true,
   "compatibility_date": "2026-09-04",
   "compatibility_flags": [
     "nodejs_compat"
@@ -11,10 +12,6 @@
     "binding": "ASSETS"
   },
   "routes": [
-    {
-      "pattern": "brabalawuka.cc",
-      "custom_domain": true
-    },
     {
       "pattern": "www.brabalawuka.cc",
       "custom_domain": true
