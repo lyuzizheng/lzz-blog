@@ -16,6 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${siteConfig.url}/status`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.5,
+    },
   ];
 
   const articles: MetadataRoute.Sitemap = posts
