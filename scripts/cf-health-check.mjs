@@ -72,6 +72,18 @@ const ROUTES = [
     label: "Dynamic OpenGraph Image Generator",
   },
   {
+    path: "/api/health",
+    expectedStatus: 200,
+    expectedContentType: "application/json",
+    label: "Edge Health JSON Probe",
+  },
+  {
+    path: "/status",
+    expectedStatus: 200,
+    expectedContentType: "text/html",
+    label: "Status Darkroom Console",
+  },
+  {
     path: "/resume.pdf",
     expectedStatus: 200,
     expectedContentType: "application/pdf",

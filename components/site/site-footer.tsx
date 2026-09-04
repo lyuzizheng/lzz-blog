@@ -45,6 +45,9 @@ export function SiteFooter({ variant = "atelier" }: { variant?: "atelier" | "dar
             <Link href="/resume" className="transition-colors hover:text-text-primary">
               RESUME // 航线
             </Link>
+            <Link href="/status" className="transition-colors hover:text-text-primary">
+              STATUS // 状态
+            </Link>
             <a href="/resume.pdf" download className="transition-colors hover:text-text-primary">
               PDF // 直链下载
             </a>

@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "velite dev & next dev --turbopack",
     "build": "velite && next build",
-    "build:worker": "opennextjs-cloudflare build",
+    "build:worker": "velite && opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "velite && tsc --noEmit",
-    "test": "node scripts/case-sensitive-assets.check.mjs && node scripts/verify-posts.mjs && node scripts/flight-path.check.mjs && node scripts/darkroom.check.mjs && node scripts/projects-resume.check.mjs && node scripts/seo-finish.check.mjs",
+    "test": "node scripts/case-sensitive-assets.check.mjs && node scripts/verify-posts.mjs && node scripts/flight-path.check.mjs && node scripts/darkroom.check.mjs && node scripts/projects-resume.check.mjs && node scripts/seo-finish.check.mjs && node scripts/status-health.check.mjs",
     "dossier:check": "node scripts/career-dossier.check.ts",
     "preview": "opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare deploy",
