@@ -52,10 +52,12 @@ export function ProductsDeck() {
   }, []);
 
   // 键盘控制契约：j/k, ArrowUp/ArrowDown, 1-3 定帧
+  // prefers-reduced-motion 下用 instant 跳转（CSS scroll-behavior 门禁管不住 JS 侧 behavior: "smooth"，须在此处显式降级）。
   const scrollToSlide = useCallback((index: number) => {
     const target = slideRefs.current[index];
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
     }
   }, []);
 
