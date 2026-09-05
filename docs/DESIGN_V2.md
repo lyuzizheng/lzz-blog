@@ -3,7 +3,7 @@
 > **状态**：定稿，可实施。替代 `docs/DESIGN.md` 的色彩 / 排印 / 动效 / IA 章节；暗房隐喻保留，执行方式以本文件为准。
 > **范围**：整站视觉语言，**文章阅读页是主战场**（自由滚动例外），其次列表页，最后首页向 BRAWUKA-57 对齐。
 > **方法论来源**：`mono-color` skill `design-system/` catalogs（colors / typography / compositions / rhythm / imperfections / carriers）的 Web 转写。
-> **Grill 存档**：Q1–Q7 全 A（以 Phase 1 草案提案为准）+ 三修正；Q8 锁 4 子页；Q9 六项全按推荐；Q10 提案 A。详见 §10。
+> **Grill 存档**：Q1–Q7 全 A + 三修正；Q8 锁 4 子页；Q9 六项全按推荐；Q10 锁 **A**。详见 §10。
 
 ---
 
@@ -138,9 +138,9 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 - 只收工作之外：`CoffeeMode`（开发中 · 找咖指南）、`CanCan`（开发中 · 网站已上线 · 财务证据库 + 对账台）、`Our Village`（已上线 · 社区成员系统）。
 - 每屏一句话 + 状态章 + 外链。状态词不对创始人只回三个词即改。
 
-### 7.4 Q10-A：删全局 chrome，换屏内眉脚
-- 文章 / 列表页不再用全局 sticky header + footer：本屏 eyebrow（索引回链 + 章节 + 昼夜点）与屏内 foot（Colophon 一行）代替。
-- 必留：昼夜切换点、索引入口、语义 `nav`。其余页迁移随各单跟进，本单只改文章链路。
+### 7.4 Q10-A（全锁）：删全局 chrome，换屏内眉脚
+- 文章 / 列表页不再用全局 sticky header + footer：本屏 eyebrow（索引回链 + 章节 + 语言切换 + 昼夜点）与屏内 foot（Colophon 一行）代替。
+- 必留：**语言切换键（中/EN，与 nightmode 昼夜点并排眉脚右端，创始人硬性要求；`LanguageSwitch` 逻辑复用只换皮）**、昼夜切换点、索引入口、语义 `nav`。其余页迁移随各单跟进，本单只改文章链路。
 
 ---
 
@@ -169,4 +169,4 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 - Deck 追加：策展翻页 + resume 单生涯一屏 + FRAME/J/K/`#slide` + 风控（§8）。
 - Q8：4 子页（Writings/Darkroom/Flight/Products），Now 不做；Slide 2 散落拼贴规范；Products 文案三句（§7.3）。
 - Q9：①钴蓝维持 ②night `#E05454` 接受 ③Noto Serif SC ④`<Aside>` ⑤emerald 特赦（STATUS 一词）⑥三件套删；§7 `/now` 删除。
-- Q10：提案 **A**（删全局 chrome，换屏内眉脚 + Colophon 终屏）。
+- Q10：锁 **A**（删全局 chrome，换屏内眉脚 + Colophon 终屏）。

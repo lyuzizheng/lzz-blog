@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
+import { LanguageSwitch } from "@/components/ui/language-switch";
 
 /**
  * BRAWUKA-61 · Q10-A 屏内眉脚（替代全局 sticky header/footer 的文章链路 chrome）。
- * - 眉题：回链 + 章节 + 昼夜点（必留三件：昼夜点 / 索引 / 语义 nav）。
- * - 终屏：Colophon 一行（纸 / 墨配方 + 版权），非全局 staicky。
+ * - 眉题：回链 + 章节 + 语言切换 + 昼夜点（必留：语言 / 昼夜 / 索引 / 语义 nav；创始人硬性要求语言键在 nightmode 旁）。
+ * - 终屏：Colophon 一行（纸 / 墨配方 + 版权），非全局 sticky。
  */
 
 export function ReaderEyebrow({
@@ -42,6 +43,7 @@ export function ReaderEyebrow({
         >
           Index
         </Link>
+        <LanguageSwitch />
         <SafelightSwitch />
       </div>
     </div>
