@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { posts } from "#site/content";
 import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome";
 import { ArchiveList, type ArchivePost } from "@/components/posts/archive-list";
+import { BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "文章归档 · Writing & Dispatches | LZZ Blog",
