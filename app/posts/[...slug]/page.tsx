@@ -4,10 +4,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { posts, type Post } from "#site/content";
 import { MdxContent } from "@/components/mdx/mdx-content";
-import { TableOfContents, PostHeaderMeta, PostNav } from "@/components/posts";
+import { TableOfContents, TocMobileProgress } from "@/components/posts/toc";
+import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome";
 import { MonoColorCover } from "@/components/ui/mono-color-cover";
-import { SiteHeader, SiteFooter } from "@/components/site";
-import { Tag, Folder } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -98,6 +97,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+/**
+ * BRAWUKA-61 · 文章阅读页（主战场）：
+ * 屏内眉脚（Q10-A）/ 跨栏引言 / 左侧 <Aside> gutter（xl+）/
+ * 章节序号 rail（进度融合）/ 档案条目导航 / telemetry 单行。
+ */
 export default async function PostDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const post = findPostBySlugSegments(slug);
@@ -116,52 +120,61 @@ export default async function PostDetailPage({ params }: PageProps) {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
-      <SiteHeader />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+        <ReaderEyebrow backHref="/posts" backLabel="文章归档" section={post.category} />
+        <div className="mb-8 lg:hidden">
+          <TocMobileProgress items={post.toc} />
+        </div>
         {/* Article Header & Metadata */}
         <header className="mb-10 max-w-3xl">
           {/* Tags bar */}
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            <span className="flex items-center gap-1 rounded border border-border-plate bg-chamber px-2.5 py-0.5 font-telemetry text-[11px] font-semibold uppercase text-ink-dominant">
-              <Folder className="h-3 w-3" />
-              {post.category}
-            </span>
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="flex items-center gap-1 rounded border border-border-plate/70 bg-surface px-2 py-0.5 font-telemetry text-[11px] text-text-muted"
-              >
-                <Tag className="h-2.5 w-2.5" />
-                {tag}
+          {post.tags.length > 0 && (
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="border border-border-strong bg-chamber px-2 py-0.5 font-telemetry text-[11px] font-semibold uppercase tracking-wider text-ink-dominant">
+                {post.category}
               </span>
-            ))}
-          </div>
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="border border-border-plate/70 bg-surface px-2 py-0.5 font-telemetry text-[11px] tracking-wider text-text-muted"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
 
           {/* Title */}
-          <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+          <h1 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.08] tracking-[-0.015em] text-text-primary">
             {post.title}
           </h1>
 
-          {/* Subtitle / Excerpt if available */}
+          {/* Standfirst: summary as cross-column lede */}
           {post.summary && (
-            <p className="mt-4 text-base leading-relaxed text-text-secondary sm:text-lg">
+            <p className="mt-5 font-display text-[1.25rem] leading-[1.5] text-text-secondary sm:text-[1.4rem]">
               {post.summary}
             </p>
           )}
 
-          <PostHeaderMeta
-            category={post.category}
-            date={post.date}
-            readingTime={post.reading_time}
-            wordCount={post.word_count}
-            author={post.author}
-          />
+          {/* Single telemetry line */}
+          <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-y border-border-plate/60 py-3 font-telemetry text-xs text-muted">
+            <time dateTime={post.date} className="tabular-nums">
+              {post.date.slice(0, 10)}
+            </time>
+            <span className="tabular-nums">{post.reading_time} 分钟阅读</span>
+            {post.word_count > 0 && (
+              <span className="tabular-nums">{post.word_count} 字</span>
+            )}
+            <span className="ml-auto tracking-[0.14em]">
+              BY {post.author.toUpperCase()}
+            </span>
+          </div>
         </header>
 
         {/* Cover Display */}
         <div className="mb-12 max-w-4xl">
           {post.cover_image ? (
-            <div className="overflow-hidden rounded-xl border border-border-plate bg-surface shadow-elevated">
+            <div className="border border-border-plate bg-surface">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post.cover_image}
@@ -169,7 +182,7 @@ export default async function PostDetailPage({ params }: PageProps) {
                 className="max-h-[500px] w-full object-cover"
               />
               {post.cover?.caption && (
-                <p className="p-3 text-center text-xs font-telemetry text-muted">
+                <p className="border-t border-border-plate/60 p-3 text-center font-telemetry text-xs text-muted">
                   {post.cover.caption}
                 </p>
               )}
@@ -186,52 +199,99 @@ export default async function PostDetailPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* Main Content & Sidebar Layout */}
+        {/* Main Content & Rail Layout */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-          {/* Article Main Text Column */}
-          <div className="lg:col-span-8 min-w-0">
-            <MdxContent code={post.content} />
+          {/* Article column: gutter reserved for left marginalia at xl+ */}
+          <div className="min-w-0 lg:col-span-8">
+            <div className="reader-article max-w-[40rem] xl:ml-[13.5rem]">
+              <MdxContent code={post.content} />
+            </div>
 
-            <PostNav
-              tags={post.tags}
-              prevPost={prevPost}
-              nextPost={nextPost}
-            />
+            {/* Bottom Meta & Tags */}
+            {post.tags.length > 0 && (
+              <div className="mt-12 max-w-[40rem] border-t border-border-plate pt-4 xl:ml-[13.5rem]">
+                <div className="flex flex-wrap items-center gap-2 font-telemetry text-xs text-muted">
+                  <span className="tracking-[0.14em]">TAGS //</span>
+                  {post.tags.map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`/posts?tag=${encodeURIComponent(tag)}`}
+                      className="tracking-wider text-text-secondary hover:text-ink-dominant hover:underline"
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Adjacent Posts: archive entries, no cards */}
+            <nav
+              aria-label="相邻文章"
+              className="mt-8 max-w-[40rem] border-t-2 border-border-strong xl:ml-[13.5rem]"
+            >
+              {prevPost && (
+                <Link
+                  href={prevPost.permalink}
+                  className="group flex items-baseline justify-between gap-4 border-b border-border-plate/60 py-4"
+                >
+                  <span className="shrink-0 font-telemetry text-[11px] tracking-[0.14em] text-muted">
+                    ← PREV
+                  </span>
+                  <span className="text-right font-display text-lg leading-snug text-text-primary group-hover:text-ink-dominant">
+                    {prevPost.title}
+                  </span>
+                </Link>
+              )}
+              {nextPost && (
+                <Link
+                  href={nextPost.permalink}
+                  className="group flex items-baseline justify-between gap-4 border-b border-border-plate/60 py-4"
+                >
+                  <span className="font-display text-lg leading-snug text-text-primary group-hover:text-ink-dominant">
+                    {nextPost.title}
+                  </span>
+                  <span className="shrink-0 font-telemetry text-[11px] tracking-[0.14em] text-muted">
+                    NEXT →
+                  </span>
+                </Link>
+              )}
+            </nav>
           </div>
 
-          {/* Sticky Sidebar (TOC) */}
-          <aside className="lg:col-span-4 hidden lg:block">
-            <div className="sticky top-20 space-y-6">
-              {/* Dynamic Table of Contents */}
+          {/* Section-number rail */}
+          <aside className="hidden lg:col-span-4 lg:block">
+            <div className="sticky top-8 max-w-[15rem] space-y-8">
               {post.toc && post.toc.length > 0 && (
                 <TableOfContents items={post.toc} />
               )}
 
-              {/* Atelier Metadata Card */}
-              <div className="rounded-lg border border-border-plate bg-surface/40 p-4 font-telemetry text-xs text-muted">
-                <div className="font-bold tracking-wider text-text-primary border-b border-border-plate/60 pb-2 mb-2">
-                  SPECIMEN TELEMETRY
+              {/* Telemetry strip: archive entry, not a card (emerald STATUS amnestied Q9⑤) */}
+              <div className="border-t-2 border-border-strong pt-3 font-telemetry text-xs text-muted">
+                <div className="mb-2 text-[11px] font-bold tracking-[0.14em] text-text-primary">
+                  SPECIMEN
                 </div>
                 <dl className="space-y-1.5 tabular-nums">
-                  <div className="flex justify-between">
-                    <dt>SLUG:</dt>
-                    <dd className="font-mono text-text-primary">{post.slug}</dd>
+                  <div className="flex justify-between gap-2">
+                    <dt>SLUG</dt>
+                    <dd className="truncate font-mono text-text-primary">{post.slug}</dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt>CHANNEL:</dt>
+                  <div className="flex justify-between gap-2">
+                    <dt>CHANNEL</dt>
                     <dd className="uppercase text-text-primary">{post.category}</dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt>STATUS:</dt>
-                    <dd className="text-emerald-500 uppercase">{post.status}</dd>
+                  <div className="flex justify-between gap-2">
+                    <dt>STATUS</dt>
+                    <dd className="uppercase text-emerald-500">{post.status}</dd>
                   </div>
                 </dl>
               </div>
             </div>
           </aside>
         </div>
+
+        <ReaderColophon />
       </main>
-      <SiteFooter />
     </div>
   );
 }

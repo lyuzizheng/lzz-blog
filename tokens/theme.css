@@ -8,9 +8,9 @@
   --theme-name: "daylight-atelier";
 
   /* Canvas Substrates & Surface Plates */
-  --bg-substrate: #FAFAF7;
-  --bg-surface: #F0F0EB;
-  --bg-chamber: #E9E9E5;
+  --bg-substrate: #F5F1E8;
+  --bg-surface: #EEE6D3;
+  --bg-chamber: #E5D9BE;
 
   /* Ink Spectrum (Controlled Duotone: 80% / 20%) */
   --ink-dominant: #2148B8;
@@ -22,10 +22,10 @@
   --ink-faint: rgba(33, 72, 184, 0.12);
 
   /* Typography & Readability */
-  --text-primary: #1C2B54;
-  --text-secondary: #35477D;
-  --text-muted: #6B7C9E;
-  --text-badge: #FAFAF7;
+  --text-primary: #26241E;
+  --text-secondary: #57503F;
+  --text-muted: #857C68;
+  --text-badge: #F5F1E8;
 
   /* Borders & Registration Rules */
   --border-plate: rgba(33, 72, 184, 0.25);
@@ -45,42 +45,42 @@
   --theme-name: "safelight-darkroom";
 
   /* Canvas Substrates & Surface Plates */
-  --bg-substrate: #0D0E11;
-  --bg-surface: #14151B;
-  --bg-chamber: #181920;
+  --bg-substrate: #100F0E;
+  --bg-surface: #171512;
+  --bg-chamber: #1E1A17;
 
   /* Ink Spectrum (Safelight Spectrum: 75% / 25%) */
-  --ink-dominant: #E54B4B;
-  --ink-dominant-rgb: 229, 75, 75;
+  --ink-dominant: #E05454;
+  --ink-dominant-rgb: 224, 84, 84;
   --ink-accent: #F3E8D6;
   --ink-accent-rgb: 243, 232, 214;
   --ink-overprint: #FF5A5A;
-  --ink-subtle: rgba(229, 75, 75, 0.70);
-  --ink-faint: rgba(229, 75, 75, 0.14);
+  --ink-subtle: rgba(224, 84, 84, 0.70);
+  --ink-faint: rgba(224, 84, 84, 0.14);
 
   /* Typography & Readability */
   --text-primary: #F3E8D6;
   --text-secondary: rgba(243, 232, 214, 0.82);
   --text-muted: rgba(243, 232, 214, 0.55);
-  --text-badge: #0D0E11;
+  --text-badge: #100F0E;
 
   /* Borders & Registration Rules */
-  --border-plate: rgba(229, 75, 75, 0.35);
-  --border-plate-strong: #E54B4B;
+  --border-plate: rgba(224, 84, 84, 0.35);
+  --border-plate-strong: #E05454;
   --border-accent: rgba(243, 232, 214, 0.4);
 
   /* Blend Modes & Shadows */
   --blend-mode-ink: screen;
-  --shadow-plate: 0 4px 25px -2px rgba(229, 75, 75, 0.22);
-  --shadow-elevated: 0 12px 40px -4px rgba(229, 75, 75, 0.35);
+  --shadow-plate: 0 4px 25px -2px rgba(224, 84, 84, 0.22);
+  --shadow-elevated: 0 12px 40px -4px rgba(224, 84, 84, 0.35);
 
   /* Halftone Pattern Dot */
-  --halftone-dot-color: rgba(229, 75, 75, 0.28);
+  --halftone-dot-color: rgba(224, 84, 84, 0.28);
 }
 
 /* Typography Classes */
 .font-display {
-  font-family: 'Newsreader', 'Playfair Display', 'Cormorant', Georgia, serif;
+  font-family: 'Newsreader', 'Source Serif 4', Georgia, 'Noto Serif SC', 'Songti SC', serif;
 }
 
 .font-body {

@@ -6,18 +6,18 @@
     --theme-name: "safelight-darkroom";
 
     /* Canvas Substrates & Surface Plates (Obsidian Darkroom) */
-    --bg-substrate: #0D0E11;
-    --bg-surface: #14151B;
-    --bg-chamber: #181920;
+    --bg-substrate: #100F0E;
+    --bg-surface: #171512;
+    --bg-chamber: #1E1A17;
 
     /* Ink Spectrum (Safelight Spectrum: 75% / 25%) */
-    --ink-dominant: #E54B4B;
-    --ink-dominant-rgb: 229, 75, 75;
+    --ink-dominant: #E05454;
+    --ink-dominant-rgb: 224, 84, 84;
     --ink-accent: #F3E8D6;
     --ink-accent-rgb: 243, 232, 214;
-    --ink-overprint: #FF5A5A;
-    --ink-subtle: rgba(229, 75, 75, 0.70);
-    --ink-faint: rgba(229, 75, 75, 0.14);
+    --ink-overprint: #E05454;
+    --ink-subtle: rgba(224, 84, 84, 0.70);
+    --ink-faint: rgba(224, 84, 84, 0.14);
 
     /* Core / Earth Accent Palette */
     --color-obsidian: #0D0E11;
@@ -25,7 +25,7 @@
     --color-text-highlight: #F4F4F5;
     --color-terracotta: #C65F38;
     --color-cobalt: #2148B8;
-    --color-safelight: #E54B4B;
+    --color-safelight: #E05454;
     --color-phosphor: #F3E8D6;
 
     /* Typography & Readability */
@@ -35,27 +35,27 @@
     --text-badge: #0D0E11;
 
     /* Borders & Registration Rules */
-    --border-plate: #22242A;
-    --border-plate-subtle: rgba(255, 255, 255, 0.08);
-    --border-plate-strong: #E54B4B;
+    --border-plate: #262019;
+    --border-plate-subtle: rgba(245, 241, 232, 0.08);
+    --border-plate-strong: #E05454;
     --border-accent: rgba(243, 232, 214, 0.4);
 
     /* Blend Modes & Shadows */
     --blend-mode-ink: screen;
-    --shadow-plate: 0 4px 25px -2px rgba(229, 75, 75, 0.22);
-    --shadow-elevated: 0 12px 40px -4px rgba(229, 75, 75, 0.35);
+    --shadow-plate: 0 4px 25px -2px rgba(224, 84, 84, 0.22);
+    --shadow-elevated: 0 12px 40px -4px rgba(224, 84, 84, 0.35);
 
     /* Halftone Pattern Dot */
-    --halftone-dot-color: rgba(229, 75, 75, 0.28);
+    --halftone-dot-color: rgba(224, 84, 84, 0.28);
   }
 
   [data-theme="day"] {
     --theme-name: "daylight-atelier";
 
     /* Canvas Substrates & Surface Plates */
-    --bg-substrate: #FAFAF7;
-    --bg-surface: #F0F0EB;
-    --bg-chamber: #E9E9E5;
+    --bg-substrate: #F5F1E8;
+    --bg-surface: #EEE6D3;
+    --bg-chamber: #E5D9BE;
 
     /* Ink Spectrum (Controlled Duotone: 80% / 20%) */
     --ink-dominant: #2148B8;
@@ -76,10 +76,10 @@
     --color-phosphor: #F3E8D6;
 
     /* Typography & Readability */
-    --text-primary: #1C2B54;
-    --text-secondary: #35477D;
-    --text-muted: #6B7C9E;
-    --text-badge: #FAFAF7;
+    --text-primary: #26241E;
+    --text-secondary: #57503F;
+    --text-muted: #857C68;
+    --text-badge: #F5F1E8;
 
     /* Borders & Registration Rules */
     --border-plate: rgba(33, 72, 184, 0.25);
@@ -100,18 +100,18 @@
     --theme-name: "safelight-darkroom";
 
     /* Canvas Substrates & Surface Plates */
-    --bg-substrate: #0D0E11;
-    --bg-surface: #14151B;
-    --bg-chamber: #181920;
+    --bg-substrate: #100F0E;
+    --bg-surface: #171512;
+    --bg-chamber: #1E1A17;
 
     /* Ink Spectrum (Safelight Spectrum: 75% / 25%) */
-    --ink-dominant: #E54B4B;
-    --ink-dominant-rgb: 229, 75, 75;
+    --ink-dominant: #E05454;
+    --ink-dominant-rgb: 224, 84, 84;
     --ink-accent: #F3E8D6;
     --ink-accent-rgb: 243, 232, 214;
-    --ink-overprint: #FF5A5A;
-    --ink-subtle: rgba(229, 75, 75, 0.70);
-    --ink-faint: rgba(229, 75, 75, 0.14);
+    --ink-overprint: #E05454;
+    --ink-subtle: rgba(224, 84, 84, 0.70);
+    --ink-faint: rgba(224, 84, 84, 0.14);
 
     /* Core / Earth Accent Palette */
     --color-obsidian: #0D0E11;
@@ -119,7 +119,7 @@
     --color-text-highlight: #F4F4F5;
     --color-terracotta: #C65F38;
     --color-cobalt: #2148B8;
-    --color-safelight: #E54B4B;
+    --color-safelight: #E05454;
     --color-phosphor: #F3E8D6;
 
     /* Typography & Readability */
@@ -129,18 +129,18 @@
     --text-badge: #0D0E11;
 
     /* Borders & Registration Rules */
-    --border-plate: #22242A;
-    --border-plate-subtle: rgba(255, 255, 255, 0.08);
-    --border-plate-strong: #E54B4B;
+    --border-plate: #262019;
+    --border-plate-subtle: rgba(245, 241, 232, 0.08);
+    --border-plate-strong: #E05454;
     --border-accent: rgba(243, 232, 214, 0.4);
 
     /* Blend Modes & Shadows */
     --blend-mode-ink: screen;
-    --shadow-plate: 0 4px 25px -2px rgba(229, 75, 75, 0.22);
-    --shadow-elevated: 0 12px 40px -4px rgba(229, 75, 75, 0.35);
+    --shadow-plate: 0 4px 25px -2px rgba(224, 84, 84, 0.22);
+    --shadow-elevated: 0 12px 40px -4px rgba(224, 84, 84, 0.35);
 
     /* Halftone Pattern Dot */
-    --halftone-dot-color: rgba(229, 75, 75, 0.28);
+    --halftone-dot-color: rgba(224, 84, 84, 0.28);
   }
 }
 
@@ -173,7 +173,7 @@
   --color-border-strong: var(--border-plate-strong);
   --color-border-accent: var(--border-accent);
 
-  --font-display: var(--font-newsreader), 'Newsreader', 'Playfair Display', 'Cormorant', Georgia, serif;
+  --font-display: var(--font-newsreader), var(--font-noto-serif), 'Newsreader', 'Source Serif 4', Georgia, 'Noto Serif SC', 'Songti SC', serif;
   --font-body: var(--font-geist-sans), 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-telemetry: var(--font-geist-mono), 'Geist Mono', 'JetBrains Mono', 'SF Mono', monospace;
 }
@@ -523,5 +523,77 @@ h4:hover .heading-anchor {
   .print-only a {
     color: #1a1a1a;
     text-decoration: none;
+  }
+}
+
+/* ==========================================================================
+   BRAWUKA-61 · Reader language (article pages)
+   文学衬线正文 / 栏外 § 序号 / 左侧旁注 / FIG 计数
+   ========================================================================== */
+.reader-article {
+  counter-reset: reader-section reader-fig;
+}
+
+/* Hanging section numerals (h2 + h3 share one counter; rail side keeps TOC) */
+.reader-article h2,
+.reader-article h3 {
+  counter-increment: reader-section;
+  position: relative;
+}
+.reader-article h2::before,
+.reader-article h3::before {
+  content: "§" counter(reader-section, decimal-leading-zero);
+  font-family: var(--font-telemetry);
+  font-size: 0.55em;
+  letter-spacing: 0.12em;
+  color: var(--ink-dominant);
+  margin-right: 0.7em;
+  white-space: nowrap;
+}
+
+/* Figure numbering: FIG.01 — caption */
+.reader-article figure:not([data-rehype-pretty-code-figure]) {
+  counter-increment: reader-fig;
+}
+.reader-article figcaption::before {
+  content: "FIG." counter(reader-fig, decimal-leading-zero) " — ";
+  color: var(--ink-dominant);
+}
+
+/* External link marker (domain lives in title tooltip) */
+.reader-article a[data-domain]::after {
+  content: "↗";
+  font-size: 0.8em;
+  margin-left: 0.15em;
+  color: var(--ink-dominant);
+}
+
+/* Left marginalia: in-flow ruled block below xl, gutter float above */
+.reader-aside {
+  margin: 1.25rem 0;
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  border-left: 1px solid var(--border-plate-strong);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+.reader-aside-label {
+  display: block;
+  font-family: var(--font-telemetry);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dominant);
+  margin-bottom: 0.35rem;
+}
+@media (min-width: 1280px) {
+  .reader-aside {
+    float: left;
+    width: 11.5rem;
+    margin: 0.35em 2rem 1rem -13.5rem;
+    padding: 0.6rem 0 0;
+    border-left: none;
+    border-top: 1px solid var(--border-plate-strong);
   }
 }

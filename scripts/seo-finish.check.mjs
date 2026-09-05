@@ -32,16 +32,17 @@ function expectExists(file, label) {
   console.log(`PASS ${label}`);
 }
 
-// 1. Motion finish: route transition wired in layout, reduced-motion bypass present.
+// 1. Motion finish (BRAWUKA-61: page-enter animation deleted per DESIGN_V2 §6 —
+//    scroll restore only, no motion import, nothing to reduce-motion-bypass).
 expect(
   "components/motion/route-transition.tsx",
-  (s) => s.includes("usePathname") && s.includes("prefers-reduced-motion") && s.includes("scrollTo"),
-  "route-transition (pathname key + scroll restore + reduced-motion)",
+  (s) => s.includes("ScrollRestore") && s.includes("usePathname") && s.includes("scrollTo") && !s.includes("framer-motion"),
+  "scroll-restore (pathname key + scroll restore, no page animation)",
 );
 expect(
   "app/layout.tsx",
-  (s) => s.includes("RouteTransition") && s.includes("metadataBase") && s.includes("openGraph"),
-  "layout (transition wired + full Metadata API)",
+  (s) => s.includes("ScrollRestore") && s.includes("metadataBase") && s.includes("openGraph"),
+  "layout (scroll-restore wired + full Metadata API)",
 );
 
 // 2. SEO routes exist.

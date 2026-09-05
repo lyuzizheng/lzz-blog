@@ -7,7 +7,7 @@ import { Info, AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
 export function YouTube({ id }: { id: string }) {
   if (!id) return null;
   return (
-    <div className="my-6 overflow-hidden rounded-lg border border-border-plate bg-surface shadow-plate">
+    <div className="my-6 overflow-hidden border border-border-plate bg-surface">
       <div className="relative aspect-video w-full">
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${id}`}
@@ -26,7 +26,7 @@ export function Bilibili({ id }: { id: string }) {
   if (!id) return null;
   const bvid = id.startsWith("BV") ? id : `BV${id}`;
   return (
-    <div className="my-6 overflow-hidden rounded-lg border border-border-plate bg-surface shadow-plate">
+    <div className="my-6 overflow-hidden border border-border-plate bg-surface">
       <div className="relative aspect-video w-full">
         <iframe
           src={`https://player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&as_wide=1`}
@@ -47,7 +47,7 @@ export function Tweet({ id, user }: { id: string; user?: string }) {
     : `https://twitter.com/i/status/${id}`;
 
   return (
-    <div className="my-6 rounded-lg border border-border-plate bg-surface/80 p-5 shadow-plate">
+    <div className="my-6 border border-border-plate bg-surface/80 p-5">
       <div className="flex items-center justify-between text-xs font-telemetry text-muted">
         <span className="font-semibold text-text-primary">
           {user ? `@${user}` : "Twitter / X Post"}
@@ -81,7 +81,7 @@ export function Spotify({
 }) {
   if (!id) return null;
   return (
-    <div className="my-6 overflow-hidden rounded-lg border border-border-plate shadow-plate">
+    <div className="my-6 overflow-hidden border border-border-plate">
       <iframe
         src={`https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`}
         width="100%"
@@ -106,18 +106,18 @@ export function Notice({
   const icons = {
     info: <Info className="h-5 w-5 text-ink-dominant shrink-0 mt-0.5" />,
     warning: <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />,
-    success: <CheckCircle className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />,
+    success: <CheckCircle className="h-5 w-5 text-ink-dominant shrink-0 mt-0.5" />,
   };
 
   const borderStyles = {
     info: "border-ink-dominant/30 bg-ink-dominant/5",
     warning: "border-amber-500/30 bg-amber-500/5",
-    success: "border-emerald-500/30 bg-emerald-500/5",
+    success: "border-ink-dominant/30 bg-ink-dominant/5",
   };
 
   return (
     <div
-      className={`my-6 flex gap-3 rounded-lg border p-4 shadow-sm ${borderStyles[type]}`}
+      className={`my-6 flex gap-3 border p-4 ${borderStyles[type]}`}
     >
       {icons[type]}
       <div className="text-sm leading-relaxed text-text-primary [&>p]:my-1">

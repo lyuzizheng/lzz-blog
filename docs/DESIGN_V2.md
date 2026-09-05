@@ -1,0 +1,172 @@
+# LZZ Blog 视觉语言 v2（定稿 · 2026-09-05 grill Q1–Q10 全锁）
+
+> **状态**：定稿，可实施。替代 `docs/DESIGN.md` 的色彩 / 排印 / 动效 / IA 章节；暗房隐喻保留，执行方式以本文件为准。
+> **范围**：整站视觉语言，**文章阅读页是主战场**（自由滚动例外），其次列表页，最后首页向 BRAWUKA-57 对齐。
+> **方法论来源**：`mono-color` skill `design-system/` catalogs（colors / typography / compositions / rhythm / imperfections / carriers）的 Web 转写。
+> **Grill 存档**：Q1–Q7 全 A + 三修正；Q8 锁 4 子页；Q9 六项全按推荐；Q10 锁 **A**。详见 §10。
+
+---
+
+## 1. 七宗 AI 味病灶 → 新语言对照
+
+| # | 病灶（main 分支证据） | 新语言（一句话） | 落点 |
+|---|---|---|---|
+| 1 | `SiteHeader`：`sticky + bg-substrate/85 + backdrop-blur-md` 毛玻璃；`border-white/10` 无对比级 | Q10-A：删全局 chrome，换**屏内眉脚**（本屏 eyebrow + Colophon 终屏），必留昼夜点 / 索引 / 语义 nav | §7.4 |
+| 2 | 三段式八股 Landing：Hero + Bento 图标墙（Compass/Sparkles/Layers）+ Tokens 色板验证区 | 首页只许 3 屏：封面 → 四入口散落 → Colophon；禁图标墙，入口用 overprint collage 散落 | §7.1 |
+| 3 | Tokens 色板、`SPECIMEN 2026-N1` 徽章直接上首页 | telemetry 三合法位置：屏内眉题数据条、图片 caption、Colophon 寄存器；余者皆 bug | §5.6 |
+| 4 | `SpotlightCard` 光晕、`MagneticButton` 磁吸、全页过渡，与业务状态零绑定 | Q9⑥：三件套删除；动效只绑定阅读进度 / 章节位置 / 主题切换（加码项亦须绑定状态） | §6 |
+| 5 | Display 巨大 / 正文极小两档跳跃，字重 400/600，全站无衬线 | 文学衬线正文（Noto Serif SC 锁定）+ 5 档字阶 + 字重呼吸（与阅读位置绑定） | §4, §5.1 |
+| 6 | shadcn 默认骨架：`rounded-lg` + `Card` 堆叠 | 圆角只留 `0px` / `2px` 两档；导航卡片改档案条目（规则线 + 序号） | §5.7 |
+| 7 | 窄栏列表仍是"UI 界面"思维：无旁注、无呼吸 | **左侧**旁注栏（`<Aside>`）+ 跨栏引言 + 脚注清单，即"作者化质感"的全部定义 | §5.3 |
+
+---
+
+## 2. 三枚锚
+
+### 锚 A — 纸媒装帧
+- 非对称网格：**左侧**旁注栏（12–14rem）+ 正文栏（max 40rem），左对齐一条不可见线；`xl` 以下旁注收进正文折叠块（栏外 gutter 只在 80rem+ 展开，保证 40rem 行宽不断裂）。
+- 页边距 5%–9%，空纸感 25%–55%（release zone = 旁注栏 + 章间空）。
+- 跨栏引言（standfirst）：标题下 1.25–1.4× 衬线引言，可跨旁注+正文两栏，全页唯一大字呼吸口。
+- 章节序号随视线流动：`§01 / §02`  hanging numerals 出现在栏外（正文左侧 / 旁注侧），不挤占行首。
+
+### 锚 B — mono-color 印刷
+- 纸感基底 Q1 锁：`#F5F1E8`（`substrate_pale_beige`，温润方向）。
+- 单专色 Q9①锁：钴蓝 `#2148B8`（`ink_cobalt`）。陶土橙降级为**封面套印副板**（仅封面图 / 档案编号可用，正文 chrome 禁用）。
+- SVG Noise 3%–5% 全站一层（`film-grain-overlay`，锁死上限 5%，禁第二层；加码的 shader 底噪与此同层合并，不得另起覆盖层）。
+- 正文章节禁用一切 `mix-blend-mode`（封面 / 编号除外）。
+
+### 锚 C — 信息密度
+- 正文 `1.0625–1.125rem / 1.7–1.8`，段间距 `0.9em`；规则线三级（faint / default / strong）区分层级，不用阴影。
+- 眉题日期 / 字数 / 时长 / 标签收进**一条** telemetry 行，不做徽章云。
+
+---
+
+## 3. 色彩
+
+| 模式 | token | 值 | 说明 |
+|---|---|---|---|
+| day 纸面 | `--bg-substrate` | `#F5F1E8` | Q1 锁：Pale Beige |
+| day 衬底 | `--bg-surface / --bg-chamber` | `#EEE6D3 / #E5D9BE` | 纸面同色相加深 |
+| day 专色 | `--ink-dominant` | `#2148B8` | Q9①锁：单专色 |
+| day 正文墨 | `--text-primary` | `#26241E` | 暖炭 carry 长文本（chromatic + black 分支） |
+| night 极夜 | `--bg-substrate` | `#100F0E` | 暖炭（Q9②） |
+| night 槽体 | `--bg-surface / --bg-chamber` | `#171512 / #1E1A17` | 同色相加深 |
+| night 专色变体 | `--ink-dominant` | `#E05454` | Q9②接受：同色相不同浓度，不算破戒 |
+| night 正文光 | `--text-primary` | `#F3E8D6` | 磷光奶白 |
+
+专色配额（complementary duotone 转写）：专色只出现在链接、当前章节号、进度线、脚注序号、徽章描边；标题字骨一律正文墨。专色面积 <30%。
+
+### 禁止清单（出现即打回）
+1. 紫青渐变、2. `bg-clip-text`、3. 发光边框、4. 纯黑 `#000` 背景、5. 毛玻璃导航、6. 第二种点缀色（**特赦**：Q9⑤，telemetry `STATUS` 一词可用 emerald）、7. 正文区混合模式。
+
+---
+
+## 4. 字体（Q9③锁：Noto Serif SC）
+
+| 角色 | 家族（西文 / 中文） | 用途 |
+|---|---|---|
+| 正文衬线 | `Newsreader, Source Serif 4, Georgia, Noto Serif SC, Songti SC, serif` | 正文、引言、引用、caption |
+| Display | 同上（optical-size 拉大 + weight 拉高，不另起 grotesk） | 标题、章节标题 |
+| UI 无衬线 | `Geist, Inter` / `Noto Sans SC` | 导航、按钮、chrome（禁长正文） |
+| Telemetry Mono | `Geist Mono, JetBrains Mono` + `tabular-nums` | 数据条、序号、caption |
+
+### 字重呼吸（加码项，与状态绑定）
+- 可变字重；正文常态 450–500，**当前阅读段落**（视口中央，IntersectionObserver）升至 550，200ms 过渡。
+- 禁生硬缩放：禁 `scale-105`、禁整段字号跳变；只许 wght / opsz 连续微动。
+- 熔断：`prefers-reduced-motion` 时 JS 侧 `useReducedMotion` 关闭呼吸，CSS 门禁保留。
+
+---
+
+## 5. 文章视觉语言（主战场）
+
+### 5.1 字阶（5 档，标题 : Micro ≈ 5–8×）
+Display `clamp(2.5rem,5vw,4rem)/1.08` ｜ Standfirst 1.25–1.4× body ｜ H2 `1.5rem/1.3` ｜ Body `1.0625–1.125rem/1.75` ｜ Micro `0.75rem` Mono +0.08em。
+
+### 5.2 网格与间距
+`[左旁注 12–14rem] [正文 minmax(0,40rem)]`；章间 3.5rem / 节间 2rem / 段间 0.9em；`xl` 以下单栏。
+
+### 5.3 引言 / 旁注 / 脚注
+- 引言：`post.summary` 渲染为跨栏衬线 standfirst。
+- 旁注：Q9④锁 **MDX `<Aside>` 组件放左侧**；内容限定译名 / 年份 / 人名 / 定义；小屏自动收进正文折叠块。
+- 脚注：页底清单 + 回指（现行机制保留；弹窗不做——长文可打印性优先）。
+- 外链 hover 显示一行域名 preview（`data-domain`，CSS only）；站内链无 preview。
+
+### 5.4 代码块
+Shiki 双主题保留；1px 实线规则，**圆角 0**，标题栏只留语言名 + 复制；`0.8125rem/1.6`，超长行横向滚不换行。
+
+### 5.5 图片与 caption
+无圆角、无阴影、1px 规则线框；caption Mono 一行：`FIG.01 — 说明 · 机身 · 焦段`；`HALFTONE / TRUE` 切换保留，默认 TRUE。
+
+### 5.6 进度 × 章节指示器（融合，禁独立色条）
+TOC 改为**章节序号 rail**：每节一行 `§01 标题 ·· %`，当前节序号染专色 + 2px 专色竖线随滚动伸长（即进度）。移动端收成眉题一行 `§02/07 · 42%`。复用既有 IntersectionObserver，不另起监听。
+
+### 5.7 档案条目（替代圆角卡片）
+上 / 下篇、标签行改用 1px 顶线规则 + Mono 小字 + 衬线标题；圆角只留 `0px`（引用 / 代码 / 图框）与 `2px`（徽章 / 按钮）。
+
+### 5.8 兜底状态
+超长标题两行 clamp ｜ 空标签不渲染标签行 ｜ 无封面用 type-led 题名区（禁灰占位图）｜ 短文无 TOC 时侧栏只留 telemetry 档案条 ｜ 代码 / 公式渲染失败行内小字 + warn，不打断正文 ｜ 404 一句人话 + 返回链。
+
+---
+
+## 6. 动效物理
+
+```ts
+snappy:        { stiffness: 450, damping: 30, mass: 0.8 }  // 开关、折叠、TOC 当前节指示
+trayFloat:     { stiffness: 220, damping: 24, mass: 1.2 }  // Lightbox 抛物线 dismiss
+dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移动端抽屉
+```
+
+- Q9⑥：`cursorTrack` / `SpotlightCard` / `MagneticButton` **删除**；`RouteTransition` 整页遮罩**删除**（只留滚动复位）。
+- 加码（均与状态绑定）：scroll 显影（名字 / 胶片帧 stagger 只在首页封面）、字重呼吸（§4）、grain 底噪（单层）。
+- 三禁令不变：禁全页 fade-in slide-up、禁无差别 `scale-105`、禁与状态无关的光晕跟随。
+- 触感只给两处：暗色切换 0.15s 微暗遮罩、折叠 snappy 进出。
+
+---
+
+## 7. IA（Q8 锁，`/now` 以毙案为准删除）
+
+### 7.1 首页 = 封面 + 目录，3 屏封顶
+- Slide 1 封面：纸底 → 名字显影 → 3 帧胶片 stagger（load 序列，reduced-motion 下直接呈现）。
+- Slide 2 子页索引：四入口**散落叠放**（overprint collage：一大一小一窄条一章戳，压边 8–16px）；SVG 修饰只许**一个**细线 gesture 家族（钴蓝 1px）。
+- Slide 3 Colophon 终屏（见 §7.4）。
+- 移动端：入视口自动显影，**禁纯 hover 交互**。
+
+### 7.2 四子页（Now 不做）
+`Writings / Darkroom / Flight / Products` 独立页。Writings 列表 + 内容自由滚动（deck 例外）。
+
+### 7.3 Products（一屏一产品，不展开架构）
+- 只收工作之外：`CoffeeMode`（开发中 · 找咖指南）、`CanCan`（开发中 · 网站已上线 · 财务证据库 + 对账台）、`Our Village`（已上线 · 社区成员系统）。
+- 每屏一句话 + 状态章 + 外链。状态词不对创始人只回三个词即改。
+
+### 7.4 Q10-A（全锁）：删全局 chrome，换屏内眉脚
+- 文章 / 列表页不再用全局 sticky header + footer：本屏 eyebrow（索引回链 + 章节 + 语言切换 + 昼夜点）与屏内 foot（Colophon 一行）代替。
+- 必留：**语言切换键（中/EN，与 nightmode 昼夜点并排眉脚右端，创始人硬性要求；`LanguageSwitch` 逻辑复用只换皮）**、昼夜切换点、索引入口、语义 `nav`。其余页迁移随各单跟进，本单只改文章链路。
+
+---
+
+## 8. 策展 deck 模型与 scroll-jacking 风控
+
+- 例外：文章列表 / 内容自由滚；摄影 = 全屏拖拽地图 + visited pins。
+- 其余页一屏一 section，scroll 为翻页信号；resume 时间线每段生涯一屏 + `FRAME` 帧号 + J/K/Arrow 定帧 + `#slide` 深链。
+- 风控（V2 强制）：翻页动画 600ms 内**可打断**（wheel / touch / key 即接管）；不锁 `body` scroll（用 Lenis 接管 + 中断恢复）；URL `#slide` 双向同步（返回可深链）；`prefers-reduced-motion` 与移动端退化为普通堆叠。
+- Deck 容器与 resume 时间线属 BRAWUKA-57 / 摄影单，本文件只定契约，不定实现。
+
+---
+
+## 9. 实施顺序与门禁
+
+1. 文章详情页（本单已实施，见 §5–§6）。
+2. 列表页 `/posts`（本单已实施：眉脚 + 衬线题名，deck 例外自由滚）。
+3. 首页向 BRAWUKA-57 对齐（tokens 自动生效；结构归 57）。
+4. 门禁：`pnpm typecheck` + `pnpm build` + `pnpm test`；自查：§3 禁止清单 7 项 + §6 三禁令逐项打勾。
+
+---
+
+## 10. Grill 决议存档（创始人 2026-09-05）
+
+- Q1：纸 `#F5F1E8`（温润方向）。
+- Q1–Q7：全 A（以 Phase 1 草案提案为准），加三修正：①旁注放**左侧**；②动画加码（spring + scroll 显影 + 字重呼吸 + grain/shader 底噪，均与状态绑定，三禁令不变）；③滚动模型（列表 / 内容正常滚、摄影拖拽地图 + visited pins、其余一屏一 section）。
+- Deck 追加：策展翻页 + resume 单生涯一屏 + FRAME/J/K/`#slide` + 风控（§8）。
+- Q8：4 子页（Writings/Darkroom/Flight/Products），Now 不做；Slide 2 散落拼贴规范；Products 文案三句（§7.3）。
+- Q9：①钴蓝维持 ②night `#E05454` 接受 ③Noto Serif SC ④`<Aside>` ⑤emerald 特赦（STATUS 一词）⑥三件套删；§7 `/now` 删除。
+- Q10：锁 **A**（删全局 chrome，换屏内眉脚 + Colophon 终屏）。
