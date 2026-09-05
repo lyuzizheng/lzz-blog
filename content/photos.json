@@ -55,7 +55,8 @@
         "aperture": "f/2.0",
         "shutter": "1/125s",
         "iso": "ISO 800",
-        "takenAt": "2026.07.30 22:05 +08:00"
+        "takenAt": "2026.07.30 22:05 +08:00",
+        "gps": "1°16'N 103°51'E"
       }
     },
     {
@@ -92,7 +93,8 @@
         "aperture": "f/1.2",
         "shutter": "1/320s",
         "iso": "ISO 1600",
-        "takenAt": "2026.09.01 21:12 +08:00"
+        "takenAt": "2026.09.01 21:12 +08:00",
+        "gps": "1°17'N 103°50'E"
       }
     },
     {
@@ -110,7 +112,46 @@
         "aperture": "f/5.6",
         "shutter": "1/60s",
         "iso": "ISO 100",
-        "takenAt": "2026.08.02 10:24 +08:00"
+        "takenAt": "2026.08.02 10:24 +08:00",
+        "gps": "1°18'N 103°51'E"
+      }
+    },
+    {
+      "id": "altay-galaxy-plate",
+      "title": "阿勒泰银河穹顶",
+      "frame": "FRAME 36",
+      "alt": "Altay mountain galaxy under midnight sky specimen",
+      "width": 16,
+      "height": 9,
+      "chemistry": "ILFORD DELTA 3200 · Microphen · 20.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 24mm F1.4 GM",
+        "focal": "24mm",
+        "aperture": "f/1.4",
+        "shutter": "15s",
+        "iso": "ISO 3200",
+        "takenAt": "2023.09.18 23:45 +08:00",
+        "gps": "47°50'N 88°08'E"
+      }
+    },
+    {
+      "id": "sayram-lake-chem",
+      "title": "赛里木湖最后一滴眼泪",
+      "frame": "FRAME 42",
+      "alt": "Sayram lake azure water with mountain reflection specimen",
+      "width": 3,
+      "height": 2,
+      "chemistry": "FUJI PRO 400H · C-41 · 38.0°C",
+      "exif": {
+        "camera": "Sony A7M4 · ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "focal": "50mm",
+        "aperture": "f/5.6",
+        "shutter": "1/500s",
+        "iso": "ISO 100",
+        "takenAt": "2023.09.21 15:30 +08:00",
+        "gps": "44°36'N 81°12'E"
       }
     }
   ]
