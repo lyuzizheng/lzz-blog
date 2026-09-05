@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Folder, Calendar, Clock, Search, Filter, BookOpen } from "lucide-react";
+import { Folder, Calendar, Clock, Search, X, BookOpen } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 export interface ArchivePost {
@@ -14,6 +14,7 @@ export interface ArchivePost {
   category: string;
   tags: string[];
   reading_time?: number;
+  cover_image?: string;
 }
 
 /**
@@ -23,9 +24,11 @@ export interface ArchivePost {
 export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
   const { locale, t } = useI18n();
   const isZh = locale === "zh";
+
   const [activeChannel, setActiveChannel] = useState<"all" | "study" | "essay">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
   const allTags = useMemo(() => {
     const set = new Set<string>();
     posts.forEach((p) => p.tags.forEach((t) => set.add(t)));
@@ -41,7 +44,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
           const q = searchQuery.toLowerCase();
           const matchTitle = post.title.toLowerCase().includes(q);
           const matchSummary = (post.summary || "").toLowerCase().includes(q);
-          const matchTag = post.tags.some((t) => t.toLowerCase().includes(q));
+          const matchTag = post.tags.some((tag) => tag.toLowerCase().includes(q));
           return matchTitle || matchSummary || matchTag;
         }
         return true;
@@ -58,6 +61,20 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
     });
     return Array.from(map.entries()).sort((a, b) => Number(b[0]) - Number(a[0]));
   }, [filteredPosts]);
+
+  const channels = [
+    { id: "all" as const, label: t.posts.allChannels, count: posts.length },
+    {
+      id: "study" as const,
+      label: t.posts.technical,
+      count: posts.filter((p) => p.category === "study").length,
+    },
+    {
+      id: "essay" as const,
+      label: t.posts.essays,
+      count: posts.filter((p) => p.category === "essay").length,
+    },
+  ];
 
   return (
     <>
@@ -77,86 +94,80 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
         </p>
       </div>
 
-      {/* Filter Controls: Channels + Search */}
-      <div className="mb-8 space-y-4 rounded-xl border border-border-plate bg-surface/60 p-4 sm:p-5 shadow-plate">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setActiveChannel("all")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
-                activeChannel === "all"
-                  ? "bg-ink-dominant text-text-badge shadow-sm"
-                  : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              {t.posts.allChannels} ({posts.length})
-            </button>
-            <button
-              onClick={() => setActiveChannel("study")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
-                activeChannel === "study"
-                  ? "bg-ink-dominant text-text-badge shadow-sm"
-                  : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              {t.posts.technical} ({posts.filter((p) => p.category === "study").length})
-            </button>
-            <button
-              onClick={() => setActiveChannel("essay")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
-                activeChannel === "essay"
-                  ? "bg-ink-dominant text-text-badge shadow-sm"
-                  : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              {t.posts.essays} ({posts.filter((p) => p.category === "essay").length})
-            </button>
+      {/* Slim filter toolbar: channel tabs + compact search + tag strip */}
+      <div className="mb-6 flex flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <div className="flex items-center gap-4" role="tablist" aria-label={isZh ? "文章通道" : "Article channels"}>
+            {channels.map((channel) => {
+              const isActive = activeChannel === channel.id;
+              return (
+                <button
+                  key={channel.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveChannel(channel.id)}
+                  className={`relative cursor-pointer py-1 font-telemetry text-xs transition-colors ${
+                    isActive
+                      ? "font-semibold text-text-primary"
+                      : "text-muted hover:text-text-primary"
+                  }`}
+                >
+                  {channel.label}
+                  <span className="ml-1 tabular-nums opacity-70">{channel.count}</span>
+                  <span
+                    aria-hidden
+                    className={`absolute inset-x-0 -bottom-px h-px transition-opacity ${
+                      isActive ? "bg-ink-dominant opacity-100" : "opacity-0"
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </div>
 
-          <div className="relative min-w-[240px]">
-            <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted" />
+          <div className="relative w-full sm:w-52">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.posts.searchPlaceholder}
               aria-label={isZh ? "搜索文章" : "Search articles"}
-              className="w-full rounded-lg border border-border-plate bg-substrate py-2 pl-9 pr-3 font-telemetry text-xs text-text-primary placeholder:text-muted focus:border-ink-dominant focus:outline-none focus:ring-1 focus:ring-ink-dominant"
+              className="h-8 w-full rounded-full border border-border-plate/70 bg-chamber/40 pl-8 pr-3 font-telemetry text-xs text-text-primary placeholder:text-muted focus:border-ink-dominant focus:outline-none"
             />
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 border-t border-border-plate/60 pt-3">
-          <span className="flex items-center gap-1 font-telemetry text-[11px] text-muted mr-1">
-            <Filter className="h-3 w-3" />
-            {t.posts.tagFilter}
-          </span>
-          {selectedTag && (
-            <button
-              onClick={() => setSelectedTag(null)}
-              className="rounded bg-ink-dominant/15 px-2 py-0.5 font-telemetry text-[11px] font-semibold text-ink-dominant hover:bg-ink-dominant/25"
-            >
-              {isZh ? `全部 [清除 #${selectedTag}]` : `All [Clear #${selectedTag}]`}
-            </button>
-          )}
-          {allTags.map((tag) => {
-            const isSelected = selectedTag === tag;
-            return (
+        {allTags.length > 0 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+            {selectedTag && (
               <button
-                key={tag}
-                onClick={() => setSelectedTag(isSelected ? null : tag)}
-                aria-pressed={isSelected}
-                className={`rounded px-2 py-0.5 font-telemetry text-[11px] transition-colors ${
-                  isSelected
-                    ? "bg-ink-dominant text-text-badge font-semibold"
-                    : "border border-border-plate/70 bg-chamber/40 text-text-muted hover:border-border-plate hover:text-text-primary"
-                }`}
+                onClick={() => setSelectedTag(null)}
+                aria-label={isZh ? "清除标签过滤" : "Clear tag filter"}
+                className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-ink-dominant px-2 py-0.5 font-telemetry text-[11px] font-semibold text-text-badge"
               >
-                #{tag}
+                <X className="h-3 w-3" />#{selectedTag}
               </button>
-            );
-          })}
-        </div>
+            )}
+            {allTags.map((tag) => {
+              const isSelected = selectedTag === tag;
+              return (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(isSelected ? null : tag)}
+                  aria-pressed={isSelected}
+                  className={`shrink-0 cursor-pointer rounded-full px-2 py-0.5 font-telemetry text-[11px] transition-colors ${
+                    isSelected
+                      ? "bg-ink-dominant font-semibold text-text-badge"
+                      : "text-text-muted hover:text-text-primary"
+                  }`}
+                >
+                  #{tag}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Results List Grouped By Year */}
@@ -169,7 +180,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
       ) : (
         <div className="space-y-12">
           {groupedByYear.map(([year, yearPosts]) => (
-            <section key={year} className="relative" aria-label={`${year} 年归档`}>
+            <section key={year} className="relative" aria-label={`${year} ${t.posts.yearArchive}`}>
               <div className="sticky top-16 z-20 mb-6 flex items-center gap-3 bg-substrate/90 py-2 backdrop-blur-sm">
                 <span className="font-display text-2xl font-bold text-text-primary tabular-nums">
                   {year}
@@ -185,45 +196,60 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                   <Link
                     key={post.slug}
                     href={post.permalink}
-                    className="group flex flex-col justify-between rounded-xl border border-border-plate bg-surface/70 p-5 shadow-plate transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-dominant/50 hover:bg-surface hover:shadow-elevated"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-border-plate bg-surface/70 shadow-plate transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-dominant/50 hover:bg-surface hover:shadow-elevated"
                   >
-                    <div>
-                      <div className="mb-2.5 flex items-center justify-between text-xs font-telemetry text-muted">
-                        <span className="flex items-center gap-1 uppercase font-semibold text-ink-dominant">
-                          <Folder className="h-3 w-3" />
-                          {post.category}
-                        </span>
-                        <div className="flex items-center gap-1 tabular-nums">
-                          <Calendar className="h-3 w-3" />
-                          <span>{post.date.slice(5, 10)}</span>
-                        </div>
+                    {post.cover_image && (
+                      <div className="relative aspect-[16/9] overflow-hidden bg-chamber/40">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.cover_image}
+                          alt={post.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        />
                       </div>
-
-                      <h2 className="font-display text-lg font-bold leading-snug tracking-tight text-text-primary group-hover:text-ink-dominant transition-colors">
-                        {post.title}
-                      </h2>
-
-                      {post.summary && (
-                        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-text-secondary">
-                          {post.summary}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between border-t border-border-plate/60 pt-3 text-[11px] font-telemetry text-muted">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        {post.tags.slice(0, 2).map((t) => (
-                          <span
-                            key={t}
-                            className="rounded border border-border-plate/80 bg-chamber/60 px-1.5 py-0.5"
-                          >
-                            #{t}
+                    )}
+                    <div className="flex flex-1 flex-col justify-between p-5">
+                      <div>
+                        <div className="mb-2.5 flex items-center justify-between text-xs font-telemetry text-muted">
+                          <span className="flex items-center gap-1 uppercase font-semibold text-ink-dominant">
+                            <Folder className="h-3 w-3" />
+                            {post.category}
                           </span>
-                        ))}
+                          <div className="flex items-center gap-1 tabular-nums">
+                            <Calendar className="h-3 w-3" />
+                            <span>{post.date.slice(5, 10)}</span>
+                          </div>
+                        </div>
+
+                        <h2 className="font-display text-lg font-bold leading-snug tracking-tight text-text-primary group-hover:text-ink-dominant transition-colors">
+                          {post.title}
+                        </h2>
+
+                        {post.summary && (
+                          <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-text-secondary">
+                            {post.summary}
+                          </p>
+                        )}
                       </div>
-                      <div className="flex items-center gap-1 tabular-nums text-text-secondary">
-                        <Clock className="h-3 w-3 text-ink-dominant" />
-                        <span>{post.reading_time ?? "—"} {t.posts.readingTime}</span>
+
+                      <div className="mt-4 flex items-center justify-between gap-2 border-t border-border-plate/60 pt-3 text-[11px] font-telemetry text-muted">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {post.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded border border-border-plate/80 bg-chamber/60 px-1.5 py-0.5"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex shrink-0 items-center gap-1 tabular-nums text-text-secondary">
+                          <Clock className="h-3 w-3 text-ink-dominant" />
+                          <span>
+                            {post.reading_time ?? "—"} {t.posts.readingTime}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </Link>
