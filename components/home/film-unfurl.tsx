@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import { useI18n } from "@/lib/i18n";
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
 
 /**
@@ -120,6 +121,7 @@ function StillFrame({ spec }: { spec: FrameSpec }) {
 }
 
 export function FilmUnfurl() {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -149,7 +151,7 @@ export function FilmUnfurl() {
         <motion.div className="h-px w-full origin-left bg-safelight" style={{ scaleX: scrollYProgress }} />
       </div>
       <p className="mt-2 font-telemetry text-[10px] tracking-[0.2em] text-muted">
-        DEVELOPING // 向下滑动显影
+        {t.home.developing}
       </p>
     </div>
   );

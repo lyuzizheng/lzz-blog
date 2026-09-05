@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Folder, Calendar, Clock, Search, X } from "lucide-react";
+import { Folder, Calendar, Clock, Search, X, BookOpen } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export interface ArchivePost {
   slug: string;
@@ -21,6 +22,9 @@ export interface ArchivePost {
  * Receives lean DTOs from the server shell — never the full Velite documents.
  */
 export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
+
   const [activeChannel, setActiveChannel] = useState<"all" | "study" | "essay">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -40,7 +44,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
           const q = searchQuery.toLowerCase();
           const matchTitle = post.title.toLowerCase().includes(q);
           const matchSummary = (post.summary || "").toLowerCase().includes(q);
-          const matchTag = post.tags.some((t) => t.toLowerCase().includes(q));
+          const matchTag = post.tags.some((tag) => tag.toLowerCase().includes(q));
           return matchTitle || matchSummary || matchTag;
         }
         return true;
@@ -58,27 +62,43 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
     return Array.from(map.entries()).sort((a, b) => Number(b[0]) - Number(a[0]));
   }, [filteredPosts]);
 
+  const channels = [
+    { id: "all" as const, label: t.posts.allChannels, count: posts.length },
+    {
+      id: "study" as const,
+      label: t.posts.technical,
+      count: posts.filter((p) => p.category === "study").length,
+    },
+    {
+      id: "essay" as const,
+      label: t.posts.essays,
+      count: posts.filter((p) => p.category === "essay").length,
+    },
+  ];
+
   return (
     <>
+      {/* Page Header */}
+      <div className="mb-10 max-w-2xl">
+        <div className="mb-2 flex items-center gap-2 font-telemetry text-xs text-ink-dominant">
+          <BookOpen className="h-3.5 w-3.5" />
+          <span className="font-semibold tracking-wider uppercase">
+            {isZh ? "文章归档 · VOL. 2014-2026" : "DOCUMENT ARCHIVE · VOL. 2014-2026"}
+          </span>
+        </div>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+          {t.posts.title}
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
+          {t.posts.subtitle}
+        </p>
+      </div>
+
       {/* Slim filter toolbar: channel tabs + compact search + tag strip */}
       <div className="mb-6 flex flex-col gap-2">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <div className="flex items-center gap-4" role="tablist" aria-label="文章通道">
-            {(
-              [
-                { id: "all", label: "全部 ALL", count: posts.length },
-                {
-                  id: "study",
-                  label: "技术 TECHNICAL",
-                  count: posts.filter((p) => p.category === "study").length,
-                },
-                {
-                  id: "essay",
-                  label: "随笔 ESSAYS",
-                  count: posts.filter((p) => p.category === "essay").length,
-                },
-              ] as const
-            ).map((channel) => {
+          <div className="flex items-center gap-4" role="tablist" aria-label={isZh ? "文章通道" : "Article channels"}>
+            {channels.map((channel) => {
               const isActive = activeChannel === channel.id;
               return (
                 <button
@@ -86,7 +106,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveChannel(channel.id)}
-                  className={`relative py-1 font-telemetry text-xs transition-colors ${
+                  className={`relative cursor-pointer py-1 font-telemetry text-xs transition-colors ${
                     isActive
                       ? "font-semibold text-text-primary"
                       : "text-muted hover:text-text-primary"
@@ -111,8 +131,8 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="检索标题、摘要或标签..."
-              aria-label="检索文章"
+              placeholder={t.posts.searchPlaceholder}
+              aria-label={isZh ? "搜索文章" : "Search articles"}
               className="h-8 w-full rounded-full border border-border-plate/70 bg-chamber/40 pl-8 pr-3 font-telemetry text-xs text-text-primary placeholder:text-muted focus:border-ink-dominant focus:outline-none"
             />
           </div>
@@ -123,8 +143,8 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
             {selectedTag && (
               <button
                 onClick={() => setSelectedTag(null)}
-                aria-label="清除标签过滤"
-                className="flex shrink-0 items-center gap-1 rounded-full bg-ink-dominant px-2 py-0.5 font-telemetry text-[11px] font-semibold text-text-badge"
+                aria-label={isZh ? "清除标签过滤" : "Clear tag filter"}
+                className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-ink-dominant px-2 py-0.5 font-telemetry text-[11px] font-semibold text-text-badge"
               >
                 <X className="h-3 w-3" />#{selectedTag}
               </button>
@@ -136,7 +156,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                   key={tag}
                   onClick={() => setSelectedTag(isSelected ? null : tag)}
                   aria-pressed={isSelected}
-                  className={`shrink-0 rounded-full px-2 py-0.5 font-telemetry text-[11px] transition-colors ${
+                  className={`shrink-0 cursor-pointer rounded-full px-2 py-0.5 font-telemetry text-[11px] transition-colors ${
                     isSelected
                       ? "bg-ink-dominant font-semibold text-text-badge"
                       : "text-text-muted hover:text-text-primary"
@@ -154,20 +174,20 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
       {groupedByYear.length === 0 ? (
         <div className="my-12 rounded-xl border border-dashed border-border-plate p-12 text-center">
           <p className="font-telemetry text-sm text-muted">
-            未找到匹配条件的文章，请调整检索关键词或过滤标签。
+            {t.posts.noResults}
           </p>
         </div>
       ) : (
         <div className="space-y-12">
           {groupedByYear.map(([year, yearPosts]) => (
-            <section key={year} className="relative" aria-label={`${year} 年归档`}>
+            <section key={year} className="relative" aria-label={`${year} ${t.posts.yearArchive}`}>
               <div className="sticky top-16 z-20 mb-6 flex items-center gap-3 bg-substrate/90 py-2 backdrop-blur-sm">
                 <span className="font-display text-2xl font-bold text-text-primary tabular-nums">
                   {year}
                 </span>
                 <div className="h-px flex-1 bg-border-plate" />
                 <span className="font-telemetry text-xs text-muted tabular-nums">
-                  {yearPosts.length} 篇归档
+                  {yearPosts.length} {t.posts.yearArchive}
                 </span>
               </div>
 
@@ -180,6 +200,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                   >
                     {post.cover_image && (
                       <div className="relative aspect-[16/9] overflow-hidden bg-chamber/40">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={post.cover_image}
                           alt={post.title}
@@ -214,18 +235,20 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
 
                       <div className="mt-4 flex items-center justify-between gap-2 border-t border-border-plate/60 pt-3 text-[11px] font-telemetry text-muted">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          {post.tags.map((t) => (
+                          {post.tags.map((tag) => (
                             <span
-                              key={t}
+                              key={tag}
                               className="rounded border border-border-plate/80 bg-chamber/60 px-1.5 py-0.5"
                             >
-                              #{t}
+                              #{tag}
                             </span>
                           ))}
                         </div>
                         <div className="flex shrink-0 items-center gap-1 tabular-nums text-text-secondary">
                           <Clock className="h-3 w-3 text-ink-dominant" />
-                          <span>{post.reading_time ?? "—"} 分钟</span>
+                          <span>
+                            {post.reading_time ?? "—"} {t.posts.readingTime}
+                          </span>
                         </div>
                       </div>
                     </div>

@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-motion";
 import { motionPhysics } from "@/tokens";
+import { useI18n } from "@/lib/i18n";
 import {
   DARKROOM_PHOTOS,
   darkroomReadoutRows,
@@ -52,6 +53,8 @@ interface DarkroomLightboxProps {
  * prefers-reduced-motion → no drag arc, instant state swaps.
  */
 export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLightboxProps) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const [scale, setScale] = useState(1);
   const [reduced, setReduced] = useState(false);
   const pinchRef = useRef<number | null>(null);
@@ -160,13 +163,13 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
             <span className="tabular-nums">
               {photo.frame} — {String(index + 1).padStart(2, "0")} / {String(DARKROOM_PHOTOS.length).padStart(2, "0")}
             </span>
-            <span className="hidden sm:inline">DRAG ↓ 120px DISMISS · SCROLL ZOOM · ESC CLOSE</span>
+            <span className="hidden sm:inline">{t.photography.lightbox.hint}</span>
             <button
               onClick={onClose}
-              aria-label="关闭灯箱 (ESC)"
+              aria-label={isZh ? "关闭灯箱 (ESC)" : "Close lightbox (ESC)"}
               className="cursor-pointer border border-white/30 px-2.5 py-1 text-white/90 hover:border-white hover:text-white"
             >
-              ✕ CLOSE
+              ✕ {t.photography.lightbox.close}
             </button>
           </div>
 

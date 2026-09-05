@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import { ListCollapse, Compass } from "lucide-react";
 
 export interface TocEntry {
@@ -15,6 +16,8 @@ interface TocProps {
 }
 
 export function TableOfContents({ items = [], className = "" }: TocProps) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const [activeId, setActiveId] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
 
@@ -136,7 +139,7 @@ export function TableOfContents({ items = [], className = "" }: TocProps) {
       <div className="mb-3 flex items-center justify-between border-b border-border-plate pb-2">
         <div className="flex items-center gap-2 text-xs font-telemetry font-bold tracking-wider text-text-primary">
           <ListCollapse className="h-3.5 w-3.5 text-ink-dominant" />
-          <span>目录 ARCHIVE</span>
+          <span>{isZh ? "文章目录" : "TABLE OF CONTENTS"}</span>
         </div>
         <div className="flex items-center gap-1.5 font-telemetry text-[11px] text-muted tabular-nums">
           <Compass className="h-3 w-3" />

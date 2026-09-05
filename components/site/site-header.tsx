@@ -1,21 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { SafelightSwitch } from "@/components/ui/safelight-switch";
+import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
 import { FilmIndex, type FilmPillar } from "./film-index";
 import { SOCIAL_LINKS } from "./social-links";
 import { SocialBadge } from "./social-badge";
 
-export type NavPillar = FilmPillar;
 
 /**
- * BRAWUKA-57 · Four-pillar global navigation (/#projects retired with the bento).
+ * Core destination routes referenced by the header index.
  */
-export const NAV_PILLARS: ReadonlyArray<NavPillar> = [
-  { href: "/", label: "ATELIER // 门厅" },
-  { href: "/posts", label: "DISPATCHES // 归档" },
-  { href: "/photography", label: "DARKROOM // 暗房" },
-  { href: "/resume", label: "FLIGHT PATH // 航线" },
-];
+export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume"] as const;
 
 /**
  * BRAWUKA-45 · Shared sticky site header: logo + coordinates, film-clip
@@ -31,7 +25,7 @@ export function SiteHeader() {
           <Link
             href="/"
             className="font-display text-lg font-bold tracking-tight text-primary"
-            aria-label="LZZ Atelier — 返回门厅"
+            aria-label="LZZ Atelier"
           >
             LZZ ATELIER
           </Link>
@@ -41,12 +35,13 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-1.5">
-          <FilmIndex pillars={NAV_PILLARS} />
+          <FilmIndex />
           <div className="mr-1 hidden items-center gap-1.5 xl:flex" aria-label="社交媒体外链">
             {SOCIAL_LINKS.map((link) => (
               <SocialBadge key={link.key} link={link} />
             ))}
           </div>
+          <LanguageSwitch />
           <SafelightSwitch />
         </div>
       </div>

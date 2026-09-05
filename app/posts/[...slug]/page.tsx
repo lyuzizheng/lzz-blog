@@ -4,18 +4,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { posts, type Post } from "#site/content";
 import { MdxContent } from "@/components/mdx/mdx-content";
-import { TableOfContents } from "@/components/posts/toc";
+import { TableOfContents, PostHeaderMeta, PostNav } from "@/components/posts";
 import { MonoColorCover } from "@/components/ui/mono-color-cover";
 import { SiteHeader, SiteFooter } from "@/components/site";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  Tag,
-  Folder,
-  ChevronLeft,
-  BookOpen,
-} from "lucide-react";
+import { Tag, Folder } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -126,13 +118,6 @@ export default async function PostDetailPage({ params }: PageProps) {
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-        <Link
-          href="/posts"
-          className="mb-8 inline-flex items-center gap-1.5 rounded border border-border-plate/60 bg-chamber/60 px-2.5 py-1 text-xs font-telemetry text-text-secondary transition-colors hover:border-border-plate hover:text-text-primary"
-        >
-          <ChevronLeft className="h-3.5 w-3.5" />
-          <span>文章归档 · {post.category.toUpperCase()}</span>
-        </Link>
         {/* Article Header & Metadata */}
         <header className="mb-10 max-w-3xl">
           {/* Tags bar */}
@@ -164,28 +149,13 @@ export default async function PostDetailPage({ params }: PageProps) {
             </p>
           )}
 
-          {/* Precision Telemetry Cluster */}
-          <div className="mt-6 flex flex-wrap items-center gap-4 border-y border-border-plate/60 py-3 text-xs font-telemetry text-muted">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5 text-ink-dominant" />
-              <time dateTime={post.date} className="tabular-nums">
-                {post.date.slice(0, 10)}
-              </time>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5 text-ink-dominant" />
-              <span className="tabular-nums">{post.reading_time} 分钟阅读</span>
-            </div>
-            {post.word_count > 0 && (
-              <div className="hidden items-center gap-1.5 sm:flex">
-                <BookOpen className="h-3.5 w-3.5 text-ink-dominant" />
-                <span className="tabular-nums">{post.word_count} 字</span>
-              </div>
-            )}
-            <div className="ml-auto text-[11px] opacity-75">
-              <span>BY {post.author.toUpperCase()}</span>
-            </div>
-          </div>
+          <PostHeaderMeta
+            category={post.category}
+            date={post.date}
+            readingTime={post.reading_time}
+            wordCount={post.word_count}
+            author={post.author}
+          />
         </header>
 
         {/* Cover Display */}
@@ -222,63 +192,11 @@ export default async function PostDetailPage({ params }: PageProps) {
           <div className="lg:col-span-8 min-w-0">
             <MdxContent code={post.content} />
 
-            {/* Bottom Meta & Tags */}
-            <div className="mt-12 border-t border-border-plate pt-6">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-telemetry text-muted">标签:</span>
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded border border-border-plate bg-chamber px-2.5 py-0.5 font-telemetry text-xs text-text-secondary"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  href="/posts"
-                  className="flex items-center gap-1 text-xs font-telemetry text-ink-dominant hover:underline"
-                >
-                  <ArrowLeft className="h-3 w-3" />
-                  <span>返回文章总列表</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Adjacent Posts Navigation Cards */}
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {prevPost ? (
-                <Link
-                  href={prevPost.permalink}
-                  className="group rounded-lg border border-border-plate bg-surface/60 p-4 transition-all hover:border-ink-dominant/50 hover:bg-surface"
-                >
-                  <span className="text-[11px] font-telemetry text-muted block mb-1">
-                    ← 上一篇 PREVIOUS
-                  </span>
-                  <span className="line-clamp-2 text-sm font-semibold text-text-primary group-hover:text-ink-dominant">
-                    {prevPost.title}
-                  </span>
-                </Link>
-              ) : (
-                <div />
-              )}
-              {nextPost ? (
-                <Link
-                  href={nextPost.permalink}
-                  className="group rounded-lg border border-border-plate bg-surface/60 p-4 text-right transition-all hover:border-ink-dominant/50 hover:bg-surface"
-                >
-                  <span className="text-[11px] font-telemetry text-muted block mb-1">
-                    下一篇 NEXT →
-                  </span>
-                  <span className="line-clamp-2 text-sm font-semibold text-text-primary group-hover:text-ink-dominant">
-                    {nextPost.title}
-                  </span>
-                </Link>
-              ) : (
-                <div />
-              )}
-            </div>
+            <PostNav
+              tags={post.tags}
+              prevPost={prevPost}
+              nextPost={nextPost}
+            />
           </div>
 
           {/* Sticky Sidebar (TOC) */}
