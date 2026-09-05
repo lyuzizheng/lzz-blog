@@ -13,16 +13,23 @@ export const metadata: Metadata = {
 function toArchiveDtos(): ArchivePost[] {
   return posts
     .filter((p) => !p.draft)
-    .map((p) => ({
-      slug: p.slug,
-      permalink: p.permalink,
-      title: p.title,
-      summary: p.summary ?? p.description ?? "",
-      date: p.date,
-      category: p.category,
-      tags: [...(p.tags ?? [])],
-      reading_time: (p as unknown as { reading_time?: number }).reading_time,
-    }));
+    .map((p) => {
+      const readingTime =
+        "reading_time" in p && typeof p.reading_time === "number" ? p.reading_time : undefined;
+      const coverImage =
+        "cover_image" in p && typeof p.cover_image === "string" ? p.cover_image : undefined;
+      return {
+        slug: p.slug,
+        permalink: p.permalink,
+        title: p.title,
+        summary: p.summary ?? p.description ?? "",
+        date: p.date,
+        category: p.category,
+        tags: [...(p.tags ?? [])],
+        reading_time: readingTime,
+        cover_image: coverImage,
+      };
+    });
 }
 
 export default function PostsArchivePage() {
