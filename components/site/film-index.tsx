@@ -41,8 +41,9 @@ export function FilmIndex({ pillars }: { pillars?: ReadonlyArray<FilmPillar> }) 
         { href: "/posts", label: t.nav.dispatches },
         { href: "/photography", label: t.nav.darkroom },
         { href: "/resume", label: t.nav.flightPath },
+        { href: "/products", label: t.nav.products },
       ],
-    [pillars, t.nav.atelier, t.nav.dispatches, t.nav.darkroom, t.nav.flightPath],
+    [pillars, t.nav.atelier, t.nav.dispatches, t.nav.darkroom, t.nav.flightPath, t.nav.products],
   );
   const [open, setOpen] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);

@@ -14,6 +14,7 @@ export interface Translations {
     dispatches: string;
     darkroom: string;
     flightPath: string;
+    products: string;
     status: string;
     pdf: string;
   };
@@ -138,5 +139,13 @@ export interface Translations {
     resume: string;
     status: string;
     pdf: string;
+  };
+  products: {
+    title: string;
+    subtitle: string;
+    deckHint: string;
+    scrollDown: string;
+    externalLink: string;
+    status: string;
   };
 }

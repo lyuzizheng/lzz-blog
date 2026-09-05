@@ -14,6 +14,7 @@ export const en: Translations = {
     dispatches: "DISPATCHES",
     darkroom: "DARKROOM",
     flightPath: "FLIGHT PATH",
+    products: "PRODUCTS",
     status: "STATUS",
     pdf: "DOWNLOAD PDF",
   },
@@ -157,5 +158,13 @@ export const en: Translations = {
     resume: "RESUME",
     status: "STATUS",
     pdf: "PDF DOWNLOAD",
+  },
+  products: {
+    title: "Products & Works",
+    subtitle: "Curated Independent Engineering & Digital Experiments",
+    deckHint: "One product per frame · Scroll or Arrow keys to navigate",
+    scrollDown: "Scroll down for next product ↓",
+    externalLink: "External Channel",
+    status: "Status Stamp",
   },
 };

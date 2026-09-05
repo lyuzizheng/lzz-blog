@@ -56,6 +56,9 @@ export function SiteFooter({ variant = "atelier" }: { variant?: "atelier" | "dar
             <Link href="/posts" className="transition-colors hover:text-text-primary">
               {isZh ? "文章归档" : "POSTS"}
             </Link>
+            <Link href="/products" className="transition-colors hover:text-text-primary">
+              {isZh ? "产品项目" : "PRODUCTS"}
+            </Link>
             <Link href="/resume" className="transition-colors hover:text-text-primary">
               {isZh ? "个人履历" : "RESUME"}
             </Link>
