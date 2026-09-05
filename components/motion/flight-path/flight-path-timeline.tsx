@@ -217,31 +217,31 @@ export function FlightPathTimeline() {
       {/* Act 4 · 人格穿插 interlude */}
       <section aria-label="人格穿插" className="mt-12 border-t border-border-plate pt-6">
         <p className="font-telemetry text-[11px] tracking-[0.18em] text-safelight">
-          ACT 4 // human — 人格切片穿插
+          {t.resume.act4Human}
         </p>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <CritiqueCard />
           <div className="rounded border border-border-plate bg-surface p-3">
             <p className="font-telemetry text-[11px] tracking-[0.1em] text-secondary">
-              PHOTO // 暗房代表作
+              {t.resume.photoRep}
             </p>
             <div className="halftone-screen mt-2 flex h-28 items-center justify-center rounded bg-chamber">
               <span className="px-4 text-center font-telemetry text-[10px] leading-relaxed text-muted">
                 Sony A7M4 · 35mm F1.4 GM · f/1.4 · 1/250s · ISO 100
                 <br />
-                代表作待 owner 供图（P5）
+                {isZh ? "代表作待供图（P5）" : "Specimen photo pending upload (P5)"}
               </span>
             </div>
           </div>
           <div className="rounded border border-border-plate bg-surface p-3">
             <p className="font-telemetry text-[11px] tracking-[0.1em] text-secondary">
-              LIFE // 羽毛球
+              {t.resume.lifeBadminton}
             </p>
             <p className="mt-2 font-display text-3xl text-primary tabular-nums">
-              50<span className="text-lg text-muted">+ 场/年</span>
+              50<span className="text-lg text-muted">{t.resume.badmintonMatches}</span>
             </p>
             <p className="mt-1 font-body text-[13px] leading-relaxed text-muted">
-              2023 全年出勤，教练课自 5 月 —— 仍未赢下老板。[VERIFIED:S5]
+              {t.resume.badmintonNote}
             </p>
           </div>
         </div>

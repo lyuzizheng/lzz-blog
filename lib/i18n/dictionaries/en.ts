@@ -22,6 +22,7 @@ export const en: Translations = {
     tagline: "LZZ Atelier // Personal Page",
     heroSubtitle:
       "Distributed systems engineer & visual storyteller — writing, photography, and the flight path between.",
+    developing: "DEVELOPING · SCROLL TO DEVELOP",
     chapters: {
       writings: {
         title: "Writings",
@@ -103,6 +104,16 @@ export const en: Translations = {
     footerNote:
       "Source: docs/CAREER_DOSSIER.md · lib/career-dossier.ts — Verified facts only. TBD metrics require owner confirmation.",
     employment: "Employment",
+    act4Human: "ACT 4 · Human Interlude",
+    photoRep: "PHOTOGRAPHY · SELECTION",
+    lifeBadminton: "LIFE · BADMINTON",
+    badmintonMatches: "+ matches/yr",
+    badmintonNote:
+      "2023 full attendance, coaching since May — still haven't beaten the boss. [VERIFIED:S5]",
+    mentorNote: "MENTORSHIP · Structured methodology, sharp engineering focus.",
+    liveNote: "LIVE · IN PROGRESS",
+    needsOwnerNote: "[NEEDS-OWNER] Public disclosure boundary pending confirmation.",
+    archTitle: "ARCH DIAGRAM",
     dimensions: {
       platform: {
         title: "Platform Infrastructure",

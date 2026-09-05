@@ -33,7 +33,7 @@ export interface DossierDrawerProps {
 }
 
 export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const isZh = locale === "zh";
   return (
     <Dialog
@@ -96,7 +96,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
               <div className="mt-4">
                 <ArchDiagram
                   source={node.archDiagram}
-                  title={`ARCH // ${node.id} ${node.codename} · mono-color 蓝图`}
+                  title={`${t.resume.archTitle} · ${node.id} ${node.codename}`}
                 />
               </div>
             )}
@@ -105,7 +105,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
 
             {node.needsOwner && (
               <p className="mt-4 rounded border border-dashed border-border-plate bg-chamber/50 px-3 py-2 font-telemetry text-[11px] text-muted">
-                NEEDS-OWNER // 公开边界待确认，展示范围可能调整。
+                {t.resume.needsOwnerNote}
               </p>
             )}
 

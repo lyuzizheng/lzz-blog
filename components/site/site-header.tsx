@@ -5,17 +5,11 @@ import { FilmIndex, type FilmPillar } from "./film-index";
 import { SOCIAL_LINKS } from "./social-links";
 import { SocialBadge } from "./social-badge";
 
-export type NavPillar = FilmPillar;
 
 /**
- * BRAWUKA-57 · Four-pillar global navigation (/#projects retired with the bento).
+ * Core destination routes referenced by the header index.
  */
-export const NAV_PILLARS: ReadonlyArray<NavPillar> = [
-  { href: "/", label: "ATELIER" },
-  { href: "/posts", label: "DISPATCHES" },
-  { href: "/photography", label: "DARKROOM" },
-  { href: "/resume", label: "FLIGHT PATH" },
-];
+export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume"] as const;
 
 /**
  * BRAWUKA-45 · Shared sticky site header: logo + coordinates, film-clip

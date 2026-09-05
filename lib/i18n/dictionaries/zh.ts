@@ -19,9 +19,10 @@ export const zh: Translations = {
   },
   home: {
     title: "吕自正",
-    tagline: "LZZ Atelier // 个人主页",
+    tagline: "吕自正 · 个人主页",
     heroSubtitle:
       "分布式系统工程师与摄影记录者。记录关于系统架构、工程手艺与光影定格的长期思考。",
+    developing: "胶片显影中 · 向下滑动显影",
     chapters: {
       writings: {
         title: "文章归档",
@@ -97,12 +98,22 @@ export const zh: Translations = {
     flightPathTitle: "经历航线与工程实录",
     flightPathSubtitle:
       "吕自正 — 工程师与视觉记录者。从南洋理工大学本科到字节跳动的十二帧工程历程。",
-    timelineAct0: "序章 // 显影 — 胶片入水显影",
+    timelineAct0: "序章 · 显影 — 35mm 胶片入水显影",
     capabilityTitle: "工程能力维度",
-    screenOnly: "// 交互浏览 · 仅屏幕展示",
+    screenOnly: "交互浏览 · 仅屏幕展示",
     footerNote:
       "数据来源 docs/CAREER_DOSSIER.md · lib/career-dossier.ts。仅收录已验证事实，待确认指标需经本人核实。",
     employment: "工作经历",
+    act4Human: "第四幕 · 个人生活剪影",
+    photoRep: "摄影 · 暗房精选",
+    lifeBadminton: "生活 · 羽毛球",
+    badmintonMatches: "+ 场/年",
+    badmintonNote:
+      "2023 全年出勤，教练课自 5 月 —— 仍未赢下老板。[VERIFIED:S5]",
+    mentorNote: "导师引导 · 拆解工程方法，聚焦关键目标。",
+    liveNote: "进行中",
+    needsOwnerNote: "[待核实] 公开边界待确认，展示范围可能调整。",
+    archTitle: "架构蓝图",
     dimensions: {
       platform: {
         title: "架构底座",
@@ -125,7 +136,7 @@ export const zh: Translations = {
   status: {
     navTitle: "系统状态与边缘探针控制台",
     escHint: "ESC 键返回",
-    telemetryLabel: "系统遥测 // 01°20′N 103°49′E",
+    telemetryLabel: "系统遥测 · 01°20′N 103°49′E",
     title: "系统运行状态",
     subtitle:
       "边缘网络运行状态、交付物版本与架构门禁健康度。健康检查接口：/api/health。",

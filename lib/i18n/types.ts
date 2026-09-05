@@ -21,6 +21,7 @@ export interface Translations {
     title: string;
     tagline: string;
     heroSubtitle: string;
+    developing: string;
     chapters: {
       writings: {
         title: string;
@@ -98,6 +99,15 @@ export interface Translations {
     screenOnly: string;
     footerNote: string;
     employment: string;
+    act4Human: string;
+    photoRep: string;
+    lifeBadminton: string;
+    badmintonMatches: string;
+    badmintonNote: string;
+    mentorNote: string;
+    liveNote: string;
+    needsOwnerNote: string;
+    archTitle: string;
     dimensions: {
       platform: { title: string; summary: string };
       frontend: { title: string; summary: string };

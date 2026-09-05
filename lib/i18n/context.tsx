@@ -51,18 +51,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleLocale = useCallback(() => {
-    setLocaleState((prev) => {
-      const next = prev === "en" ? "zh" : "en";
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-        document.cookie = `lzz_locale=${next}; path=/; max-age=31536000; SameSite=Lax`;
-        document.documentElement.lang = next === "zh" ? "zh-CN" : "en";
-      } catch {
-        // ignore
-      }
-      return next;
-    });
-  }, []);
+    setLocale(locale === "en" ? "zh" : "en");
+  }, [locale, setLocale]);
 
   const t = useMemo(() => DICTIONARIES[locale], [locale]);
 
