@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import * as runtime from "react/jsx-runtime";
 import Link from "next/link";
 import { CodeBlock } from "./code-block";
+import { Aside } from "./aside";
 import { YouTube, Bilibili, Tweet, Spotify, Notice } from "./embeds";
 
 interface MdxContentProps {
@@ -71,7 +72,7 @@ const defaultComponents = {
     </h4>
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="my-4 leading-relaxed text-text-secondary" {...props} />
+    <p className="my-[0.9em] font-display text-[1.0625rem] leading-[1.75] text-text-primary sm:text-lg" {...props} />
   ),
   a: ({ href, children, ...props }: LinkProps) => {
     if (!href) return <a {...props}>{children}</a>;
@@ -92,6 +93,8 @@ const defaultComponents = {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        data-domain={href.includes("://") ? href.split("/")[2]?.replace(/^www\./, "") : undefined}
+        title={href}
         className="font-medium text-ink-dominant underline underline-offset-4 transition-colors hover:text-ink-overprint"
         {...props}
       >
@@ -101,21 +104,21 @@ const defaultComponents = {
   },
   blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="my-6 border-l-4 border-ink-dominant/50 bg-chamber/40 py-2 pl-4 pr-3 italic text-text-secondary"
+      className="my-6 border-l-2 border-ink-dominant/60 bg-chamber/40 py-2 pl-4 pr-3 font-display italic text-text-secondary"
       {...props}
     />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="my-4 ml-6 list-disc space-y-1.5 text-text-secondary" {...props} />
+    <ul className="my-[0.9em] ml-6 list-disc space-y-[0.4em] font-display text-[1.0625rem] leading-[1.75] text-text-primary sm:text-lg" {...props} />
   ),
   ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
-    <ol className="my-4 ml-6 list-decimal space-y-1.5 text-text-secondary" {...props} />
+    <ol className="my-[0.9em] ml-6 list-decimal space-y-[0.4em] font-display text-[1.0625rem] leading-[1.75] text-text-primary sm:text-lg" {...props} />
   ),
   li: (props: React.LiHTMLAttributes<HTMLLIElement>) => (
     <li className="leading-relaxed" {...props} />
   ),
   table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 overflow-x-auto rounded-lg border border-border-plate">
+    <div className="my-6 overflow-x-auto border border-border-plate">
       <table className="w-full text-left text-sm" {...props} />
     </div>
   ),
@@ -139,20 +142,20 @@ const defaultComponents = {
     const isCentered = src.includes("#center");
     const cleanSrc = src.replace(/#center$/, "");
     return (
-      <figure className={`my-6 block ${isCentered ? "text-center" : ""}`}>
-        <div className="inline-block max-w-full overflow-hidden rounded-lg border border-border-plate bg-surface p-1 shadow-plate">
+      <figure className={`my-8 block ${isCentered ? "text-center" : ""}`}>
+        <div className="inline-block max-w-full overflow-hidden border border-border-plate bg-surface p-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={cleanSrc}
             alt={alt || ""}
             title={title}
-            className="max-h-[600px] w-auto max-w-full rounded object-contain mx-auto"
+            className="max-h-[600px] w-auto max-w-full object-contain mx-auto"
             loading="lazy"
             {...props}
           />
         </div>
         {(alt || title) && (
-          <figcaption className="mt-2 text-xs font-telemetry text-muted">
+          <figcaption className="mt-2 font-telemetry text-xs text-muted">
             {alt || title}
           </figcaption>
         )}
@@ -172,6 +175,7 @@ const defaultComponents = {
   Tweet,
   Spotify,
   Notice,
+  Aside,
 };
 
 export function MdxContent({ code, components = {}, className = "" }: MdxContentProps) {

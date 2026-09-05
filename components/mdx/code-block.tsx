@@ -45,7 +45,7 @@ export function CodeBlock({
   return (
     <div
       ref={containerRef}
-      className={`group relative my-6 overflow-hidden rounded-lg border border-border-plate bg-surface shadow-plate transition-colors duration-200 ${className}`}
+      className={`group relative my-6 overflow-hidden rounded-none border border-border-plate bg-surface transition-colors duration-200 ${className}`}
       {...props}
     >
       {/* Code Header Bar with Language and Copy */}
@@ -59,12 +59,12 @@ export function CodeBlock({
         <button
           onClick={handleCopy}
           aria-label="复制代码"
-          className="flex items-center gap-1.5 rounded px-2 py-0.5 text-[11px] font-medium text-text-secondary transition-all hover:bg-surface hover:text-text-primary focus:outline-none focus:ring-1 focus:ring-ink-dominant"
+          className="flex items-center gap-1.5 rounded-sm px-2 py-0.5 text-[11px] font-medium text-text-secondary transition-all hover:bg-surface hover:text-text-primary focus:outline-none focus:ring-1 focus:ring-ink-dominant"
         >
           {copied ? (
             <>
-              <Check className="h-3.5 w-3.5 text-emerald-500" />
-              <span className="text-emerald-500">已复制</span>
+            <Check className="h-3.5 w-3.5 text-ink-dominant" />
+            <span className="text-ink-dominant">已复制</span>
             </>
           ) : (
             <>

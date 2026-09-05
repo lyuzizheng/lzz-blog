@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, FlaskConical, Star } from "lucide-react";
-import { SpotlightCard } from "@/components/motion/spotlight-card";
 import { Badge } from "@/components/ui";
 import { PROJECTS, PROJECT_STATUS_META, type ProjectEntry } from "@/lib/projects";
 import { TiltCard } from "./tilt-card";
@@ -56,7 +55,7 @@ function ProjectCard({ project }: { project: ProjectEntry }) {
         project.span === "featured" ? "h-full md:col-span-4" : "h-full md:col-span-2"
       }
     >
-      <SpotlightCard className="flex h-full flex-col justify-between">
+      <div className="flex h-full flex-col justify-between border-t-2 border-border-strong pt-3">
         <div className="space-y-3">
           <div className="flex items-center justify-between font-telemetry text-[11px] text-muted">
             <span className="tracking-[0.14em]">{project.frame}</span>
@@ -118,7 +117,7 @@ function ProjectCard({ project }: { project: ProjectEntry }) {
             )}
           </div>
         </div>
-      </SpotlightCard>
+      </div>
     </TiltCard>
   );
 }

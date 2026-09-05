@@ -39,12 +39,14 @@ for (const field of ["codename", "frame", "tagline", "status", "stack", "links",
 check(projects.includes("incubating"), "Future Lab card must carry incubating items");
 check(bento.includes("PROJECTS"), "bento must render from PROJECTS");
 
-// 2. Dynamic card physics: tilt + spotlight, reduced-motion + touch fallback
+// 2. Card physics (BRAWUKA-61 Q9⑥: spotlight cursor layer deleted per DESIGN_V2 §6 —
+//    cards use a ruled archive block; tilt keeps reduced-motion + touch fallback)
 check(/rotateX/.test(tilt) && /rotateY/.test(tilt), "tilt card must drive rotateX/rotateY parallax");
 check(tilt.includes("prefers-reduced-motion"), "tilt must honor prefers-reduced-motion");
 check(tilt.includes("pointer: coarse"), "tilt must degrade on touch devices");
 check(tilt.includes("transformPerspective"), "tilt must use 3D perspective");
-check(bento.includes("SpotlightCard"), "cards must mount the spotlight cursor layer");
+check(!bento.includes("SpotlightCard"), "cards must NOT mount the deleted spotlight cursor layer");
+check(bento.includes("border-t-2 border-border-strong"), "cards must use the ruled archive block");
 check(bento.includes("TiltCard"), "cards must mount inside TiltCard");
 
 // 3. Live badges: stars fetch with CLS-safe fixed width + graceful fallback
@@ -104,5 +106,5 @@ if (failures.length > 0) {
   process.exit(1);
 }
 console.log(
-  "projects-resume OK: 4-project radar bento (tilt + spotlight + live stars), 4-dimension interactive dossier, A4 print sheet, homepage + resume wiring.",
+  "projects-resume OK: 4-project radar bento (tilt + ruled block + live stars), 4-dimension interactive dossier, A4 print sheet, homepage + resume wiring.",
 );

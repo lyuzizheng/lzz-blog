@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Geist, Geist_Mono } from "next/font/google";
+import { Newsreader, Noto_Serif_SC, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScrollProvider, FilmGrainOverlay, RouteTransition } from "@/components/motion";
+import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore } from "@/components/motion";
 import { siteConfig } from "@/lib/site";
 
 const newsreader = Newsreader({
@@ -10,6 +10,13 @@ const newsreader = Newsreader({
   variable: "--font-newsreader",
   display: "swap",
   style: ["normal", "italic"],
+});
+
+const notoSerifSC = Noto_Serif_SC({
+  subsets: ["latin"],
+  variable: "--font-noto-serif",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "900"],
 });
 
 const geistSans = Geist({
@@ -74,7 +81,7 @@ export default function RootLayout({
     <html
       lang="zh-CN"
       suppressHydrationWarning
-      className={`${newsreader.variable} ${geistSans.variable} ${geistMono.variable}`}
+      className={`${newsreader.variable} ${notoSerifSC.variable} ${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen bg-substrate text-primary font-body antialiased selection:bg-safelight/20 selection:text-safelight">
         <ThemeProvider
@@ -86,7 +93,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
             <FilmGrainOverlay />
-            <RouteTransition>{children}</RouteTransition>
+            <ScrollRestore>{children}</ScrollRestore>
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>
