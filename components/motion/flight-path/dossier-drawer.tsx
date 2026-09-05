@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "@/lib/i18n";
 import { motion } from "framer-motion";
 import { motionPhysics } from "@/tokens";
 import type { TimelineNode } from "@/lib/career-dossier";
@@ -32,6 +33,8 @@ export interface DossierDrawerProps {
 }
 
 export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   return (
     <Dialog
       open={node !== null}
@@ -49,7 +52,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
             <DialogHeader>
               <p className="font-telemetry text-[11px] tracking-[0.14em] text-muted tabular-nums">
                 {node.id} {"//"} {node.start}
-                {node.end ? ` – ${node.end}` : " – 至今"} · {node.codename}
+                {node.end ? ` – ${node.end}` : (isZh ? " – 至今" : " – Present")} · {node.codename}
               </p>
               <DialogTitle className="font-display text-2xl text-primary">
                 {node.org}
@@ -66,7 +69,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
             {node.impact.length > 0 && (
               <div className="mt-4 overflow-hidden rounded border border-border-plate">
                 <div className="border-b border-border-plate bg-chamber px-3 py-1.5 font-telemetry text-[10px] tracking-[0.12em] text-muted">
-                  IMPACT // 实测档案
+                  {isZh ? "实测成果指标" : "IMPACT METRICS"}
                 </div>
                 <dl>
                   {node.impact.map((im) => (
@@ -79,7 +82,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
                         <ImpactCounter impact={im} />
                         {im.status === "tbd" && (
                           <span className="ml-2 rounded border border-border-plate px-1 text-[10px] font-normal text-muted">
-                            TBD 待确认
+                            {isZh ? "待确认" : "TBD"}
                           </span>
                         )}
                       </dd>
@@ -93,7 +96,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
               <div className="mt-4">
                 <ArchDiagram
                   source={node.archDiagram}
-                  title={`ARCH // ${node.id} ${node.codename} · mono-color 蓝图`}
+                  title={`${t.resume.archTitle} · ${node.id} ${node.codename}`}
                 />
               </div>
             )}
@@ -102,7 +105,7 @@ export function DossierDrawer({ node, onClose }: DossierDrawerProps) {
 
             {node.needsOwner && (
               <p className="mt-4 rounded border border-dashed border-border-plate bg-chamber/50 px-3 py-2 font-telemetry text-[11px] text-muted">
-                NEEDS-OWNER // 公开边界待确认，展示范围可能调整。
+                {t.resume.needsOwnerNote}
               </p>
             )}
 

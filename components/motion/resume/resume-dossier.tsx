@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import { motionPhysics } from "@/tokens";
 import { Badge } from "@/components/ui";
 import { CAPABILITY_DIMENSIONS } from "@/lib/resume";
@@ -16,6 +17,8 @@ import { cn } from "@/lib/utils";
  * - prefers-reduced-motion 下 AnimatePresence 经全局 CSS 降级为瞬时切换。
  */
 export function ResumeDossier() {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const [open, setOpen] = useState<string[]>(["platform"]);
 
   const toggle = (id: string) => {
@@ -41,7 +44,7 @@ export function ResumeDossier() {
                   D{String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="font-display text-xl font-medium text-primary">
-                  {dim.title}
+                  {isZh ? dim.title : (t.resume.dimensions[dim.id as keyof typeof t.resume.dimensions]?.title ?? dim.title)}
                 </span>
                 <span className="hidden font-telemetry text-[11px] tracking-[0.14em] text-muted sm:inline">
                   {dim.codename}
@@ -69,7 +72,7 @@ export function ResumeDossier() {
                 >
                   <div className="space-y-3 border-t border-border-plate p-5">
                     <p className="font-body text-sm leading-relaxed text-muted">
-                      {dim.summary}
+                      {isZh ? dim.summary : (t.resume.dimensions[dim.id as keyof typeof t.resume.dimensions]?.summary ?? dim.summary)}
                     </p>
                     <ul className="space-y-2.5">
                       {dim.bullets.map((bullet) => (

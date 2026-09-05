@@ -125,7 +125,6 @@ export default async function PostDetailPage({ params }: PageProps) {
         <div className="mb-8 lg:hidden">
           <TocMobileProgress items={post.toc} />
         </div>
-
         {/* Article Header & Metadata */}
         <header className="mb-10 max-w-3xl">
           {/* Tags bar */}

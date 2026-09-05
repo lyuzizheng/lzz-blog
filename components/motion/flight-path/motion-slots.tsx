@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion, useInView } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 import { motionPhysics } from "@/tokens";
 import type { DossierImpact } from "@/lib/career-dossier";
 
@@ -121,13 +122,14 @@ export function SlotBentoCounter({ children, className = "" }: SlotProps) {
 /* ------------------------------------------------------------------ */
 
 export function SlotFog({ children, className = "" }: SlotProps) {
+  const { t } = useI18n();
   const reduced = usePrefersReducedMotion();
   if (reduced) {
     return (
       <div data-slot="act2-fog">
         {children}
         <p className="mt-2 border-l-2 border-ink-dominant pl-3 font-telemetry text-[11px] leading-relaxed text-secondary">
-          MENTOR // 台湾导师入场 — 拆解工作法，对焦清晰。
+          {t.resume.mentorNote}
         </p>
       </div>
     );
@@ -159,7 +161,7 @@ export function SlotFog({ children, className = "" }: SlotProps) {
         viewport={{ once: true, margin: "-40px" }}
         transition={{ type: "spring", ...motionPhysics.springs.snappy, delay: 0.5 }}
       >
-        MENTOR // 台湾导师入场 — 拆解工作法，对焦清晰。
+        {t.resume.mentorNote}
       </motion.p>
     </motion.div>
   );
@@ -428,6 +430,7 @@ export function SlotBentoRow({ children, className = "" }: SlotProps) {
 /* ------------------------------------------------------------------ */
 
 export function SlotLiveCursor({ children, className = "" }: SlotProps) {
+  const { t } = useI18n();
   const reduced = usePrefersReducedMotion();
   return (
     <div data-slot="act3-live-cursor" className={className}>
@@ -435,7 +438,7 @@ export function SlotLiveCursor({ children, className = "" }: SlotProps) {
         {!reduced && (
           <span className="inline-block h-3 w-[7px] animate-pulse bg-safelight" aria-hidden />
         )}
-        <span>LIVE // 进行中 — {new Date().getFullYear().toString()}</span>
+        <span>{t.resume.liveNote} — {new Date().getFullYear().toString()}</span>
       </div>
       {children}
     </div>

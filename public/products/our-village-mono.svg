@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Mono Halftone Dot Pattern (Screen Angle 45deg, Cobalt Ink) -->
+    <pattern id="mono-halftone-ov" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <circle cx="2.5" cy="2.5" r="1.3" fill="#2148B8" fill-opacity="0.32" />
+      <circle cx="8.5" cy="8.5" r="1.3" fill="#2148B8" fill-opacity="0.32" />
+    </pattern>
+    <pattern id="mono-dense-ov" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <circle cx="2" cy="2" r="1.6" fill="#2148B8" fill-opacity="0.48" />
+      <circle cx="6" cy="6" r="1.6" fill="#2148B8" fill-opacity="0.48" />
+    </pattern>
+  </defs>
+
+  <!-- Substrate: Pale Beige Paper Base (#F5F1E8) -->
+  <rect width="800" height="500" fill="#F5F1E8" />
+
+  <!-- Outer Boundary & Registration Trim Marks -->
+  <rect x="24" y="24" width="752" height="452" fill="none" stroke="#2148B8" stroke-width="1" stroke-opacity="0.4" />
+  <rect x="28" y="28" width="744" height="444" fill="none" stroke="#2148B8" stroke-width="0.5" stroke-opacity="0.2" />
+
+  <!-- Corner Crop Marks (1px Hairlines) -->
+  <path d="M12 24h20M24 12v20 M768 24h20M776 12v20 M12 476h20M24 468v20 M768 476h20M776 468v20" stroke="#2148B8" stroke-width="1" />
+
+  <!-- Telemetry Header Strip -->
+  <g font-family="monospace" font-size="9" fill="#2148B8" letter-spacing="1">
+    <text x="40" y="46">PLATE 03 // OUR VILLAGE</text>
+    <text x="270" y="46">SPEC // NEIGHBORHOOD-COMMONS-SYSTEM</text>
+    <text x="580" y="46">ORIGIN // SINGAPORE · 1.3521°N</text>
+    <line x1="40" y1="52" x2="760" y2="52" stroke="#2148B8" stroke-width="1" stroke-opacity="0.3" />
+  </g>
+
+  <!-- LEFT SCHEMATIC: Communal Village Pavilion Elevation Blueprint -->
+  <g transform="translate(50, 70)">
+    <rect x="0" y="0" width="320" height="370" fill="none" stroke="#2148B8" stroke-width="1" />
+    <rect x="4" y="4" width="312" height="24" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+    <text x="12" y="20" font-family="monospace" font-size="10" font-weight="bold" fill="#2148B8">FIG 03.1 · COMMONS PAVILION ELEVATION</text>
+
+    <!-- Pitched Roof Pavilion Architecture -->
+    <g transform="translate(30, 45)">
+      <!-- Gabled Roof Shading (Halftone Dense Fill) -->
+      <polygon points="130,25 15,100 245,100" fill="url(#mono-halftone-ov)" stroke="#2148B8" stroke-width="1.5" />
+      <line x1="130" y1="25" x2="130" y2="100" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="3,3" />
+
+      <!-- Overhang Eaves Bracket -->
+      <line x1="5" y1="100" x2="255" y2="100" stroke="#2148B8" stroke-width="2" />
+      <line x1="10" y1="106" x2="250" y2="106" stroke="#2148B8" stroke-width="1" />
+
+      <!-- Columns / Timber Pillars (4 Load-Bearing Pillars) -->
+      <rect x="35" y="106" width="12" height="110" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="85" y="106" width="12" height="110" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="163" y="106" width="12" height="110" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="213" y="106" width="12" height="110" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+
+      <!-- Communal Gathering Platform Ground Line -->
+      <rect x="15" y="216" width="230" height="16" fill="url(#mono-dense-ov)" stroke="#2148B8" stroke-width="1.5" />
+      <line x1="0" y1="232" x2="260" y2="232" stroke="#2148B8" stroke-width="1" />
+
+      <!-- Central Hearth / Commons Symbol -->
+      <circle cx="130" cy="160" r="22" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <circle cx="130" cy="160" r="16" fill="url(#mono-halftone-ov)" stroke="#2148B8" stroke-width="0.75" />
+      <circle cx="130" cy="160" r="4" fill="#2148B8" />
+
+      <!-- Dimension Lines -->
+      <line x1="265" y1="25" x2="265" y2="232" stroke="#2148B8" stroke-width="0.75" />
+      <polyline points="262,30 265,25 268,30" fill="none" stroke="#2148B8" stroke-width="0.75" />
+      <polyline points="262,227 265,232 268,227" fill="none" stroke="#2148B8" stroke-width="0.75" />
+      <text x="272" y="132" font-family="monospace" font-size="7.5" fill="#2148B8" transform="rotate(90 272 132)">HEIGHT 6.2M</text>
+    </g>
+
+    <!-- Structural Language Banner -->
+    <g font-family="monospace" font-size="8" fill="#1A1A18">
+      <rect x="15" y="300" width="290" height="56" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+      <text x="24" y="318"><tspan font-weight="bold" fill="#2148B8">CANONICAL LEXICON:</tspan></text>
+      <text x="24" y="332">• Family: Household Unit &amp; Membership Holder</text>
+      <text x="24" y="346">• Villager: Person (Guardian / Child) inside Family</text>
+    </g>
+  </g>
+
+  <!-- RIGHT SCHEMATIC: Community Membership Constellation & Access Ring -->
+  <g transform="translate(390, 70)">
+    <rect x="0" y="0" width="370" height="370" fill="none" stroke="#2148B8" stroke-width="1" />
+    <rect x="4" y="4" width="362" height="24" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+    <text x="12" y="20" font-family="monospace" font-size="10" font-weight="bold" fill="#2148B8">FIG 03.2 · HOUSEHOLD ARCHIPELAGO &amp; ACCESS GATES</text>
+
+    <!-- Concentric Relational Rings -->
+    <g transform="translate(185, 155)">
+      <!-- Outer Ring: Commons Access -->
+      <circle cx="0" cy="0" r="105" fill="none" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="4,4" stroke-opacity="0.5" />
+      <text x="0" y="-110" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2148B8">TIER 03 · COMMUNITY COMMONS &amp; ACTIVITIES</text>
+
+      <!-- Middle Ring: Subscription & Membership -->
+      <circle cx="0" cy="0" r="75" fill="none" stroke="#2148B8" stroke-width="1" stroke-opacity="0.7" />
+      <text x="0" y="-80" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#2148B8">TIER 02 · FAMILY MEMBERSHIP</text>
+
+      <!-- Inner Core: Household Nodes -->
+      <circle cx="0" cy="0" r="45" fill="url(#mono-halftone-ov)" stroke="#2148B8" stroke-width="1.2" />
+      <circle cx="0" cy="0" r="18" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="4" fill="#2148B8" />
+      <text x="0" y="4" text-anchor="middle" font-family="monospace" font-size="6.5" font-weight="bold" fill="#2148B8">CORE</text>
+
+      <!-- Connected Family Orbital Nodes -->
+      <!-- Family Alpha -->
+      <g transform="translate(-75, -25)">
+        <circle cx="0" cy="0" r="9" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="3" fill="#2148B8" />
+        <text x="-48" y="-12" font-family="monospace" font-size="7" font-weight="bold" fill="#2148B8">FAM_01 [2+1]</text>
+      </g>
+      <!-- Family Beta -->
+      <g transform="translate(68, -35)">
+        <circle cx="0" cy="0" r="9" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="3" fill="#2148B8" />
+        <text x="14" y="-2" font-family="monospace" font-size="7" font-weight="bold" fill="#2148B8">FAM_02 [2+2]</text>
+      </g>
+      <!-- Family Gamma -->
+      <g transform="translate(42, 65)">
+        <circle cx="0" cy="0" r="9" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="3" fill="#2148B8" />
+        <text x="14" y="8" font-family="monospace" font-size="7" font-weight="bold" fill="#2148B8">FAM_03 [2+1]</text>
+      </g>
+      <!-- Family Delta -->
+      <g transform="translate(-55, 55)">
+        <circle cx="0" cy="0" r="9" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="3" fill="#2148B8" />
+        <text x="-48" y="18" font-family="monospace" font-size="7" font-weight="bold" fill="#2148B8">FAM_04 [1+1]</text>
+      </g>
+
+      <!-- Connecting Inter-Family Mesh Filaments -->
+      <line x1="-75" y1="-25" x2="68" y2="-35" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="2,2" />
+      <line x1="68" y1="-35" x2="42" y2="65" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="2,2" />
+      <line x1="42" y1="65" x2="-55" y2="55" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="2,2" />
+      <line x1="-55" y1="55" x2="-75" y2="-25" stroke="#2148B8" stroke-width="0.75" stroke-dasharray="2,2" />
+    </g>
+
+    <!-- Bottom Newcomer Intake & Access Card Mockup -->
+    <g transform="translate(20, 285)">
+      <rect x="0" y="0" width="330" height="70" fill="#F5F1E8" stroke="#2148B8" stroke-width="1" />
+      <rect x="0" y="0" width="330" height="18" fill="url(#mono-halftone-ov)" stroke="#2148B8" stroke-width="0.5" />
+      <text x="10" y="13" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">MEMBERSHIP CREDENTIAL · VILLAGE ACCESS</text>
+
+      <text x="12" y="34" font-family="monospace" font-size="8" fill="#1A1A18">ACCESS: <tspan font-weight="bold" fill="#2148B8">FAMILY ONBOARDING &amp; SUBSCRIPTION</tspan></text>
+      <text x="12" y="48" font-family="monospace" font-size="7.5" fill="#1A1A18">BILLING: AIRWALLEX RECURRING MEMBERSHIP / AIRWALLEX CUSTOMER</text>
+      <text x="12" y="60" font-family="monospace" font-size="7.5" font-weight="bold" fill="#2148B8">ACTIVITIES: CNY GATHERINGS · STORIES MAGAZINE · COMMUNITY COMMONS</text>
+    </g>
+  </g>
+
+  <!-- Technical Stamp Badge: Bottom Right -->
+  <g transform="translate(565, 412)">
+    <rect x="0" y="0" width="190" height="34" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+    <rect x="2" y="2" width="186" height="30" fill="none" stroke="#2148B8" stroke-width="0.5" stroke-dasharray="2,2" />
+    <text x="10" y="15" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">STATUS: LIVE · SHIPPED</text>
+    <text x="10" y="27" font-family="monospace" font-size="7.5" fill="#1A1A18">ORIGIN: GEN-GROWTH.COM</text>
+  </g>
+
+  <!-- Footer Technical Annotation -->
+  <g font-family="monospace" font-size="8" fill="#2148B8" fill-opacity="0.8">
+    <text x="40" y="466">ARCHETYPE: NEIGHBORHOOD MEMBERSHIP SYSTEM · HOUSEHOLD ARCHIPELAGO</text>
+    <text x="640" y="466">MONO-COLOR PURE PRINT</text>
+  </g>
+</svg>
