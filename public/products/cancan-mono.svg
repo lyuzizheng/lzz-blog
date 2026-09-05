@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Mono Halftone Dot Pattern (Screen Angle 45deg, Cobalt Ink) -->
+    <pattern id="mono-halftone-cc" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <circle cx="2.5" cy="2.5" r="1.3" fill="#2148B8" fill-opacity="0.32" />
+      <circle cx="8.5" cy="8.5" r="1.3" fill="#2148B8" fill-opacity="0.32" />
+    </pattern>
+    <pattern id="mono-dense-cc" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <circle cx="2" cy="2" r="1.6" fill="#2148B8" fill-opacity="0.48" />
+      <circle cx="6" cy="6" r="1.6" fill="#2148B8" fill-opacity="0.48" />
+    </pattern>
+  </defs>
+
+  <!-- Substrate: Pale Beige Paper Base (#F5F1E8) -->
+  <rect width="800" height="500" fill="#F5F1E8" />
+
+  <!-- Outer Boundary & Registration Trim Marks -->
+  <rect x="24" y="24" width="752" height="452" fill="none" stroke="#2148B8" stroke-width="1" stroke-opacity="0.4" />
+  <rect x="28" y="28" width="744" height="444" fill="none" stroke="#2148B8" stroke-width="0.5" stroke-opacity="0.2" />
+
+  <!-- Corner Crop Marks (1px Hairlines) -->
+  <path d="M12 24h20M24 12v20 M768 24h20M776 12v20 M12 476h20M24 468v20 M768 476h20M776 468v20" stroke="#2148B8" stroke-width="1" />
+
+  <!-- Telemetry Header Strip -->
+  <g font-family="monospace" font-size="9" fill="#2148B8" letter-spacing="1">
+    <text x="40" y="46">PLATE 02 // CANCAN</text>
+    <text x="280" y="46">SPEC // EVIDENCE-VAULT-RECONCILIATION</text>
+    <text x="595" y="46">TARGET // macOS LOCAL-FIRST</text>
+    <line x1="40" y1="52" x2="760" y2="52" stroke="#2148B8" stroke-width="1" stroke-opacity="0.3" />
+  </g>
+
+  <!-- LEFT SCHEMATIC: The Heavy Encrypted Local Vault Door -->
+  <g transform="translate(50, 70)">
+    <rect x="0" y="0" width="320" height="370" fill="none" stroke="#2148B8" stroke-width="1" />
+    <rect x="4" y="4" width="312" height="24" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+    <text x="12" y="20" font-family="monospace" font-size="10" font-weight="bold" fill="#2148B8">FIG 02.1 · HARDENED LOCAL VAULT CORE</text>
+
+    <!-- Vault Mechanism Center -->
+    <g transform="translate(160, 175)">
+      <!-- Outer Dial Bezel -->
+      <circle cx="0" cy="0" r="110" fill="url(#mono-halftone-cc)" stroke="#2148B8" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="96" fill="#F5F1E8" stroke="#2148B8" stroke-width="1" />
+
+      <!-- Cryptographic Tumbler Teeth (12 Radial Marks) -->
+      <g stroke="#2148B8" stroke-width="1">
+        <line x1="0" y1="-110" x2="0" y2="-98" />
+        <line x1="55" y1="-95" x2="49" y2="-85" />
+        <line x1="95" y1="-55" x2="85" y2="-49" />
+        <line x1="110" y1="0" x2="98" y2="0" />
+        <line x1="95" y1="55" x2="85" y2="49" />
+        <line x1="55" y1="95" x2="49" y2="85" />
+        <line x1="0" y1="110" x2="0" y2="98" />
+        <line x1="-55" y1="95" x2="-49" y2="85" />
+        <line x1="-95" y1="55" x2="-85" y2="49" />
+        <line x1="-110" y1="0" x2="-98" y2="0" />
+        <line x1="-95" y1="-55" x2="-85" y2="-49" />
+        <line x1="-55" y1="-95" x2="-49" y2="-85" />
+      </g>
+
+      <!-- Inner Lock Mechanism Rotor -->
+      <circle cx="0" cy="0" r="68" fill="url(#mono-dense-cc)" stroke="#2148B8" stroke-width="1.2" />
+      <circle cx="0" cy="0" r="44" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+
+      <!-- Tri-Spoke Heavy Vault Handle Wheel -->
+      <line x1="0" y1="-44" x2="0" y2="44" stroke="#2148B8" stroke-width="2.5" />
+      <line x1="-38" y1="-22" x2="38" y2="22" stroke="#2148B8" stroke-width="2.5" />
+      <line x1="-38" y1="22" x2="38" y2="-22" stroke="#2148B8" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="14" fill="#2148B8" />
+      <circle cx="0" cy="0" r="4" fill="#F5F1E8" />
+
+      <!-- Vault Cross-Bolt Deadbolts -->
+      <rect x="-140" y="-8" width="22" height="16" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="118" y="-8" width="22" height="16" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="-8" y="-140" width="16" height="22" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+      <rect x="-8" y="118" width="16" height="22" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.2" />
+    </g>
+
+    <!-- Encryption Protocol Tags -->
+    <g font-family="monospace" font-size="8" fill="#1A1A18">
+      <rect x="15" y="310" width="290" height="46" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+      <text x="24" y="325"><tspan font-weight="bold" fill="#2148B8">CIPHER:</tspan> XChaCha20-Poly1305 + SQLCipher</text>
+      <text x="24" y="342"><tspan font-weight="bold" fill="#2148B8">INTEGRITY:</tspan> SHA-256 Per Document Envelope</text>
+    </g>
+  </g>
+
+  <!-- RIGHT SCHEMATIC: Multi-Source Reconciliation Matrix -->
+  <g transform="translate(390, 70)">
+    <rect x="0" y="0" width="370" height="370" fill="none" stroke="#2148B8" stroke-width="1" />
+    <rect x="4" y="4" width="362" height="24" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+    <text x="12" y="20" font-family="monospace" font-size="10" font-weight="bold" fill="#2148B8">FIG 02.2 · CROSS-SOURCE EVIDENCE CONVERGENCE</text>
+
+    <!-- Source Intake Node 1: Bank Statement (PDF) -->
+    <g transform="translate(20, 42)">
+      <rect x="0" y="0" width="150" height="70" fill="#F5F1E8" stroke="#2148B8" stroke-width="1" />
+      <rect x="0" y="0" width="150" height="16" fill="url(#mono-halftone-cc)" stroke="#2148B8" stroke-width="0.5" />
+      <text x="8" y="12" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">SOURCE A · DBS STATEMENTS</text>
+      <text x="8" y="32" font-family="monospace" font-size="7.5" fill="#1A1A18">21/01 CARD PMT</text>
+      <text x="8" y="46" font-family="monospace" font-size="9" font-weight="bold" fill="#2148B8">−980.50 SGD</text>
+      <text x="8" y="60" font-family="monospace" font-size="7" fill="#1A1A18" fill-opacity="0.7">EVID: #DBS-20260121.PDF</text>
+    </g>
+
+    <!-- Source Intake Node 2: Credit Card Ledger (CSV) -->
+    <g transform="translate(200, 42)">
+      <rect x="0" y="0" width="150" height="70" fill="#F5F1E8" stroke="#2148B8" stroke-width="1" />
+      <rect x="0" y="0" width="150" height="16" fill="url(#mono-halftone-cc)" stroke="#2148B8" stroke-width="0.5" />
+      <text x="8" y="12" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">SOURCE B · CARD ACCOUNT</text>
+      <text x="8" y="32" font-family="monospace" font-size="7.5" fill="#1A1A18">21/01 PAYMENT RCVD</text>
+      <text x="8" y="46" font-family="monospace" font-size="9" font-weight="bold" fill="#2148B8">+980.50 SGD</text>
+      <text x="8" y="60" font-family="monospace" font-size="7" fill="#1A1A18" fill-opacity="0.7">EVID: #CARD-TRANS.CSV</text>
+    </g>
+
+    <!-- Convergence Convergence Filaments (Connecting Pipes) -->
+    <path d="M95 112 v30 l80 25 M275 112 v30 l-80 25" fill="none" stroke="#2148B8" stroke-width="1.2" stroke-dasharray="3,3" />
+
+    <!-- Central Deterministic Reconciliation Box -->
+    <g transform="translate(50, 180)">
+      <rect x="0" y="0" width="270" height="75" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+      <!-- Top Title Bar -->
+      <rect x="0" y="0" width="270" height="18" fill="#2148B8" />
+      <text x="10" y="13" font-family="monospace" font-size="8.5" font-weight="bold" fill="#F5F1E8">DETERMINISTIC RECONCILIATION ENGINE</text>
+
+      <text x="14" y="36" font-family="monospace" font-size="9" font-weight="bold" fill="#1A1A18">INTERNAL TRANSFER DETECTED</text>
+      <text x="14" y="52" font-family="monospace" font-size="8" fill="#1A1A18">RULE: (−980.50) + (+980.50) = <tspan font-weight="bold" fill="#2148B8">Δ 0.00 SGD</tspan></text>
+      <text x="14" y="66" font-family="monospace" font-size="7.5" font-weight="bold" fill="#2148B8">STATUS: LINKED &amp; DE-DUPLICATED (NOT DOUBLE-COUNTED)</text>
+    </g>
+
+    <!-- Downward Arrow into Local Ledger -->
+    <line x1="185" y1="255" x2="185" y2="280" stroke="#2148B8" stroke-width="1.5" />
+    <polygon points="185,286 181,278 189,278" fill="#2148B8" />
+
+    <!-- Local Ledger Single Output Block -->
+    <g transform="translate(30, 290)">
+      <rect x="0" y="0" width="310" height="66" fill="url(#mono-halftone-cc)" stroke="#2148B8" stroke-width="1" />
+      <rect x="8" y="8" width="294" height="50" fill="#F5F1E8" stroke="#2148B8" stroke-width="0.75" />
+      <text x="18" y="24" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">IMMUTABLE LOCAL TRUTH // 100% CITED</text>
+      <text x="18" y="38" font-family="monospace" font-size="8" fill="#1A1A18">Every balance figure cites source page &amp; line index.</text>
+      <text x="18" y="50" font-family="monospace" font-size="7.5" fill="#2148B8">NO SILENT TELEMETRY · NO BANK CREDENTIAL STORAGE</text>
+    </g>
+  </g>
+
+  <!-- Technical Stamp Badge: Bottom Right -->
+  <g transform="translate(565, 412)">
+    <rect x="0" y="0" width="190" height="34" fill="#F5F1E8" stroke="#2148B8" stroke-width="1.5" />
+    <rect x="2" y="2" width="186" height="30" fill="none" stroke="#2148B8" stroke-width="0.5" stroke-dasharray="2,2" />
+    <text x="10" y="15" font-family="monospace" font-size="8" font-weight="bold" fill="#2148B8">STATUS: DEV · SITE LIVE</text>
+    <text x="10" y="27" font-family="monospace" font-size="7.5" fill="#1A1A18">WEB: CANCAN-4TJ.PAGES.DEV</text>
+  </g>
+
+  <!-- Footer Technical Annotation -->
+  <g font-family="monospace" font-size="8" fill="#2148B8" fill-opacity="0.8">
+    <text x="40" y="466">ARCHETYPE: FINANCIAL EVIDENCE VAULT · DETERMINISTIC RECONCILIATION CONSOLE</text>
+    <text x="640" y="466">MONO-COLOR PURE PRINT</text>
+  </g>
+</svg>

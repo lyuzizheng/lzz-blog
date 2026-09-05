@@ -9,7 +9,7 @@ import { SocialBadge } from "./social-badge";
 /**
  * Core destination routes referenced by the header index.
  */
-export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume"] as const;
+export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume", "/products"] as const;
 
 /**
  * BRAWUKA-45 · Shared sticky site header: logo + coordinates, film-clip

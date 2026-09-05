@@ -14,6 +14,7 @@ export const zh: Translations = {
     dispatches: "文章",
     darkroom: "摄影",
     flightPath: "履历",
+    products: "产品",
     status: "状态",
     pdf: "下载简历",
   },
@@ -157,5 +158,13 @@ export const zh: Translations = {
     resume: "个人履历",
     status: "系统状态",
     pdf: "PDF 下载",
+  },
+  products: {
+    title: "产品与项目",
+    subtitle: "工作之余的独立产品实验 · 策展式展台",
+    deckHint: "一屏一产品 · 滑动或使用方向键翻页",
+    scrollDown: "向下滑动查看下一款产品 ↓",
+    externalLink: "官方外链",
+    status: "状态章",
   },
 };
