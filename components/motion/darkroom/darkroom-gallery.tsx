@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { motionPhysics } from "@/tokens";
+import { useI18n } from "@/lib/i18n";
 import {
   DARKROOM_PHOTOS,
   MONO_MODES,
@@ -43,6 +44,8 @@ function usePrefersReducedMotion(): boolean {
  * Mono mode is gallery-global: one switch re-inks every plate at once.
  */
 export function DarkroomGallery() {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const [view, setView] = useState<GalleryView>("masonry");
   const [mode, setMode] = useState<MonoMode>("true");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -94,10 +97,14 @@ export function DarkroomGallery() {
       <div className="mb-6 flex flex-col gap-3 border-y border-border-plate py-3 lg:flex-row lg:items-center lg:justify-between">
         <div
           role="tablist"
-          aria-label="展厅排布模式"
+          aria-label={isZh ? "展厅排布模式" : "Gallery view layout"}
           className="flex items-center gap-1 rounded-sm border border-border-plate bg-chamber p-1 font-telemetry text-xs"
         >
-          {VIEWS.map((v) => (
+          {[
+            { id: "masonry" as const, label: t.photography.views.masonry, hint: isZh ? "流式网格排布" : "CSS columns masonry" },
+            { id: "reel" as const, label: t.photography.views.reel, hint: isZh ? "胶卷横卷漫游" : "Horizontal reel scroll" },
+            { id: "immersive" as const, label: t.photography.views.immersive, hint: isZh ? "大图单栏沉浸" : "Single column plate stack" },
+          ].map((v) => (
             <button
               key={v.id}
               role="tab"
@@ -115,8 +122,8 @@ export function DarkroomGallery() {
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-2 font-telemetry text-xs">
-          <span className="tracking-[0.14em] text-muted">INK // 油墨</span>
-          <div role="radiogroup" aria-label="Mono-color 艺术模式" className="flex items-center gap-1 rounded-sm border border-border-plate bg-chamber p-1">
+          <span className="tracking-[0.14em] text-muted">{t.photography.inkLabel}</span>
+          <div role="radiogroup" aria-label={isZh ? "Mono-color 艺术模式" : "Mono-color art mode"} className="flex items-center gap-1 rounded-sm border border-border-plate bg-chamber p-1">
             {MONO_MODES.map((m) => (
               <button
                 key={m.id}

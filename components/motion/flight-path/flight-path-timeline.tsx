@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TIMELINE_NODES, NARRATIVE_BEATS, type TimelineNode } from "@/lib/career-dossier";
@@ -44,14 +45,16 @@ function frameNo(index: number): string {
 }
 
 export function FlightPathTimeline() {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const nodes = TIMELINE_NODES;
   const reduced = usePrefersReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const triggerRef = useRef<ScrollTrigger | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [drawerNode, setDrawerNode] = useState<TimelineNode | null>(null);
 
   /* Pinned horizontal scrub (desktop, motion-safe only) */
@@ -138,22 +141,21 @@ export function FlightPathTimeline() {
       {/* Act 0 · Developing hero */}
       <header className="mb-8 border-b border-border-plate pb-6">
         <p className="font-telemetry text-[11px] tracking-[0.18em] text-safelight">
-          ACT 0 // developing — 35MM 负片入水显影
+          {t.resume.timelineAct0}
         </p>
         <h2 className="mt-2 font-display text-3xl leading-tight text-primary sm:text-5xl">
-          Flight Path — 生涯与成果航线图
+          {t.resume.flightPathTitle}
         </h2>
         <p className="mt-3 max-w-2xl font-body text-sm leading-relaxed text-muted sm:text-base">
-          Zizheng Lyu — Engineer & Visual Storyteller.十二帧编年史：NTU 地基层 → TikTok IM
-          全球心跳 → 降本刀锋 → 车库暗房。滚轮漫游，键盘定帧。
+          {t.resume.flightPathSubtitle}
         </p>
         <p className="mt-3 font-telemetry text-[11px] tracking-wider text-muted">
           <kbd className="rounded border border-border-plate px-1.5 py-0.5">→</kbd>/
-          <kbd className="rounded border border-border-plate px-1.5 py-0.5">L</kbd> 前进 ·{" "}
+          <kbd className="rounded border border-border-plate px-1.5 py-0.5">L</kbd> {isZh ? "前进" : "Forward"} ·{" "}
           <kbd className="rounded border border-border-plate px-1.5 py-0.5">←</kbd>/
-          <kbd className="rounded border border-border-plate px-1.5 py-0.5">J</kbd> 后退 ·{" "}
+          <kbd className="rounded border border-border-plate px-1.5 py-0.5">J</kbd> {isZh ? "后退" : "Back"} ·{" "}
           <kbd className="rounded border border-border-plate px-1.5 py-0.5">Home</kbd>/
-          <kbd className="rounded border border-border-plate px-1.5 py-0.5">End</kbd> 首尾
+          <kbd className="rounded border border-border-plate px-1.5 py-0.5">End</kbd> {isZh ? "首尾" : "First/Last"}
         </p>
       </header>
 
@@ -259,6 +261,8 @@ interface NodeCardProps {
 }
 
 function NodeCard({ node, index, active, onOpen, onSelect }: NodeCardProps) {
+  const { locale } = useI18n();
+  const isZh = locale === "zh";
   const externalLinks = node.links.filter((l) => !isSelfRefLink(l.href));
   return (
     <article
@@ -290,7 +294,7 @@ function NodeCard({ node, index, active, onOpen, onSelect }: NodeCardProps) {
         <p className="mt-0.5 font-telemetry text-[11px] text-secondary">{node.role}</p>
         <p className="mt-1 font-telemetry text-[11px] text-muted tabular-nums">
           {node.start}
-          {node.end ? ` – ${node.end}` : " – 至今"} · {node.codename}
+          {node.end ? ` – ${node.end}` : (isZh ? " – 至今" : " – Present")} · {node.codename}
         </p>
       </button>
 
@@ -322,12 +326,12 @@ function NodeCard({ node, index, active, onOpen, onSelect }: NodeCardProps) {
         <div className="flex items-center gap-2">
           {node.archDiagram && (
             <span className="font-telemetry text-[10px] tracking-wider text-ink-dominant">
-              蓝图已收录 →
+              {isZh ? "蓝图已收录 →" : "DIAGRAM INCLUDED →"}
             </span>
           )}
           {node.needsOwner && (
             <span className="rounded border border-dashed border-border-plate px-1.5 py-0.5 font-telemetry text-[10px] text-muted">
-              待确认
+              {isZh ? "待确认" : "TBD"}
             </span>
           )}
         </div>
@@ -349,7 +353,7 @@ function NodeCard({ node, index, active, onOpen, onSelect }: NodeCardProps) {
             onClick={onOpen}
             className="cursor-pointer rounded border border-ink-dominant/50 px-2.5 py-1 font-telemetry text-[11px] text-ink-dominant hover:bg-ink-dominant hover:text-white"
           >
-            战役简报
+            {isZh ? "战役简报" : "DOSSIER"}
           </button>
         </div>
       </div>

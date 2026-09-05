@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScrollProvider, FilmGrainOverlay, RouteTransition } from "@/components/motion";
 import { siteConfig } from "@/lib/site";
+import { I18nProvider } from "@/lib/i18n";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -83,11 +84,13 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange={false}
         >
-          <SmoothScrollProvider>
-            {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
-            <FilmGrainOverlay />
-            <RouteTransition>{children}</RouteTransition>
-          </SmoothScrollProvider>
+          <I18nProvider>
+            <SmoothScrollProvider>
+              {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
+              <FilmGrainOverlay />
+              <RouteTransition>{children}</RouteTransition>
+            </SmoothScrollProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

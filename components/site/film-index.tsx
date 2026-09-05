@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 import { Clapperboard } from "lucide-react";
 
 export interface FilmPillar {
@@ -30,7 +31,19 @@ const FRAMES: ReadonlyArray<{ code: string; scatter: string; stock: string }> = 
  * Keys: 1–5 jump (scoped to open panel, form fields excluded),
  * Escape collapses. Mobile: Pocket Slide Deck (snap-x scroll, flat frames).
  */
-export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
+export function FilmIndex({ pillars }: { pillars?: ReadonlyArray<FilmPillar> }) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
+  const activePillars = useMemo(
+    () =>
+      pillars ?? [
+        { href: "/", label: t.nav.atelier },
+        { href: "/posts", label: t.nav.dispatches },
+        { href: "/photography", label: t.nav.darkroom },
+        { href: "/resume", label: t.nav.flightPath },
+      ],
+    [pillars, t.nav.atelier, t.nav.dispatches, t.nav.darkroom, t.nav.flightPath],
+  );
   const [open, setOpen] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const router = useRouter();
@@ -58,15 +71,15 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
       const target = event.target as HTMLElement | null;
       if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
       const slot = Number.parseInt(event.key, 10);
-      if (slot >= 1 && slot <= pillars.length) {
+      if (slot >= 1 && slot <= activePillars.length) {
         event.preventDefault();
         close();
-        router.push(pillars[slot - 1].href);
+        router.push(activePillars[slot - 1].href);
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, close, pillars, router]);
+  }, [open, close, activePillars, router]);
 
   return (
     <>
@@ -76,11 +89,11 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls="film-index-panel"
-        aria-label={open ? "收拢胶卷索引" : "展开胶卷索引：五大支柱"}
-        className="flex items-center gap-1.5 rounded-xs border border-border-plate px-2.5 py-1 font-telemetry text-[11px] text-text-primary transition-colors hover:border-ink-dominant"
+        aria-label={open ? (isZh ? "收拢胶卷索引" : "Collapse film index") : (isZh ? "展开胶卷索引" : "Expand film index")}
+        className="flex items-center gap-1.5 rounded-xs border border-border-plate px-2.5 py-1 font-telemetry text-[11px] text-text-primary transition-colors hover:border-ink-dominant cursor-pointer"
       >
         <Clapperboard className="h-3 w-3 text-ink-dominant" />
-        <span>FILM INDEX // 胶卷索引</span>
+        <span>{isZh ? "胶卷索引" : "FILM INDEX"}</span>
         <span aria-hidden="true" className="text-muted">{open ? "▾" : "▸"}</span>
       </button>
 
@@ -98,7 +111,7 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
               aria-label="胶卷支柱导航"
               className="mx-auto flex max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto px-4 py-5 sm:px-6 md:snap-none md:justify-between md:gap-4 md:overflow-visible"
             >
-              {pillars.map((pillar, i) => {
+              {activePillars.map((pillar, i) => {
                 const frame = FRAMES[i % FRAMES.length];
                 return (
                   <Link
@@ -129,7 +142,7 @@ export function FilmIndex({ pillars }: { pillars: ReadonlyArray<FilmPillar> }) {
               })}
             </nav>
             <p className="mx-auto max-w-6xl px-4 pb-3 font-telemetry text-[10px] tracking-[0.12em] text-muted sm:px-6">
-              KEYS 1–5 跳格 · ESC 收卷 · TAB 逐格显影
+              {isZh ? "按键 1–4 跳转 · ESC 关闭 · TAB 逐格显影" : "KEYS 1–4 JUMP · ESC CLOSE · TAB CYCLE"}
             </p>
           </motion.div>
         )}

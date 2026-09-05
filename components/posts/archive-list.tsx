@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Folder, Calendar, Clock, Search, Filter } from "lucide-react";
+import { Folder, Calendar, Clock, Search, Filter, BookOpen } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export interface ArchivePost {
   slug: string;
@@ -20,10 +21,11 @@ export interface ArchivePost {
  * Receives lean DTOs from the server shell — never the full Velite documents.
  */
 export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
+  const { locale, t } = useI18n();
+  const isZh = locale === "zh";
   const [activeChannel, setActiveChannel] = useState<"all" | "study" | "essay">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-
   const allTags = useMemo(() => {
     const set = new Set<string>();
     posts.forEach((p) => p.tags.forEach((t) => set.add(t)));
@@ -59,39 +61,55 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
 
   return (
     <>
+      {/* Page Header */}
+      <div className="mb-10 max-w-2xl">
+        <div className="mb-2 flex items-center gap-2 font-telemetry text-xs text-ink-dominant">
+          <BookOpen className="h-3.5 w-3.5" />
+          <span className="font-semibold tracking-wider uppercase">
+            {isZh ? "文章归档 · VOL. 2014-2026" : "DOCUMENT ARCHIVE · VOL. 2014-2026"}
+          </span>
+        </div>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+          {t.posts.title}
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-base">
+          {t.posts.subtitle}
+        </p>
+      </div>
+
       {/* Filter Controls: Channels + Search */}
       <div className="mb-8 space-y-4 rounded-xl border border-border-plate bg-surface/60 p-4 sm:p-5 shadow-plate">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setActiveChannel("all")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all ${
+              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
                 activeChannel === "all"
                   ? "bg-ink-dominant text-text-badge shadow-sm"
                   : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
               }`}
             >
-              全量通道 ALL ({posts.length})
+              {t.posts.allChannels} ({posts.length})
             </button>
             <button
               onClick={() => setActiveChannel("study")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all ${
+              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
                 activeChannel === "study"
                   ? "bg-ink-dominant text-text-badge shadow-sm"
                   : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
               }`}
             >
-              技术工程 TECHNICAL ({posts.filter((p) => p.category === "study").length})
+              {t.posts.technical} ({posts.filter((p) => p.category === "study").length})
             </button>
             <button
               onClick={() => setActiveChannel("essay")}
-              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all ${
+              className={`rounded-lg px-3 py-1.5 font-telemetry text-xs font-medium transition-all cursor-pointer ${
                 activeChannel === "essay"
                   ? "bg-ink-dominant text-text-badge shadow-sm"
                   : "border border-border-plate bg-chamber/60 text-text-secondary hover:text-text-primary"
               }`}
             >
-              随笔思考 ESSAYS ({posts.filter((p) => p.category === "essay").length})
+              {t.posts.essays} ({posts.filter((p) => p.category === "essay").length})
             </button>
           </div>
 
@@ -101,8 +119,8 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="检索文章标题、摘要或标签..."
-              aria-label="检索文章"
+              placeholder={t.posts.searchPlaceholder}
+              aria-label={isZh ? "搜索文章" : "Search articles"}
               className="w-full rounded-lg border border-border-plate bg-substrate py-2 pl-9 pr-3 font-telemetry text-xs text-text-primary placeholder:text-muted focus:border-ink-dominant focus:outline-none focus:ring-1 focus:ring-ink-dominant"
             />
           </div>
@@ -111,14 +129,14 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
         <div className="flex flex-wrap items-center gap-1.5 border-t border-border-plate/60 pt-3">
           <span className="flex items-center gap-1 font-telemetry text-[11px] text-muted mr-1">
             <Filter className="h-3 w-3" />
-            标签过滤:
+            {t.posts.tagFilter}
           </span>
           {selectedTag && (
             <button
               onClick={() => setSelectedTag(null)}
               className="rounded bg-ink-dominant/15 px-2 py-0.5 font-telemetry text-[11px] font-semibold text-ink-dominant hover:bg-ink-dominant/25"
             >
-              全部 [清除 #{selectedTag}]
+              {isZh ? `全部 [清除 #${selectedTag}]` : `All [Clear #${selectedTag}]`}
             </button>
           )}
           {allTags.map((tag) => {
@@ -145,7 +163,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
       {groupedByYear.length === 0 ? (
         <div className="my-12 rounded-xl border border-dashed border-border-plate p-12 text-center">
           <p className="font-telemetry text-sm text-muted">
-            未找到匹配条件的文章，请调整检索关键词或过滤标签。
+            {t.posts.noResults}
           </p>
         </div>
       ) : (
@@ -158,7 +176,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                 </span>
                 <div className="h-px flex-1 bg-border-plate" />
                 <span className="font-telemetry text-xs text-muted tabular-nums">
-                  {yearPosts.length} 篇归档
+                  {yearPosts.length} {t.posts.yearArchive}
                 </span>
               </div>
 
@@ -205,7 +223,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                       </div>
                       <div className="flex items-center gap-1 tabular-nums text-text-secondary">
                         <Clock className="h-3 w-3 text-ink-dominant" />
-                        <span>{post.reading_time ?? "—"} 分钟</span>
+                        <span>{post.reading_time ?? "—"} {t.posts.readingTime}</span>
                       </div>
                     </div>
                   </Link>

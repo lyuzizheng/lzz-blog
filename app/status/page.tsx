@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getHealthPayload } from "@/lib/health";
-import { SiteHeader, SiteFooter } from "@/components/site";
+import { SiteHeader, SiteFooter, StatusHeader } from "@/components/site";
 import { StatusConsole } from "@/components/site/status-console";
 import packageJson from "@/package.json";
 
 export const metadata: Metadata = {
   title: "系统状态 · System Status | LZZ Blog",
   description:
-    "LZZ 数字暗房系统状态与边缘探针控制台：运行脉搏、版本交付物、架构门禁。Readiness probe: /api/health。",
+    "LZZ atelier system status and edge telemetry probe console: runtime pulse, release artifacts, and architecture verification gates. Readiness probe: /api/health.",
 };
 
 function CardShell({
@@ -63,29 +62,7 @@ export default function StatusPage() {
     <div className="relative flex min-h-screen flex-col">
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-        <nav
-          aria-label="面包屑"
-          className="mb-6 flex flex-wrap items-center justify-between gap-3 font-telemetry text-[11px] text-muted"
-        >
-          <Link href="/" className="hover:text-primary">
-            ← LZZ ATELIER
-          </Link>
-          <span className="tracking-[0.14em]">STATUS {"//"} EDGE PROBE CONSOLE · ESC 返回</span>
-        </nav>
-
-        <header className="mb-8">
-          <p className="mb-2 font-telemetry text-[11px] tracking-[0.22em] text-muted">
-            THE DARKROOM TELEMETRY {"//"} 01°20′N 103°49′E
-          </p>
-          <h1 className="font-display text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-            系统状态<span className="text-muted"> / </span>
-            <span className="italic">System Status</span>
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-secondary">
-            数字暗房的边缘脉搏、交付物印章与架构门禁 —— 全绿即营业。
-            自动化就绪探针直达 <code className="font-telemetry text-xs">/api/health</code>。
-          </p>
-        </header>
+        <StatusHeader />
 
         <div className="grid gap-5 lg:grid-cols-2">
           <CardShell index="01" eyebrow="SYSTEM PULSE" title="系统运行状态">
