@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Info, AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
+import { Info, AlertTriangle, CheckCircle, ExternalLink, Lightbulb, AlertOctagon } from "lucide-react";
 
 // YouTube Embed Component
 export function YouTube({ id }: { id: string }) {
@@ -95,34 +95,65 @@ export function Spotify({
   );
 }
 
-// Notice Callout Box Component
+// Notice / Callout Box Component
+export type NoticeCategory = "info" | "warning" | "tip" | "success" | "danger";
+
 export function Notice({
   type = "info",
+  title,
   children,
 }: {
-  type?: "info" | "warning" | "success";
+  type?: string;
+  title?: string;
   children: React.ReactNode;
 }) {
+  const normType = (type?.toLowerCase() || "info").trim();
+
+  let category: NoticeCategory = "info";
+  if (normType === "warning" || normType === "caution") {
+    category = "warning";
+  } else if (normType === "tip" || normType === "hint") {
+    category = "tip";
+  } else if (normType === "success" || normType === "done") {
+    category = "success";
+  } else if (normType === "danger" || normType === "error" || normType === "alert") {
+    category = "danger";
+  }
+
   const icons = {
-    info: <Info className="h-5 w-5 text-ink-dominant shrink-0 mt-0.5" />,
-    warning: <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />,
-    success: <CheckCircle className="h-5 w-5 text-ink-dominant shrink-0 mt-0.5" />,
+    info: <Info className="h-5 w-5 shrink-0 text-[#2148B8] dark:text-[#E05454] mt-0.5" aria-hidden="true" />,
+    warning: <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" aria-hidden="true" />,
+    tip: <Lightbulb className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" aria-hidden="true" />,
+    success: <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" aria-hidden="true" />,
+    danger: <AlertOctagon className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" aria-hidden="true" />,
   };
 
   const borderStyles = {
-    info: "border-ink-dominant/30 bg-ink-dominant/5",
-    warning: "border-amber-500/30 bg-amber-500/5",
-    success: "border-ink-dominant/30 bg-ink-dominant/5",
+    info: "border-border-plate border-l-4 border-l-[#2148B8] dark:border-l-[#E05454] bg-[#2148B8]/5 dark:bg-[#E05454]/5",
+    warning: "border-border-plate border-l-4 border-l-amber-500 dark:border-l-amber-400 bg-amber-500/5 dark:bg-amber-400/5",
+    tip: "border-border-plate border-l-4 border-l-emerald-600 dark:border-l-emerald-400 bg-emerald-600/5 dark:bg-emerald-400/5",
+    success: "border-border-plate border-l-4 border-l-emerald-600 dark:border-l-emerald-400 bg-emerald-600/5 dark:bg-emerald-400/5",
+    danger: "border-border-plate border-l-4 border-l-rose-600 dark:border-l-rose-400 bg-rose-600/5 dark:bg-rose-400/5",
   };
 
   return (
     <div
-      className={`my-6 flex gap-3 border p-4 ${borderStyles[type]}`}
+      className={`my-6 flex gap-3.5 border p-4 rounded-[2px] transition-colors ${borderStyles[category]}`}
+      role="region"
+      aria-label={title || `${category} callout`}
     >
-      {icons[type]}
-      <div className="text-sm leading-relaxed text-text-primary [&>p]:my-1">
+      {icons[category]}
+      <div className="min-w-0 flex-1 font-display text-sm leading-relaxed text-text-primary [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:my-1.5 [&>ul]:my-1.5 [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:my-1.5 [&>ol]:list-decimal [&>ol]:pl-5 [&>ul_li]:my-0.5 [&>ol_li]:my-0.5">
+        {title && (
+          <div className="font-semibold tracking-tight text-text-primary mb-1">
+            {title}
+          </div>
+        )}
         {children}
       </div>
     </div>
   );
 }
+
+// Callout is an alias for Notice
+export const Callout = Notice;

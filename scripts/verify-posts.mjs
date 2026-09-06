@@ -116,6 +116,39 @@ for (const p of posts) {
 }
 console.log(`✓ Verified ${verifiedCovers} custom cover image files in public/`);
 
+// 5. Verify Notice / Callout component compilation & SSG rendering
+const bigtablePost = posts.find((p) => p.slug === "study/bigtable");
+if (!bigtablePost || !bigtablePost.content.includes("Notice")) {
+  console.error("FAIL: Notice component not compiled in study/bigtable");
+  errors++;
+} else {
+  console.log("✓ Notice component correctly compiled in study/bigtable");
+}
+
+const gfsPost = posts.find((p) => p.slug === "study/gfs");
+if (!gfsPost || !gfsPost.content.includes("Notice")) {
+  console.error("FAIL: Notice component not compiled in study/gfs");
+  errors++;
+} else {
+  console.log("✓ Notice component correctly compiled in study/gfs");
+}
+
+if (fs.existsSync(ssgDir)) {
+  const bigtableHtmlPath = path.join(ssgDir, "study/bigtable.html");
+  if (fs.existsSync(bigtableHtmlPath)) {
+    const html = fs.readFileSync(bigtableHtmlPath, "utf-8");
+    if (html.includes("{{<") || html.includes("<Notice>") || html.includes("{{< /notice >}}")) {
+      console.error("FAIL: Raw unparsed notice tags found in study/bigtable.html");
+      errors++;
+    } else if (!html.includes("callout") && !html.includes("border-l-4")) {
+      console.error("FAIL: Notice callout styles missing from study/bigtable.html");
+      errors++;
+    } else {
+      console.log("✓ study/bigtable.html contains fully rendered callout box without raw tags");
+    }
+  }
+}
+
 if (errors > 0) {
   console.error(`\n❌ Total Errors: ${errors}`);
   process.exit(1);
