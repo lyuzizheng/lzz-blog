@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
@@ -5,6 +7,7 @@ import { FilmIndex, type FilmPillar } from "./film-index";
 import { SOCIAL_LINKS } from "./social-links";
 import { SocialBadge } from "./social-badge";
 
+import { useI18n } from "@/lib/i18n";
 
 /**
  * Core destination routes referenced by the header index.
@@ -18,6 +21,7 @@ export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume", "/pr
  * absolute overlay → Zero CLS).
  */
 export function SiteHeader() {
+  const { t } = useI18n();
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/85 backdrop-blur-md transition-colors duration-300">
       <div className="relative mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -25,9 +29,9 @@ export function SiteHeader() {
           <Link
             href="/"
             className="font-display text-lg font-bold tracking-tight text-primary"
-            aria-label="LZZ Atelier"
+            aria-label={t.common.atelier}
           >
-            LZZ ATELIER
+            {t.common.atelier}
           </Link>
           <span className="hidden font-telemetry text-[11px] text-muted lg:inline-block">
             / 01°20&apos;N 103°49&apos;E / 2026.09

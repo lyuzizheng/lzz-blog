@@ -115,7 +115,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
           <div
             className="flex items-center gap-5"
             role="tablist"
-            aria-label={isZh ? "文章分类通道" : "Article channels"}
+            aria-label={isZh ? "文章分类" : "Filter by category"}
           >
             {channels.map((channel) => {
               const isActive = activeChannel === channel.id;
@@ -150,7 +150,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isZh ? "搜索 / SEARCH..." : "SEARCH..."}
+              placeholder={isZh ? "搜索文章..." : "Search articles..."}
               aria-label={isZh ? "搜索文章" : "Search articles"}
               className="h-8 w-full border-0 border-b border-border-plate bg-transparent px-1 py-1 text-xs text-text-primary placeholder:text-muted focus:border-ink-dominant focus:outline-none transition-colors"
             />

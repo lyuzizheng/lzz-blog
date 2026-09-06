@@ -31,7 +31,7 @@ export function PostHeaderMeta({
       >
         <ChevronLeft className="h-3.5 w-3.5" />
         <span>
-          {isZh ? "文章归档" : "DISPATCHES"} · {category.toUpperCase()}
+          {isZh ? "全部文章" : "ALL POSTS"} · {category.toUpperCase()}
         </span>
       </Link>
 

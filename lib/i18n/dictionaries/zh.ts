@@ -2,7 +2,7 @@ import type { Translations } from "../types";
 
 export const zh: Translations = {
   common: {
-    atelier: "LZZ ATELIER",
+    atelier: "LZZ 工作室",
     backToAtelier: "← 返回主页",
     loading: "加载中...",
     tbd: "待确认",
@@ -20,20 +20,20 @@ export const zh: Translations = {
   },
   home: {
     title: "吕子正",
-    tagline: "软件工程师 · 视觉记录者",
+    tagline: "全栈工程师 · 喜欢拍照",
     heroSubtitle:
-      "全栈工程师与摄影记录者。以用户视角打造有温度的产品，恪守工程伦理与技术向善，在系统架构与 35mm 光影定格之间探索真实表达。",
+      "做产品习惯从用户的真实感受出发，乐于和伙伴协作、把好点子从零打磨到上线。对新技术始终充满好奇，坚信写出的代码要对人和社会有实在的帮助。工作之余特别喜欢摄影，用镜头随手记录生活。",
     developing: "胶片显影中 · 向下滑动显影",
     chapters: {
       writings: {
         title: "文章归档",
-        sentence: "关于分布式系统、基础架构与工程手艺的深度长文。",
+        sentence: "关于分布式系统、基础架构与工程实战的深度长文。",
         cta: "浏览全部文章",
       },
       darkroom: {
-        title: "摄影暗房",
-        sentence: "光影沉淀在胶片与传感器上。Sony A7M4 · 35mm F1.4 GM。",
-        cta: "进入摄影画廊",
+        title: "摄影画廊",
+        sentence: "用相机记录日常画面与光影。Sony A7M4 · 35mm F1.4 GM。",
+        cta: "查看摄影作品",
       },
       flightPath: {
         title: "经历航线",
@@ -44,22 +44,22 @@ export const zh: Translations = {
     colophon: "排版采用 NEWSREADER 与 GEIST MONO",
     rss: "RSS 订阅",
     films: {
-      blogs: "Blogs",
-      career: "Career",
-      photography: "Photography",
-      projects: "Projects",
+      blogs: "文章",
+      career: "履历",
+      photography: "摄影",
+      projects: "产品",
       label: "章节索引 —— 灯箱台上散落的四张底片",
     },
   },
   posts: {
-    noResults: "未找到匹配的文章，请尝试调整关键词或筛选条件。",
+    noResults: "没有找到相关的文章，换个关键词或分类试试看？",
     yearArchive: "篇",
     readingTime: "分钟阅读",
     wordCount: "字",
-    backToPosts: "返回文章总列表",
+    backToPosts: "返回文章列表",
     prevPost: "上一篇",
     nextPost: "下一篇",
-    toc: "文章目录",
+    toc: "目录",
     specimenSlug: "路径",
     specimenChannel: "分类",
     specimenStatus: "状态",

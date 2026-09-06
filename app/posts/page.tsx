@@ -4,8 +4,8 @@ import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome"
 import { ArchiveList, type ArchivePost } from "@/components/posts/archive-list";
 
 export const metadata: Metadata = {
-  title: "文章归档 · Writing & Dispatches | LZZ Blog",
-  description: "Writing and long-form thinking on distributed systems, infrastructure engineering, and personal essays.",
+  title: "文章 · Posts & Thoughts | LZZ Blog",
+  description: "全栈开发、系统实践与生活思考的个人文章列表。",
   alternates: { canonical: "/posts" },
 };
 
@@ -37,7 +37,7 @@ export default function PostsArchivePage() {
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
-        <ReaderEyebrow backHref="/" backLabel="门厅" section="归档" />
+        <ReaderEyebrow backHref="/" backLabel="首页" section="文章" />
         <ArchiveList posts={dtos} />
         <ReaderColophon />
       </main>
