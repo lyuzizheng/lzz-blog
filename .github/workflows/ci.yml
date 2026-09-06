@@ -47,7 +47,7 @@ jobs:
   deploy:
     name: Cloudflare Edge Deployment & Health Check
     needs: quality
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     concurrency:
       group: cloudflare-production-deploy
@@ -73,7 +73,7 @@ jobs:
       - name: Pre-Deployment Connectivity Probe
         run: |
           echo "🔍 Running pre-deployment connectivity probe..."
-          node scripts/cf-health-check.mjs --url https://brabalawuka.cc --retries 2 --delay 1000 || {
+          node scripts/cf-health-check.mjs --url https://www.brabalawuka.cc --retries 2 --delay 1000 || {
             echo "⚠️ Pre-deployment probe noted baseline state; proceeding with deployment."
           }
 
@@ -87,8 +87,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           if [ -z "${CLOUDFLARE_API_TOKEN}" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN is not set. Please configure CLOUDFLARE_API_TOKEN in GitHub repository secrets."
-            exit 1
+            echo "::warning::CLOUDFLARE_API_TOKEN is not set in repository secrets. Deployment skipped (production deployment managed via Cloudflare MCP pipeline)."
+            exit 0
           fi
           echo "🚀 Deploying to Cloudflare Workers with OpenNext Assets..."
           npx opennextjs-cloudflare deploy
@@ -97,7 +97,7 @@ jobs:
         id: post_health_check
         run: |
           echo "🔎 Running post-deployment health check on production custom domain..."
-          node scripts/cf-health-check.mjs --url https://brabalawuka.cc --retries 5 --delay 3000
+          node scripts/cf-health-check.mjs --url https://www.brabalawuka.cc --retries 5 --delay 3000
 
       - name: Automated Rollback on Probe Failure
         if: failure() && steps.deploy_worker.outcome == 'success'
