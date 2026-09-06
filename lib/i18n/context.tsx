@@ -26,12 +26,14 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       if (stored === "en" || stored === "zh") {
         setLocaleState(stored);
         document.documentElement.lang = stored === "zh" ? "zh-CN" : "en";
+        document.documentElement.setAttribute("data-locale", stored);
       } else {
         // Check cookie
         const match = document.cookie.match(/lzz_locale=(en|zh)/);
         if (match && (match[1] === "en" || match[1] === "zh")) {
           setLocaleState(match[1]);
           document.documentElement.lang = match[1] === "zh" ? "zh-CN" : "en";
+          document.documentElement.setAttribute("data-locale", match[1]);
         }
       }
     } catch {
@@ -45,6 +47,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(STORAGE_KEY, newLocale);
       document.cookie = `lzz_locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
       document.documentElement.lang = newLocale === "zh" ? "zh-CN" : "en";
+      document.documentElement.setAttribute("data-locale", newLocale);
     } catch {
       // ignore storage errors
     }
