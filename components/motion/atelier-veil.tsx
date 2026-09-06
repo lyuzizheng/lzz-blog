@@ -23,15 +23,18 @@ export function AtelierVeilDismiss() {
 
     // Micro-delay (160ms) ensures initial CSS layout and font paint have settled
     // so the darkroom exposure feels intentional rather than a split-second glitch
-    const timer = setTimeout(() => {
+    let cleanupTimer: number | undefined;
+    const timer = window.setTimeout(() => {
       veil.classList.add("veil-dismissed");
-      const cleanupTimer = setTimeout(() => {
+      cleanupTimer = window.setTimeout(() => {
         veil.remove();
       }, 500);
-      return () => clearTimeout(cleanupTimer);
     }, 160);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(cleanupTimer);
+    };
   }, []);
 
   return null;

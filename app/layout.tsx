@@ -102,11 +102,24 @@ export default function RootLayout({
                 color: #F4F4F5;
                 pointer-events: auto;
                 transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+                animation: veil-safety-fade 0.4s ease 4s forwards;
               }
               #atelier-veil.veil-dismissed {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
+              }
+              @media (prefers-reduced-motion: reduce) {
+                #atelier-veil {
+                  display: none !important;
+                }
+              }
+              @keyframes veil-safety-fade {
+                to {
+                  opacity: 0;
+                  visibility: hidden;
+                  pointer-events: none;
+                }
               }
               @keyframes veil-spin {
                 to { transform: rotate(360deg); }
@@ -155,6 +168,13 @@ export default function RootLayout({
             `,
           }}
         />
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `#atelier-veil { display: none !important; }`,
+            }}
+          />
+        </noscript>
         <div id="atelier-veil" aria-hidden="true">
           <div className="veil-frame">
             <div className="veil-spinner" />
