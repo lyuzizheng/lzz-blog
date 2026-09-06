@@ -69,16 +69,6 @@ const FILMS: ReadonlyArray<FilmSpec> = [
   },
 ];
 
-/** Blank blurred negatives forming the pile beneath the chapter frames. */
-const PILE: ReadonlyArray<{ className: string; idle?: string }> = [
-  { className: "left-[6%] top-[26%] w-[30%] -rotate-[9deg] opacity-45" },
-  { className: "left-[24%] top-[14%] w-[34%] rotate-[2deg] opacity-40", idle: "8.8s" },
-  { className: "left-[46%] top-[30%] w-[28%] rotate-[11deg] opacity-45" },
-  { className: "left-[64%] top-[16%] w-[32%] -rotate-[4deg] opacity-40", idle: "11.3s" },
-  { className: "left-[12%] top-[54%] w-[36%] rotate-[6deg] opacity-35" },
-  { className: "left-[42%] top-[58%] w-[30%] -rotate-[12deg] opacity-40", idle: "12.6s" },
-  { className: "left-[66%] top-[52%] w-[26%] rotate-[1deg] opacity-35" },
-];
 
 const INK = "var(--ink-dominant)";
 
@@ -178,31 +168,6 @@ function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
   );
 }
 
-/** A blank negative in the under-pile: sprockets + dim halftone, no label. */
-function PileFrame() {
-  return (
-    <div className="overflow-hidden rounded-[2px] border border-border-plate/60 bg-surface">
-      <div className="relative h-3 w-full bg-[var(--bg-chamber)]">
-        <div className="film-sprockets absolute inset-0" />
-      </div>
-      <div className="relative aspect-[3/2] w-full bg-[var(--bg-chamber)]">
-        {/* Backlit by the light table: a soft luminous core inside the negative */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 42%, var(--ink-dominant) 0%, transparent 72%)",
-            opacity: 0.16,
-          }}
-        />
-        <div className="halftone-screen pointer-events-none absolute inset-0 opacity-15" />
-      </div>
-      <div className="relative h-3 w-full bg-[var(--bg-chamber)]">
-        <div className="film-sprockets absolute inset-0" />
-      </div>
-    </div>
-  );
-}
 
 export function FilmStack() {
   const { t } = useI18n();
@@ -236,26 +201,6 @@ export function FilmStack() {
         role="group"
         aria-label={t.home.films.label}
       >
-        {/* Under-pile: blurred blank negatives, decorative only */}
-        {PILE.map((frame, i) => (
-          <div
-            key={`pile-${i}`}
-            aria-hidden="true"
-            className={`pointer-events-none absolute blur-[1.5px] ${frame.className}`}
-          >
-            <div
-              className={frame.idle ? "film-idle" : undefined}
-              style={
-                frame.idle
-                  ? ({ "--idle-duration": frame.idle } as React.CSSProperties)
-                  : undefined
-              }
-            >
-              <PileFrame />
-            </div>
-          </div>
-        ))}
-
         {/* Top layer: the four chapter negatives, permanently scattered */}
         {FILMS.map((film, i) => (
           <Link

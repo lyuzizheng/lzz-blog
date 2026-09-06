@@ -52,18 +52,18 @@ export function AmbientBackdrop() {
         aria-hidden="true"
       >
         <g stroke="var(--ink-faint)" strokeWidth={1}>
-          {/* Light-table panel under the film pile (positioned in lower desk zone to never intersect identity) */}
-          <rect x={140} y={720} width={720} height={250} rx={4} />
-          <rect x={156} y={736} width={688} height={218} rx={2} strokeDasharray="2 5" opacity={0.6} />
-          {/* Ruler ticks along the panel's top edge */}
+          {/* Master darkroom lightbox frame encompassing identity & chapter films */}
+          <rect x={140} y={430} width={720} height={520} rx={4} />
+          <rect x={156} y={446} width={688} height={488} rx={2} strokeDasharray="2 5" opacity={0.5} />
+          {/* Ruler ticks along the master frame's top edge (above the avatar) */}
           {Array.from({ length: 37 }, (_, i) => (
             <line
               key={`tick-${i}`}
               x1={156 + i * (688 / 36)}
-              y1={720}
+              y1={430}
               x2={156 + i * (688 / 36)}
-              y2={i % 6 === 0 ? 708 : 714}
-              opacity={0.8}
+              y2={i % 6 === 0 ? 418 : 424}
+              opacity={0.7}
             />
           ))}
           {/* Registration crosshair, lower right corner of the panel */}
@@ -71,15 +71,15 @@ export function AmbientBackdrop() {
           <line x1={812} y1={894} x2={812} y2={926} />
           <line x1={796} y1={910} x2={828} y2={910} />
           {/* Film canister, left of the bench */}
-          <circle cx={86} cy={820} r={26} />
-          <circle cx={86} cy={820} r={18} opacity={0.6} />
-          <line x1={86} y1={788} x2={86} y2={780} />
+          <circle cx={86} cy={720} r={26} />
+          <circle cx={86} cy={720} r={18} opacity={0.6} />
+          <line x1={86} y1={688} x2={86} y2={680} />
           {/* Loupe, right of the bench */}
-          <circle cx={916} cy={780} r={20} />
-          <line x1={930} y1={794} x2={946} y2={816} />
+          <circle cx={916} cy={680} r={20} />
+          <line x1={930} y1={694} x2={946} y2={716} />
         </g>
-        {/* Subtle accent: the light table's live edge under the film stack */}
-        <line x1={156} y1={736} x2={844} y2={736} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.25} />
+        {/* Single live edge accent running above the avatar at the top of the lightbox */}
+        <line x1={156} y1={446} x2={844} y2={446} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.3} />
       </svg>
 
       {/* Dust drifting through the beam */}
