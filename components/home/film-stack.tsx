@@ -67,7 +67,6 @@ const FILMS: ReadonlyArray<FilmSpec> = [
   },
 ];
 
-
 const INK = "var(--ink-dominant)";
 
 /** Single-ink cobalt emblems — one per chapter, drawn like a negative's image. */
@@ -165,7 +164,6 @@ function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
     </div>
   );
 }
-
 
 export function FilmStack() {
   const { t } = useI18n();

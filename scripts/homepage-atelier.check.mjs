@@ -77,7 +77,7 @@ check(css.includes("film-exposure-flash"), "globals.css must define the exposure
 check(css.includes("ambient-drift") && css.includes("dust-float"), "globals.css must define ambient glow + dust keyframes");
 check(ambientBackdrop.includes("aria-hidden") && ambientBackdrop.includes("pointer-events-none"), "ambient backdrop must be decorative-only");
 check(ambientBackdrop.includes("<svg") && ambientBackdrop.includes("--ink-faint"), "workbench SVG line art must render in the single-hairline ink family");
-check(ambientBackdrop.includes("Large light-table easel frame enclosing avatar"), "workbench SVG must frame the avatar and identity (founder directive BRAWUKA-86)");
+check(homeAtelier.includes("Darkroom easel light-table frame") && homeAtelier.includes("border-[var(--ink-faint)]"), "easel frame enclosing avatar and identity with ruler ticks must render around center column (BRAWUKA-86)");
 if (failures.length > 0) {
   console.error("homepage-atelier check FAILED:");
   for (const f of failures) {
