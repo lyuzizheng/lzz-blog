@@ -59,15 +59,19 @@ for (const ch of ["/posts", "/resume", "/photography", "/products"]) {
 }
 check(readerChrome.includes("LanguageSwitch") && readerChrome.includes("SafelightSwitch"), "reader header must include language and safelight switches");
 
-// 4. 单列时间线列表（Single column timeline with scroll animations）
+// 4. 大卡片时间线流（Big cards timeline with cover, title, description, tags, time, reading time）
 check(archiveList.includes("border-l") && archiveList.includes("border-border-plate"), "archive list must render single-column vertical timeline axis");
 check(archiveList.includes("framer-motion") && archiveList.includes("whileInView"), "archive list must use framer-motion whileInView for subtle scroll animations");
+check(archiveList.includes("post.cover_image"), "big cards must render cover photo");
+check(archiveList.includes("post.summary"), "big cards must render post description/summary");
+check(archiveList.includes("post.tags"), "big cards must render post tags");
+check(archiveList.includes("post.date"), "big cards must render created time");
+check(archiveList.includes("post.reading_time"), "big cards must render reading time");
 check(!archiveList.includes("rounded-xl"), "red line: rounded-xl cards must not appear");
 check(!archiveList.includes("backdrop-blur"), "red line: backdrop-blur must not appear");
 check(!archiveList.includes("sticky"), "year anchors must be non-sticky");
 check(archiveList.includes("tabular-nums"), "dates and metrics must use tabular-nums");
 check(archiveList.includes("font-display") && (archiveList.includes("text-3xl") || archiveList.includes("text-4xl")), "year anchors must use giant serif numbers");
-
 // 5. 交互：hover 标题转钴蓝 + translate-x-1，无阴影上浮
 check(
   archiveList.includes("group-hover:text-cobalt") || archiveList.includes("group-hover:text-[#2148B8]"),
