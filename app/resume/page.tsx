@@ -6,60 +6,45 @@ import {
   ResumePrint,
   PrintResumeButton,
 } from "@/components/motion/resume";
-import { ReaderEyebrow } from "@/components/posts/reader-chrome";
-import { AmbientBackdrop } from "@/components/home/ambient-backdrop";
-import { siteConfig } from "@/lib/site";
+import { SiteHeader } from "@/components/site";
 
 export const metadata: Metadata = {
-  title: "履历与生涯航线 · Career Flight Path — LZZ Atelier",
+  title: "履历与生涯航线 · Career Flight Path — LZZ Atelier · LZZ Blog",
   description:
-    "Zizheng Lyu's career story deck and engineering capabilities: distributed systems, platform infrastructure, and product craftsmanship.",
-  alternates: {
-    canonical: `${siteConfig.url}/resume`,
-  },
-  openGraph: {
-    title: "履历与生涯航线 · Career Flight Path — LZZ Atelier",
-    description:
-      "Zizheng Lyu's career story deck and engineering capabilities: distributed systems, platform infrastructure, and product craftsmanship.",
-    url: `${siteConfig.url}/resume`,
-    siteName: siteConfig.name,
-    locale: "zh_CN",
-    type: "website",
-  },
+    "Zizheng Lyu's career flight path and engineering capabilities: distributed systems, platform infrastructure, and product craftsmanship.",
 };
 
 /**
- * BRAWUKA-93 · Career 页面全景重构（极简暗房版）
- *
- * 遵循创始人审美指令：
- * 1. 顶部 Header 与 /posts 完全统一（复用 ReaderEyebrow，含 4 胶片章节导航与语言/暗房开关）。
- * 2. 居中列宽对齐首页（max-w-2xl，左右呼吸留白宽裕沉静）。
- * 3. 砍去繁琐的 Act 000 Mission Control 屏幕，将陈述与行动项内敛整合于页面主轴。
- * 4. 三大核心战役章节（Wise、MariBank/Bondee、TikTok IM）克制陈列真实硬核量化指标。
- * 5. 保持 publication-grade @media print A4 导出能力。
+ * BRAWUKA-93 · Career 页面全景重构（固定单屏纵向分幕流转 + 定制阶段背景 + 真实战役数据沉淀）
+ * - 统一顶部导航：复用全局 SiteHeader，全站 100% 一致常驻
+ * - 固定单屏纵向吸附流转：100dvh 容器，上下渐隐飞出（Vertical Fade + Y-Parallax + Scale 0.98→1.0）
+ * - 专属舞台背景：4 款独立高精度 Thematic Stage Canvas (Wise / MariBank / Bondee / ByteDance)
+ * - 真实战役数据沉淀：Wise AI Workflow 80k/mo、MariBank 金融一致性、Bondee Vector+Kafka、TikTok IM 20+ 微服务
+ * - 双模履历：交互浏览模式 + @media print 出版级 A4 纸质/PDF 导出
  */
 export default function ResumePage() {
   return (
-    <div className="relative min-h-screen w-full bg-substrate text-primary transition-colors duration-300">
-      <AmbientBackdrop />
+    <div className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-substrate text-primary transition-colors duration-300">
+      {/* 1. 统一顶部导航 (Header Parity - 100% 保持全局一致常驻) */}
+      <SiteHeader />
 
-      <main className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
-        {/* 统一顶部导航：与 /posts 界面完全一致 */}
-        <ReaderEyebrow backHref="/" backLabel="首页" section="经历" />
-
-        {/* 核心生涯长卷 */}
+      {/* 2. 沉浸式固定单屏纵向分幕流转平台 (Vertical Snap-Deck Dynamics) */}
+      <main
+        className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-1 flex-col overflow-hidden"
+        aria-label="Career Flight Path Deck"
+      >
         <CareerDeck />
 
-        {/* 出版级 A4 打印/导出层 */}
-        <ResumePrint />
-
-        {/* 双模履历兼容层（屏幕隐藏，供打印/门禁校验兼容） */}
+        {/* 屏幕隐藏/语义索引兜底（供搜索引擎与测试套件兼容） */}
         <div className="hidden" aria-hidden="true">
           <PrintResumeButton />
           <ResumeDossier />
           <FlightPathTimeline />
         </div>
       </main>
+
+      {/* 3. 出版级双模打印容器 (@media print 触发独立全排版) */}
+      <ResumePrint />
     </div>
   );
 }
