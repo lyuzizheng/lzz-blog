@@ -255,54 +255,47 @@ export function CareerDeck() {
         </AnimatePresence>
       </div>
 
-      {/* 3. Sleek Vertical Timeline & Progress Rail (纵向时间轴) */}
+      {/* 3. Sleek Minimalist Vertical Timeline & Progress Rail (纵向时间轴) */}
       <aside
-        className="pointer-events-auto absolute right-3 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-3 sm:right-6 md:flex"
+        className="pointer-events-auto absolute right-4 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-4 sm:right-8 md:flex"
         aria-label="Career Timeline Progression"
       >
-        <div className="flex flex-col items-center gap-1 rounded-xs border border-border-plate/70 bg-surface/75 p-2 shadow-plate backdrop-blur-md">
-          {/* Timeline Rail Track */}
-          <div className="relative flex flex-col items-center gap-4 py-1">
-            {CAREER_STAGES.map((stage, idx) => {
-              const isActive = idx === stageIndex;
-              const isPassed = idx < stageIndex;
+        <div className="flex flex-col items-center gap-3">
+          {CAREER_STAGES.map((stage, idx) => {
+            const isActive = idx === stageIndex;
+            const isPassed = idx < stageIndex;
 
-              return (
-                <button
-                  key={stage.id}
-                  onClick={() => goToStage(idx)}
-                  className="group relative flex items-center gap-2.5 transition-all"
-                  aria-label={`Jump to ${stage.actNo}: ${stage.nameEn}`}
-                >
-                  {/* Tooltip on hover */}
-                  <span className="pointer-events-none absolute right-7 origin-right scale-95 rounded-xs border border-border-plate bg-surface/95 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:scale-100 group-hover:opacity-100 group-hover:text-primary">
-                    {stage.actNo} · {isZh ? stage.nameZh : stage.nameEn}
-                  </span>
+            return (
+              <button
+                key={stage.id}
+                onClick={() => goToStage(idx)}
+                className="group relative flex items-center justify-center p-1 transition-all"
+                aria-label={`Jump to ${stage.actNo}: ${stage.nameEn}`}
+              >
+                {/* Tooltip on hover */}
+                <span className="pointer-events-none absolute right-6 origin-right scale-95 rounded-xs border border-border-plate/60 bg-surface/90 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:scale-100 group-hover:opacity-100 group-hover:text-primary backdrop-blur-xs">
+                  {stage.actNo} · {isZh ? stage.nameZh : stage.nameEn}
+                </span>
 
-                  {/* Pip node */}
-                  <div
-                    className={`relative flex h-3.5 w-3.5 items-center justify-center rounded-full transition-all duration-300 ${
-                      isActive
-                        ? "scale-110 border-2 border-cobalt bg-substrate shadow-xs"
-                        : isPassed
-                          ? "border border-border-plate bg-cobalt/60"
-                          : "border border-border-plate/60 bg-transparent hover:border-muted"
-                    }`}
-                  >
-                    {isActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-cobalt" />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Current Stage Indicator Tag */}
-          <div className="mt-1 border-t border-border-plate/60 pt-1.5 font-telemetry text-[9px] font-semibold uppercase tracking-widest text-muted">
-            <span className="text-cobalt">0{stageIndex + 1}</span> / 0{totalStages}
-          </div>
+                {/* Pip node */}
+                <div
+                  className={`h-2.5 w-2.5 rounded-full transition-all duration-200 ${
+                    isActive
+                      ? "scale-125 bg-cobalt ring-4 ring-cobalt/20"
+                      : isPassed
+                        ? "bg-cobalt/50 hover:bg-cobalt"
+                        : "bg-border-plate hover:bg-muted"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </div>
+
+        {/* Subtle Stage Counter */}
+        <span className="font-telemetry text-[9px] tracking-widest text-muted">
+          0{stageIndex + 1}/0{totalStages}
+        </span>
       </aside>
 
       {/* 4. Bottom-Right Quick Step Controls & Telemetry Eyebrow */}
