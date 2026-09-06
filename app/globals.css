@@ -424,6 +424,55 @@ h4:hover .heading-anchor {
 }
 
 /* ==========================================================================
+   BRAWUKA-78 · 单屏暗房工作台：胶片叠 idle 微摆 / 显影曝光 / 显影液微光
+   独立 transform 属性（translate/rotate）与 framer-motion 的 transform 叠加，
+   互不覆盖；reduced-motion 由全局门禁熔断，JS 侧 useReducedMotion 同步禁用。
+   ========================================================================== */
+@keyframes film-idle-sway {
+  0%,
+  100% {
+    translate: 0 2px;
+    rotate: -0.5deg;
+  }
+  50% {
+    translate: 0 -2px;
+    rotate: 0.5deg;
+  }
+}
+/* 闲置呼吸级微浮动（±2px / ±0.5°），hover 暂停该张 */
+.film-idle {
+  animation: film-idle-sway 7s ease-in-out infinite;
+  will-change: translate, rotate;
+}
+.film-idle:hover {
+  animation-play-state: paused;
+}
+
+/* 显影曝光：负片 → 正片反转（仅作用于画格场景层，文字叠层不参与） */
+.film-latent {
+  filter: invert(0.88) brightness(0.92) saturate(0.9);
+  transition: filter 0.35s ease;
+}
+.group:hover .film-latent,
+.group:focus-visible .film-latent {
+  filter: invert(0) brightness(1) saturate(1);
+}
+
+/* 显影液微光：单层低透明径向渐变，缓慢漂移（与 grain 底噪不同层、不叠加） */
+.darkroom-glow {
+  background: radial-gradient(45% 40% at 50% 62%, var(--ink-faint), transparent 72%);
+  animation: darkroom-glow-drift 26s ease-in-out infinite alternate;
+}
+@keyframes darkroom-glow-drift {
+  from {
+    transform: translate3d(-2%, 1.5%, 0);
+  }
+  to {
+    transform: translate3d(2%, -1.5%, 0);
+  }
+}
+
+/* ==========================================================================
    BRAWUKA-39 · Dual-Mode Resume Print Sheet (@media print A4)
    交互元素 .no-print 全部隐藏；出版级简历 .print-only 仅在打印时显影。
    ========================================================================== */

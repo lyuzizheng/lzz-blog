@@ -40,6 +40,17 @@ export const zh: Translations = {
         sentence: "从南洋理工大学到字节跳动，个人成长与工程实战历程。",
         cta: "查看完整履历",
       },
+      projects: {
+        title: "产品展台",
+        sentence: "工作之外的产品实验：CoffeeMode、CanCan 与 Our Village。",
+        cta: "进入产品展台",
+      },
+    },
+    workbench: {
+      scatterHint: "点击胶片叠 · 散落四枚入口",
+      gatherHint: "点击空白或按 ESC 收拢胶片",
+      expandAria: "散落展开四枚导航胶片",
+      collapseAria: "收拢导航胶片叠",
     },
     colophon: "排版采用 NEWSREADER 与 GEIST MONO",
     rss: "RSS 订阅",

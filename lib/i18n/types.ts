@@ -39,6 +39,17 @@ export interface Translations {
         sentence: string;
         cta: string;
       };
+      projects: {
+        title: string;
+        sentence: string;
+        cta: string;
+      };
+    };
+    workbench: {
+      scatterHint: string;
+      gatherHint: string;
+      expandAria: string;
+      collapseAria: string;
     };
     colophon: string;
     rss: string;

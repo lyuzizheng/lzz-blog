@@ -40,6 +40,17 @@ export const en: Translations = {
         sentence: "NTU to ByteDance, one frame at a time.",
         cta: "Open the dossier",
       },
+      projects: {
+        title: "Products",
+        sentence: "Experiments beyond work — CoffeeMode, CanCan, Our Village.",
+        cta: "Enter the showroom",
+      },
+    },
+    workbench: {
+      scatterHint: "CLICK THE STACK · SCATTER FOUR FILMS",
+      gatherHint: "ESC OR CLICK THE CANVAS TO REGATHER",
+      expandAria: "Scatter the four navigation films",
+      collapseAria: "Regather the film stack",
     },
     colophon: "SET IN NEWSREADER & GEIST MONO",
     rss: "RSS",
