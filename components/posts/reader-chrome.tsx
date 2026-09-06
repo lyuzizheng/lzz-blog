@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
 import { LanguageSwitch } from "@/components/ui/language-switch";
+import { useI18n } from "@/lib/i18n";
 
 /**
  * Four chapter negative specifications matching the darkroom homepage:
@@ -32,9 +33,10 @@ export function ReaderEyebrow({
   backLabel?: string;
   section?: string;
 }) {
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
   const pathname = usePathname();
   const isPostDetail = pathname !== "/posts";
-
   return (
     <header className="mb-10 flex flex-col gap-3 border-b border-border-plate pb-4 sm:flex-row sm:items-center sm:justify-between">
       {/* Brand / Home link */}
@@ -43,7 +45,7 @@ export function ReaderEyebrow({
           href="/"
           className="font-display text-sm font-bold tracking-tight text-text-primary transition-colors hover:text-ink-dominant uppercase"
         >
-          LZZ ATELIER
+          {t.common.atelier}
         </Link>
         {isPostDetail && backLabel && (
           <div className="flex items-center gap-1.5 font-telemetry text-xs text-muted">
@@ -60,7 +62,7 @@ export function ReaderEyebrow({
 
       {/* 4 mini 简约长方形胶片 section navigation (matching homepage 4 negatives) */}
       <nav
-        aria-label="Section chapter navigation"
+        aria-label={isZh ? "章节导航" : "Section chapter navigation"}
         className="flex items-center gap-1.5 overflow-x-auto py-0.5 sm:gap-2"
       >
         {CHAPTER_NEGATIVES.map((neg) => {
@@ -78,7 +80,7 @@ export function ReaderEyebrow({
               }`}
             >
               <span className="text-[9px] opacity-60 tabular-nums">{neg.frameNo}</span>
-              <span className="tracking-wider uppercase">{neg.label}</span>
+              <span className="tracking-wider uppercase">{t.home.films[neg.key] || neg.label}</span>
             </Link>
           );
         })}
@@ -94,10 +96,11 @@ export function ReaderEyebrow({
 }
 
 export function ReaderColophon() {
+  const { t } = useI18n();
   return (
     <footer className="mt-16 border-t border-border-plate pt-4 font-telemetry text-[11px] leading-relaxed text-muted">
       <div className="flex flex-col justify-between gap-2 sm:flex-row">
-        <span>© 2026 ZIZHENG LYU · LZZ ATELIER</span>
+        <span>© 2026 ZIZHENG LYU · {t.common.atelier}</span>
         <span className="tabular-nums">
           PAPER #F5F1E8 · INK #2148B8 · SET IN NEWSREADER + NOTO SERIF SC
         </span>

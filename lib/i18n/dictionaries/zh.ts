@@ -2,7 +2,7 @@ import type { Translations } from "../types";
 
 export const zh: Translations = {
   common: {
-    atelier: "LZZ ATELIER",
+    atelier: "LZZ 工作室",
     backToAtelier: "← 返回主页",
     loading: "加载中...",
     tbd: "待确认",
@@ -44,10 +44,10 @@ export const zh: Translations = {
     colophon: "排版采用 NEWSREADER 与 GEIST MONO",
     rss: "RSS 订阅",
     films: {
-      blogs: "Blogs",
-      career: "Career",
-      photography: "Photography",
-      projects: "Projects",
+      blogs: "文章",
+      career: "履历",
+      photography: "摄影",
+      projects: "产品",
       label: "章节索引 —— 灯箱台上散落的四张底片",
     },
   },
