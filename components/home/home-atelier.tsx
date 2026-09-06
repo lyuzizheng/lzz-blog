@@ -29,8 +29,8 @@ export function HomeAtelier() {
       </div>
 
       {/* Center column: identity + film stack enclosed in darkroom easel frame */}
-      <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
-        <div className="relative flex w-full flex-col items-center px-4 py-6 sm:px-8 sm:py-7">
+      <div className="relative z-10 mx-auto flex w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl flex-1 flex-col items-center justify-center px-4 py-4 sm:px-6 sm:py-6">
+        <div className="relative flex w-full flex-col items-center px-4 py-6 sm:px-8 sm:py-7 md:px-12 md:py-8">
           {/* BRAWUKA-86 · Darkroom easel light-table frame enclosing identity + chapter negatives */}
           <div
             className="pointer-events-none absolute inset-0 rounded-[4px] border border-[var(--ink-faint)]"
@@ -88,7 +88,7 @@ export function HomeAtelier() {
             <h1 className="mt-2 font-display text-3xl font-normal leading-tight tracking-tight text-primary sm:text-4xl">
               {t.home.title}
             </h1>
-            <p className="mt-3 max-w-md font-body text-sm leading-relaxed text-muted sm:text-base">
+            <p className="mt-3 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl font-body text-sm leading-relaxed text-muted sm:text-base">
               {t.home.heroSubtitle}
             </p>
 

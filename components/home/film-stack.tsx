@@ -39,7 +39,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
     frameNo: "▶ 01A",
     stock: "KODAK 400TX",
     emblem: "lines",
-    pose: "left-[1%] top-[2%] -rotate-[6deg] sm:left-[2%] sm:top-[8%] sm:-rotate-[7deg]",
+    pose: "left-[1%] top-[2%] -rotate-[6deg] sm:left-[2%] sm:top-[6%] sm:-rotate-[5deg]",
   },
   {
     key: "photography",
@@ -47,7 +47,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
     frameNo: "▶ 03A",
     stock: "PORTRA 400",
     emblem: "aperture",
-    pose: "left-[55%] top-[8%] rotate-[5deg] sm:left-[52%] sm:top-[2%] sm:-rotate-[3deg]",
+    pose: "left-[55%] top-[8%] rotate-[5deg] sm:left-[49%] sm:top-[4%] sm:-rotate-[3deg]",
   },
   {
     key: "career",
@@ -55,7 +55,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
     frameNo: "▶ 02A",
     stock: "ILFORD HP5+",
     emblem: "flight",
-    pose: "left-[5%] top-[50%] rotate-[3deg] sm:left-[27%] sm:top-[40%] sm:rotate-[4deg]",
+    pose: "left-[5%] top-[50%] rotate-[3deg] sm:left-[25%] sm:top-[36%] sm:rotate-[4deg]",
   },
   {
     key: "projects",
@@ -63,7 +63,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
     frameNo: "▶ 04A",
     stock: "FUJI C200",
     emblem: "bento",
-    pose: "left-[57%] top-[56%] -rotate-[8deg] sm:left-[76%] sm:top-[32%] sm:rotate-[8deg]",
+    pose: "left-[57%] top-[56%] -rotate-[8deg] sm:left-[72%] sm:top-[30%] sm:rotate-[6deg]",
   },
 ];
 
@@ -193,7 +193,7 @@ export function FilmStack() {
   return (
     <div className="w-full">
       <div
-        className="relative mx-auto h-[340px] w-full max-w-[680px] sm:h-[300px]"
+        className="relative mx-auto h-[340px] w-full max-w-[680px] sm:h-[320px] md:h-[340px] sm:max-w-[800px] md:max-w-[880px] lg:max-w-[940px]"
         role="group"
         aria-label={t.home.films.label}
       >
@@ -206,7 +206,7 @@ export function FilmStack() {
             onMouseEnter={() => router.prefetch(film.href)}
             onFocus={() => router.prefetch(film.href)}
             aria-label={`${film.frameNo} · ${t.home.films[film.key]}`}
-            className={`film-frame-shell group absolute z-10 block w-[44%] rounded-[2px] transition-[rotate,scale,translate] duration-300 ease-out hover:z-50 hover:rotate-0 hover:scale-[1.06] hover:-translate-y-2 focus-visible:z-50 focus-visible:rotate-0 focus-visible:scale-[1.06] focus-visible:-translate-y-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)] sm:w-[24%] ${film.pose}`}
+            className={`film-frame-shell group absolute z-10 block w-[44%] rounded-[2px] transition-[rotate,scale,translate] duration-300 ease-out hover:z-50 hover:rotate-0 hover:scale-[1.06] hover:-translate-y-2 focus-visible:z-50 focus-visible:rotate-0 focus-visible:scale-[1.06] focus-visible:-translate-y-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)] sm:w-[26%] md:w-[27%] ${film.pose}`}
           >
             <div
               className="film-idle"
