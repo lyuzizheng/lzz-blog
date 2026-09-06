@@ -202,6 +202,9 @@ export function FilmStack() {
           <Link
             key={film.key}
             href={film.href}
+            prefetch={false}
+            onMouseEnter={() => router.prefetch(film.href)}
+            onFocus={() => router.prefetch(film.href)}
             aria-label={`${film.frameNo} · ${t.home.films[film.key]}`}
             className={`film-frame-shell group absolute z-10 block w-[44%] rounded-[2px] transition-[rotate,scale,translate] duration-300 ease-out hover:z-50 hover:rotate-0 hover:scale-[1.06] hover:-translate-y-2 focus-visible:z-50 focus-visible:rotate-0 focus-visible:scale-[1.06] focus-visible:-translate-y-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)] sm:w-[24%] ${film.pose}`}
           >
