@@ -62,6 +62,9 @@ function getAllFiles(dir, baseDir = dir) {
   let results = [];
   const list = fs.readdirSync(dir);
   for (const file of list) {
+    if (file === "_headers" || file === "_redirects" || file === ".assetsignore") {
+      continue;
+    }
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
@@ -166,12 +169,21 @@ async function main() {
   }
   const workerCode = fs.readFileSync(workerPath, "utf-8");
 
+  const headersPath = path.join(assetsDir, "_headers");
+  const headersContent = fs.existsSync(headersPath) ? fs.readFileSync(headersPath, "utf-8") : undefined;
+  const redirectsPath = path.join(assetsDir, "_redirects");
+  const redirectsContent = fs.existsSync(redirectsPath) ? fs.readFileSync(redirectsPath, "utf-8") : undefined;
+
   const metadata = {
     main_module: "worker.js",
     compatibility_date: "2026-09-04",
     compatibility_flags: ["nodejs_compat"],
     assets: {
-      jwt: jwt
+      jwt: jwt,
+      config: {
+        ...(headersContent ? { _headers: headersContent } : {}),
+        ...(redirectsContent ? { _redirects: redirectsContent } : {})
+      }
     },
     bindings: [
       {
@@ -180,6 +192,9 @@ async function main() {
       }
     ],
     cache: {
+      enabled: true
+    },
+    cache_options: {
       enabled: true
     },
     observability: {
