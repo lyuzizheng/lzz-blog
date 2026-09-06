@@ -21,7 +21,7 @@ export function WiseCanvas() {
       />
 
       <svg
-        className="absolute inset-0 h-full w-full opacity-60"
+        className="absolute inset-0 h-full w-full opacity-25 dark:opacity-20 transition-opacity duration-300"
         viewBox="0 0 1000 800"
         preserveAspectRatio="xMidYMid slice"
         fill="none"

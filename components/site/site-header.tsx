@@ -2,11 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
-import { FilmIndex, type FilmPillar } from "./film-index";
-import { SOCIAL_LINKS } from "./social-links";
-import { SocialBadge } from "./social-badge";
-
 import { useI18n } from "@/lib/i18n";
 
 /**
@@ -15,36 +12,78 @@ import { useI18n } from "@/lib/i18n";
 export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume", "/products"] as const;
 
 /**
- * BRAWUKA-45 · Shared sticky site header: logo + coordinates, film-clip
- * index toggle, monochrome social microbadges, safelight switch.
- * Server-rendered; the unfurl panel is a client island (fixed h-14,
- * absolute overlay → Zero CLS).
+ * 4 chapter negative specifications matching the darkroom homepage:
+ * Blogs (/posts) · Career (/resume) · Photography (/photography) · Projects (/products)
+ */
+const CHAPTER_NEGATIVES = [
+  { key: "blogs", label: "Blogs", labelZh: "文章", href: "/posts", frameNo: "01" },
+  { key: "career", label: "Career", labelZh: "履历", href: "/resume", frameNo: "02" },
+  { key: "photography", label: "Photo", labelZh: "摄影", href: "/photography", frameNo: "03" },
+  { key: "projects", label: "Projects", labelZh: "产品", href: "/products", frameNo: "04" },
+] as const;
+
+/**
+ * BRAWUKA-45 / BRAWUKA-93 · Shared Unified Header
+ *
+ * 100% aligned with /posts ReaderEyebrow:
+ * - Left: "LZZ ATELIER" (homepage brand link)
+ * - Center: 4 mini rectangular negative links (direct navigation, zero click-to-expand)
+ * - Right: Language switch + Safelight darkroom switch
+ *
+ * Clean, lightweight, generous whitespace, zero cluttered popups.
  */
 export function SiteHeader() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
+  const pathname = usePathname();
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/85 backdrop-blur-md transition-colors duration-300">
-      <div className="relative mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/90 backdrop-blur-md transition-colors duration-300">
+      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 md:px-8">
+        {/* Brand / Homepage link */}
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="font-display text-lg font-bold tracking-tight text-primary"
+            className="font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-cobalt uppercase sm:text-lg"
             aria-label={t.common.atelier}
           >
             {t.common.atelier}
           </Link>
-          <span className="hidden font-telemetry text-[11px] text-muted lg:inline-block">
-            / 01°20&apos;N 103°49&apos;E / 2026.09
-          </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <FilmIndex />
-          <div className="mr-1 hidden items-center gap-1.5 xl:flex" aria-label="社交媒体外链">
-            {SOCIAL_LINKS.map((link) => (
-              <SocialBadge key={link.key} link={link} />
-            ))}
-          </div>
+        {/* 4 mini 简约长方形胶片直接导航 (Direct Navigation, No Dropdowns) */}
+        <nav
+          aria-label={isZh ? "章节导航" : "Section chapter navigation"}
+          className="flex items-center gap-1 overflow-x-auto py-0.5 sm:gap-2"
+        >
+          {CHAPTER_NEGATIVES.map((neg) => {
+            const isActive =
+              pathname === neg.href ||
+              (neg.key === "blogs" && pathname.startsWith("/posts")) ||
+              (neg.key === "career" && pathname.startsWith("/resume"));
+
+            return (
+              <Link
+                key={neg.key}
+                href={neg.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
+                  isActive
+                    ? "border-cobalt bg-surface text-cobalt font-semibold shadow-plate"
+                    : "border-border-plate/60 bg-chamber/40 text-muted hover:border-border-plate hover:text-primary hover:bg-surface"
+                }`}
+              >
+                <span className="text-[9px] opacity-60 tabular-nums">{neg.frameNo}</span>
+                <span className="tracking-wider uppercase">
+                  {isZh ? neg.labelZh : neg.label}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Right tools: Language + Safelight switch */}
+        <div className="flex items-center gap-2">
           <LanguageSwitch />
           <SafelightSwitch />
         </div>
