@@ -41,28 +41,33 @@ export function AmbientBackdrop() {
         }}
       />
 
-      {/* BRAWUKA-83 · Workbench line art — the darkroom desk itself:
-          light-table panel with ruler ticks, film canister, and a loupe.
-          Single 1px hairline family, faint ink, decorative only. */}
+      {/* BRAWUKA-86 · Workbench line art — integrated darkroom light-table frame:
+          large easel frame enclosing identity and chapter negatives, with ruler ticks,
+          canister, and loupe. Single 1px hairline family, faint ink, decorative only. */}
+      {/* BRAWUKA-86 · Workbench line art — integrated darkroom light-table frame:
+          large easel frame enclosing avatar, identity, and chapter negatives, with ruler ticks,
+          canister, and loupe. Responsive desktop (1000x1000) and mobile (400x800) SVGs. */}
+
+      {/* Desktop workbench frame (sm: and up) */}
       <svg
-        className="absolute inset-0 h-full w-full"
+        className="hidden sm:block absolute inset-0 h-full w-full"
         viewBox="0 0 1000 1000"
         preserveAspectRatio="xMidYMax slice"
         fill="none"
         aria-hidden="true"
       >
         <g stroke="var(--ink-faint)" strokeWidth={1}>
-          {/* Light-table panel under the film pile (positioned in lower desk zone to never intersect identity) */}
-          <rect x={140} y={720} width={720} height={250} rx={4} />
-          <rect x={156} y={736} width={688} height={218} rx={2} strokeDasharray="2 5" opacity={0.6} />
+          {/* Large light-table easel frame enclosing avatar, identity, and chapter negatives */}
+          <rect x={140} y={440} width={720} height={530} rx={4} />
+          <rect x={156} y={456} width={688} height={498} rx={2} strokeDasharray="2 5" opacity={0.6} />
           {/* Ruler ticks along the panel's top edge */}
           {Array.from({ length: 37 }, (_, i) => (
             <line
-              key={`tick-${i}`}
+              key={`tick-desktop-${i}`}
               x1={156 + i * (688 / 36)}
-              y1={720}
+              y1={440}
               x2={156 + i * (688 / 36)}
-              y2={i % 6 === 0 ? 708 : 714}
+              y2={i % 6 === 0 ? 428 : 434}
               opacity={0.8}
             />
           ))}
@@ -78,8 +83,40 @@ export function AmbientBackdrop() {
           <circle cx={916} cy={780} r={20} />
           <line x1={930} y1={794} x2={946} y2={816} />
         </g>
-        {/* Subtle accent: the light table's live edge under the film stack */}
-        <line x1={156} y1={736} x2={844} y2={736} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.25} />
+        {/* Subtle accent: the light table's live edge at the top */}
+        <line x1={156} y1={456} x2={844} y2={456} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.25} />
+      </svg>
+
+      {/* Mobile workbench frame (< sm) */}
+      <svg
+        className="block sm:hidden absolute inset-0 h-full w-full"
+        viewBox="0 0 400 800"
+        preserveAspectRatio="xMidYMid meet"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g stroke="var(--ink-faint)" strokeWidth={1}>
+          {/* Large light-table easel frame enclosing avatar, identity, and chapter negatives */}
+          <rect x={16} y={48} width={368} height={704} rx={4} />
+          <rect x={24} y={56} width={352} height={688} rx={2} strokeDasharray="2 4" opacity={0.6} />
+          {/* Ruler ticks along the panel's top edge */}
+          {Array.from({ length: 23 }, (_, i) => (
+            <line
+              key={`tick-mobile-${i}`}
+              x1={24 + i * (352 / 22)}
+              y1={48}
+              x2={24 + i * (352 / 22)}
+              y2={i % 4 === 0 ? 38 : 42}
+              opacity={0.8}
+            />
+          ))}
+          {/* Registration crosshair, lower right corner of the panel */}
+          <circle cx={356} cy={724} r={8} />
+          <line x1={356} y1={712} x2={356} y2={736} />
+          <line x1={344} y1={724} x2={368} y2={724} />
+        </g>
+        {/* Subtle accent: the light table's live edge at the top */}
+        <line x1={24} y1={56} x2={376} y2={56} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.25} />
       </svg>
 
       {/* Dust drifting through the beam */}
