@@ -41,9 +41,14 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "content/about.md",
       },
       {
-        text: "Bondee K8s 管理平台 + Pod 调试能力；身兼 SE / SRE / BD（新加坡首位 SWE）",
+        text: "Bondee K8s 容器编排平台与高吞吐可观测基础设施；身兼 SE / SRE / BD（新加坡首位 SWE）",
         status: "verified",
         source: "CAREER_DOSSIER N09",
+      },
+      {
+        text: "MariBank 数字银行架构：信贷业务线分布式交易一致性、防并发重放、长周期计息与高标准风控工程",
+        status: "verified",
+        source: "CAREER_DOSSIER N10",
       },
       {
         text: "Location 业务线 CI/CD 流程与在线 / 离线任务标准告警体系建设",
@@ -82,17 +87,17 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
     summary: "离线编排与在线服务的双轨治理：先治管道，再谈规模。",
     bullets: [
       {
-        text: "TikTok Location 海外 IP 定位负责人：近百离线 Spark 任务治理，自研分析编排优化资源利用",
+        text: "TikTok Location 海外 IP 定位负责人：近百离线 Spark 任务治理，自研分析编排优化资源利用，ASEAN 精度突破",
         status: "verified",
         source: "CAREER_DOSSIER N07",
       },
       {
-        text: "Bondee 日志管线：AWS 托管日志 → 自建 Vector + Kafka + ElasticSearch（成本与性能双优化）",
+        text: "Bondee 日志管线：重构替换昂贵 ELK → 基于 DaemonSet + Disk Mount + Vector + Kafka 构建全自研高性能日志收集与导出管线",
         status: "verified",
         source: "CAREER_DOSSIER N09",
       },
       {
-        text: "TikTok IM：Golang 微服务多活同步、会话排序初始化优化、消息丢失自动化诊断工具",
+        text: "TikTok IM：维护 20+ 个 Go 微服务全球高并发与 7×24 Oncall，主导多数据中心跨洋毫秒级同步，自研消息丢包秒级自动排障工具",
         status: "verified",
         source: "CAREER_DOSSIER N08",
       },
@@ -115,9 +120,9 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "CAREER_DOSSIER N08",
       },
       {
-        text: "WISE AI Agent 自动化提效：赔偿链路重构与跨组升级机制",
-        status: "tbd",
-        source: "NEEDS-OWNER 脱敏边界",
+        text: "WISE 主导设计并落地 PayOps AI Workflow Platform 与 AI Infra 底座：首批 Onboard 最后一公里资金交易核验匹配，月自动化处理 30k+ cases (准确率 98%+)，每月节省 80,000 GBP 人工成本",
+        status: "verified",
+        source: "CAREER_DOSSIER N12",
       },
     ],
   },
@@ -135,25 +140,25 @@ export const PRINT_EMPLOYMENT: PrintEmployment[] = [
     period: "2024-11 – Present",
     org: "WISE",
     role: "Full-Stack Product Engineer",
-    line: "Payment Defects & Incident：Agent 状态追踪、队列管理、跨组升级、赔偿链路重构；主导产品设计。",
+    line: "Payment Defects Group：主导设计落地 PayOps AI Workflow Platform，最后一公里资金交易核验月处理 30k+ cases (98%+ 准确率)，月省 80,000 GBP。",
   },
   {
     period: "2024-04 – 2024-07",
     org: "Maribank",
     role: "Senior Backend · Loan & Credit",
-    line: "Cashloan + SME Termloan (Java)；风控 / 合规 / SDLC；业余 RAG + LLM 智能客服 Bot。",
+    line: "信贷业务线（Loan Division）：Cashloan + SME Termloan；分布式交易一致性、防并发重放、长周期计息与高标准风控合规。",
   },
   {
     period: "2023-09 – 2024-04",
     org: "Bondee",
     role: "Senior SWE · DevOps",
-    line: "K8s 管理平台；日志 AWS → 自建 Vector + Kafka + ES；新加坡首位 SWE，身兼 SE / SRE / BD。",
+    line: "新加坡首位 SWE；主导重构替换 ELK，基于 DaemonSet + Vector + Kafka 构建全自研高性能日志管线，显著缩减云资源账单。",
   },
   {
     period: "2021-08 – 2023-09",
     org: "ByteDance · TikTok",
     role: "Backend · IM / Location / AGW",
-    line: "IM 多活同步与会话排序优化；Location 海外 IP 定位负责人；AGW 自助诊断与用量预估工具。",
+    line: "TikTok IM 维护 20+ Go 微服务全球 7×24 Oncall；主导建设跨洋多活数据中心毫秒级同步机制；自研消息丢包秒级自动排障工具；获团队晋升与 Spot Bonus。",
   },
   {
     period: "2019-08 – 2021-01",
