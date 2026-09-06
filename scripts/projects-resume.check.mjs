@@ -95,7 +95,7 @@ check(resumePage.includes("FlightPathTimeline"), "resume page must keep the flig
 // 8. Homepage film-strip wiring (BRAWUKA-57: personal page, not a landing page)
 check(!home.includes("ProjectsBento"), "homepage must not render ProjectsBento");
 check(!home.includes("SpotlightCard") && !home.includes("Pillars"), "homepage must not render pillar card walls");
-check(home.includes("FilmUnfurl"), "homepage must render the FilmUnfurl hero");
+check(home.includes("HomeAtelier"), "homepage must render the HomeAtelier single-screen film index (BRAWUKA-78)");
 check(home.includes("/posts"), "homepage must link onward to /posts");
 check(home.includes("/photography"), "homepage must link onward to /photography");
 check(home.includes("/resume"), "homepage must link onward to /resume");

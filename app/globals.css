@@ -424,6 +424,81 @@ h4:hover .heading-anchor {
 }
 
 /* ==========================================================================
+   BRAWUKA-78 · Atelier single-screen homepage: idle drift, exposure flash,
+   ambient darkroom dust. All GPU-composited transforms; the global
+   prefers-reduced-motion block above degrades every animation to static.
+   ========================================================================== */
+@keyframes film-idle-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0) rotate(0.5deg);
+  }
+}
+.film-idle {
+  animation: film-idle-drift var(--idle-duration, 7s) ease-in-out infinite;
+  will-change: transform;
+}
+.film-frame-shell:hover .film-idle,
+.film-frame-shell:focus-within .film-idle {
+  animation-play-state: paused;
+}
+
+@keyframes film-exposure-flash {
+  0% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.film-exposure {
+  opacity: 0;
+  pointer-events: none;
+}
+.film-frame-shell:hover .film-exposure,
+.film-frame-shell:focus-within .film-exposure {
+  animation: film-exposure-flash 360ms ease-out;
+}
+
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, 1.5%, 0) scale(1.06);
+  }
+}
+.ambient-glow {
+  animation: ambient-drift 36s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes dust-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--dust-opacity, 0.3);
+  }
+  85% {
+    opacity: var(--dust-opacity, 0.3);
+  }
+  100% {
+    transform: translate3d(var(--dust-dx, 12px), -48px, 0);
+    opacity: 0;
+  }
+}
+.dust-mote {
+  animation: dust-float var(--dust-duration, 14s) linear infinite;
+  will-change: transform, opacity;
+}
+
+/* ==========================================================================
    BRAWUKA-39 · Dual-Mode Resume Print Sheet (@media print A4)
    交互元素 .no-print 全部隐藏；出版级简历 .print-only 仅在打印时显影。
    ========================================================================== */

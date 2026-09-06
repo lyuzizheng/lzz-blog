@@ -43,6 +43,15 @@ export const en: Translations = {
     },
     colophon: "SET IN NEWSREADER & GEIST MONO",
     rss: "RSS",
+    films: {
+      blogs: "Blogs",
+      career: "Career",
+      photography: "Photography",
+      projects: "Projects",
+      open: "Open the film index — four chapters scattered on the light table",
+      scatterHint: "CLICK THE STACK · FRAMES SCATTER",
+      collectHint: "ESC OR CLICK ELSEWHERE TO COLLECT",
+    },
   },
   posts: {
     title: "Writing & Dispatches",
