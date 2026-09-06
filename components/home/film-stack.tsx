@@ -186,6 +186,15 @@ function PileFrame() {
         <div className="film-sprockets absolute inset-0" />
       </div>
       <div className="relative aspect-[3/2] w-full bg-[var(--bg-chamber)]">
+        {/* Backlit by the light table: a soft luminous core inside the negative */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 42%, var(--ink-dominant) 0%, transparent 72%)",
+            opacity: 0.16,
+          }}
+        />
         <div className="halftone-screen pointer-events-none absolute inset-0 opacity-15" />
       </div>
       <div className="relative h-3 w-full bg-[var(--bg-chamber)]">
