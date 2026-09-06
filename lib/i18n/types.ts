@@ -47,9 +47,7 @@ export interface Translations {
       career: string;
       photography: string;
       projects: string;
-      open: string;
-      scatterHint: string;
-      collectHint: string;
+      label: string;
     };
   };
   posts: {

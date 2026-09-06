@@ -48,9 +48,7 @@ export const en: Translations = {
       career: "Career",
       photography: "Photography",
       projects: "Projects",
-      open: "Open the film index — four chapters scattered on the light table",
-      scatterHint: "CLICK THE STACK · FRAMES SCATTER",
-      collectHint: "ESC OR CLICK ELSEWHERE TO COLLECT",
+      label: "Chapter index — four negatives scattered on the light table",
     },
   },
   posts: {
