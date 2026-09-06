@@ -49,8 +49,7 @@ export const zh: Translations = {
       photography: "Photography",
       projects: "Projects",
       open: "打开胶片索引 —— 四个章节散落在灯箱台上",
-      scatterHint: "点击胶片叠 · 画格散落",
-      collectHint: "按 ESC 或点击空白处收拢",
+      hint: "拾起一张底片 · 数字键 1–4 直达章节",
     },
   },
   posts: {

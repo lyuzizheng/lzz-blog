@@ -128,6 +128,8 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 ### 7.1 首页 = 封面 + 目录，3 屏封顶
 
 > **BRAWUKA-78 推翻（2026-09-06 创始人新方向）**：本节三屏 deck 作废。首页改为**单屏无滚动暗房工作台**（`100dvh`，无 Slide 2/3）：中央身份卡片（avatar + 名字 + 一句话 + 社交链接行）+ 四枚 35mm 负片叠放，点击 spring 散落为 Blogs/Career/Photography/Projects 四入口，Esc/点空白收拢；reduced-motion 静态规整排布。屏内眉脚（§7.4）契约保留。
+>
+> **BRAWUKA-83 迭代（2026-09-06 创始人反馈）**：取消"叠放 → 点击散落"状态机——四张章节胶片**常驻散落**、各自直接是链接（保留 hover 回正上浮 + 显影、idle 呼吸、数字键 1–4）；工作台下半区新增**模糊底片堆层**（6~8 张无标签负片，低透明度 + `blur(1.5px)`，纯装饰 pointer-events:none）；背景层追加**工作台 SVG 蚀刻**（灯箱台面内发光、刻度尺、套准标记、胶片罐、放大镜头——钴蓝 1px 单线族）。
 - Slide 1 封面：纸底 → 名字显影 → 3 帧胶片 stagger（load 序列，reduced-motion 下直接呈现）。
 - Slide 2 子页索引：四入口**散落叠放**（overprint collage：一大一小一窄条一章戳，压边 8–16px）；SVG 修饰只许**一个**细线 gesture 家族（钴蓝 1px）。
 - Slide 3 Colophon 终屏（见 §7.4）。

@@ -1,6 +1,9 @@
 /**
- * BRAWUKA-78 verification suite: single-screen atelier homepage — no scroll,
- * identity card, stacked film index with scatter interaction, ambient motion.
+ * BRAWUKA-83 verification suite: single-screen atelier homepage — no scroll,
+ * identity card, four chapter films permanently scattered on the light table,
+ * a blurred under-layer pile of unlabeled negatives, workbench SVG etching.
+ * (BRAWUKA-78 introduced the atelier; BRAWUKA-83 retires the stacked deck
+ * and click-to-scatter state machine.)
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -49,31 +52,41 @@ check(homeAtelier.includes("SOCIAL_LINKS"), "identity card must render the socia
 check(homeAtelier.includes("t.home.title") && homeAtelier.includes("t.home.heroSubtitle"), "identity card must render localized name + bio");
 check(exists("public/avatar.jpg"), "public/avatar.jpg must exist");
 
-// 4. 四胶片散落：四条路由 + 四个标签 + spring 物理 + 收拢契约
+// 4. 四胶片常驻散落：四条路由 + 四个标签 + spring 物理 + 无收拢状态机
 for (const route of ["/posts", "/resume", "/photography", "/products"]) {
   check(filmStack.includes(`"${route}"`), `film stack must carry a frame for ${route}`);
 }
 for (const label of ["blogs", "career", "photography", "projects"]) {
   check(filmStack.includes(label), `film stack must label a frame: ${label}`);
 }
-check(filmStack.includes("type: \"spring\""), "scatter must use spring physics");
-check(filmStack.includes("setScattered(true)") && filmStack.includes("setScattered(false)"), "film stack must scatter on tap and collect again");
-check(filmStack.includes("Escape"), "Esc must collect the scattered frames");
-check(filmStack.includes("film-idle"), "stacked frames must carry the idle drift class");
+check(filmStack.includes("type: \"spring\""), "hover settle must use spring physics");
+check(filmStack.includes("<Link"), "every chapter frame must directly be a link");
+check(!filmStack.includes("setScattered") && !filmStack.includes("Escape"), "the stacked/scattered state machine must be retired (no scatter/collect, no Esc)");
+check(filmStack.includes("film-idle"), "scattered frames must carry the idle drift class");
 check(filmStack.includes("useReducedMotion"), "film stack must honor prefers-reduced-motion");
 check(filmStack.includes("ResizeObserver"), "scatter poses must be measured in pixels (Zero CLS)");
 
+// 4b. 底片堆层：无标签负片堆叠在工作台下半区，模糊 + 纯装饰
+check(filmStack.includes("PILE_POSES") && filmStack.includes("PileNegative"), "film stack must render the blurred negative pile layer");
+check(filmStack.includes("blur-[1.5px]"), "pile layer must carry the blur(1.5px) depth treatment");
+check(filmStack.includes("pointer-events-none"), "pile layer must be pointer-events none (decorative-only)");
+
 // 5. 语义与爬虫可达：sr-only 章节索引 + i18n 键齐备
 check(homePage.includes("sr-only") && homePage.includes("Crawling index"), "homepage must keep the sr-only crawl index");
-for (const key of ["scatterHint", "collectHint", "open"]) {
-  check(en.includes(key) && zh.includes(key), `i18n films.${key} must exist in en + zh`);
-}
+check(en.includes("hint") && zh.includes("hint"), "i18n films.hint must exist in en + zh");
+check(!en.includes("scatterHint") && !zh.includes("scatterHint") && !en.includes("collectHint") && !zh.includes("collectHint"), "retired films.scatterHint/collectHint keys must be removed from en + zh");
+check(en.includes("open") && zh.includes("open"), "i18n films.open must exist in en + zh");
 
 // 6. 背景与微动画基底（globals.css 契约）
 check(css.includes("film-idle-drift"), "globals.css must define the film-idle-drift keyframes");
 check(css.includes("film-exposure-flash"), "globals.css must define the exposure flash keyframes");
 check(css.includes("ambient-drift") && css.includes("dust-float"), "globals.css must define ambient glow + dust keyframes");
 check(ambientBackdrop.includes("aria-hidden") && ambientBackdrop.includes("pointer-events-none"), "ambient backdrop must be decorative-only");
+
+// 6b. 工作台 SVG 氛围层：灯箱台面（内发光 + 刻度尺 + 套准十字）、胶片罐、放大镜头
+for (const piece of ["LightTable", "workbench-table-glow", "FilmCanister", "EnlargerLens", "RegistrationMark"]) {
+  check(ambientBackdrop.includes(piece), `workbench etching must include: ${piece}`);
+}
 
 if (failures.length > 0) {
   console.error("homepage-atelier check FAILED:");
@@ -83,4 +96,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("homepage-atelier OK: single 100dvh frame, identity card, 4-frame film stack (scatter/collect, spring + idle drift), ambient backdrop, reduced-motion fallbacks.");
+console.log("homepage-atelier OK: single 100dvh frame, identity card, 4 chapter films permanently scattered (spring hover + idle drift), blurred negative pile, workbench SVG etching, ambient backdrop, reduced-motion fallbacks.");

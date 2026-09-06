@@ -49,8 +49,7 @@ export const en: Translations = {
       photography: "Photography",
       projects: "Projects",
       open: "Open the film index — four chapters scattered on the light table",
-      scatterHint: "CLICK THE STACK · FRAMES SCATTER",
-      collectHint: "ESC OR CLICK ELSEWHERE TO COLLECT",
+      hint: "PICK A FRAME · KEYS 1–4 JUMP TO A CHAPTER",
     },
   },
   posts: {

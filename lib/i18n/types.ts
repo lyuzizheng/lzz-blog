@@ -48,8 +48,7 @@ export interface Translations {
       photography: string;
       projects: string;
       open: string;
-      scatterHint: string;
-      collectHint: string;
+      hint: string;
     };
   };
   posts: {
