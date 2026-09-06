@@ -52,12 +52,12 @@ export const en: Translations = {
     },
   },
   posts: {
-    title: "Writing & Dispatches",
+    title: "Blogs",
     subtitle:
       "Long-form thinking on distributed systems, infrastructure engineering, and personal essays.",
     allChannels: "ALL",
-    technical: "TECHNICAL",
-    essays: "ESSAYS",
+    technical: "STUDY",
+    essays: "ESSAY",
     searchPlaceholder: "Search articles by title, summary, or tag...",
     tagFilter: "Filter by tag:",
     clearTag: "Clear tag",
