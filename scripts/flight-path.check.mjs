@@ -6,16 +6,22 @@
  * Checks:
  *  1. Data layer: N10 ledger-stamp, N09 pipeline-flow, verified battle metrics in Wise & TikTok.
  *  2. Horizontal reel retirement: flight-path-timeline.tsx no longer has GSAP pin/horizontal scrub.
- *  3. Visual alignment with homepage & posts:
- *     - app/resume/page.tsx mounts ReaderEyebrow (unified header with /posts)
- *     - app/resume/page.tsx uses max-w-2xl container (matching homepage center column)
+ *  3. Fixed 100dvh Snap-Deck Architecture:
+ *     - app/resume/page.tsx mounts SiteHeader (100% Header Parity with /posts and site)
+ *     - app/resume/page.tsx uses 100dvh container with overflow-hidden
  *     - app/resume/page.tsx keeps publication-grade ResumePrint for print mode
- *  4. Career Deck structure:
- *     - Integrated Masthead: verbatim core statement, action links (/resume.pdf, mailto, /products)
- *     - Chapter 01 (Wise): 30,000+ cases/mo, 98%+ accuracy, £80,000/mo savings, AI Workflow Platform
- *     - Chapter 02 (Exploration): Bondee Vector+Kafka pipeline, MariBank distributed consistency
- *     - Chapter 03 (ByteDance): 20+ Go microservices, 7×24 oncall, multi-DC sync, automated diagnostics
- *  5. Zero CLS: tabular-nums for numeric indicators.
+ *  4. Vertical Snap-Deck Dynamics & Controls:
+ *     - career-deck.tsx implements wheel debounce, touch swipe, and keyboard listeners (ArrowDown/Up, J/K)
+ *     - career-deck.tsx implements vertical snap spring physics with Y-parallax and opacity fading
+ *     - career-deck.tsx mounts the vertical timeline progression rail
+ *  5. 4 Thematic Stage Canvases:
+ *     - HeroCanvas, WiseCanvas, ExplorationCanvas, BytedanceCanvas imported & rendered
+ *  6. 4 Dedicated Stage Views:
+ *     - StageHero: Verbatim core statement, action hub (/resume.pdf, mailto, /products), downward chevron
+ *     - StageWise: 30,000+ cases/mo, 98%+ accuracy, £80,000/mo savings, AI Workflow Platform
+ *     - StageExploration: Bondee Vector+Kafka pipeline, MariBank distributed consistency
+ *     - StageBytedance: 20+ Go microservices, 7×24 oncall, multi-DC sync, automated diagnostics
+ *  7. Zero CLS: tabular-nums for numeric indicators.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -50,44 +56,57 @@ check(!timeline.includes("pin: true"), "flight-path-timeline must NOT contain GS
 check(!timeline.includes("scrollWidth - viewport.clientWidth"), "horizontal scroll amount calculation must be retired");
 check(timeline.includes("CareerDeck"), "flight-path-timeline must delegate to CareerDeck");
 
-// 3. Visual alignment with homepage & posts
+// 3. Header parity & 100dvh layout
 const resumePage = read("app/resume/page.tsx");
-check(resumePage.includes("ReaderEyebrow"), "app/resume/page.tsx must mount ReaderEyebrow (unified header with /posts)");
-check(resumePage.includes("max-w-2xl"), "app/resume/page.tsx must use max-w-2xl container (matching homepage)");
+check(resumePage.includes("SiteHeader"), "app/resume/page.tsx must mount SiteHeader (100% Header Parity)");
+check(resumePage.includes("100dvh"), "app/resume/page.tsx must use 100dvh fixed container");
 check(resumePage.includes("CareerDeck"), "app/resume/page.tsx must mount CareerDeck");
 check(resumePage.includes("ResumePrint"), "app/resume/page.tsx must keep publication-grade ResumePrint for print mode");
 
-// 4. Career Deck content & structure
+// 4. Vertical Snap Dynamics & Canvases
 const deck = read("components/motion/career-deck/career-deck.tsx");
+check(deck.includes("handleWheel"), "CareerDeck must implement wheel listener");
+check(deck.includes("handleTouchStart") && deck.includes("handleTouchEnd"), "CareerDeck must implement touch swipe listeners");
+check(deck.includes("ArrowDown") && deck.includes("ArrowUp"), "CareerDeck must implement keyboard navigation");
+check(deck.includes("HeroCanvas") && deck.includes("WiseCanvas"), "CareerDeck must mount HeroCanvas & WiseCanvas");
+check(deck.includes("ExplorationCanvas") && deck.includes("BytedanceCanvas"), "CareerDeck must mount ExplorationCanvas & BytedanceCanvas");
+check(deck.includes("stageVariants"), "CareerDeck must define vertical snap parallax motion variants");
 
-// Masthead & Statement
+// 5. Stages content
+const stageHero = read("components/motion/career-deck/stage-hero.tsx");
+const stageWise = read("components/motion/career-deck/stage-wise.tsx");
+const stageExploration = read("components/motion/career-deck/stage-exploration.tsx");
+const stageBytedance = read("components/motion/career-deck/stage-bytedance.tsx");
+
+// Act 0 Hero
 check(
-  deck.includes("values engineering ethic and believes good software products must do good to societies"),
-  "CareerDeck must contain the verbatim core statement",
+  stageHero.includes("values engineering ethic and believes good software products must do good to societies"),
+  "StageHero must contain the verbatim core statement",
 );
-check(deck.includes("/resume.pdf"), "CareerDeck masthead must link to /resume.pdf");
-check(deck.includes("mailto:lvzizhengde@gmail.com"), "CareerDeck masthead must link to mailto:lvzizhengde@gmail.com");
-check(deck.includes("/products"), "CareerDeck masthead must link to /products");
+check(stageHero.includes("/resume.pdf"), "StageHero action hub must link to /resume.pdf");
+check(stageHero.includes("mailto:lvzizhengde@gmail.com"), "StageHero action hub must link to mailto:lvzizhengde@gmail.com");
+check(stageHero.includes("/products"), "StageHero action hub must link to /products");
+check(stageHero.includes("ChevronDown") || stageHero.includes("onExploreNext"), "StageHero must render downward exploration action");
 
-// Chapter 01 (Wise)
-check(deck.includes("30,000"), "CareerDeck must display 30,000+ monthly cases");
-check(deck.includes("98"), "CareerDeck must display 98%+ matching accuracy");
-check(deck.includes("£80,000"), "CareerDeck must display £80,000 monthly savings");
-check(deck.includes("AI Workflow Platform"), "CareerDeck must highlight the AI Workflow Platform");
+// Act 1 Wise
+check(stageWise.includes("30,000"), "StageWise must display 30,000+ monthly cases");
+check(stageWise.includes("98"), "StageWise must display 98%+ matching accuracy");
+check(stageWise.includes("£80,000"), "StageWise must display £80,000 monthly savings");
+check(stageWise.includes("AI Workflow Platform"), "StageWise must highlight the AI Workflow Platform");
 
-// Chapter 02 (Exploration)
-check(deck.includes("Bondee") && deck.includes("MariBank"), "CareerDeck must feature Bondee and MariBank");
-check(deck.includes("Vector") && deck.includes("Kafka"), "CareerDeck must detail Vector + Kafka pipeline");
-check(deck.includes("分布式") || deck.includes("Consistency"), "CareerDeck must detail banking distributed consistency");
+// Act 2 Exploration
+check(stageExploration.includes("Bondee") && stageExploration.includes("MariBank"), "StageExploration must feature Bondee and MariBank");
+check(stageExploration.includes("Vector") && stageExploration.includes("Kafka"), "StageExploration must detail Vector + Kafka pipeline");
+check(stageExploration.includes("分布式") || stageExploration.includes("Consistency"), "StageExploration must detail banking distributed consistency");
 
-// Chapter 03 (ByteDance)
-check(deck.includes("20+"), "CareerDeck must display 20+ Go microservices");
-check(deck.includes("7×24") || deck.includes("7x24"), "CareerDeck must feature 7x24 oncall stability");
-check(deck.includes("Multi-datacenter") || deck.includes("Multi-DC"), "CareerDeck must feature multi-datacenter sync");
-check(deck.includes("排障") || deck.includes("Troubleshooting"), "CareerDeck must feature automated message loss troubleshooting");
+// Act 3 ByteDance
+check(stageBytedance.includes("20+"), "StageBytedance must display 20+ Go microservices");
+check(stageBytedance.includes("7×24") || stageBytedance.includes("7x24"), "StageBytedance must feature 7x24 oncall stability");
+check(stageBytedance.includes("Multi-datacenter") || stageBytedance.includes("Multi-DC"), "StageBytedance must feature multi-datacenter sync");
+check(stageBytedance.includes("排障") || stageBytedance.includes("Troubleshooting"), "StageBytedance must feature automated message loss troubleshooting");
 
-// 5. Zero CLS tabular-nums
-check(deck.includes("tabular-nums"), "CareerDeck must use tabular-nums for numeric indicators");
+// 6. Zero CLS tabular-nums
+check(stageWise.includes("tabular-nums"), "StageWise must use tabular-nums for numeric counters");
 
 if (failures.length > 0) {
   console.error(`CAREER DECK / FLIGHT PATH CHECK FAILED (${failures.length}):`);
@@ -95,5 +114,5 @@ if (failures.length > 0) {
   process.exit(1);
 }
 console.log(
-  `career deck / flight path OK: horizontal reel retired, unified ReaderEyebrow header, max-w-2xl homepage margins, verified battle metrics, zero-CLS tabular-nums.`,
+  `career deck / flight path OK: horizontal reel retired, 100dvh vertical snap deck, 4 thematic SVG canvases, vertical timeline rail, verified battle metrics, zero-CLS tabular-nums.`,
 );

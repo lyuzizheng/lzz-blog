@@ -1,485 +1,350 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { CAREER_STAGES, type CareerStageId } from "./deck-types";
+import {
+  HeroCanvas,
+  WiseCanvas,
+  ExplorationCanvas,
+  BytedanceCanvas,
+} from "./canvases";
+import { StageHero } from "./stage-hero";
+import { StageWise } from "./stage-wise";
+import { StageExploration } from "./stage-exploration";
+import { StageBytedance } from "./stage-bytedance";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { Download, Mail, Rocket, ArrowUp, Printer } from "lucide-react";
 
 /**
- * BRAWUKA-93 · CareerDeck (Re-architected)
- *
- * Minimalist, human-crafted Career Experience matching the Homepage & Posts language:
- * - max-w-2xl central column with generous breathing margins
- * - Darkroom easel light-table frames with precision hairline ruler ticks & crosshairs
- * - Integrated Masthead: Authentic engineering statement + 3 primary action badges
- * - Chapter 01: Wise · Product + Impact Matters More (30k+ cases/mo, 98%+, £80k/mo)
- * - Chapter 02: MariBank + Bondee · Dynamic + Exploration (Vector+Kafka, Banking Core)
- * - Chapter 03: ByteDance / TikTok IM · Foundation with Huge Responsibility (20+ Go Svcs, Multi-DC Sync)
- * - Keyboard shortcuts: 1, 2, 3 jump to chapters, Home returns to top
+ * Vertical snap-deck transition physics variants.
+ * When scrolling down (direction > 0):
+ *  - outgoing stage drifts up slightly (-45px) and fades out.
+ *  - incoming stage rises from below (+50px) with damping inertia, fading in (0.98 -> 1.0).
+ * When scrolling up (direction < 0):
+ *  - outgoing stage drifts down slightly (+45px) and fades out.
+ *  - incoming stage drops from above (-50px) with damping inertia, fading in (0.98 -> 1.0).
  */
+const stageVariants: Variants = {
+  enter: (direction: number) => ({
+    y: direction > 0 ? 50 : -50,
+    opacity: 0,
+    scale: 0.98,
+    filter: "blur(3px)",
+  }),
+  center: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      y: { type: "spring", stiffness: 280, damping: 28, mass: 0.8 },
+      opacity: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
+      scale: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
+      filter: { duration: 0.3 },
+    },
+  },
+  exit: (direction: number) => ({
+    y: direction > 0 ? -45 : 45,
+    opacity: 0,
+    scale: 0.98,
+    filter: "blur(3px)",
+    transition: {
+      y: { duration: 0.32, ease: [0.32, 0, 0.67, 0] },
+      opacity: { duration: 0.28, ease: "easeIn" },
+      scale: { duration: 0.28, ease: "easeIn" },
+      filter: { duration: 0.25 },
+    },
+  }),
+};
+
+/**
+ * Thematic Canvas transition variants (smooth cross-fade)
+ */
+const canvasVariants: Variants = {
+  enter: { opacity: 0 },
+  center: {
+    opacity: 1,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.4, ease: "easeIn" },
+  },
+};
+
 export function CareerDeck() {
-  const { locale, t } = useI18n();
+  const [stageIndex, setStageIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const isAnimatingRef = useRef(false);
+  const { locale } = useI18n();
   const isZh = locale === "zh";
 
-  const chapter1Ref = useRef<HTMLElement>(null);
-  const chapter2Ref = useRef<HTMLElement>(null);
-  const chapter3Ref = useRef<HTMLElement>(null);
+  const totalStages = CAREER_STAGES.length;
 
-  const scrollToRef = (ref: React.RefObject<HTMLElement | null>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Navigate to specific stage
+  const goToStage = useCallback(
+    (newIndex: number) => {
+      if (newIndex === stageIndex || isAnimatingRef.current) return;
+      if (newIndex < 0 || newIndex >= totalStages) return;
+
+      isAnimatingRef.current = true;
+      setDirection(newIndex > stageIndex ? 1 : -1);
+      setStageIndex(newIndex);
+
+      setTimeout(() => {
+        isAnimatingRef.current = false;
+      }, 550);
+    },
+    [stageIndex, totalStages],
+  );
+
+  const goNext = useCallback(() => {
+    if (stageIndex < totalStages - 1) {
+      goToStage(stageIndex + 1);
+    }
+  }, [stageIndex, totalStages, goToStage]);
+
+  const goPrev = useCallback(() => {
+    if (stageIndex > 0) {
+      goToStage(stageIndex - 1);
+    }
+  }, [stageIndex, goToStage]);
+
+  // Wheel listener with threshold & cooldown
+  const lastWheelTimeRef = useRef(0);
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      const now = Date.now();
+      if (now - lastWheelTimeRef.current < 550) return;
+
+      if (Math.abs(e.deltaY) > 30) {
+        lastWheelTimeRef.current = now;
+        if (e.deltaY > 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }
+    },
+    [goNext, goPrev],
+  );
+
+  // Touch swipe gesture listener
+  const touchStartYRef = useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartYRef.current === null) return;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartYRef.current - touchEndY;
+    touchStartYRef.current = null;
 
-  const handlePrint = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (typeof window !== "undefined") {
-      window.print();
+    if (Math.abs(diff) > 45) {
+      if (diff > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
     }
   };
 
-  // Keyboard navigation shortcuts (1, 2, 3, Home)
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
+      // Ignore if inside input/textarea
       if (
-        target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.tagName === "SELECT" ||
-          target.isContentEditable)
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
       ) {
         return;
       }
 
-      if (e.key === "1") {
+      if (
+        e.key === "ArrowDown" ||
+        e.key === "j" ||
+        e.key === "J" ||
+        e.key === "PageDown" ||
+        (e.key === " " && !e.shiftKey)
+      ) {
         e.preventDefault();
-        scrollToRef(chapter1Ref);
-      } else if (e.key === "2") {
+        goNext();
+      } else if (
+        e.key === "ArrowUp" ||
+        e.key === "k" ||
+        e.key === "K" ||
+        e.key === "PageUp" ||
+        (e.key === " " && e.shiftKey)
+      ) {
         e.preventDefault();
-        scrollToRef(chapter2Ref);
-      } else if (e.key === "3") {
-        e.preventDefault();
-        scrollToRef(chapter3Ref);
+        goPrev();
       } else if (e.key === "Home") {
         e.preventDefault();
-        scrollToTop();
+        goToStage(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goToStage(totalStages - 1);
+      } else if (e.key >= "0" && e.key <= "3") {
+        const target = parseInt(e.key, 10);
+        if (target < totalStages) {
+          e.preventDefault();
+          goToStage(target);
+        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [goNext, goPrev, goToStage, totalStages]);
+
+  const currentStage = CAREER_STAGES[stageIndex];
 
   return (
-    <div className="w-full space-y-10 sm:space-y-12">
-      {/* ========================================================================= */}
-      {/* 1. Integrated Masthead (Statement + Action Hub)                          */}
-      {/* ========================================================================= */}
-      <section
-        aria-label="Career Masthead"
-        className="relative overflow-hidden rounded-[4px] border border-[var(--ink-faint)] bg-surface/60 p-5 shadow-[var(--shadow-plate)] backdrop-blur-xs sm:p-7"
-      >
-        {/* Inner subtle frame & registration crosshair */}
-        <div className="pointer-events-none absolute inset-1 rounded-[2px] border border-dashed border-[var(--ink-faint)] opacity-40" />
-        <div className="pointer-events-none absolute bottom-2 right-2 flex h-3.5 w-3.5 items-center justify-center text-[var(--ink-faint)] opacity-60">
-          <span className="absolute h-full w-[1px] bg-current" />
-          <span className="absolute h-[1px] w-full bg-current" />
-        </div>
-
-        <div className="relative z-10 flex flex-col items-center text-center">
-          {/* Avatar matching homepage */}
-          <Image
-            src="/avatar.jpg"
-            alt="Zizheng Lyu"
-            width={64}
-            height={64}
-            priority
-            className="rounded-full border border-border-plate object-cover shadow-[var(--shadow-plate)]"
-            style={{ width: 64, height: 64 }}
-          />
-
-          <p className="mt-3 font-telemetry text-[11px] uppercase tracking-[0.24em] text-muted">
-            {isZh ? "经历航线与工程实录" : "CAREER CHRONICLES & FLIGHT PATH"}
-          </p>
-
-          <h1 className="mt-1.5 font-display text-2xl font-normal tracking-tight text-primary sm:text-3xl">
-            {isZh ? "自正的工程师历程与战役实录" : "Zizheng Lyu — Flight Path"}
-          </h1>
-
-          {/* Authentic Core Statement */}
-          <blockquote className="mt-3 max-w-xl font-serif text-sm italic leading-relaxed text-secondary sm:text-base sm:leading-relaxed">
-            &ldquo;A results-driven full-stack engineer with a passion for user-centric product development.
-            Proactive in fostering a cooperative team environment and mentoring new talent.
-            Excels in guiding projects from conception to successful completion.
-            More importantly, values engineering ethic and believes good software products must do good to societies.&rdquo;
-          </blockquote>
-
-          {/* Action Hub */}
-          <nav
-            aria-label="Resume quick actions"
-            className="mt-5 flex flex-wrap items-center justify-center gap-2.5 font-telemetry text-xs"
-          >
-            {/* Download PDF + Print */}
-            <div className="inline-flex items-center rounded-xs shadow-plate">
-              <a
-                href="/resume.pdf"
-                download="Zizheng-Lyu-Resume.pdf"
-                className="inline-flex items-center gap-1.5 rounded-l-xs border border-cobalt bg-cobalt px-3 py-1.5 font-telemetry text-xs font-medium text-text-badge transition-all hover:opacity-90"
-              >
-                <Download className="h-3 w-3" />
-                <span>{isZh ? "下载 PDF 简历" : "DOWNLOAD RESUME"}</span>
-              </a>
-              <button
-                onClick={handlePrint}
-                type="button"
-                className="inline-flex items-center border border-l-0 border-cobalt bg-cobalt/85 px-2 py-1.5 text-text-badge transition-all hover:bg-cobalt"
-                title={isZh ? "打印/导出 A4 简历" : "Print A4 Resume"}
-                aria-label={isZh ? "打印/导出 A4 简历" : "Print A4 Resume"}
-              >
-                <Printer className="h-3 w-3" />
-              </button>
-            </div>
-
-            {/* Email */}
-            <a
-              href="mailto:lvzizhengde@gmail.com"
-              className="inline-flex items-center gap-1.5 rounded-xs border border-border-plate bg-surface px-3 py-1.5 font-telemetry text-xs font-medium text-primary shadow-plate transition-colors hover:border-cobalt hover:text-cobalt"
-            >
-              <Mail className="h-3 w-3 text-cobalt" />
-              <span>{isZh ? "邮件联系" : "EMAIL"}</span>
-            </a>
-
-            {/* Side Projects */}
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-1.5 rounded-xs border border-border-plate bg-surface px-3 py-1.5 font-telemetry text-xs font-medium text-primary shadow-plate transition-colors hover:border-cobalt hover:text-cobalt"
-            >
-              <Rocket className="h-3 w-3 text-terracotta" />
-              <span>{isZh ? "独立产品雷达" : "PRODUCTS"}</span>
-            </Link>
-          </nav>
-
-          {/* Mini Chapter Index Row */}
-          <div className="mt-4 flex items-center gap-2 font-telemetry text-[11px] text-muted">
-            <span className="opacity-50">{isZh ? "直达章节：" : "JUMP:"}</span>
-            <button
-              onClick={() => scrollToRef(chapter1Ref)}
-              className="hover:text-cobalt transition-colors underline-offset-4 hover:underline"
-            >
-              01. WISE
-            </button>
-            <span className="opacity-30">·</span>
-            <button
-              onClick={() => scrollToRef(chapter2Ref)}
-              className="hover:text-cobalt transition-colors underline-offset-4 hover:underline"
-            >
-              02. MARIBANK &amp; BONDEE
-            </button>
-            <span className="opacity-30">·</span>
-            <button
-              onClick={() => scrollToRef(chapter3Ref)}
-              className="hover:text-cobalt transition-colors underline-offset-4 hover:underline"
-            >
-              03. BYTEDANCE
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 2. Chapter 01: Wise (2024 – Present)                                     */}
-      {/* ========================================================================= */}
-      <section
-        ref={chapter1Ref}
-        aria-label="Wise Experience"
-        className="relative rounded-[4px] border border-[var(--ink-faint)] bg-surface/50 p-5 shadow-[var(--shadow-plate)] backdrop-blur-xs sm:p-7"
-      >
-        {/* Top telemetry rule */}
-        <div className="flex items-center justify-between border-b border-border-plate pb-2 font-telemetry text-[11px] uppercase tracking-wider text-muted">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-cobalt">CHAPTER 01</span>
-            <span className="text-border-plate">|</span>
-            <span>WISE</span>
-          </div>
-          <span>2024 – PRESENT</span>
-        </div>
-
-        {/* Title & Tagline */}
-        <div className="mt-4">
-          <h2 className="font-display text-xl font-bold tracking-tight text-primary sm:text-2xl">
-            Product + Impact Matters More
-          </h2>
-          <p className="mt-0.5 font-telemetry text-xs tracking-wider text-muted">
-            {isZh ? "技术为业务服务 · AI 工作流平台与降本提效" : "AI Workflow Platform · Payment Defects Group"}
-          </p>
-
-          <p className="mt-3 rounded-xs border-l-2 border-cobalt bg-chamber/30 p-2.5 font-body text-xs leading-relaxed text-secondary sm:text-sm sm:leading-relaxed">
-            {isZh
-              ? "在 Wise 建立的核心工程心智：技术永远是为业务服务的。在有限的工程资源与时间窗口内，科学拆解优先级、统筹团队规划，以 Impact 最大化为唯一北极星，坚决抵制自嗨与拍脑门盲目立项。"
-              : "Core engineering mindset: Technology is always in service of business. Prioritizing ruthlessly within tight windows, maximizing measurable impact as the sole North Star, and resisting ungrounded vanity projects."}
-          </p>
-        </div>
-
-        {/* Quantified Battle Stat Strip */}
-        <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3">
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-muted">
-              {isZh ? "月自动化处理" : "MONTHLY AUTOMATION"}
-            </span>
-            <div className="mt-1 font-display text-2xl font-bold text-primary tabular-nums">
-              30,000<span className="text-lg text-cobalt">+</span>
-            </div>
-            <p className="mt-0.5 font-body text-[11px] text-muted">
-              {isZh ? "cases / 月全自动流转" : "cases/mo automated"}
-            </p>
-          </div>
-
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-muted">
-              {isZh ? "核验匹配率" : "MATCHING ACCURACY"}
-            </span>
-            <div className="mt-1 font-display text-2xl font-bold text-primary tabular-nums">
-              98<span className="text-lg text-cobalt">%+</span>
-            </div>
-            <p className="mt-0.5 font-body text-[11px] text-muted">
-              {isZh ? "最后一公里资金核验" : "Last-mile linking accuracy"}
-            </p>
-          </div>
-
-          <div className="rounded-xs border border-cobalt/30 bg-surface p-3">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-cobalt font-semibold">
-              {isZh ? "直接商业价值" : "DIRECT VALUE"}
-            </span>
-            <div className="mt-1 font-display text-2xl font-bold text-primary tabular-nums">
-              £80,000<span className="text-xs font-normal text-muted">/mo</span>
-            </div>
-            <p className="mt-0.5 font-body text-[11px] text-muted">
-              {isZh ? "年化节省近百万英镑" : "Annualized ~£1.0M savings"}
-            </p>
-          </div>
-        </div>
-
-        {/* Deliverables detail */}
-        <div className="mt-4 rounded-xs border border-border-plate/60 bg-surface/40 p-3 font-body text-xs leading-relaxed text-secondary">
-          <p>
-            {isZh
-              ? "主导设计并落地贯穿整个 PayOps 运营线的 AI Workflow Platform + AI Infra 底座，首批 Onboard 最后一公里资金交易核验匹配场景（Last-mile linking scenario）。端到端保障资金安全（Security）、全链路可审计追踪（Auditability）以及高精度可观测性（Observability），具备长青迭代能力。"
-              : "Led design and rollout of the AI Workflow Platform + AI Infra across Wise PayOps, onboarding the critical last-mile payment linking scenario with end-to-end security, auditability, and observability."}
-          </p>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 3. Chapter 02: MariBank + Bondee (2023 – 2024)                           */}
-      {/* ========================================================================= */}
-      <section
-        ref={chapter2Ref}
-        aria-label="MariBank and Bondee Experience"
-        className="relative rounded-[4px] border border-[var(--ink-faint)] bg-surface/50 p-5 shadow-[var(--shadow-plate)] backdrop-blur-xs sm:p-7"
-      >
-        {/* Top telemetry rule */}
-        <div className="flex items-center justify-between border-b border-border-plate pb-2 font-telemetry text-[11px] uppercase tracking-wider text-muted">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-cobalt">CHAPTER 02</span>
-            <span className="text-border-plate">|</span>
-            <span>MARIBANK · BONDEE</span>
-          </div>
-          <span>2023 – 2024</span>
-        </div>
-
-        {/* Title & Tagline */}
-        <div className="mt-4">
-          <h2 className="font-display text-xl font-bold tracking-tight text-primary sm:text-2xl">
-            Dynamic + Exploration
-          </h2>
-          <p className="mt-0.5 font-telemetry text-xs tracking-wider text-muted">
-            {isZh ? "跳出舒适圈 · 云原生运维与金融后端架构" : "Cloud-Native DevOps & Digital Banking Backend"}
-          </p>
-
-          <p className="mt-3 rounded-xs border-l-2 border-cobalt bg-chamber/30 p-2.5 font-body text-xs leading-relaxed text-secondary sm:text-sm sm:leading-relaxed">
-            {isZh
-              ? "2024 年主动跳出字节跳动的大厂舒适圈，以极客的敏锐度探索完全未知的技术栈与垂直行业。"
-              : "Actively stepped out of the big-tech comfort zone in 2024, venturing into cloud-native infrastructure, high-throughput observability, and regulated banking architecture."}
-          </p>
-        </div>
-
-        {/* Dual Battle Blocks */}
-        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-          {/* Bondee */}
-          <div className="rounded-xs border border-border-plate bg-surface p-4">
-            <div className="flex items-center justify-between border-b border-border-plate pb-1.5 font-telemetry text-[11px] uppercase text-cobalt font-semibold">
-              <span>BONDEE // DEVOPS &amp; K8S</span>
-              <span className="text-muted font-normal">SG SWE #01</span>
-            </div>
-            <h3 className="mt-2.5 font-display text-sm font-bold text-primary sm:text-base">
-              {isZh ? "云原生与全自研高性能日志管线" : "Cloud-Native Logging Pipeline"}
-            </h3>
-            <p className="mt-1.5 font-body text-xs leading-relaxed text-secondary">
-              {isZh
-                ? "深度掌握 DevOps、K8s 容器编排平台与高吞吐可观测性基础设施。主导重构并彻底替换掉笨重昂贵的 ELK Stack，基于 DaemonSet + Disk Mount + Vector + Kafka 构建全自研高性能日志收集与导出管线，显著缩减云资源账单。"
-                : "Mastered DevOps, K8s orchestration, and observability infra. Replaced expensive managed ELK, engineering a self-hosted pipeline via DaemonSet + Disk Mount + Vector + Kafka, significantly cutting cloud costs."}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-1.5 font-telemetry text-[10px] text-muted">
-              <span className="rounded-xs border border-border-plate bg-chamber/50 px-1.5 py-0.5">Vector + Kafka</span>
-              <span className="rounded-xs border border-border-plate bg-chamber/50 px-1.5 py-0.5">DaemonSet Mount</span>
-              <span className="rounded-xs border border-cobalt/30 bg-cobalt/10 px-1.5 py-0.5 text-cobalt">大幅缩减云账单</span>
-            </div>
-          </div>
-
-          {/* MariBank */}
-          <div className="rounded-xs border border-border-plate bg-surface p-4">
-            <div className="flex items-center justify-between border-b border-border-plate pb-1.5 font-telemetry text-[11px] uppercase text-terracotta font-semibold">
-              <span>MARIBANK // BANKING CORE</span>
-              <span className="text-muted font-normal">LOAN DIVISION</span>
-            </div>
-            <h3 className="mt-2.5 font-display text-sm font-bold text-primary sm:text-base">
-              {isZh ? "合规数字银行金融后端架构" : "Digital Banking Core"}
-            </h3>
-            <p className="mt-1.5 font-body text-xs leading-relaxed text-secondary">
-              {isZh
-                ? "全面切入新加坡合规数字银行严格的金融后端架构体系。在信贷业务线（Cashloan + SME Termloan）深入实践了分布式交易一致性、防并发重放、长周期计息与高标准风控工程。"
-                : "Immersed in Singapore regulated digital banking backend architecture. In the Loan Division (Cashloan & SME Termloan), engineered distributed consistency, anti-replay idempotency, and long-cycle interest calculation risk SDLC."}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-1.5 font-telemetry text-[10px] text-muted">
-              <span className="rounded-xs border border-border-plate bg-chamber/50 px-1.5 py-0.5">分布式一致性</span>
-              <span className="rounded-xs border border-border-plate bg-chamber/50 px-1.5 py-0.5">幂等防重放</span>
-              <span className="rounded-xs border border-terracotta/30 bg-terracotta/10 px-1.5 py-0.5 text-terracotta">信贷计息风控</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 4. Chapter 03: ByteDance / TikTok IM (2021 – 2023)                       */}
-      {/* ========================================================================= */}
-      <section
-        ref={chapter3Ref}
-        aria-label="ByteDance and TikTok IM Experience"
-        className="relative rounded-[4px] border border-[var(--ink-faint)] bg-surface/50 p-5 shadow-[var(--shadow-plate)] backdrop-blur-xs sm:p-7"
-      >
-        {/* Top telemetry rule */}
-        <div className="flex items-center justify-between border-b border-border-plate pb-2 font-telemetry text-[11px] uppercase tracking-wider text-muted">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-cobalt">CHAPTER 03</span>
-            <span className="text-border-plate">|</span>
-            <span>BYTEDANCE · TIKTOK IM</span>
-          </div>
-          <span>2021 – 2023</span>
-        </div>
-
-        {/* Title & Tagline */}
-        <div className="mt-4">
-          <h2 className="font-display text-xl font-bold tracking-tight text-primary sm:text-2xl">
-            Foundation with Huge Responsibility
-          </h2>
-          <p className="mt-0.5 font-telemetry text-xs tracking-wider text-muted">
-            {isZh ? "大厂高并发基石 · 亿级消息通信与全球化多活同步" : "High-Concurrency Foundation · Central Product Platform"}
-          </p>
-
-          <p className="mt-3 rounded-xs border-l-2 border-cobalt bg-chamber/30 p-2.5 font-body text-xs leading-relaxed text-secondary sm:text-sm sm:leading-relaxed">
-            {isZh
-              ? "字节跳动中台产品研发中心（Central Product Platform），扛起超大规模全球流量冲击的基石责任与工程纪律。"
-              : "Central Product Platform at ByteDance: bearing the heavy engineering responsibility and discipline of global-scale traffic, ensuring resilience across distributed multi-datacenter meshes."}
-          </p>
-        </div>
-
-        {/* 4 Core Facts Grid */}
-        <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase text-muted">
-              <span>MICROSERVICES</span>
-              <span className="text-cobalt font-semibold">20+ SVC</span>
-            </div>
-            <h3 className="mt-1 font-display text-sm font-bold text-primary">
-              {isZh ? "微服务高可用矩阵" : "Microservices HA"}
-            </h3>
-            <p className="mt-1 font-body text-[11px] leading-relaxed text-muted">
-              {isZh
-                ? "独立维护 20+ 个 Go 微服务，扛住全球海量瞬时并发峰值，保障 TikTok IM 核心链路全球 7×24 Oncall 稳定运行。"
-                : "Independently maintained 20+ Go microservices, handling global instantaneous traffic spikes with 7×24 oncall."}
-            </p>
-          </div>
-
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase text-muted">
-              <span>MULTI-DC SYNC</span>
-              <span className="text-cobalt font-semibold">MS-LEVEL</span>
-            </div>
-            <h3 className="mt-1 font-display text-sm font-bold text-primary">
-              {isZh ? "多数据中心跨洋同步" : "Multi-Datacenter Sync"}
-            </h3>
-            <p className="mt-1 font-body text-[11px] leading-relaxed text-muted">
-              {isZh
-                ? "主导建设 Multi-datacenter Synchronization 机制，实现跨洋多活数据中心间的无缝毫秒级同步体验。"
-                : "Led multi-datacenter synchronization mechanism, achieving seamless cross-ocean ms-level active-active sync."}
-            </p>
-          </div>
-
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase text-muted">
-              <span>DIAGNOSTICS</span>
-              <span className="text-terracotta font-semibold">HOURS → SECS</span>
-            </div>
-            <h3 className="mt-1 font-display text-sm font-bold text-primary">
-              {isZh ? "自动化排障工具" : "Automated Tooling"}
-            </h3>
-            <p className="mt-1 font-body text-[11px] leading-relaxed text-muted">
-              {isZh
-                ? "设计并自研消息丢包自动排障工具，将过去需要半天排查的复杂丢包定位缩减至秒级全自动诊断。"
-                : "Engineered automated message loss diagnostic tool, cutting complex manual investigation from half a day to seconds."}
-            </p>
-          </div>
-
-          <div className="rounded-xs border border-border-plate bg-surface p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase text-muted">
-              <span>LEADERSHIP</span>
-              <span className="text-cobalt font-semibold">SPOT BONUS</span>
-            </div>
-            <h3 className="mt-1 font-display text-sm font-bold text-primary">
-              {isZh ? "新人导师与技术突破" : "Mentorship & IP Geo"}
-            </h3>
-            <p className="mt-1 font-body text-[11px] leading-relaxed text-muted">
-              {isZh
-                ? "在 Location 业务线单人建立起新加坡团队标准基底（CI/CD、离线/在线任务告警体系），带领实习生进行 ASEAN IP 精度突破并荣获团队 Spot Bonus。"
-                : "Established Singapore team foundation (CI/CD, alerts), mentored interns to ASEAN IP precision breakthroughs; won Spot Bonus."}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 5. Closing Footer Bar                                                     */}
-      {/* ========================================================================= */}
-      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border-plate pt-4 font-telemetry text-xs text-muted">
-        <button
-          onClick={scrollToTop}
-          className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
+    <div
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-col overflow-hidden bg-substrate select-none"
+      role="region"
+      aria-label="Career Deck Vertical Snap Reel"
+    >
+      {/* 1. Thematic Stage Canvas (Single-color high precision SVG background) */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStage.id}
+          variants={canvasVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         >
-          <ArrowUp className="h-3 w-3" />
-          <span>{isZh ? "回到顶部" : "RETURN TO TOP"}</span>
+          {currentStage.id === "hero" && <HeroCanvas />}
+          {currentStage.id === "wise" && <WiseCanvas />}
+          {currentStage.id === "exploration" && <ExplorationCanvas />}
+          {currentStage.id === "bytedance" && <BytedanceCanvas />}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* 2. Main Stage Stage Frame with Vertical Snap Parallax */}
+      <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden">
+        <AnimatePresence custom={direction} mode="wait">
+          <motion.div
+            key={currentStage.id}
+            custom={direction}
+            variants={stageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="flex h-full w-full flex-col justify-center overflow-y-auto"
+          >
+            {currentStage.id === "hero" && (
+              <StageHero onExploreNext={() => goToStage(1)} />
+            )}
+            {currentStage.id === "wise" && (
+              <StageWise onExploreNext={() => goToStage(2)} />
+            )}
+            {currentStage.id === "exploration" && (
+              <StageExploration onExploreNext={() => goToStage(3)} />
+            )}
+            {currentStage.id === "bytedance" && (
+              <StageBytedance onScrollToTop={() => goToStage(0)} />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* 3. Sleek Vertical Timeline & Progress Rail (纵向时间轴) */}
+      <aside
+        className="pointer-events-auto absolute right-3 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-3 sm:right-6 md:flex"
+        aria-label="Career Timeline Progression"
+      >
+        <div className="flex flex-col items-center gap-1 rounded-xs border border-border-plate/70 bg-surface/75 p-2 shadow-plate backdrop-blur-md">
+          {/* Timeline Rail Track */}
+          <div className="relative flex flex-col items-center gap-4 py-1">
+            {CAREER_STAGES.map((stage, idx) => {
+              const isActive = idx === stageIndex;
+              const isPassed = idx < stageIndex;
+
+              return (
+                <button
+                  key={stage.id}
+                  onClick={() => goToStage(idx)}
+                  className="group relative flex items-center gap-2.5 transition-all"
+                  aria-label={`Jump to ${stage.actNo}: ${stage.nameEn}`}
+                >
+                  {/* Tooltip on hover */}
+                  <span className="pointer-events-none absolute right-7 origin-right scale-95 rounded-xs border border-border-plate bg-surface/95 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:scale-100 group-hover:opacity-100 group-hover:text-primary">
+                    {stage.actNo} · {isZh ? stage.nameZh : stage.nameEn}
+                  </span>
+
+                  {/* Pip node */}
+                  <div
+                    className={`relative flex h-3.5 w-3.5 items-center justify-center rounded-full transition-all duration-300 ${
+                      isActive
+                        ? "scale-110 border-2 border-cobalt bg-substrate shadow-xs"
+                        : isPassed
+                          ? "border border-border-plate bg-cobalt/60"
+                          : "border border-border-plate/60 bg-transparent hover:border-muted"
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-cobalt" />
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Current Stage Indicator Tag */}
+          <div className="mt-1 border-t border-border-plate/60 pt-1.5 font-telemetry text-[9px] font-semibold uppercase tracking-widest text-muted">
+            <span className="text-cobalt">0{stageIndex + 1}</span> / 0{totalStages}
+          </div>
+        </div>
+      </aside>
+
+      {/* 4. Bottom-Right Quick Step Controls & Telemetry Eyebrow */}
+      <nav
+        className="pointer-events-auto absolute bottom-3 right-3 z-30 flex items-center gap-1.5 rounded-xs border border-border-plate/60 bg-surface/80 p-1 shadow-plate backdrop-blur-md sm:bottom-4 sm:right-6"
+        aria-label="Stage Navigation Controls"
+      >
+        <button
+          onClick={goPrev}
+          disabled={stageIndex === 0}
+          className="flex h-7 w-7 items-center justify-center rounded-xs border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
+          title="Previous Stage (ArrowUp / K)"
+          aria-label="Previous Stage"
+        >
+          <ChevronUp className="h-4 w-4" />
         </button>
 
-        <div className="flex items-center gap-3">
-          <a
-            href="/resume.pdf"
-            download="Zizheng-Lyu-Resume.pdf"
-            className="transition-colors hover:text-cobalt underline-offset-4 hover:underline"
-          >
-            {isZh ? "下载 A4 PDF 简历" : "DOWNLOAD A4 PDF"}
-          </a>
-          <span className="opacity-30">·</span>
-          <Link
-            href="/products"
-            className="transition-colors hover:text-terracotta underline-offset-4 hover:underline"
-          >
-            {isZh ? "独立产品雷达" : "PRODUCTS RADAR"}
-          </Link>
-        </div>
-      </footer>
+        <span className="px-1.5 font-telemetry text-[10px] font-medium text-muted">
+          {stageIndex + 1}/{totalStages}
+        </span>
+
+        <button
+          onClick={goNext}
+          disabled={stageIndex === totalStages - 1}
+          className="flex h-7 w-7 items-center justify-center rounded-xs border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
+          title="Next Stage (ArrowDown / J)"
+          aria-label="Next Stage"
+        >
+          <ChevronDown className="h-4 w-4" />
+        </button>
+      </nav>
+
+      {/* 5. Mobile Progress Bar at Top */}
+      <div
+        className="absolute left-0 top-0 z-30 h-[2px] w-full bg-border-plate/40 md:hidden"
+        aria-hidden="true"
+      >
+        <div
+          className="h-full bg-cobalt transition-all duration-300 ease-out"
+          style={{ width: `${((stageIndex + 1) / totalStages) * 100}%` }}
+        />
+      </div>
     </div>
   );
 }
