@@ -23,7 +23,7 @@ export const en: Translations = {
     title: "Zizheng Lyu",
     tagline: "Full-Stack Engineer · Loves Photography",
     heroSubtitle:
-      "A full-stack engineer who loves building thoughtful products from the user's shoes. I enjoy collaborating with teammates, turning ideas into finished products, and exploring new tech. I firmly believe good software should genuinely help people and do good for society. Outside of code, I'm really into photography and capturing everyday life.",
+      "Full-stack engineer building thoughtful software that genuinely helps people | Loves photography & documenting life | Just renovated my own home | ENFJ-A | Pretty spontaneous, always down for an adventure | Always believe that something wonderful is about to happen!",
     developing: "DEVELOPING · SCROLL TO DEVELOP",
     chapters: {
       writings: {
