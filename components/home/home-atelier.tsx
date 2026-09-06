@@ -30,7 +30,7 @@ export function HomeAtelier() {
 
       {/* Center column: identity + film stack */}
       <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-6 py-8">
-        <header className="flex flex-col items-center text-center">
+        <header className="animate-latent-develop flex flex-col items-center text-center">
           <Image
             src="/avatar.jpg"
             alt={t.home.title}

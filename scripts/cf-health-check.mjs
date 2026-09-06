@@ -89,6 +89,12 @@ const ROUTES = [
     expectedContentType: "application/pdf",
     label: "Static PDF Asset",
   },
+  {
+    path: "/avatar.jpg",
+    expectedStatus: 200,
+    expectedContentType: "",
+    label: "Static Avatar Asset & Cache",
+  },
 ];
 
 async function probeRoute(route) {
