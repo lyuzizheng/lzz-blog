@@ -197,7 +197,6 @@ export function FilmStack() {
         role="group"
         aria-label={t.home.films.label}
       >
-
         {/* Top layer: the four chapter negatives, permanently scattered */}
         {FILMS.map((film, i) => (
           <Link
