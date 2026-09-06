@@ -5,3 +5,4 @@ export * from "./exposure-progress";
 export * from "./darkroom";
 export * from "./projects";
 export * from "./resume";
+export * from "./atelier-veil";
