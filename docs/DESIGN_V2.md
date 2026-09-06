@@ -141,6 +141,8 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 `Writings / Darkroom / Flight / Products` 独立页。Writings 列表 + 内容自由滚动（deck 例外）。
 
 > **BRAWUKA-85 迭代（2026-09-06 创始人方向）**：`/posts` 视觉形态定为**编辑部目录式列表（The Archive Reading Room）**——刊头一行收束（衬线大字「Blogs / 文章」+ 单行 mono telemetry `N DISPATCHES · YYYY—YYYY`）；按年分组平铺目录行（1px hairline 分隔、tabular mono `MM-DD` 日期、衬线标题、纯文本 `#tag`、阅读时长），年份以超大衬线数字作**静态**章节锚；hover 行标题 `translate-x-1` 缩进并转钴蓝，桌面端光标侧浮现接触印相微缩图（`pointer-events-none`，无封面不浮现）；过滤收敛为一行 mono 工具行（ALL / STUDY / ESSAY 下划线指示、无框 hairline 搜索、纯文本标签钴蓝选中态）。红线：零卡片、零图标墙（lucide ≤ 1）、零 `backdrop-blur`、零阴影上浮。`DESIGN.md` 1.2.2「出版物物料库」一条自此作废。
+>
+> **BRAWUKA-85 二轮迭代（2026-09-06 创始人 14:32 原话定稿）**：①刊头直白为 **Posts & Thoughts**（中英同文，无任何副标题/徽章）；②文章链路眉脚改为**主页同款极简 header**——左 `LZZ ATELIER` 品牌链 + 中央四枚 mini 长方形胶片 section 导航（01 BLOGS / 02 CAREER / 03 PHOTO / 04 PROJECTS，当前板块高亮，`rounded-[2px]`，active 胶片带 `--shadow-plate` 物料投影）+ 右端语言/昼夜开关，§7.4 屏内眉脚在文章链路自此退役（Colophon 保留）；③列表改**单列垂直时间线**（左 1px 发丝轴线 + 年份菱形锚点，倒序），行级滚动显影用 framer-motion `whileInView`（`once`、y+12、0.3s easeOut，`useReducedMotion` 下直出）——§6 三禁令之「禁 fade-in slide-up」在此由创始人点名特赦为小幅度滚动小动画；④阅读页排版升级：分类/标签改纯文本 `[CATEGORY] / #tag`，摘要改侧规线 standfirst（**禁 italic**：Noto Serif SC 无真斜体，CJK 会被合成伪斜体），Display 标题放宽为 `clamp(2.25rem,4.5vw,3.75rem)/1.18`（§5.1 字阶对长中文标题的舒适性豁免）。
 
 ### 7.3 Products（一屏一产品，不展开架构）
 - 只收工作之外：`CoffeeMode`（开发中 · 找咖指南）、`CanCan`（开发中 · 网站已上线 · 财务证据库 + 对账台）、`Our Village`（已上线 · 社区成员系统）。
