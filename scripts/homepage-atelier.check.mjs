@@ -59,7 +59,7 @@ for (const label of ["blogs", "career", "photography", "projects"]) {
 }
 check(filmStack.includes("<Link"), "the four chapter negatives must be permanently live links (no stack/scatter state machine)");
 check(!filmStack.includes("setScattered") && !filmStack.includes("useState"), "scatter/collect state machine must be removed");
-check(filmStack.includes("PileFrame") && filmStack.includes("blur-[1.5px]") && filmStack.includes("pointer-events-none"), "blurred under-pile of blank negatives must exist and be inert");
+check(!filmStack.includes("PileFrame") && !filmStack.includes("blur-[1.5px]"), "blurred under-pile of blank negatives must be cleanly removed (BRAWUKA-86 founder directive)");
 check(filmStack.includes("film-idle"), "frames must carry the idle drift class");
 check(filmStack.includes('["1", "2", "3", "4"]'), "digit keys 1–4 must jump to chapters");
 check(filmStack.includes("hover:rotate-0") && filmStack.includes("focus-visible:rotate-0"), "hover must straighten frames with focus parity");
