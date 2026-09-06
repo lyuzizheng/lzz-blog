@@ -138,6 +138,8 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 ### 7.2 四子页（Now 不做）
 `Writings / Darkroom / Flight / Products` 独立页。Writings 列表 + 内容自由滚动（deck 例外）。
 
+> **BRAWUKA-85 迭代（2026-09-06 创始人方向）**：`/posts` 视觉形态定为**编辑部目录式列表（The Archive Reading Room）**——刊头一行收束（衬线大字「Blogs / 文章」+ 单行 mono telemetry `N DISPATCHES · YYYY—YYYY`）；按年分组平铺目录行（1px hairline 分隔、tabular mono `MM-DD` 日期、衬线标题、纯文本 `#tag`、阅读时长），年份以超大衬线数字作**静态**章节锚；hover 行标题 `translate-x-1` 缩进并转钴蓝，桌面端光标侧浮现接触印相微缩图（`pointer-events-none`，无封面不浮现）；过滤收敛为一行 mono 工具行（ALL / STUDY / ESSAY 下划线指示、无框 hairline 搜索、纯文本标签钴蓝选中态）。红线：零卡片、零图标墙（lucide ≤ 1）、零 `backdrop-blur`、零阴影上浮。`DESIGN.md` 1.2.2「出版物物料库」一条自此作废。
+
 ### 7.3 Products（一屏一产品，不展开架构）
 - 只收工作之外：`CoffeeMode`（开发中 · 找咖指南）、`CanCan`（开发中 · 网站已上线 · 财务证据库 + 对账台）、`Our Village`（已上线 · 社区成员系统）。
 - 每屏一句话 + 状态章 + 外链。状态词不对创始人只回三个词即改。

@@ -68,9 +68,10 @@ const lucideImports = archiveList.match(/from\s+["']lucide-react["']/g) || [];
 check(lucideImports.length <= 1, `archive-list must not have an icon wall (found ${lucideImports.length} lucide imports)`);
 check(!archiveList.includes("Folder") && !archiveList.includes("Calendar") && !archiveList.includes("Clock"), "Folder/Calendar/Clock icon wall must be completely removed");
 
-// 7. i18n 字典同步
-check(zh.includes('title: "文章"'), "zh dictionary must have updated title");
-check(en.includes('title: "Blogs"'), "en dictionary must have updated title");
+// 7. i18n 字典同步：归档列表仅消费 noResults / yearArchive / readingTime，三键必须在双语字典存活
+for (const key of ["noResults", "yearArchive", "readingTime"]) {
+  check(zh.includes(`${key}:`) && en.includes(`${key}:`), `live key '${key}' must exist in both zh and en dictionaries`);
+}
 
 if (failures.length > 0) {
   console.error("posts-archive check FAILED:");

@@ -36,12 +36,24 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  // Contact sheet hover proof (cursor follower)
+  // Contact sheet hover proof (cursor follower).
+  // Position lives in refs and is written straight to the preview node's style —
+  // mousemove never triggers a React re-render of the archive tree.
   const [hoveredCover, setHoveredCover] = useState<string | null>(null);
-  const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const cursorRef = React.useRef({ x: 0, y: 0 });
+  const previewRef = React.useRef<HTMLDivElement | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setCursorPos({ x: e.clientX, y: e.clientY });
+  const placePreview = () => {
+    const el = previewRef.current;
+    if (!el || typeof window === "undefined") return;
+    const { x, y } = cursorRef.current;
+    el.style.left = `${Math.max(16, Math.min(x + 20, window.innerWidth - 210))}px`;
+    el.style.top = `${Math.max(16, Math.min(y - 70, window.innerHeight - 140))}px`;
+  };
+
+  const trackCursor = (e: React.MouseEvent) => {
+    cursorRef.current = { x: e.clientX, y: e.clientY };
+    placePreview();
   };
 
   const allTags = useMemo(() => {
@@ -212,8 +224,12 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                   <Link
                     key={post.slug}
                     href={post.permalink}
-                    onMouseEnter={() => post.cover_image && setHoveredCover(post.cover_image)}
-                    onMouseMove={handleMouseMove}
+                    onMouseEnter={(e) => {
+                      if (!post.cover_image) return;
+                      cursorRef.current = { x: e.clientX, y: e.clientY };
+                      setHoveredCover(post.cover_image);
+                    }}
+                    onMouseMove={post.cover_image ? trackCursor : undefined}
                     onMouseLeave={() => setHoveredCover(null)}
                     className="group flex flex-col gap-y-1.5 py-3.5 transition-colors sm:flex-row sm:items-baseline sm:justify-between sm:gap-x-6 hover:bg-surface/20"
                   >
@@ -251,15 +267,12 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
       {/* 3. 可选增强：暗房接触印相 hover 浮层 (Contact sheet preview near cursor) */}
       {hoveredCover && (
         <div
-          aria-hidden="true"
-          className="pointer-events-none fixed z-50 hidden lg:block overflow-hidden border border-border-plate bg-surface p-1 shadow-none transition-opacity duration-150"
-          style={{
-            left: Math.min(
-              cursorPos.x + 20,
-              typeof window !== "undefined" ? window.innerWidth - 210 : cursorPos.x + 20,
-            ),
-            top: Math.max(16, cursorPos.y - 70),
+          ref={(el) => {
+            previewRef.current = el;
+            placePreview();
           }}
+          aria-hidden="true"
+          className="pointer-events-none fixed left-0 top-0 z-50 hidden lg:block overflow-hidden border border-border-plate bg-surface p-1"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

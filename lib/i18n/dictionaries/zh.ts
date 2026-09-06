@@ -52,15 +52,6 @@ export const zh: Translations = {
     },
   },
   posts: {
-    title: "文章",
-    subtitle:
-      "收录分布式架构实践、后端工程探究、生活随笔思考以及摄影技术笔记。",
-    allChannels: "ALL",
-    technical: "STUDY",
-    essays: "ESSAY",
-    searchPlaceholder: "搜索文章、摘要或标签...",
-    tagFilter: "标签筛选：",
-    clearTag: "清除筛选",
     noResults: "未找到匹配的文章，请尝试调整关键词或筛选条件。",
     yearArchive: "篇归档",
     readingTime: "分钟阅读",
