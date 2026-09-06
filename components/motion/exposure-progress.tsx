@@ -23,6 +23,7 @@ export function ExposureProgress() {
   const [visible, setVisible] = useState(true);
   const [reduceMotion, setReduceMotion] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const didMountRef = useRef(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -58,8 +59,15 @@ export function ExposureProgress() {
     };
   }, [reduceMotion]);
 
-  // Route transition trigger on pathname change
+  // Route transition trigger on pathname change.
+  // Skips the initial mount: the first-screen exposure sweep above owns that
+  // sequence — running both at mount would make the bar jump backwards
+  // (95 → 65 → 100 → 90 → 100) on every full page load.
   useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     if (reduceMotion) return;
 
     setVisible(true);
