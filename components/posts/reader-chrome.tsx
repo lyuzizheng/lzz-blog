@@ -39,7 +39,7 @@ export function ReaderEyebrow({
       <div className="flex shrink-0 items-center gap-3">
         <Link
           href="/"
-          className="font-telemetry text-xs uppercase tracking-wider text-muted hover:text-text-primary"
+          className="hidden sm:inline font-telemetry text-xs uppercase tracking-wider text-muted hover:text-text-primary"
         >
           Index
         </Link>

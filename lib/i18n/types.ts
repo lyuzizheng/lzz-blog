@@ -51,14 +51,6 @@ export interface Translations {
     };
   };
   posts: {
-    title: string;
-    subtitle: string;
-    allChannels: string;
-    technical: string;
-    essays: string;
-    searchPlaceholder: string;
-    tagFilter: string;
-    clearTag: string;
     noResults: string;
     yearArchive: string;
     readingTime: string;

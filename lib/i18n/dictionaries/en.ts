@@ -52,15 +52,6 @@ export const en: Translations = {
     },
   },
   posts: {
-    title: "Writing & Dispatches",
-    subtitle:
-      "Long-form thinking on distributed systems, infrastructure engineering, and personal essays.",
-    allChannels: "ALL",
-    technical: "TECHNICAL",
-    essays: "ESSAYS",
-    searchPlaceholder: "Search articles by title, summary, or tag...",
-    tagFilter: "Filter by tag:",
-    clearTag: "Clear tag",
     noResults: "No matching articles found. Try adjusting your search or filters.",
     yearArchive: "articles",
     readingTime: "min read",
