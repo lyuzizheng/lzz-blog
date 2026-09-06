@@ -20,9 +20,9 @@ export const en: Translations = {
   },
   home: {
     title: "Zizheng Lyu",
-    tagline: "LZZ Atelier // Personal Page",
+    tagline: "Software Engineer & Visual Storyteller",
     heroSubtitle:
-      "Distributed systems engineer & visual storyteller — writing, photography, and the flight path between.",
+      "Full-stack product engineer & visual storyteller. Building user-centric systems that do good, exploring new tech with ethical craft, and observing the world through 35mm optics.",
     developing: "DEVELOPING · SCROLL TO DEVELOP",
     chapters: {
       writings: {

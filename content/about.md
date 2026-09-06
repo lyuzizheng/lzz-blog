@@ -12,17 +12,16 @@ cover:
     relative: true
 ---
 
-## Pricipals
+## Principles & Engineering Philosophy
 
-*I always believe that a good software engineer:*  
+*I always believe that a good software engineer:*
 
-- *should be a good product owner with user perspective*  
-- *should actively practise code of conduct*
-- *should be excited about new technologies and welcome changes*
+- **Should be a good product owner with genuine user perspective**: software is not merely code, but an end-to-end experience that serves real human needs.
+- **Should actively practice code of conduct and engineering ethics**: technologies must respect privacy, resist dark patterns, and build products that do good to societies.
+- **Should stay curious about new technologies and welcome changes**: continuously embracing evolving paradigms across full-stack architecture, distributed systems, and local-first computing.
+- **Brings the observant eye of a photographer into engineering craft**: observing the world with precision and empathy, composing systems with balance and clarity.
 
-*I hope to become a good software engineer.*  
-*And I can build exciting products that do good to societies.*  
-
+A results-driven full-stack engineer and visual storyteller with a passion for user-centric product development. Proactive in fostering a cooperative team environment and mentoring new talent. Excels in guiding projects from conception to robust completion.
 ## Education and Experiences
 
 ### Nanyang Technological University  

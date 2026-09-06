@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useI18n } from "@/lib/i18n";
-import { SOCIAL_LINKS, handleOf } from "@/components/site/social-links";
+import { SOCIAL_LINKS } from "@/components/site/social-links";
 import { LanguageSwitch, SafelightSwitch } from "@/components/ui";
 import { AmbientBackdrop } from "./ambient-backdrop";
 import { FilmStack } from "./film-stack";
@@ -53,23 +53,24 @@ export function HomeAtelier() {
           {/* Social matrix */}
           <nav
             aria-label="Social links"
-            className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-telemetry text-xs tracking-wider text-muted"
+            className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-telemetry text-xs tracking-wider text-muted"
           >
-            {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.key}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1 transition-colors hover:text-ink-dominant"
-              >
-                <span className="font-semibold text-text-secondary group-hover:text-ink-dominant">
-                  [{link.badge}]
-                </span>
-                <span className="underline-offset-2 group-hover:underline">
-                  {handleOf(link.href)}
-                </span>
-              </a>
+            {SOCIAL_LINKS.map((link, index) => (
+              <React.Fragment key={link.key}>
+                {index > 0 && (
+                  <span className="select-none text-muted opacity-40" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-ink-dominant underline-offset-4 hover:underline"
+                >
+                  {link.label}
+                </a>
+              </React.Fragment>
             ))}
           </nav>
         </header>

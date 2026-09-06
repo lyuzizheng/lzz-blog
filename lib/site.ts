@@ -23,6 +23,6 @@ export const siteConfig = {
     twitter: "https://twitter.com/brabalawuka",
     github: "https://github.com/lyuzizheng",
     instagram: "https://www.instagram.com/brabalawuka",
-    linkedin: "https://www.linkedin.com/in/zizheng-lyu-84404912a/",
+    linkedin: "https://www.linkedin.com/in/lyuzizheng/",
   },
 } as const;

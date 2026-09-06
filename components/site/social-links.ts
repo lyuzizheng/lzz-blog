@@ -25,7 +25,7 @@ export function handleOf(url: string): string {
  */
 export const SOCIAL_LINKS: ReadonlyArray<SocialLink> = [
   { key: "github", badge: "GH", label: "GitHub", href: siteConfig.social.github },
-  { key: "x", badge: "X", label: "Twitter / X", href: siteConfig.social.twitter },
+  { key: "x", badge: "X", label: "X (Twitter)", href: siteConfig.social.twitter },
   { key: "linkedin", badge: "IN", label: "LinkedIn", href: siteConfig.social.linkedin },
   { key: "instagram", badge: "IG", label: "Instagram", href: siteConfig.social.instagram },
 ];

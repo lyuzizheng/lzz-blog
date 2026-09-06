@@ -19,10 +19,10 @@ export const zh: Translations = {
     pdf: "下载简历",
   },
   home: {
-    title: "吕自正",
-    tagline: "吕自正 · 个人主页",
+    title: "吕子正",
+    tagline: "软件工程师 · 视觉记录者",
     heroSubtitle:
-      "分布式系统工程师与摄影记录者。记录关于系统架构、工程手艺与光影定格的长期思考。",
+      "全栈工程师与摄影记录者。以用户视角打造有温度的产品，恪守工程伦理与技术向善，在系统架构与 35mm 光影定格之间探索真实表达。",
     developing: "胶片显影中 · 向下滑动显影",
     chapters: {
       writings: {
@@ -105,7 +105,7 @@ export const zh: Translations = {
     printResume: "打印简历",
     flightPathTitle: "经历航线与工程实录",
     flightPathSubtitle:
-      "吕自正 — 工程师与视觉记录者。从南洋理工大学本科到字节跳动的十二帧工程历程。",
+      "吕子正 — 工程师与视觉记录者。从南洋理工大学本科到字节跳动的十二帧工程历程。",
     timelineAct0: "序章 · 显影 — 35mm 胶片入水显影",
     capabilityTitle: "工程能力维度",
     screenOnly: "交互浏览 · 仅屏幕展示",
@@ -158,7 +158,7 @@ export const zh: Translations = {
   },
   footer: {
     connect: "社交平台",
-    copyright: "吕自正",
+    copyright: "吕子正",
     darkroomChamber: "摄影暗房",
     printAtelier: "数字暗房与物料工坊",
     posts: "文章归档",
