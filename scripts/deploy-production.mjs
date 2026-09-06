@@ -179,6 +179,9 @@ async function main() {
         name: "ASSETS"
       }
     ],
+    cache: {
+      enabled: true
+    },
     observability: {
       enabled: true
     }
@@ -261,7 +264,12 @@ async function main() {
   if (apexAttachRes?.success) {
     console.log("   ✅ brabalawuka.cc attached to Worker successfully!");
   } else {
-    console.log("   Apex attach result:", JSON.stringify(apexAttachRes));
+    const errStr = JSON.stringify(apexAttachRes);
+    console.warn("   ⚠️  Apex attach notice:", errStr);
+    if (errStr.includes("100117") || errStr.includes("externally managed DNS records")) {
+      console.warn("   💡 ACTION REQUIRED for DevOps / Zone Admin: An obsolete CNAME/A record exists for apex brabalawuka.cc.");
+      console.warn("      Delete the stale DNS record in Cloudflare Dashboard (Zone brabalawuka.cc -> DNS) to allow Worker custom domain binding.");
+    }
   }
 
   // Attach www.brabalawuka.cc to Worker

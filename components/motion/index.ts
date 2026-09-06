@@ -1,6 +1,7 @@
 export * from "./smooth-scroll-provider";
 export * from "./route-transition";
 export * from "./grain-overlay";
+export * from "./exposure-progress";
 export * from "./darkroom";
 export * from "./projects";
 export * from "./resume";

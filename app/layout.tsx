@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Newsreader, Noto_Serif_SC, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore } from "@/components/motion";
+import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore, ExposureProgress } from "@/components/motion";
 import { siteConfig } from "@/lib/site";
 import { I18nProvider } from "@/lib/i18n";
 
@@ -93,6 +93,8 @@ export default function RootLayout({
         >
           <I18nProvider>
             <SmoothScrollProvider>
+              {/* Top Darkroom Exposure Beam & Route Navigation Progress Bar */}
+              <ExposureProgress />
               {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
               <FilmGrainOverlay />
               <ScrollRestore>{children}</ScrollRestore>

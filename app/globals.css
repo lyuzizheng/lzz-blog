@@ -672,3 +672,39 @@ h4:hover .heading-anchor {
     border-top: 1px solid var(--border-plate-strong);
   }
 }
+
+/* ==========================================================================
+   BRAWUKA-84 · Darkroom Latent Image Development & First-Screen Exposure
+   GPU-accelerated entrance mimicking photo paper development under safelight.
+   ========================================================================== */
+@keyframes latent-develop {
+  0% {
+    opacity: 0;
+    filter: blur(4px) contrast(80%);
+    transform: translateY(6px);
+  }
+  60% {
+    opacity: 0.9;
+    filter: blur(1px) contrast(95%);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0) contrast(100%);
+    transform: translateY(0);
+  }
+}
+
+.animate-latent-develop {
+  animation: latent-develop 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, filter, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-latent-develop {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    will-change: auto;
+  }
+}

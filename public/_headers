@@ -1,2 +1,26 @@
+# ==============================================================================
+# Cloudflare Workers Static Assets Headers Configuration
+# Enforces aggressive HTTP edge and client-side caching for immutable static assets.
+# ==============================================================================
+
+# Next.js fingerprinted immutable assets (JS chunks, CSS, media, fonts)
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static photo assets, post illustrations, and darkroom media
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Avatar image (explicit MIME + stale-while-revalidate caching)
+/avatar.jpg
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# Product screenshots and mockups
+/products/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# Career Dossier PDF asset
 /resume.pdf
   Content-Type: application/pdf
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
