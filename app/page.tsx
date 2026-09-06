@@ -28,7 +28,7 @@ export default function HomePage() {
       <div className="sr-only" aria-hidden="true">
         <nav aria-label="Crawling index">
           {CHAPTER_ROUTES.map((route) => (
-            <a key={route} href={route}>
+            <a key={route} href={route} tabIndex={-1}>
               {route}
             </a>
           ))}

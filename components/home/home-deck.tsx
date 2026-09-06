@@ -99,18 +99,12 @@ export function HomeDeck({ filmHero }: HomeDeckProps) {
 
       if (e.key === "ArrowDown" || e.key === "j" || e.key === "J") {
         e.preventDefault();
-        setActiveIndex((prev) => {
-          const next = Math.min(SLIDE_IDS.length - 1, prev + 1);
-          scrollToSlide(next);
-          return next;
-        });
+        const next = Math.min(SLIDE_IDS.length - 1, activeIndex + 1);
+        scrollToSlide(next);
       } else if (e.key === "ArrowUp" || e.key === "k" || e.key === "K") {
         e.preventDefault();
-        setActiveIndex((prev) => {
-          const next = Math.max(0, prev - 1);
-          scrollToSlide(next);
-          return next;
-        });
+        const next = Math.max(0, activeIndex - 1);
+        scrollToSlide(next);
       } else if (e.key === "1") {
         e.preventDefault();
         scrollToSlide(0);
@@ -125,7 +119,7 @@ export function HomeDeck({ filmHero }: HomeDeckProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [scrollToSlide]);
+  }, [activeIndex, scrollToSlide]);
 
   return (
     <div
