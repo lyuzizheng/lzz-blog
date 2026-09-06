@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { FilmUnfurl, HomeDeck } from "@/components/home";
+import { HomeAtelier } from "@/components/home";
 
 export const metadata: Metadata = {
   title: "Zizheng Lyu — Engineer & Visual Storyteller",
@@ -10,21 +10,19 @@ export const metadata: Metadata = {
 };
 
 /**
- * BRAWUKA-64 · Phase 2-3: 首页 deck + 屏内眉脚向 V2 对齐
+ * BRAWUKA-78 · 单屏无滚动首页（The Atelier Workbench）
  *
- * 1. 3 屏封顶：Slide 1 封面 → Slide 2 四入口散落索引 → Slide 3 Colophon；到底即止。
- * 2. 删全局 sticky header/footer，换屏内眉脚（左 LZZ · §号，右 01–04 索引 + LanguageSwitch + 昼夜点）。
- * 3. 语义 nav 留 DOM，保持 SEO、无障碍与静态检查兼容性。
+ * 一个 100dvh 画框到底：中央 avatar + 名字 + 描述 + 社交矩阵，
+ * 下方四张 35mm 负片叠放，点击散落后各自通向独立章节页
+ * （Blogs /posts · Career /resume · Photography /photography · Projects /products）。
+ * 无 Slide、无翻页、无全局 sticky chrome。
  */
-/**
- * Core destination routes preserved for static crawlability & checks.
- */
-const CHAPTER_ROUTES = ["/posts", "/photography", "/resume", "/products"] as const;
+const CHAPTER_ROUTES = ["/posts", "/resume", "/photography", "/products"] as const;
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen w-full bg-substrate text-primary transition-colors duration-300">
-      {/* 隐藏语义链接与结构化辅助（确保纯 HTML 爬虫与静态验证可达） */}
+    <main className="relative h-[100dvh] w-full overflow-hidden bg-substrate text-primary transition-colors duration-300">
+      {/* 隐藏语义链接（确保纯 HTML 爬虫与静态验证可达四个章节） */}
       <div className="sr-only" aria-hidden="true">
         <nav aria-label="Crawling index">
           {CHAPTER_ROUTES.map((route) => (
@@ -35,7 +33,7 @@ export default function HomePage() {
         </nav>
       </div>
 
-      <HomeDeck filmHero={<FilmUnfurl />} />
+      <HomeAtelier />
     </main>
   );
 }

@@ -43,6 +43,15 @@ export const zh: Translations = {
     },
     colophon: "排版采用 NEWSREADER 与 GEIST MONO",
     rss: "RSS 订阅",
+    films: {
+      blogs: "Blogs",
+      career: "Career",
+      photography: "Photography",
+      projects: "Projects",
+      open: "打开胶片索引 —— 四个章节散落在灯箱台上",
+      scatterHint: "点击胶片叠 · 画格散落",
+      collectHint: "按 ESC 或点击空白处收拢",
+    },
   },
   posts: {
     title: "文章归档",

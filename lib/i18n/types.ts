@@ -42,6 +42,15 @@ export interface Translations {
     };
     colophon: string;
     rss: string;
+    films: {
+      blogs: string;
+      career: string;
+      photography: string;
+      projects: string;
+      open: string;
+      scatterHint: string;
+      collectHint: string;
+    };
   };
   posts: {
     title: string;
