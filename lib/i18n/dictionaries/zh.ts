@@ -5,6 +5,7 @@ export const zh: Translations = {
     atelier: "LZZ 工作室",
     backToAtelier: "← 返回主页",
     loading: "加载中...",
+    developingExposure: "胶片显影中 // 35MM",
     tbd: "待确认",
     language: "语言",
     theme: "主题",

@@ -708,3 +708,28 @@ h4:hover .heading-anchor {
     will-change: auto;
   }
 }
+
+/* ==========================================================================
+   Atelier Veil & Loading Telemetry Multilingual Typography
+   Controls instant zero-shift bilingual display between English and Chinese.
+   ========================================================================== */
+.veil-text-zh {
+  display: none;
+}
+.veil-text-en {
+  display: inline;
+}
+
+[lang^="zh"] .veil-text-zh,
+[data-locale="zh"] .veil-text-zh,
+:root[lang^="zh"] .veil-text-zh,
+:root[data-locale="zh"] .veil-text-zh {
+  display: inline !important;
+}
+
+[lang^="zh"] .veil-text-en,
+[data-locale="zh"] .veil-text-en,
+:root[lang^="zh"] .veil-text-en,
+:root[data-locale="zh"] .veil-text-en {
+  display: none !important;
+}

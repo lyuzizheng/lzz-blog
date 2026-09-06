@@ -84,6 +84,35 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${newsreader.variable} ${notoSerifSC.variable} ${geistSans.variable} ${geistMono.variable}`}
     >
+      <head>
+        <script
+          id="atelier-init-theme-locale"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('theme');
+                  if (t === 'day' || t === 'night') {
+                    document.documentElement.setAttribute('data-theme', t);
+                  }
+                  var l = localStorage.getItem('lzz_locale');
+                  if (!l) {
+                    var m = document.cookie.match(/(?:^|;\\s*)lzz_locale=(en|zh)/);
+                    if (m) l = m[1];
+                  }
+                  if (l === 'zh') {
+                    document.documentElement.setAttribute('lang', 'zh-CN');
+                    document.documentElement.setAttribute('data-locale', 'zh');
+                  } else if (l === 'en') {
+                    document.documentElement.setAttribute('lang', 'en');
+                    document.documentElement.setAttribute('data-locale', 'en');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-substrate text-primary font-body antialiased selection:bg-safelight/20 selection:text-safelight">
         {/* BRAWUKA-87 · 0ms Zero-Blocking Instant Darkroom Exposure Veil */}
         <style
@@ -165,6 +194,53 @@ export default function RootLayout({
                 text-transform: uppercase;
                 color: rgba(243, 232, 214, 0.55);
               }
+              .veil-label-dot {
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: #E05454;
+                animation: veil-pulse 2s ease-in-out infinite;
+              }
+              [data-theme="day"] #atelier-veil {
+                background-color: #F5F1E8;
+                color: #26241E;
+              }
+              [data-theme="day"] #atelier-veil .veil-frame {
+                border: 1px solid rgba(33, 72, 184, 0.25);
+                background-color: #EEE6D3;
+                box-shadow: 0 4px 20px -2px rgba(33, 72, 184, 0.08);
+              }
+              [data-theme="day"] #atelier-veil .veil-spinner {
+                border: 1.5px dashed rgba(33, 72, 184, 0.5);
+              }
+              [data-theme="day"] #atelier-veil .veil-dot {
+                background-color: #2148B8;
+              }
+              [data-theme="day"] #atelier-veil .veil-label {
+                color: #857C68;
+              }
+              [data-theme="day"] #atelier-veil .veil-label-dot {
+                background-color: #2148B8;
+              }
+              .veil-text-zh {
+                display: none;
+              }
+              .veil-text-en {
+                display: inline;
+              }
+              [lang^="zh"] .veil-text-zh,
+              [data-locale="zh"] .veil-text-zh,
+              :root[lang^="zh"] .veil-text-zh,
+              :root[data-locale="zh"] .veil-text-zh {
+                display: inline !important;
+              }
+              [lang^="zh"] .veil-text-en,
+              [data-locale="zh"] .veil-text-en,
+              :root[lang^="zh"] .veil-text-en,
+              :root[data-locale="zh"] .veil-text-en {
+                display: none !important;
+              }
             `,
           }}
         />
@@ -180,7 +256,11 @@ export default function RootLayout({
             <div className="veil-spinner" />
             <div className="veil-dot" />
           </div>
-          <div className="veil-label">DEVELOPING EXPOSURE // 35MM</div>
+          <div className="veil-label">
+            <span className="veil-label-dot" />
+            <span className="veil-text-en">DEVELOPING EXPOSURE // 35MM</span>
+            <span className="veil-text-zh">胶片显影中 // 35MM</span>
+          </div>
         </div>
         <AtelierVeilDismiss />
         <ThemeProvider

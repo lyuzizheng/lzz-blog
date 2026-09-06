@@ -5,6 +5,7 @@ export const en: Translations = {
     atelier: "LZZ ATELIER",
     backToAtelier: "← Back to Home",
     loading: "Loading...",
+    developingExposure: "DEVELOPING EXPOSURE // 35MM",
     tbd: "TBD",
     language: "Language",
     theme: "Theme",

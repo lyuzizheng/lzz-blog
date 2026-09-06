@@ -5,6 +5,7 @@ export interface Translations {
     atelier: string;
     backToAtelier: string;
     loading: string;
+    developingExposure: string;
     tbd: string;
     language: string;
     theme: string;
