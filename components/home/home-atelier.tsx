@@ -31,15 +31,29 @@ export function HomeAtelier() {
       {/* Center column: identity + film stack */}
       <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-6 py-8">
         <header className="animate-latent-develop flex flex-col items-center text-center">
-          <Image
-            src="/avatar.jpg"
-            alt={t.home.title}
-            width={88}
-            height={88}
-            priority
-            className="rounded-full border border-border-plate object-cover shadow-[var(--shadow-plate)]"
-            style={{ width: 88, height: 88 }}
-          />
+          {/* Photography optical crop reticle / viewfinder framing the avatar */}
+          <div className="relative flex items-center justify-center p-3">
+            {/* Optical reticle corner crop brackets (Sony A7M4 / Darkroom easel) */}
+            <div className="pointer-events-none absolute inset-0 text-border-plate" aria-hidden="true">
+              {/* 4 corner brackets */}
+              <span className="absolute left-0 top-0 h-3 w-3 border-l border-t border-current opacity-75" />
+              <span className="absolute right-0 top-0 h-3 w-3 border-r border-t border-current opacity-75" />
+              <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-current opacity-75" />
+              <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-current opacity-75" />
+              {/* Micro optical focus tick at the top */}
+              <span className="absolute -top-1 left-1/2 h-1.5 w-[1.5px] -translate-x-1/2 bg-[var(--ink-dominant)] opacity-80" />
+            </div>
+
+            <Image
+              src="/avatar.jpg"
+              alt={t.home.title}
+              width={88}
+              height={88}
+              priority
+              className="rounded-full border border-border-plate object-cover shadow-[var(--shadow-plate)]"
+              style={{ width: 88, height: 88 }}
+            />
+          </div>
           <p className="mt-4 font-telemetry text-[11px] uppercase tracking-[0.24em] text-muted">
             {t.home.tagline}
           </p>
