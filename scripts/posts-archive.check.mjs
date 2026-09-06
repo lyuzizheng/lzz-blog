@@ -6,7 +6,8 @@
  * 2. Client island: components/posts/archive-list.tsx must be "use client".
  * 3. Masthead: "Posts & Thoughts" serif title + mono telemetry; zero marketing subtitles or badges.
  * 4. Header: 4 mini rectangular negatives as section navigation matching homepage workbench.
- * 5. Single column timeline: chronological list with hairline axis and framer-motion scroll-in.
+ * 5. Big editorial cards on the timeline: cover photo (or halftone specimen plate),
+ *    serif title, summary, tags, created time, reading time; framer-motion scroll-in.
  * 6. Year anchors: giant serif numbers, strictly non-sticky, zero backdrop-blur.
  * 7. Hover interaction: translate-x-1 + cobalt #2148B8; zero hover shadow or upward elevation.
  * 8. Mono toolbar: ALL / STUDY / ESSAY channel tabs with hairline indicator;
@@ -113,4 +114,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("posts-archive OK: Posts & Thoughts masthead, 4-mini-negatives header, single-column timeline with framer-motion whileInView scroll animations, comfortable post typography, zero cards/shadows/backdrop-blur/icon-wall.");
+console.log("posts-archive OK: Posts & Thoughts masthead, 4-mini-negatives header, big editorial cards (cover/title/summary/tags/date/reading-time) on a hairline timeline with reduced-motion-aware whileInView, comfortable post typography, zero rounded-xl/backdrop-blur/hover-shadow/icon-wall.");
