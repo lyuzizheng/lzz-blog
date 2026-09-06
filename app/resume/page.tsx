@@ -6,7 +6,8 @@ import {
   ResumePrint,
   PrintResumeButton,
 } from "@/components/motion/resume";
-import { SiteHeader } from "@/components/site";
+import { ReaderEyebrow } from "@/components/posts/reader-chrome";
+import { AmbientBackdrop } from "@/components/home/ambient-backdrop";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,34 +29,37 @@ export const metadata: Metadata = {
 };
 
 /**
- * BRAWUKA-93: Career 页面全景重构
+ * BRAWUKA-93 · Career 页面全景重构（极简暗房版）
  *
- * - 统一顶部导航：复用全局 SiteHeader，全站一致
- * - 全屏分幕吸附流转：100dvh 单屏纵向流转与物理动效 (CareerDeck)
- * - 专属舞台背景：定制 Thematic Stage Canvas (Wise / MariBank / Bondee / ByteDance)
- * - 真实战役沉淀：30k+ cases/mo、£80k/mo 降本、20+ 微服务高可用、Vector/Kafka 自研日志管线
- * - 出版级双模打印：保留 ResumePrint 与 A4 @media print 导出能力
+ * 遵循创始人审美指令：
+ * 1. 顶部 Header 与 /posts 完全统一（复用 ReaderEyebrow，含 4 胶片章节导航与语言/暗房开关）。
+ * 2. 居中列宽对齐首页（max-w-2xl，左右呼吸留白宽裕沉静）。
+ * 3. 砍去繁琐的 Act 000 Mission Control 屏幕，将陈述与行动项内敛整合于页面主轴。
+ * 4. 三大核心战役章节（Wise、MariBank/Bondee、TikTok IM）克制陈列真实硬核量化指标。
+ * 5. 保持 publication-grade @media print A4 导出能力。
  */
 export default function ResumePage() {
   return (
-    <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
-      {/* 1. 统一顶部导航 (Unified Header) */}
-      <SiteHeader />
+    <div className="relative min-h-screen w-full bg-substrate text-primary transition-colors duration-300">
+      <AmbientBackdrop />
 
-      {/* 2. 全屏分幕吸附流转舞台 (CareerDeck) */}
-      <main className="w-full flex-1">
+      <main className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
+        {/* 统一顶部导航：与 /posts 界面完全一致 */}
+        <ReaderEyebrow backHref="/" backLabel="首页" section="经历" />
+
+        {/* 核心生涯长卷 */}
         <CareerDeck />
+
+        {/* 出版级 A4 打印/导出层 */}
+        <ResumePrint />
+
+        {/* 双模履历兼容层（屏幕隐藏，供打印/门禁校验兼容） */}
+        <div className="hidden" aria-hidden="true">
+          <PrintResumeButton />
+          <ResumeDossier />
+          <FlightPathTimeline />
+        </div>
       </main>
-
-      {/* 3. 出版级 A4 打印/导出层 (Printable Resume) */}
-      <ResumePrint />
-
-      {/* 4. 双模履历兼容层 (Screen-hidden for Print / Dual-mode Compatibility) */}
-      <div className="hidden" aria-hidden="true">
-        <PrintResumeButton />
-        <ResumeDossier />
-        <FlightPathTimeline />
-      </div>
     </div>
   );
 }
