@@ -40,6 +40,48 @@ export function AmbientBackdrop() {
             "radial-gradient(circle at center, var(--ink-dominant) 0%, transparent 55%)",
         }}
       />
+
+      {/* BRAWUKA-83 · Workbench line art — the darkroom desk itself:
+          light-table panel with ruler ticks, film canister, and a loupe.
+          Single 1px hairline family, faint ink, decorative only. */}
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 1000 1000"
+        preserveAspectRatio="xMidYMax slice"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g stroke="var(--ink-faint)" strokeWidth={1}>
+          {/* Light-table panel under the film pile */}
+          <rect x={140} y={560} width={720} height={400} rx={4} />
+          <rect x={156} y={576} width={688} height={368} rx={2} strokeDasharray="2 5" opacity={0.6} />
+          {/* Ruler ticks along the panel's top edge */}
+          {Array.from({ length: 37 }, (_, i) => (
+            <line
+              key={`tick-${i}`}
+              x1={156 + i * (688 / 36)}
+              y1={560}
+              x2={156 + i * (688 / 36)}
+              y2={i % 6 === 0 ? 548 : 554}
+              opacity={0.8}
+            />
+          ))}
+          {/* Registration crosshair, lower right corner of the panel */}
+          <circle cx={812} cy={920} r={10} />
+          <line x1={812} y1={904} x2={812} y2={936} />
+          <line x1={796} y1={920} x2={828} y2={920} />
+          {/* Film canister, left of the bench */}
+          <circle cx={86} cy={700} r={26} />
+          <circle cx={86} cy={700} r={18} opacity={0.6} />
+          <line x1={86} y1={668} x2={86} y2={660} />
+          {/* Loupe, right of the bench */}
+          <circle cx={916} cy={640} r={20} />
+          <line x1={930} y1={654} x2={946} y2={676} />
+        </g>
+        {/* Single cobalt accent: the light table's live edge */}
+        <line x1={156} y1={576} x2={844} y2={576} stroke="var(--ink-dominant)" strokeWidth={1} opacity={0.35} />
+      </svg>
+
       {/* Dust drifting through the beam */}
       {MOTES.map((mote, i) => (
         <span

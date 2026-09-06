@@ -78,11 +78,6 @@ export function HomeAtelier() {
           <FilmStack />
         </div>
       </div>
-
-      {/* Colophon hairline */}
-      <footer className="relative z-10 pb-4 text-center font-telemetry text-[10px] uppercase tracking-[0.22em] text-muted">
-        {t.home.colophon}
-      </footer>
     </div>
   );
 }

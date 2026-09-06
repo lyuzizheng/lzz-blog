@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 
 /**
- * BRAWUKA-78 · FilmStack — four 35mm negatives stacked on the light table.
+ * BRAWUKA-83 · FilmStack — the darkroom workbench, top layer.
  *
- * Stacked by default with organic rotations and a breathing idle drift;
- * a click scatters them across the bench with spring physics, turning each
- * frame into a chapter entrance: Blogs / Career / Photography / Projects.
+ * The four chapter negatives (Blogs / Career / Photography / Projects) lie
+ * permanently scattered on the light table in organic poses — nothing is
+ * stacked away, every frame is a live link. Beneath them a pile of blank,
+ * blurred negatives gives the bench its depth.
  *
- * - GPU-only transforms (x / y / rotate / scale) → 60fps+, Zero CLS
- *   (absolute positioning inside a fixed-height container).
- * - Keyboard: the stacked deck is a single button; scattered frames are
- *   real links; Esc collects; digits 1–4 jump straight to a chapter.
- * - prefers-reduced-motion: instant pose swap, idle drift flattened by the
- *   global CSS media query, every destination stays reachable.
+ * - Zero layout JS: percentage poses + CSS individual transform properties;
+ *   hover/focus straighten + lift + exposure flash are pure CSS transitions.
+ * - Idle breathing drift via `film-idle` keyframes (inner wrapper, composited).
+ * - Keyboard: digits 1–4 jump straight to a chapter; all frames are real
+ *   links with visible focus rings.
+ * - prefers-reduced-motion: global CSS flattens idle drift + transitions.
  */
 
 type FilmKey = "blogs" | "career" | "photography" | "projects";
@@ -30,36 +30,55 @@ interface FilmSpec {
   frameNo: string;
   stock: string;
   emblem: EmblemKind;
+  /** Irregular resting pose: percentage offsets + rotation, mobile / desktop. */
+  pose: string;
 }
 
 const FILMS: ReadonlyArray<FilmSpec> = [
-  { key: "blogs", href: "/posts", frameNo: "▶ 01A", stock: "KODAK 400TX", emblem: "lines" },
-  { key: "career", href: "/resume", frameNo: "▶ 02A", stock: "ILFORD HP5+", emblem: "flight" },
-  { key: "photography", href: "/photography", frameNo: "▶ 03A", stock: "PORTRA 400", emblem: "aperture" },
-  { key: "projects", href: "/products", frameNo: "▶ 04A", stock: "FUJI C200", emblem: "bento" },
+  {
+    key: "blogs",
+    href: "/posts",
+    frameNo: "▶ 01A",
+    stock: "KODAK 400TX",
+    emblem: "lines",
+    pose: "left-[1%] top-[2%] -rotate-[6deg] sm:left-[2%] sm:top-[8%] sm:-rotate-[7deg]",
+  },
+  {
+    key: "photography",
+    href: "/photography",
+    frameNo: "▶ 03A",
+    stock: "PORTRA 400",
+    emblem: "aperture",
+    pose: "left-[55%] top-[8%] rotate-[5deg] sm:left-[52%] sm:top-[2%] sm:-rotate-[3deg]",
+  },
+  {
+    key: "career",
+    href: "/resume",
+    frameNo: "▶ 02A",
+    stock: "ILFORD HP5+",
+    emblem: "flight",
+    pose: "left-[5%] top-[50%] rotate-[3deg] sm:left-[27%] sm:top-[40%] sm:rotate-[4deg]",
+  },
+  {
+    key: "projects",
+    href: "/products",
+    frameNo: "▶ 04A",
+    stock: "FUJI C200",
+    emblem: "bento",
+    pose: "left-[57%] top-[56%] -rotate-[8deg] sm:left-[76%] sm:top-[32%] sm:rotate-[8deg]",
+  },
 ];
 
-/** Organic stacked poses: rotation (deg) + pixel offset from deck center. */
-const STACK_POSES = [
-  { r: -5, dx: -8, dy: -6 },
-  { r: 3.5, dx: 7, dy: 2 },
-  { r: -1.5, dx: -5, dy: 8 },
-  { r: 6, dx: 10, dy: -3 },
-] as const;
-
-/** Scattered poses as fractions of the free space, desktop fan / mobile 2×2. */
-const SCATTER_DESKTOP = [
-  { fx: 0, fy: 0.12, r: -6 },
-  { fx: 1, fy: 0.55, r: 4 },
-  { fx: 0.5, fy: 0.02, r: -3 },
-  { fx: 0.75, fy: 0.45, r: 7 },
-] as const;
-const SCATTER_MOBILE = [
-  { fx: 0, fy: 0.02, r: -5 },
-  { fx: 1, fy: 0.1, r: 6 },
-  { fx: 0.06, fy: 0.88, r: 3 },
-  { fx: 0.94, fy: 0.98, r: -7 },
-] as const;
+/** Blank blurred negatives forming the pile beneath the chapter frames. */
+const PILE: ReadonlyArray<{ className: string; idle?: string }> = [
+  { className: "left-[6%] top-[26%] w-[30%] -rotate-[9deg] opacity-45" },
+  { className: "left-[24%] top-[14%] w-[34%] rotate-[2deg] opacity-40", idle: "8.8s" },
+  { className: "left-[46%] top-[30%] w-[28%] rotate-[11deg] opacity-45" },
+  { className: "left-[64%] top-[16%] w-[32%] -rotate-[4deg] opacity-40", idle: "11.3s" },
+  { className: "left-[12%] top-[54%] w-[36%] rotate-[6deg] opacity-35" },
+  { className: "left-[42%] top-[58%] w-[30%] -rotate-[12deg] opacity-40", idle: "12.6s" },
+  { className: "left-[66%] top-[52%] w-[26%] rotate-[1deg] opacity-35" },
+];
 
 const INK = "var(--ink-dominant)";
 
@@ -159,28 +178,28 @@ function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
   );
 }
 
+/** A blank negative in the under-pile: sprockets + dim halftone, no label. */
+function PileFrame() {
+  return (
+    <div className="overflow-hidden rounded-[2px] border border-border-plate/60 bg-surface">
+      <div className="relative h-3 w-full bg-[var(--bg-chamber)]">
+        <div className="film-sprockets absolute inset-0" />
+      </div>
+      <div className="relative aspect-[3/2] w-full bg-[var(--bg-chamber)]">
+        <div className="halftone-screen pointer-events-none absolute inset-0 opacity-15" />
+      </div>
+      <div className="relative h-3 w-full bg-[var(--bg-chamber)]">
+        <div className="film-sprockets absolute inset-0" />
+      </div>
+    </div>
+  );
+}
+
 export function FilmStack() {
   const { t } = useI18n();
   const router = useRouter();
-  const reduceMotion = useReducedMotion();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState<{ width: number; height: number } | null>(null);
-  const [scattered, setScattered] = useState(false);
-  const [hovered, setHovered] = useState<number | null>(null);
 
-  // Measure the bench so scatter poses are computed in pixels (GPU transforms).
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      const rect = entries[0]?.contentRect;
-      if (rect) setSize({ width: rect.width, height: rect.height });
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  // Keyboard contract: Esc collects, digits 1–4 jump straight to a chapter.
+  // Keyboard contract: digits 1–4 jump straight to a chapter.
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
@@ -189,10 +208,6 @@ export function FilmStack() {
         target instanceof HTMLTextAreaElement ||
         target?.isContentEditable
       ) {
-        return;
-      }
-      if (e.key === "Escape") {
-        setScattered(false);
         return;
       }
       const digit = ["1", "2", "3", "4"].indexOf(e.key);
@@ -205,57 +220,43 @@ export function FilmStack() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [router]);
 
-  const width = size?.width ?? 0;
-  const height = size?.height ?? 0;
-  const isMobile = width < 520;
-  const frameW = isMobile
-    ? Math.min(148, width * 0.44)
-    : Math.min(172, width * 0.24);
-  const frameH = frameW * (2 / 3) + 36;
-
-  const poseOf = (index: number) => {
-    if (!scattered) {
-      const pose = STACK_POSES[index]!;
-      return {
-        x: (width - frameW) / 2 + pose.dx,
-        y: (height - frameH) / 2 + pose.dy,
-        r: pose.r,
-      };
-    }
-    const pose = (isMobile ? SCATTER_MOBILE : SCATTER_DESKTOP)[index]!;
-    return {
-      x: pose.fx * (width - frameW),
-      y: pose.fy * (height - frameH),
-      r: pose.r,
-    };
-  };
-
   return (
     <div className="w-full">
       <div
-        ref={containerRef}
-        className="relative mx-auto h-[340px] w-full max-w-[640px] sm:h-[300px]"
+        className="relative mx-auto h-[340px] w-full max-w-[680px] sm:h-[300px]"
         role="group"
-        aria-label={t.home.films.open}
+        aria-label={t.home.films.label}
       >
-        {/* Backdrop collector — click anywhere off-frame to re-stack. */}
-        {scattered && (
-          <button
-            type="button"
-            aria-label={t.home.films.collectHint}
-            onClick={() => setScattered(false)}
-            className="fixed inset-0 z-30 cursor-default"
-          />
-        )}
-
-        {FILMS.map((film, i) => {
-          const pose = poseOf(i);
-          const isHovered = hovered === i;
-          const zIndex = scattered ? (isHovered ? 50 : 40 + i) : 40 + (FILMS.length - i);
-          const label = t.home.films[film.key];
-          const inner = (
+        {/* Under-pile: blurred blank negatives, decorative only */}
+        {PILE.map((frame, i) => (
+          <div
+            key={`pile-${i}`}
+            aria-hidden="true"
+            className={`pointer-events-none absolute blur-[1.5px] ${frame.className}`}
+          >
             <div
-              className={!scattered && !reduceMotion ? "film-idle" : undefined}
+              className={frame.idle ? "film-idle" : undefined}
+              style={
+                frame.idle
+                  ? ({ "--idle-duration": frame.idle } as React.CSSProperties)
+                  : undefined
+              }
+            >
+              <PileFrame />
+            </div>
+          </div>
+        ))}
+
+        {/* Top layer: the four chapter negatives, permanently scattered */}
+        {FILMS.map((film, i) => (
+          <Link
+            key={film.key}
+            href={film.href}
+            aria-label={`${film.frameNo} · ${t.home.films[film.key]}`}
+            className={`film-frame-shell group absolute z-10 block w-[44%] rounded-[2px] transition-[rotate,scale,translate] duration-300 ease-out hover:z-50 hover:rotate-0 hover:scale-[1.06] hover:-translate-y-2 focus-visible:z-50 focus-visible:rotate-0 focus-visible:scale-[1.06] focus-visible:-translate-y-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)] sm:w-[24%] ${film.pose}`}
+          >
+            <div
+              className="film-idle"
               style={
                 {
                   "--idle-duration": `${6.4 + i * 0.9}s`,
@@ -263,70 +264,11 @@ export function FilmStack() {
                 } as React.CSSProperties
               }
             >
-              <FrameBody film={film} label={label} />
+              <FrameBody film={film} label={t.home.films[film.key]} />
             </div>
-          );
-
-          return (
-            <motion.div
-              key={film.key}
-              className="absolute left-0 top-0"
-              style={{ width: frameW, zIndex }}
-              initial={false}
-              animate={{
-                x: pose.x,
-                y: pose.y + (isHovered && scattered ? -8 : 0),
-                rotate: isHovered && scattered ? 0 : pose.r,
-                scale: isHovered && scattered ? 1.06 : 1,
-                opacity: size ? 1 : 0,
-              }}
-              transition={
-                reduceMotion
-                  ? { duration: 0.15 }
-                  : {
-                      type: "spring",
-                      stiffness: 240,
-                      damping: 24,
-                      delay: scattered ? i * 0.045 : 0,
-                    }
-              }
-              onHoverStart={() => setHovered(i)}
-              onHoverEnd={() => setHovered(null)}
-            >
-              {scattered ? (
-                <Link
-                  href={film.href}
-                  className="film-frame-shell group block rounded-[2px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)]"
-                  onFocus={() => setHovered(i)}
-                  onBlur={() => setHovered(null)}
-                  aria-label={`${film.frameNo} · ${label}`}
-                >
-                  {inner}
-                </Link>
-              ) : i === 0 ? (
-                <button
-                  type="button"
-                  onClick={() => setScattered(true)}
-                  aria-label={t.home.films.open}
-                  aria-expanded={scattered}
-                  className="film-frame-shell group block w-full cursor-pointer rounded-[2px] text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ink-dominant)]"
-                >
-                  {inner}
-                </button>
-              ) : (
-                <div className="film-frame-shell group" aria-hidden="true">
-                  {inner}
-                </div>
-              )}
-            </motion.div>
-          );
-        })}
+          </Link>
+        ))}
       </div>
-
-      {/* Bench telemetry line */}
-      <p className="mt-3 text-center font-telemetry text-[10px] uppercase tracking-[0.24em] text-muted">
-        {scattered ? t.home.films.collectHint : t.home.films.scatterHint}
-      </p>
     </div>
   );
 }
