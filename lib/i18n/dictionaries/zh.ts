@@ -53,7 +53,7 @@ export const zh: Translations = {
   },
   posts: {
     noResults: "未找到匹配的文章，请尝试调整关键词或筛选条件。",
-    yearArchive: "篇归档",
+    yearArchive: "篇",
     readingTime: "分钟阅读",
     wordCount: "字",
     backToPosts: "返回文章总列表",

@@ -97,6 +97,9 @@ check(!archiveList.includes("Folder") && !archiveList.includes("Calendar") && !a
 for (const key of ["noResults", "yearArchive", "readingTime"]) {
   check(zh.includes(`${key}:`) && en.includes(`${key}:`), `live key '${key}' must exist in both zh and en dictionaries`);
 }
+check(archiveList.includes("t.posts.yearArchive"), "year count must consume the live yearArchive i18n key (no hardcoded locale ternaries)");
+check(archiveList.includes("useReducedMotion"), "whileInView scroll-in rows must honor prefers-reduced-motion");
+check(!postDetailPage.includes("italic"), "standfirst must not use italic (Noto Serif SC has no true italic; CJK gets faux-oblique)");
 
 if (failures.length > 0) {
   console.error("posts-archive check FAILED:");

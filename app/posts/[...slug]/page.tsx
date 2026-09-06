@@ -150,10 +150,11 @@ export default async function PostDetailPage({ params }: PageProps) {
             {post.title}
           </h1>
 
-          {/* Standfirst: summary as cross-column lede */}
+          {/* Standfirst: summary as cross-column lede（禁用斜体：Noto Serif SC 无真斜体，
+              CJK 文本会被浏览器合成伪斜体） */}
           {post.summary && (
             <div className="mt-6 border-l-2 border-ink-dominant/50 py-0.5 pl-4">
-              <p className="font-display text-base leading-relaxed text-text-secondary italic sm:text-lg">
+              <p className="font-display text-base leading-relaxed text-text-secondary sm:text-lg">
                 {post.summary}
               </p>
             </div>

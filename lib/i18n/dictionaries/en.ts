@@ -53,7 +53,7 @@ export const en: Translations = {
   },
   posts: {
     noResults: "No matching articles found. Try adjusting your search or filters.",
-    yearArchive: "articles",
+    yearArchive: "dispatches",
     readingTime: "min read",
     wordCount: "words",
     backToPosts: "Back to all articles",

@@ -73,7 +73,7 @@ export function ReaderEyebrow({
               aria-current={isActive ? "page" : undefined}
               className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
                 isActive
-                  ? "border-ink-dominant bg-surface text-ink-dominant font-semibold shadow-sm"
+                  ? "border-ink-dominant bg-surface text-ink-dominant font-semibold shadow-[var(--shadow-plate)]"
                   : "border-border-plate bg-chamber/40 text-muted hover:border-border-plate-strong hover:text-text-primary hover:bg-surface"
               }`}
             >

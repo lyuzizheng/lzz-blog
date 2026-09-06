@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 
 export interface ArchivePost {
@@ -33,12 +33,16 @@ export interface ArchivePost {
 export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
   const { locale, t } = useI18n();
   const isZh = locale === "zh";
+  // prefers-reduced-motion: rows mount at final state, no scroll-in drift.
+  const reduceMotion = useReducedMotion();
 
   const [activeChannel, setActiveChannel] = useState<"all" | "study" | "essay">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  // Contact sheet hover proof (cursor follower)
+  // Contact sheet hover proof (cursor follower).
+  // Position lives in refs and is written straight to the preview node's style —
+  // mousemove never triggers a React re-render of the archive tree.
   const [hoveredCover, setHoveredCover] = useState<string | null>(null);
   const cursorRef = React.useRef({ x: 0, y: 0 });
   const previewRef = React.useRef<HTMLDivElement | null>(null);
@@ -215,7 +219,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                 </h2>
                 <div className="h-px flex-1 bg-border-plate/60" />
                 <span className="font-telemetry text-xs text-muted tabular-nums">
-                  {yearPosts.length} {isZh ? "篇" : "dispatches"}
+                  {yearPosts.length} {t.posts.yearArchive}
                 </span>
               </div>
 
@@ -224,7 +228,7 @@ export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
                 {yearPosts.map((post, idx) => (
                   <motion.div
                     key={post.slug}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-20px" }}
                     transition={{ duration: 0.3, delay: Math.min(idx * 0.03, 0.15), ease: "easeOut" }}
