@@ -212,8 +212,8 @@ export function FilmStack() {
               className="film-idle"
               style={
                 {
-                  "--idle-duration": `${6.4 + i * 0.9}s`,
-                  animationDelay: `${i * -1.7}s`,
+                  "--idle-duration": `${5.6 + i * 0.8}s`,
+                  animationDelay: `${i * -1.5}s`,
                 } as React.CSSProperties
               }
             >
