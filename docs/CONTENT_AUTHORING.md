@@ -118,7 +118,7 @@ summary: "一句话摘要，进列表与 RSS。"
 - `chemistry`：暗房药水行，按既有格式自由写
 - `gps` / `ev`：可选
 - 想快速录入：把相机回放页抄成 `Sony A7M4 · … · f/1.4 · 1/250s · ISO 100` 一行，
-  `parseExifString`（`lib/darkroom.ts`）可做容错解析参考，粘贴后按 schema 拆字段即可
+  按 schema 手动拆分字段即可
 
 ---
 

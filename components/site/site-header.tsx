@@ -7,11 +7,6 @@ import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
 import { useI18n } from "@/lib/i18n";
 
 /**
- * Core destination routes referenced by the header index.
- */
-export const HEADER_NAV_ROUTES = ["/", "/posts", "/photography", "/resume", "/products"] as const;
-
-/**
  * 4 chapter negative specifications matching the darkroom homepage:
  * Blogs (/posts) · Career (/resume) · Photography (/photography) · Projects (/products)
  */

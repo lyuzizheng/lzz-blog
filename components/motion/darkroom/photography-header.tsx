@@ -5,7 +5,7 @@ import { Aperture } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 export function PhotographyHeader() {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
 
   return (
     <section className="relative mb-8 overflow-hidden rounded-lg border border-border-plate bg-surface p-6 sm:p-10">

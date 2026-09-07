@@ -32,7 +32,7 @@ export interface PhotoMapPin {
  * - Decimal: `1.2833, 103.85` or `1.2833°N 103.85°E`
  * - Hemispheres: N/S for latitude, E/W for longitude
  */
-export function parseGpsCoordinates(gpsStr?: string | null): GeoCoordinates | null {
+function parseGpsCoordinates(gpsStr?: string | null): GeoCoordinates | null {
   if (!gpsStr || typeof gpsStr !== "string") return null;
   const s = gpsStr.trim();
 
@@ -98,7 +98,7 @@ export function formatGpsCoordinates(coords: GeoCoordinates): string {
 /**
  * Friendly geodetic place names derived from coordinate clusters.
  */
-function deriveLocationName(title: string, gpsRaw: string, coords: GeoCoordinates): string {
+function deriveLocationName(title: string, _gpsRaw: string, coords: GeoCoordinates): string {
   // Singapore bounds: ~1.15°N - 1.48°N, 103.6°E - 104.05°E
   if (coords.lat >= 1.15 && coords.lat <= 1.48 && coords.lng >= 103.55 && coords.lng <= 104.1) {
     if (coords.lng <= 103.75) return "Singapore · Nanyang / Jurong";
@@ -125,7 +125,7 @@ function deriveLocationName(title: string, gpsRaw: string, coords: GeoCoordinate
 /**
  * Derive grouped pins from DARKROOM_PHOTOS.
  */
-export function derivePhotoMapPins(photos: ReadonlyArray<DarkroomPhoto>): ReadonlyArray<PhotoMapPin> {
+function derivePhotoMapPins(photos: ReadonlyArray<DarkroomPhoto>): ReadonlyArray<PhotoMapPin> {
   const pins: PhotoMapPin[] = [];
 
   for (const photo of photos) {

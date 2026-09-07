@@ -5,14 +5,14 @@
  * 文件必须保持 erasable-syntax-only（供 node type-stripping 直接校验）。
  */
 
-export interface DossierImpact {
+interface DossierImpact {
   metric: string;
   value: string;
   status: "verified" | "tbd";
   source: string;
 }
 
-export interface DossierLink {
+interface DossierLink {
   label: string;
   href: string;
 }

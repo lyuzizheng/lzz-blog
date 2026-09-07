@@ -5,7 +5,7 @@
  * 文件必须保持 erasable-syntax-only（供 node type-stripping 直接校验）。
  */
 
-export interface ResumeBullet {
+interface ResumeBullet {
   text: string;
   status: "verified" | "tbd";
   source: string;

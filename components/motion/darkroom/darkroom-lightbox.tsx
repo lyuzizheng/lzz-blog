@@ -10,7 +10,7 @@ import {
   type MonoMode,
 } from "@/lib/darkroom";
 
-export const LIGHTBOX_DISMISS_PX = 120;
+const LIGHTBOX_DISMISS_PX = 120;
 
 function matchLightboxKey(key: string): "next" | "prev" | "close" | null {
   switch (key) {

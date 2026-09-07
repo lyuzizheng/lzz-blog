@@ -15,12 +15,6 @@ import { DarkroomLightbox } from "./darkroom-lightbox";
 
 export type GalleryView = "masonry" | "reel" | "immersive";
 
-const VIEWS: ReadonlyArray<{ id: GalleryView; label: string; hint: string }> = [
-  { id: "masonry", label: "MASONRY", hint: "瀑布流" },
-  { id: "reel", label: "FILM REEL", hint: "胶卷卷轴" },
-  { id: "immersive", label: "IMMERSIVE", hint: "沉浸大图" },
-];
-
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
   useEffect(() => {

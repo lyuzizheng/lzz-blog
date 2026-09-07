@@ -11,7 +11,7 @@ import { DarkroomGallery } from "./darkroom-gallery";
 import { DarkroomLightbox } from "./darkroom-lightbox";
 import { PhotographyHeader } from "./photography-header";
 import { SiteHeader, SiteFooter } from "@/components/site";
-import { Map, Layers } from "lucide-react";
+import { Map } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 export type PhotographyMainView = "map" | "gallery";
@@ -30,10 +30,10 @@ interface PhotographyMasterViewProps {
 export function PhotographyMasterView({
   initialView = "map",
 }: PhotographyMasterViewProps) {
-  const { locale, t } = useI18n();
+  const { locale } = useI18n();
   const isZh = locale === "zh";
   const [activeView, setActiveView] = useState<PhotographyMainView>(initialView);
-  const [mode, setMode] = useState<MonoMode>("true");
+  const mode: MonoMode = "true";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const openPhoto = useCallback((photo: DarkroomPhoto) => {
@@ -55,7 +55,6 @@ export function PhotographyMasterView({
     <div className="relative min-h-screen w-full bg-substrate text-primary">
       {activeView === "map" ? (
         <PhotoMap
-          photos={DARKROOM_PHOTOS}
           mode={mode}
           onOpenPhoto={openPhoto}
           onSwitchToMasonry={() => setActiveView("gallery")}

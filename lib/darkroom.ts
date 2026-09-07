@@ -98,13 +98,8 @@ if (!Array.isArray(photoEntries) || !photoEntries.every(isPhotoJsonEntry)) {
 export const DARKROOM_PHOTOS: ReadonlyArray<DarkroomPhoto> = photoEntries.map(entry);
 
 /* ------------------------------------------------------------------ */
-/* EXIF telemetry: format + fault-tolerant parse                       */
+/* EXIF telemetry readout                                              */
 /* ------------------------------------------------------------------ */
-
-/** Canonical one-line telemetry, e.g. `Sony A7M4 · FE 35mm F1.4 GM · f/1.4 · 1/250s · ISO 100`. */
-export function formatDarkroomTelemetry(exif: DarkroomExif): string {
-  return `${exif.camera} · ${exif.lens} · ${exif.aperture} · ${exif.shutter} · ISO ${exif.iso.replace(/^ISO\s*/i, "")}`;
-}
 
 /** Multi-row mechanical readout for the hover probe (DESIGN.md §5.3). */
 export function darkroomReadoutRows(exif: DarkroomExif): Array<readonly [string, string]> {
@@ -116,49 +111,4 @@ export function darkroomReadoutRows(exif: DarkroomExif): Array<readonly [string,
   ];
   if (exif.gps) rows.push(["GEODETIC", exif.gps]);
   return rows;
-}
-
-export interface ParsedExif {
-  readonly camera?: string;
-  readonly lens?: string;
-  readonly focal?: string;
-  readonly aperture?: string;
-  readonly shutter?: string;
-  readonly iso?: string;
-  readonly takenAt?: string;
-  readonly gps?: string;
-  /** Segments the parser could not classify — never dropped, never blocking. */
-  readonly unknown: ReadonlyArray<string>;
-}
-
-const APERTURE_RE = /^f\/\d+(\.\d+)?$/i;
-const SHUTTER_RE = /^1\/\d+s$|^\d+(\.\d+)?s$/i;
-const ISO_RE = /^iso\s*\d+$/i;
-const FOCAL_RE = /^\d+mm$/i;
-const LENS_HINT_RE = /(GM|FE|RF|EF|mm\s+F\d|F\d\.\d)/i;
-const GPS_RE = /[°'″NSnsEeWw].*[°'″NSnsEeWw]|^\d+\.\d+,\s*-?\d+\.\d+$/;
-const DATE_RE = /^\d{4}[.\-/]\d{2}[.\-/]\d{2}/;
-
-/**
- * Parse a pasted telemetry line (`A · B · C …`) into structured EXIF.
- * Classification is best-effort: unrecognized segments land in `unknown`
- * so parsing is accurate where possible and never blocks the UI.
- */
-export function parseExifString(input: string): ParsedExif {
-  const unknown: string[] = [];
-  const out: Record<string, string> = {};
-  for (const raw of input.split(/[·|]/)) {
-    const seg = raw.trim();
-    if (!seg) continue;
-    if (APERTURE_RE.test(seg)) out.aperture ??= seg;
-    else if (SHUTTER_RE.test(seg)) out.shutter ??= seg;
-    else if (ISO_RE.test(seg)) out.iso ??= seg.replace(/^iso\s*/i, "");
-    else if (FOCAL_RE.test(seg) && !LENS_HINT_RE.test(seg)) out.focal ??= seg;
-    else if (DATE_RE.test(seg)) out.takenAt ??= seg;
-    else if (GPS_RE.test(seg)) out.gps ??= seg;
-    else if (LENS_HINT_RE.test(seg)) out.lens ??= seg;
-    else if (!out.camera) out.camera ??= seg;
-    else unknown.push(seg);
-  }
-  return { ...out, unknown };
 }

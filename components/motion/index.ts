@@ -3,7 +3,6 @@ export * from "./route-transition";
 export * from "./grain-overlay";
 export * from "./exposure-progress";
 export * from "./darkroom";
-export * from "./projects";
 export * from "./resume";
 export * from "./atelier-veil";
 export * from "./career-deck";
