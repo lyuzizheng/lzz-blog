@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ProductsDeck } from "@/components/products";
-import { SiteHeader, SiteFooter } from "@/components/site";
+import { SiteHeader } from "@/components/site";
 import { siteConfig } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
 
@@ -38,18 +38,16 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col justify-between bg-substrate text-primary transition-colors duration-300">
+    <div className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-substrate text-primary transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <SiteHeader />
 
-      <main className="w-full flex-1">
+      <main className="relative h-[calc(100dvh-3.5rem)] w-full flex-1 overflow-hidden">
         <ProductsDeck />
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore, ExposureProgress, AtelierVeilDismiss } from "@/components/motion";
+import { BodyScrollLock } from "@/components/body-scroll-lock";
 import { I18nProvider } from "@/lib/i18n";
 import { fontVariables } from "@/lib/fonts";
 import { rootMetadata, rootViewport } from "@/lib/metadata";
@@ -48,6 +49,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-substrate text-primary font-body antialiased selection:bg-safelight/20 selection:text-safelight">
+        <BodyScrollLock />
         {/* BRAWUKA-87 · 0ms Zero-Blocking Instant Darkroom Exposure Veil */}
         <style
           dangerouslySetInnerHTML={{
