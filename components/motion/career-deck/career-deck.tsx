@@ -10,9 +10,9 @@ import {
   BytedanceCanvas,
 } from "./canvases";
 import { StageHero } from "./stage-hero";
-import { StageWise } from "./stage-wise";
-import { StageExploration } from "./stage-exploration";
 import { StageBytedance } from "./stage-bytedance";
+import { StageExploration } from "./stage-exploration";
+import { StageWise } from "./stage-wise";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -154,7 +154,6 @@ export function CareerDeck() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if inside input/textarea
       if (
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement
@@ -210,7 +209,7 @@ export function CareerDeck() {
       role="region"
       aria-label="Career Deck Vertical Snap Reel"
     >
-      {/* 1. Thematic Stage Canvas (Single-color high precision SVG background) */}
+      {/* 1. Thematic Stage Canvas (Faint, non-distracting SVG background) */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStage.id}
@@ -218,12 +217,12 @@ export function CareerDeck() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-25 dark:opacity-20 transition-opacity duration-500"
         >
           {currentStage.id === "hero" && <HeroCanvas />}
-          {currentStage.id === "wise" && <WiseCanvas />}
-          {currentStage.id === "exploration" && <ExplorationCanvas />}
           {currentStage.id === "bytedance" && <BytedanceCanvas />}
+          {currentStage.id === "exploration" && <ExplorationCanvas />}
+          {currentStage.id === "wise" && <WiseCanvas />}
         </motion.div>
       </AnimatePresence>
 
@@ -242,25 +241,31 @@ export function CareerDeck() {
             {currentStage.id === "hero" && (
               <StageHero onExploreNext={() => goToStage(1)} />
             )}
-            {currentStage.id === "wise" && (
-              <StageWise onExploreNext={() => goToStage(2)} />
+            {currentStage.id === "bytedance" && (
+              <StageBytedance onExploreNext={() => goToStage(2)} />
             )}
             {currentStage.id === "exploration" && (
               <StageExploration onExploreNext={() => goToStage(3)} />
             )}
-            {currentStage.id === "bytedance" && (
-              <StageBytedance onScrollToTop={() => goToStage(0)} />
+            {currentStage.id === "wise" && (
+              <StageWise onScrollToTop={() => goToStage(0)} />
             )}
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* 3. Sleek Minimalist Vertical Timeline & Progress Rail (纵向时间轴) */}
+      {/* 3. Left-Side Minimalist Vertical Timeline (左侧极简竖向时间轴) */}
       <aside
-        className="pointer-events-auto absolute right-4 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-4 sm:right-8 md:flex"
+        className="pointer-events-auto absolute left-4 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-5 sm:left-6 md:left-8 lg:left-10 md:flex select-none"
         aria-label="Career Timeline Progression"
       >
-        <div className="flex flex-col items-center gap-3">
+        <div className="relative flex flex-col items-center gap-6">
+          {/* Subtle connecting vertical hairline */}
+          <div
+            className="absolute top-2.5 bottom-2.5 w-[1px] bg-border-plate/50"
+            aria-hidden="true"
+          />
+
           {CAREER_STAGES.map((stage, idx) => {
             const isActive = idx === stageIndex;
             const isPassed = idx < stageIndex;
@@ -269,44 +274,44 @@ export function CareerDeck() {
               <button
                 key={stage.id}
                 onClick={() => goToStage(idx)}
-                className="group relative flex items-center justify-center p-1 transition-all"
-                aria-label={`Jump to ${stage.actNo}: ${stage.nameEn}`}
+                className="group relative flex items-center justify-center p-1.5 transition-all cursor-pointer"
+                aria-label={`Jump to ${stage.nameEn}`}
               >
-                {/* Tooltip on hover */}
-                <span className="pointer-events-none absolute right-6 origin-right scale-95 rounded-xs border border-border-plate/60 bg-surface/90 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:scale-100 group-hover:opacity-100 group-hover:text-primary backdrop-blur-xs">
-                  {stage.actNo} · {isZh ? stage.nameZh : stage.nameEn}
-                </span>
-
-                {/* Pip node */}
+                {/* Node Pip */}
                 <div
-                  className={`h-2.5 w-2.5 rounded-full transition-all duration-200 ${
+                  className={`relative z-10 h-2.5 w-2.5 rounded-full transition-all duration-300 ${
                     isActive
                       ? "scale-125 bg-cobalt ring-4 ring-cobalt/20"
                       : isPassed
-                        ? "bg-cobalt/50 hover:bg-cobalt"
-                        : "bg-border-plate hover:bg-muted"
+                        ? "bg-cobalt/60 hover:bg-cobalt hover:scale-110"
+                        : "bg-border-plate hover:bg-muted hover:scale-110"
                   }`}
                 />
+
+                {/* Right Floating Badge on Hover */}
+                <span className="pointer-events-none absolute left-7 whitespace-nowrap rounded-[2px] border border-border-plate/60 bg-surface/90 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:opacity-100 group-hover:text-primary backdrop-blur-xs">
+                  {stage.period} · {isZh ? stage.nameZh : stage.nameEn}
+                </span>
               </button>
             );
           })}
         </div>
 
-        {/* Subtle Stage Counter */}
+        {/* Minimalist Stage Counter */}
         <span className="font-telemetry text-[9px] tracking-widest text-muted">
           0{stageIndex + 1}/0{totalStages}
         </span>
       </aside>
 
-      {/* 4. Bottom-Right Quick Step Controls & Telemetry Eyebrow */}
+      {/* 4. Bottom-Right Quick Step Controls */}
       <nav
-        className="pointer-events-auto absolute bottom-3 right-3 z-30 flex items-center gap-1.5 rounded-xs border border-border-plate/60 bg-surface/80 p-1 shadow-plate backdrop-blur-md sm:bottom-4 sm:right-6"
+        className="pointer-events-auto absolute bottom-3 right-3 z-30 flex items-center gap-1.5 rounded-[2px] border border-border-plate/60 bg-surface/80 p-1 shadow-plate backdrop-blur-md sm:bottom-4 sm:right-6"
         aria-label="Stage Navigation Controls"
       >
         <button
           onClick={goPrev}
           disabled={stageIndex === 0}
-          className="flex h-7 w-7 items-center justify-center rounded-xs border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
+          className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
           title="Previous Stage (ArrowUp / K)"
           aria-label="Previous Stage"
         >
@@ -320,7 +325,7 @@ export function CareerDeck() {
         <button
           onClick={goNext}
           disabled={stageIndex === totalStages - 1}
-          className="flex h-7 w-7 items-center justify-center rounded-xs border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
+          className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
           title="Next Stage (ArrowDown / J)"
           aria-label="Next Stage"
         >

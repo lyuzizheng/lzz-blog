@@ -1,8 +1,9 @@
 /**
  * Career Deck Stage Types & Specifications
+ * Chronological order: University (2017-2021) -> ByteDance (2021-2023) -> Exploration (2023-2024) -> Wise (2024-Present)
  */
 
-type CareerStageId = "hero" | "wise" | "exploration" | "bytedance";
+export type CareerStageId = "hero" | "bytedance" | "exploration" | "wise";
 
 export interface CareerStageSpec {
   id: CareerStageId;
@@ -10,7 +11,6 @@ export interface CareerStageSpec {
   actNo: string;
   nameZh: string;
   nameEn: string;
-  codename: string;
   period: string;
   org: string;
 }
@@ -19,41 +19,37 @@ export const CAREER_STAGES: CareerStageSpec[] = [
   {
     id: "hero",
     index: 0,
-    actNo: "ACT 00",
-    nameZh: "核心综述与行动中枢",
-    nameEn: "Mission Control & Hero Statement",
-    codename: "ORIGIN-RADAR",
-    period: "2017 – PRESENT",
-    org: "LZZ ATELIER",
+    actNo: "01",
+    nameZh: "大学与初心",
+    nameEn: "Origin & U-Wave",
+    period: "2017 – 2021",
+    org: "NTU · U-WAVE",
   },
   {
-    id: "wise",
+    id: "bytedance",
     index: 1,
-    actNo: "ACT 01",
-    nameZh: "Wise · 业务价值与 AI 工作流",
-    nameEn: "Wise · Product & AI Workflow",
-    codename: "IMPACT-NORTHSTAR",
-    period: "2024 – PRESENT",
-    org: "WISE",
+    actNo: "02",
+    nameZh: "字节跳动",
+    nameEn: "ByteDance & TikTok",
+    period: "2021 – 2023",
+    org: "BYTEDANCE · TIKTOK",
   },
   {
     id: "exploration",
     index: 2,
-    actNo: "ACT 02",
-    nameZh: "MariBank + Bondee · 动态探索",
-    nameEn: "MariBank + Bondee · Exploration",
-    codename: "DYNAMIC-BLADE",
+    actNo: "03",
+    nameZh: "探索与触礁",
+    nameEn: "Exploration & Unbound",
     period: "2023 – 2024",
-    org: "MARIBANK · BONDEE",
+    org: "BONDEE · MARIBANK",
   },
   {
-    id: "bytedance",
+    id: "wise",
     index: 3,
-    actNo: "ACT 03",
-    nameZh: "ByteDance / TikTok · 架构基石",
-    nameEn: "ByteDance / TikTok · Core Foundation",
-    codename: "GLOBAL-HEARTBEAT",
-    period: "2021 – 2023",
-    org: "BYTEDANCE · TIKTOK",
+    actNo: "04",
+    nameZh: "Wise 与现在",
+    nameEn: "Wise & Northstar",
+    period: "2024 – PRESENT",
+    org: "WISE",
   },
 ];
