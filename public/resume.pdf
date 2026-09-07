@@ -6,27 +6,136 @@ endobj
 << /Type /Pages /Kids [3 0 R] /Count 1 >>
 endobj
 3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 441 >>
+<< /Length 3025 >>
 stream
-BT /F1 24 Tf 72 720 Td 30 TL (Zizheng Lyu) Tj T* (Distributed Systems Engineer - Singapore) Tj T* () Tj T* (GitHub: github.com/lyuzizheng) Tj T* (X: twitter.com/brabalawuka) Tj T* (LinkedIn: linkedin.com/in/zizheng-lyu-84404912a) Tj T* () Tj T* (NTU EEE / TikTok IM heartbeat / cost optimization) Tj T* (Full interactive dossier: brabalawuka.cc/resume) Tj T* () Tj T* (NOTE: placeholder export - owner to replace with final resume.) Tj T* ET
+BT
+50 780 Td
+/F2 18 Tf
+22 TL
+(Lyu Zizheng \(Singapore Citizen\)) Tj
+T*
+/F1 10 Tf
+14 TL
+(Senior Product & Systems Engineer | Wise IC3 | Ex-ByteDance / TikTok) Tj
+T*
+/F1 9 Tf
+20 TL
+(Email: lyuzizheng@gmail.com | Phone: +65 83423169 | Web: brabalawuka.cc | GitHub: github.com/Brabalawuka) Tj
+T*
+/F2 11 Tf
+15 TL
+(SUMMARY) Tj
+T*
+/F1 9 Tf
+13 TL
+(Product-minded Systems Engineer with 5+ years building mission-critical financial automation, high-concurrency IM infrastructure,) Tj
+T*
+/F1 9 Tf
+18 TL
+(and developer platforms. Passionate about engineering rigor, deterministic DAG workflows, and operational impact.) Tj
+T*
+/F2 11 Tf
+15 TL
+(EXPERIENCE) Tj
+T*
+/F2 9.5 Tf
+13 TL
+(WISE — Product Engineer 3 \(Singapore\) | Nov 2024 - Present) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Architected financial AI Automation & Evaluation Platform for last-mile payment linking without golden datasets.) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Implemented real-time live shadowing against PayOps, 99.5% accuracy gating, and 5% canary control failover.) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Automated 30,000+ complex payment defect cases/mo across heterogeneous partner rails, saving 80,000 GBP/mo.) Tj
+T*
+/F1 8.5 Tf
+16 TL
+(- Re-engineered end-to-end global Compensation Platform with multi-party compliance reviews and double-approval controls.) Tj
+T*
+/F2 9.5 Tf
+13 TL
+(MARIBANK \(Sea Group\) — Senior Backend Engineer \(Singapore\) | Apr 2024 - Jul 2024) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Engineered core digital banking credit engine \(Cashloan & SME Termloan\) enforcing distributed consistency under MAS rules.) Tj
+T*
+/F1 8.5 Tf
+16 TL
+(- Built internal RAG-based customer support assistant leveraging LLM embeddings.) Tj
+T*
+/F2 9.5 Tf
+13 TL
+(BONDEE — Senior Software Engineer \(1st SWE in Singapore\) | Sep 2023 - Apr 2024) Tj
+T*
+/F1 8.5 Tf
+16 TL
+(- Established foundational SG cloud-native infrastructure, multi-tenant K8s, and Vector + Kafka logging pipelines.) Tj
+T*
+/F2 9.5 Tf
+13 TL
+(BYTEDANCE / TIKTOK — Senior Backend Engineer \(Singapore\) | Jan 2021 - Sep 2023) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Overhauled TikTok IM Presence Engine: hybrid push-pull with Redis ZSET heartbeat gating, eliminating O\(N*M\) write amplification.) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Redesigned conversation ranking & cold-start via active conversation hierarchy, achieving sub-100ms initialization.) Tj
+T*
+/F1 8.5 Tf
+16 TL
+(- Sole engineer governing Overseas Location Platform \(~100 Spark jobs, online Go services\); awarded Spot Bonus & Top Rating \(E\).) Tj
+T*
+/F2 11 Tf
+15 TL
+(EDUCATION & PROJECTS) Tj
+T*
+/F2 9.5 Tf
+13 TL
+(Nanyang Technological University \(NTU\) — B.Eng. Honor in Computer Engineering \(2017 - 2021\)) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- Full NTU Science and Engineering Undergraduate Merit Scholarship.) Tj
+T*
+/F1 8.5 Tf
+12 TL
+(- U-Wave \(Co-Founder\): Scaled campus mobile app to 20,000 registered users and 4,000 DAU \(Flutter + Spring Cloud\).) Tj
+T*
+/F1 8.5 Tf
+14 TL
+(- Side Projects: CanCan \(reconciliation\), CoffeeMode \(cafe discovery\), Our Village \(decentralized community\).) Tj
+ET
 endstream
 endobj
 5 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
 xref
-0 6
+0 7
 0000000000 65535 f 
 0000000009 00000 n 
 0000000058 00000 n 
 0000000115 00000 n 
-0000000241 00000 n 
-0000000733 00000 n 
+0000000251 00000 n 
+0000003327 00000 n 
+0000003397 00000 n 
 trailer
-<< /Size 6 /Root 1 0 R >>
+<< /Size 7 /Root 1 0 R >>
 startxref
-803
+3472
 %%EOF

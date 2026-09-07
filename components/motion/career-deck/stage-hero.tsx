@@ -67,45 +67,60 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
           </p>
         </div>
 
-        {/* Action Hub */}
-        <div className="pt-2 flex flex-wrap items-center gap-3">
-          <div className="inline-flex items-center rounded-[2px] shadow-plate">
-            <a
-              href="/resume.pdf"
-              download="Zizheng-Lyu-Resume.pdf"
-              className="inline-flex items-center gap-2 rounded-l-[2px] border border-cobalt bg-cobalt px-3.5 py-1.5 font-telemetry text-xs font-medium text-text-badge transition-all hover:opacity-90"
-              aria-label="Download PDF Resume"
-            >
-              <Download className="h-3.5 w-3.5" />
-              <span>{isZh ? "下载 A4 PDF 简历" : "DOWNLOAD RESUME"}</span>
-            </a>
-            <button
-              onClick={handlePrint}
-              type="button"
-              className="inline-flex items-center border border-l-0 border-cobalt bg-cobalt/85 px-2 py-1.5 text-text-badge transition-all hover:bg-cobalt cursor-pointer"
-              title={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
-              aria-label={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
-            >
-              <Printer className="h-3.5 w-3.5" />
-            </button>
-          </div>
+        {/* Action Hub — 对齐首页工作台 (Atelier) 的排版风格，无厚重实体色块与复杂投影 */}
+        <nav
+          aria-label="Resume actions"
+          className="pt-3 flex flex-wrap items-center gap-x-3 gap-y-2 font-telemetry text-xs tracking-wider text-muted"
+        >
+          <a
+            href="/resume.pdf"
+            download="Zizheng-Lyu-Resume.pdf"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline cursor-pointer"
+            aria-label="Download PDF Resume"
+          >
+            <Download className="h-3.5 w-3.5 opacity-70" />
+            <span>{isZh ? "下载简历 (PDF)" : "RESUME (PDF)"}</span>
+          </a>
+
+          <span className="select-none text-muted opacity-40" aria-hidden="true">
+            ·
+          </span>
+
+          <button
+            onClick={handlePrint}
+            type="button"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline cursor-pointer"
+            title={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
+            aria-label={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
+          >
+            <Printer className="h-3.5 w-3.5 opacity-70" />
+            <span>{isZh ? "打印 A4" : "PRINT A4"}</span>
+          </button>
+
+          <span className="select-none text-muted opacity-40" aria-hidden="true">
+            ·
+          </span>
 
           <a
             href="mailto:lvzizhengde@gmail.com"
-            className="inline-flex items-center gap-2 rounded-[2px] border border-border-plate/80 bg-surface/80 px-3.5 py-1.5 font-telemetry text-xs font-medium text-primary shadow-plate transition-colors hover:border-cobalt hover:text-cobalt"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline"
           >
-            <Mail className="h-3.5 w-3.5 text-cobalt" />
+            <Mail className="h-3.5 w-3.5 opacity-70" />
             <span>{isZh ? "邮件联系" : "CONTACT"}</span>
           </a>
 
+          <span className="select-none text-muted opacity-40" aria-hidden="true">
+            ·
+          </span>
+
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 rounded-[2px] border border-border-plate/80 bg-surface/80 px-3.5 py-1.5 font-telemetry text-xs font-medium text-primary shadow-plate transition-colors hover:border-cobalt hover:text-cobalt"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline"
           >
-            <Rocket className="h-3.5 w-3.5 text-terracotta" />
-            <span>{isZh ? "独立产品" : "SIDE PRODUCTS"}</span>
+            <Rocket className="h-3.5 w-3.5 opacity-70" />
+            <span>{isZh ? "独立产品" : "PRODUCTS"}</span>
           </Link>
-        </div>
+        </nav>
       </div>
 
       {/* 3. Subtle Downward Indicator */}
@@ -113,11 +128,11 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
         <button
           onClick={onExploreNext}
           type="button"
-          className="group flex flex-col items-center gap-1 font-telemetry text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-primary cursor-pointer"
+          className="group flex flex-col items-center gap-1 font-telemetry text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-ink-dominant cursor-pointer underline-offset-4 hover:underline"
           aria-label="Proceed to ByteDance"
         >
           <span>{isZh ? "向下滑动 · 字节跳动" : "PROCEED TO BYTEDANCE"}</span>
-          <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+          <ChevronDown className="h-4 w-4 opacity-60 transition-transform group-hover:translate-y-0.5" />
         </button>
       </div>
     </div>

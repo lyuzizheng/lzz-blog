@@ -66,11 +66,11 @@ export function StageExploration({ onExploreNext }: StageExplorationProps) {
         <button
           onClick={onExploreNext}
           type="button"
-          className="group flex flex-col items-center gap-1 font-telemetry text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-primary cursor-pointer"
+          className="group flex flex-col items-center gap-1 font-telemetry text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-ink-dominant cursor-pointer underline-offset-4 hover:underline"
           aria-label="Proceed to Wise"
         >
           <span>{isZh ? "向下滑动 · Wise 与现在" : "PROCEED TO WISE"}</span>
-          <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+          <ChevronDown className="h-4 w-4 opacity-60 transition-transform group-hover:translate-y-0.5" />
         </button>
       </div>
     </div>
