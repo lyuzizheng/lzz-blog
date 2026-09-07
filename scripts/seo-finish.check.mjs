@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(new URL(".", import.meta.url).pathname, "..");
+const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 let failures = 0;
 
 function expect(file, predicate, label) {
@@ -39,18 +40,29 @@ expect(
   (s) => s.includes("ScrollRestore") && s.includes("usePathname") && s.includes("scrollTo") && !s.includes("framer-motion"),
   "scroll-restore (pathname key + scroll restore, no page animation)",
 );
+const layoutAndMetadata = [
+  read("app/layout.tsx"),
+  read("lib/metadata.ts"),
+  read("lib/fonts.ts"),
+].join("\n");
+
 expect(
   "app/layout.tsx",
-  (s) => s.includes("ScrollRestore") && s.includes("metadataBase") && s.includes("openGraph"),
+  () => layoutAndMetadata.includes("ScrollRestore") && layoutAndMetadata.includes("metadataBase") && layoutAndMetadata.includes("openGraph"),
   "layout (scroll-restore wired + full Metadata API)",
 );
 
 // 2. SEO routes exist.
 expectExists("app/opengraph-image.tsx", "home OG image");
 expectExists("app/og/route.tsx", "shared OG card endpoint");
+const postDetailSources = [
+  "app/posts/[...slug]/page.tsx",
+  "lib/posts.ts",
+].map(read).join("\n");
+
 expect(
   "app/posts/[...slug]/page.tsx",
-  (s) => s.includes("/og?title=") && s.includes("openGraph") && s.includes("images:"),
+  () => postDetailSources.includes("/og?title=") && postDetailSources.includes("openGraph") && postDetailSources.includes("images:"),
   "per-post OG images via shared endpoint",
 );
 expectExists("app/sitemap.ts", "sitemap");

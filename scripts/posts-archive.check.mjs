@@ -27,9 +27,15 @@ const check = (ok, msg) => {
 };
 
 const postsPage = read("app/posts/page.tsx");
-const archiveList = read("components/posts/archive-list.tsx");
+const archiveList = [
+  "components/posts/archive-list.tsx",
+  "components/posts/archive-card.tsx",
+  "components/posts/archive-filters.tsx",
+  "components/posts/archive-timeline.tsx",
+].map(read).join("\n");
 const readerChrome = read("components/posts/reader-chrome.tsx");
 const postDetailPage = read("app/posts/[...slug]/page.tsx");
+const postHeader = read("components/posts/post-header.tsx");
 const zh = read("lib/i18n/dictionaries/zh.ts");
 const en = read("lib/i18n/dictionaries/en.ts");
 
@@ -55,8 +61,9 @@ check(!archiveList.includes("t.posts.subtitle"), "marketing subtitle must not be
 
 // 3. Header 契约：4 mini 简约长方形胶片作为 section navigation，与主页一致
 check(readerChrome.includes("CHAPTER_NEGATIVES"), "reader header must declare 4 chapter negatives");
+const chaptersSource = read("lib/chapters.ts");
 for (const ch of ["/posts", "/resume", "/photography", "/products"]) {
-  check(readerChrome.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
+  check(chaptersSource.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
 }
 check(readerChrome.includes("LanguageSwitch") && readerChrome.includes("SafelightSwitch"), "reader header must include language and safelight switches");
 
@@ -91,7 +98,10 @@ check(archiveList.includes("text-cobalt"), "selected tag must highlight in cobal
 
 // 7. Post 详情页排版
 check(postDetailPage.includes("ReaderEyebrow"), "post detail page must mount ReaderEyebrow with 4 mini negatives");
-check(postDetailPage.includes("post.summary"), "post detail page must render standfirst lede");
+check(
+  (postDetailPage + postHeader).includes("post.summary"),
+  "post detail page must render standfirst lede"
+);
 
 // 8. 图标墙检查：lucide 图标最多 1 处（当前 0 处）
 const lucideImports = archiveList.match(/from\s+["']lucide-react["']/g) || [];

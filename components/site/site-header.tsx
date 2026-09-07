@@ -5,17 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
 import { useI18n } from "@/lib/i18n";
-
-/**
- * 4 chapter negative specifications matching the darkroom homepage:
- * Blogs (/posts) · Career (/resume) · Photography (/photography) · Projects (/products)
- */
-const CHAPTER_NEGATIVES = [
-  { key: "blogs", label: "Blogs", labelZh: "文章", href: "/posts", frameNo: "01" },
-  { key: "career", label: "Career", labelZh: "履历", href: "/resume", frameNo: "02" },
-  { key: "photography", label: "Photo", labelZh: "摄影", href: "/photography", frameNo: "03" },
-  { key: "projects", label: "Projects", labelZh: "产品", href: "/products", frameNo: "04" },
-] as const;
+import { CHAPTER_NEGATIVES } from "@/lib/chapters";
 
 /**
  * BRAWUKA-45 / BRAWUKA-93 · Shared Unified Header

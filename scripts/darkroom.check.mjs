@@ -83,7 +83,8 @@ check(plate.includes('role="button"') && plate.includes("tabIndex"), "plates mus
 
 // 8. Route + nav wiring
 check(page.includes("DarkroomGallery"), "app/photography must render the gallery");
-check(chrome.includes("/photography"), "site header must link to /photography");
+const chapters = read("lib/chapters.ts");
+check(chapters.includes("/photography"), "site header must link to /photography");
 
 if (failures.length > 0) {
   console.error("darkroom check FAILED:");
