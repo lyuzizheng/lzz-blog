@@ -18,7 +18,8 @@
     "deploy": "opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --include-runtime false",
     "pages:validate": "wrangler pages project validate .open-next/assets",
-    "health:check": "node scripts/cf-health-check.mjs"
+    "health:check": "node scripts/cf-health-check.mjs",
+    "resume:build": "bash scripts/build-resume.sh"
   },
   "dependencies": {
 

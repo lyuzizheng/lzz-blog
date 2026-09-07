@@ -279,17 +279,17 @@ export function CareerDeck() {
               >
                 {/* Node Pip */}
                 <div
-                  className={`relative z-10 h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                  className={`relative z-10 h-2 w-2 rounded-full transition-all duration-300 ${
                     isActive
-                      ? "scale-125 bg-cobalt ring-4 ring-cobalt/20"
+                      ? "scale-125 bg-ink ring-2 ring-ink/20"
                       : isPassed
-                        ? "bg-cobalt/60 hover:bg-cobalt hover:scale-110"
+                        ? "bg-ink/50 hover:bg-ink hover:scale-110"
                         : "bg-border-plate hover:bg-muted hover:scale-110"
                   }`}
                 />
 
                 {/* Right Floating Badge on Hover */}
-                <span className="pointer-events-none absolute left-7 whitespace-nowrap rounded-[2px] border border-border-plate/60 bg-surface/90 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:opacity-100 group-hover:text-primary backdrop-blur-xs">
+                <span className="pointer-events-none absolute left-6 whitespace-nowrap rounded-[2px] border border-border-plate/60 bg-surface/95 px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-wider text-muted opacity-0 shadow-xs transition-all group-hover:opacity-100 group-hover:text-primary">
                   {stage.period} · {isZh ? stage.nameZh : stage.nameEn}
                 </span>
               </button>
@@ -298,38 +298,48 @@ export function CareerDeck() {
         </div>
 
         {/* Minimalist Stage Counter */}
-        <span className="font-telemetry text-[9px] tracking-widest text-muted">
+        <span className="font-telemetry text-[9px] tabular-nums tracking-widest text-muted">
           0{stageIndex + 1}/0{totalStages}
         </span>
       </aside>
 
-      {/* 4. Bottom-Right Quick Step Controls */}
+      {/* 4. Bottom-Right Stepper (Minimalist, zero heavy box, typography-first) */}
       <nav
-        className="pointer-events-auto absolute bottom-3 right-3 z-30 flex items-center gap-1.5 rounded-[2px] border border-border-plate/60 bg-surface/80 p-1 shadow-plate backdrop-blur-md sm:bottom-4 sm:right-6"
+        className="pointer-events-auto absolute bottom-3 right-4 z-30 flex items-center gap-2 font-telemetry text-xs tracking-wider text-muted select-none sm:bottom-5 sm:right-6"
         aria-label="Stage Navigation Controls"
       >
         <button
           onClick={goPrev}
           disabled={stageIndex === 0}
-          className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+          className="inline-flex items-center gap-0.5 transition-colors hover:text-ink-dominant disabled:opacity-20 disabled:pointer-events-none cursor-pointer underline-offset-4 hover:underline"
           title="Previous Stage (ArrowUp / K)"
           aria-label="Previous Stage"
         >
-          <ChevronUp className="h-4 w-4" />
+          <ChevronUp className="h-3.5 w-3.5 opacity-60" />
+          <span className="text-[11px]">{isZh ? "上一章" : "PREV"}</span>
         </button>
 
-        <span className="px-1.5 font-telemetry text-[10px] font-medium text-muted">
-          {stageIndex + 1}/{totalStages}
+        <span className="select-none text-muted opacity-40 text-[11px]" aria-hidden="true">
+          ·
+        </span>
+
+        <span className="font-telemetry text-[11px] tabular-nums text-muted">
+          0{stageIndex + 1}/0{totalStages}
+        </span>
+
+        <span className="select-none text-muted opacity-40 text-[11px]" aria-hidden="true">
+          ·
         </span>
 
         <button
           onClick={goNext}
           disabled={stageIndex === totalStages - 1}
-          className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-border-plate/40 text-muted transition-colors hover:border-cobalt hover:text-primary disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+          className="inline-flex items-center gap-0.5 transition-colors hover:text-ink-dominant disabled:opacity-20 disabled:pointer-events-none cursor-pointer underline-offset-4 hover:underline"
           title="Next Stage (ArrowDown / J)"
           aria-label="Next Stage"
         >
-          <ChevronDown className="h-4 w-4" />
+          <span className="text-[11px]">{isZh ? "下一章" : "NEXT"}</span>
+          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
         </button>
       </nav>
 
@@ -339,7 +349,7 @@ export function CareerDeck() {
         aria-hidden="true"
       >
         <div
-          className="h-full bg-cobalt transition-all duration-300 ease-out"
+          className="h-full bg-ink transition-all duration-300 ease-out"
           style={{ width: `${((stageIndex + 1) / totalStages) * 100}%` }}
         />
       </div>
