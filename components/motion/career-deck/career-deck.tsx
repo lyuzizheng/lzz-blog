@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { CAREER_STAGES, type CareerStageId } from "./deck-types";
+import { CAREER_STAGES } from "./deck-types";
 import {
   HeroCanvas,
   WiseCanvas,

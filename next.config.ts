@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     // Trim first-load JS: barrel imports resolve to per-module ESM.
-    optimizePackageImports: ["lucide-react", "framer-motion", "gsap"],
+    optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   headers: async () => [
     {

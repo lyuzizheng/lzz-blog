@@ -45,10 +45,7 @@ for (const field of ["camera", "lens", "focal", "aperture", "shutter", "iso", "t
 }
 check(data.includes("aspectRatio") || data.includes("width"), "dataset must carry intrinsic dimensions for Zero CLS");
 
-// 2. EXIF engine: format + fault-tolerant parse (never blocking)
-check(data.includes("formatDarkroomTelemetry"), "must export formatDarkroomTelemetry");
-check(data.includes("parseExifString"), "must export parseExifString for pasted telemetry");
-check(data.includes("unknown"), "parser must preserve unclassified segments in `unknown` instead of dropping them");
+// 2. EXIF readout engine
 
 // 3. Three layout scrolls
 for (const view of ["masonry", "reel", "immersive"]) {

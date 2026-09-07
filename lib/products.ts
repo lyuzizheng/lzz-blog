@@ -8,16 +8,16 @@
  * 4. 成品直接落到 /products 一屏一产品结构（策展式 deck 模型）。
  */
 
-export type ProductStatusCode = "in_development" | "in_development_site_live" | "live";
+type ProductStatusCode = "in_development" | "in_development_site_live" | "live";
 
-export interface ProductLink {
+interface ProductLink {
   readonly label: string;
   readonly labelZh: string;
   readonly href: string;
   readonly kind: "github" | "website";
 }
 
-export interface ProductItem {
+interface ProductItem {
   readonly id: "coffeemode" | "cancan" | "our-village";
   /** 产品展示名，如 CoffeeMode */
   readonly name: string;

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { CareerDeck } from "@/components/motion/career-deck";
-import { FlightPathTimeline } from "@/components/motion/flight-path";
 import {
   ResumeDossier,
   ResumePrint,
@@ -39,7 +38,6 @@ export default function ResumePage() {
         <div className="hidden" aria-hidden="true">
           <PrintResumeButton />
           <ResumeDossier />
-          <FlightPathTimeline />
         </div>
       </main>
 

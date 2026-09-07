@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { PRODUCTS, type ProductItem } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
 import { useI18n } from "@/lib/i18n";
 import { ArrowUpRight, ChevronDown, Compass } from "lucide-react";
 

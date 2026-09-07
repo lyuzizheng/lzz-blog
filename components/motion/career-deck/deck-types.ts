@@ -2,7 +2,7 @@
  * Career Deck Stage Types & Specifications
  */
 
-export type CareerStageId = "hero" | "wise" | "exploration" | "bytedance";
+type CareerStageId = "hero" | "wise" | "exploration" | "bytedance";
 
 export interface CareerStageSpec {
   id: CareerStageId;

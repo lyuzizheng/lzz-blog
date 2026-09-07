@@ -51,10 +51,8 @@ check(dossier.includes("20+ Go microservices"), "TikTok N08 must contain 20+ Go 
 check(dossier.includes("Vector + Kafka"), "Bondee N09 must contain Vector + Kafka pipeline");
 
 // 2. Horizontal reel retirement
-const timeline = read("components/motion/flight-path/flight-path-timeline.tsx");
-check(!timeline.includes("pin: true"), "flight-path-timeline must NOT contain GSAP horizontal pin");
-check(!timeline.includes("scrollWidth - viewport.clientWidth"), "horizontal scroll amount calculation must be retired");
-check(timeline.includes("CareerDeck"), "flight-path-timeline must delegate to CareerDeck");
+//    The legacy components/motion/flight-path/ wrapper has been removed;
+//    app/resume/page.tsx now mounts CareerDeck directly.
 
 // 3. Header parity & 100dvh layout
 const resumePage = read("app/resume/page.tsx");

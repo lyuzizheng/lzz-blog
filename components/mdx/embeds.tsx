@@ -96,7 +96,7 @@ export function Spotify({
 }
 
 // Notice / Callout Box Component
-export type NoticeCategory = "info" | "warning" | "tip" | "success" | "danger";
+type NoticeCategory = "info" | "warning" | "tip" | "success" | "danger";
 
 export function Notice({
   type = "info",

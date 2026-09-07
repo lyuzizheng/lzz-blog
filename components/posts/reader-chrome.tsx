@@ -27,11 +27,9 @@ const CHAPTER_NEGATIVES = [
 export function ReaderEyebrow({
   backHref = "/posts",
   backLabel,
-  section,
 }: {
   backHref?: string;
   backLabel?: string;
-  section?: string;
 }) {
   const { t, locale } = useI18n();
   const isZh = locale === "zh";

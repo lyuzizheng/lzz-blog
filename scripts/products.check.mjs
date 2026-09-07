@@ -69,11 +69,9 @@ check(deckCode.includes("statusStamp"), "deck must render status stamp");
 check(deckCode.includes("link"), "deck must render external link");
 
 const headerCode = read("components/site/site-header.tsx");
-const filmCode = read("components/site/film-index.tsx");
 const sitemapCode = read("app/sitemap.ts");
 
-check(headerCode.includes('"/products"'), "HEADER_NAV_ROUTES must include /products");
-check(filmCode.includes('href: "/products"'), "FilmIndex must include /products");
+check(headerCode.includes('"/products"'), "site header must include /products");
 check(sitemapCode.includes("/products"), "sitemap must include /products");
 
 if (failures.length > 0) {

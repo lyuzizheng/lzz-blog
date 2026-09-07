@@ -4,22 +4,18 @@ import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Compass,
   Layers,
   MapPin as MapPinIcon,
   Maximize2,
   Minus,
-  Navigation,
   Plus,
   RotateCcw,
-  SlidersHorizontal,
   X,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LanguageSwitch } from "@/components/ui/language-switch";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
 import {
-  DARKROOM_PHOTOS,
   type DarkroomPhoto,
   type MonoMode,
 } from "@/lib/darkroom";
@@ -38,7 +34,6 @@ import {
   SINGAPORE_DETAILED_PATHS,
   TOPOGRAPHIC_CONTOURS,
   generateGraticules,
-  type MapViewPreset,
 } from "./map-data";
 import { PhotoPlate } from "./photo-plate";
 
@@ -49,7 +44,6 @@ const MIN_ZOOM = 0.8;
 const MAX_ZOOM = 14;
 
 interface PhotoMapProps {
-  readonly photos?: ReadonlyArray<DarkroomPhoto>;
   readonly mode?: MonoMode;
   readonly onOpenPhoto?: (photo: DarkroomPhoto) => void;
   readonly onSwitchToMasonry?: () => void;
@@ -81,12 +75,11 @@ function usePrefersReducedMotion(): boolean {
  *    instant fallback to masonry list.
  */
 export function PhotoMap({
-  photos = DARKROOM_PHOTOS,
   mode = "true",
   onOpenPhoto,
   onSwitchToMasonry,
 }: PhotoMapProps) {
-  const { locale, t } = useI18n();
+  const { locale } = useI18n();
   const isZh = locale === "zh";
   const reducedMotion = usePrefersReducedMotion();
   const patternId = useId().replace(/[^a-zA-Z0-9]/g, "");
