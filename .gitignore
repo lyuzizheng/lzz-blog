@@ -71,6 +71,7 @@ node_modules/
 public/posts/
 public/static/
 .DS_Store
+pnpm-workspace.yaml
 
 # Generated files by hugo
 /resources/_gen/
