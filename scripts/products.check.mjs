@@ -58,20 +58,20 @@ for (const svgPath of svgFiles) {
 
 // 6. Page structure & deck contracts: app/products/page.tsx & components/products/products-deck.tsx
 const pageCode = read("app/products/page.tsx");
-const deckCode = read("components/products/products-deck.tsx");
+const deckFiles = ["components/products/products-deck.tsx", "components/products/product-slide.tsx"].map(read).join("\n");
 
 check(pageCode.includes("ProductsDeck"), "app/products/page.tsx must mount ProductsDeck");
-check(deckCode.includes("snap-y") && deckCode.includes("snap-mandatory"), "deck must use snap-y snap-mandatory");
-check(deckCode.includes("PRODUCTS.map"), "deck must map through PRODUCTS");
-check(deckCode.includes("coverSvg"), "deck must render coverSvg");
-check(deckCode.includes("tagline"), "deck must render tagline");
-check(deckCode.includes("statusStamp"), "deck must render status stamp");
-check(deckCode.includes("link"), "deck must render external link");
+check(deckFiles.includes("snap-y") && deckFiles.includes("snap-mandatory"), "deck must use snap-y snap-mandatory");
+check(deckFiles.includes("PRODUCTS.map"), "deck must map through PRODUCTS");
+check(deckFiles.includes("coverSvg"), "deck must render coverSvg");
+check(deckFiles.includes("tagline"), "deck must render tagline");
+check(deckFiles.includes("statusStamp"), "deck must render status stamp");
+check(deckFiles.includes("link"), "deck must render external link");
 
-const headerCode = read("components/site/site-header.tsx");
+const chaptersCode = read("lib/chapters.ts");
 const sitemapCode = read("app/sitemap.ts");
 
-check(headerCode.includes('"/products"'), "site header must include /products");
+check(chaptersCode.includes('"/products"'), "site header must include /products");
 check(sitemapCode.includes("/products"), "sitemap must include /products");
 
 if (failures.length > 0) {

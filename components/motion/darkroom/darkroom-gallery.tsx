@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { motionPhysics } from "@/tokens";
 import { useI18n } from "@/lib/i18n";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-prefers-reduced-motion";
 import {
   DARKROOM_PHOTOS,
   MONO_MODES,
@@ -14,18 +15,6 @@ import { PhotoPlate } from "./photo-plate";
 import { DarkroomLightbox } from "./darkroom-lightbox";
 
 export type GalleryView = "masonry" | "reel" | "immersive";
-
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent): void => setReduced(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-  return reduced;
-}
 
 /**
  * BRAWUKA-38 · The Darkroom gallery — three layout scrolls, one ink state.

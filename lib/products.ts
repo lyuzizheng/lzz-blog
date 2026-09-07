@@ -17,7 +17,7 @@ interface ProductLink {
   readonly kind: "github" | "website";
 }
 
-interface ProductItem {
+export interface ProductItem {
   readonly id: "coffeemode" | "cancan" | "our-village";
   /** 产品展示名，如 CoffeeMode */
   readonly name: string;

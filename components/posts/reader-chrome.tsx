@@ -6,17 +6,7 @@ import { usePathname } from "next/navigation";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
 import { LanguageSwitch } from "@/components/ui/language-switch";
 import { useI18n } from "@/lib/i18n";
-
-/**
- * Four chapter negative specifications matching the darkroom homepage:
- * Blogs (/posts) · Career (/resume) · Photography (/photography) · Projects (/products)
- */
-const CHAPTER_NEGATIVES = [
-  { key: "blogs", label: "Blogs", href: "/posts", frameNo: "01" },
-  { key: "career", label: "Career", href: "/resume", frameNo: "02" },
-  { key: "photography", label: "Photo", href: "/photography", frameNo: "03" },
-  { key: "projects", label: "Projects", href: "/products", frameNo: "04" },
-] as const;
+import { CHAPTER_NEGATIVES } from "@/lib/chapters";
 
 /**
  * Editorial Reader Header:

@@ -155,5 +155,4 @@ export function Notice({
   );
 }
 
-// Callout is an alias for Notice
-export const Callout = Notice;
+// Use <Notice> or <callout> in MDX; both map to the same component.

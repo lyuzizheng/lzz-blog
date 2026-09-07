@@ -5,7 +5,7 @@ import * as runtime from "react/jsx-runtime";
 import Link from "next/link";
 import { CodeBlock } from "./code-block";
 import { Aside } from "./aside";
-import { YouTube, Bilibili, Tweet, Spotify, Notice, Callout } from "./embeds";
+import { YouTube, Bilibili, Tweet, Spotify, Notice } from "./embeds";
 
 interface MdxContentProps {
   code: string;
@@ -175,9 +175,8 @@ const defaultComponents = {
   Tweet,
   Spotify,
   Notice,
-  Callout,
   notice: Notice,
-  callout: Callout,
+  callout: Notice,
   Aside,
 };
 

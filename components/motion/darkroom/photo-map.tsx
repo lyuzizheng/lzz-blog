@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-prefers-reduced-motion";
 import { LanguageSwitch } from "@/components/ui/language-switch";
 import { SafelightSwitch } from "@/components/ui/safelight-switch";
 import {
@@ -47,18 +48,6 @@ interface PhotoMapProps {
   readonly mode?: MonoMode;
   readonly onOpenPhoto?: (photo: DarkroomPhoto) => void;
   readonly onSwitchToMasonry?: () => void;
-}
-
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent): void => setReduced(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-  return reduced;
 }
 
 /**
