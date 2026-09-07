@@ -184,7 +184,7 @@ html {
   color: var(--text-primary);
   font-family: var(--font-body);
   transition: background-color 0.3s ease, color 0.3s ease;
-  overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 body {
@@ -253,7 +253,6 @@ body {
 /* Lenis Recommended CSS */
 html.lenis, html.lenis body {
   height: auto;
-  overscroll-behavior: none;
 }
 
 .lenis.lenis-smooth {
