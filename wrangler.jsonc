@@ -16,10 +16,6 @@
   },
   "routes": [
     {
-      "pattern": "brabalawuka.cc",
-      "custom_domain": true
-    },
-    {
       "pattern": "www.brabalawuka.cc",
       "custom_domain": true
     }

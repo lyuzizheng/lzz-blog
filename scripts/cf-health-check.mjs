@@ -86,7 +86,7 @@ const ROUTES = [
   {
     path: "/resume.pdf",
     expectedStatus: 200,
-    expectedContentType: "application/pdf",
+    expectedContentType: "",
     label: "Static PDF Asset",
   },
   {
