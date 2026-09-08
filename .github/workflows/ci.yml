@@ -45,9 +45,9 @@ jobs:
         run: pnpm cf-typegen
 
   deploy:
-    name: Cloudflare Edge Deployment & Health Check
+    name: Cloudflare Edge Deployment
     needs: quality
-    if: github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     concurrency:
       group: cloudflare-production-deploy
@@ -70,13 +70,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Pre-Deployment Connectivity Probe
-        run: |
-          echo "🔍 Running pre-deployment connectivity probe..."
-          node scripts/cf-health-check.mjs --url https://www.brabalawuka.cc --retries 2 --delay 1000 || {
-            echo "⚠️ Pre-deployment probe noted baseline state; proceeding with deployment."
-          }
-
       - name: Build Next.js & Cloudflare Edge Bundle
         run: pnpm build:worker
 
@@ -84,26 +77,16 @@ jobs:
         id: deploy_worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || 'bf69da5249b63731ad79545d0095e8db' }}
         run: |
           if [ -z "${CLOUDFLARE_API_TOKEN}" ]; then
-            echo "::warning::CLOUDFLARE_API_TOKEN is not set in repository secrets. Deployment skipped (production deployment managed via Cloudflare MCP pipeline)."
-            exit 0
+            echo "::error::CLOUDFLARE_API_TOKEN is not set in repository secrets! Please configure it in GitHub Settings -> Secrets -> Actions."
+            exit 1
           fi
           echo "🚀 Deploying to Cloudflare Workers with OpenNext Assets..."
           npx opennextjs-cloudflare deploy
 
-      - name: Post-Deployment Zero-Downtime Health Check Probe
-        id: post_health_check
+      - name: Verify Edge Deployment Health
         run: |
-          echo "🔎 Running post-deployment health check on production custom domain..."
-          node scripts/cf-health-check.mjs --url https://www.brabalawuka.cc --retries 5 --delay 3000
-
-      - name: Automated Rollback on Probe Failure
-        if: failure() && steps.deploy_worker.outcome == 'success'
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          echo "🚨 Post-deployment health check failed! Triggering automated rollback..."
-          npx wrangler rollback || echo "⚠️ Rollback command exited with warning."
+          echo "🔎 Verifying edge health on production domain..."
+          node scripts/cf-health-check.mjs --url https://www.brabalawuka.cc --retries 3 --delay 2000
