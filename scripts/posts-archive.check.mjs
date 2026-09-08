@@ -5,7 +5,7 @@
  * 1. Server shell: app/posts/page.tsx must NOT carry "use client".
  * 2. Client island: components/posts/archive-list.tsx must be "use client".
  * 3. Masthead: "Posts & Thoughts" serif title + mono telemetry; zero marketing subtitles or badges.
- * 4. Header: 4 mini rectangular negatives as section navigation matching homepage workbench.
+ * 4. Header: 5 mini rectangular negatives as section navigation matching homepage workbench.
  * 5. Big editorial cards on the timeline: cover photo (or halftone specimen plate),
  *    serif title, summary, tags, created time, reading time; framer-motion scroll-in.
  * 6. Year anchors: giant serif numbers, strictly non-sticky, zero backdrop-blur.
@@ -59,10 +59,10 @@ check(!postsPage.includes("DOCUMENT ARCHIVE · VOL."), "marketing badge 'DOCUMEN
 check(!postsPage.includes("BookOpen") && !archiveList.includes("BookOpen"), "BookOpen icon must be removed from posts page and archive list");
 check(!archiveList.includes("t.posts.subtitle"), "marketing subtitle must not be rendered in the masthead");
 
-// 3. Header 契约：4 mini 简约长方形胶片作为 section navigation，与主页一致
-check(readerChrome.includes("CHAPTER_NEGATIVES"), "reader header must declare 4 chapter negatives");
+// 3. Header 契约：5 mini 简约长方形胶片作为 section navigation，与主页一致
+check(readerChrome.includes("CHAPTER_NEGATIVES"), "reader header must declare 5 chapter negatives");
 const chaptersSource = read("lib/chapters.ts");
-for (const ch of ["/posts", "/resume", "/photography", "/products"]) {
+for (const ch of ["/posts", "/resume", "/photography", "/products", "/weekly-records"]) {
   check(chaptersSource.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
 }
 check(readerChrome.includes("LanguageSwitch") && readerChrome.includes("SafelightSwitch"), "reader header must include language and safelight switches");
@@ -97,7 +97,7 @@ check(!archiveList.includes("rounded-full"), "red line: rounded-full search and 
 check(archiveList.includes("text-cobalt"), "selected tag must highlight in cobalt text");
 
 // 7. Post 详情页排版
-check(postDetailPage.includes("ReaderEyebrow"), "post detail page must mount ReaderEyebrow with 4 mini negatives");
+check(postDetailPage.includes("ReaderEyebrow"), "post detail page must mount ReaderEyebrow with 5 mini negatives");
 check(
   (postDetailPage + postHeader).includes("post.summary"),
   "post detail page must render standfirst lede"
@@ -124,4 +124,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("posts-archive OK: Posts & Thoughts masthead, 4-mini-negatives header, big editorial cards (cover/title/summary/tags/date/reading-time) on a hairline timeline with reduced-motion-aware whileInView, comfortable post typography, zero rounded-xl/backdrop-blur/hover-shadow/icon-wall.");
+console.log("posts-archive OK: Posts & Thoughts masthead, 5-mini-negatives header, big editorial cards (cover/title/summary/tags/date/reading-time) on a hairline timeline with reduced-motion-aware whileInView, comfortable post typography, zero rounded-xl/backdrop-blur/hover-shadow/icon-wall.");

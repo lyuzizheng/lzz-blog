@@ -49,8 +49,25 @@ export const en: Translations = {
       career: "Career",
       photography: "Photography",
       projects: "Projects",
-      label: "Chapter index — four negatives scattered on the light table",
+      records: "Records",
+      label: "Chapter index — five negatives scattered on the light table",
     },
+  },
+  weeklyRecords: {
+    title: "Weekly Records",
+    subtitle:
+      "A chronological record of the personal and professional threads that shaped each week.",
+    personal: "Personal",
+    personalDescription: "Life outside work, curated separately.",
+    personalEmpty: "Personal notes will appear here when they are ready to be shared.",
+    work: "Work",
+    workDescription:
+      "Public-safe weekly delivery notes, assembled from collaboration, planning, and engineering records.",
+    agentMaintained: "Updated weekly by agents",
+    atAGlance: "At a glance",
+    calendarCoverage: "Calendar coverage",
+    coverageNote:
+      "Work records are synchronised from the public-safe Weekly Record. Personal records are never changed by the weekly agent workflow.",
   },
   posts: {
     noResults: "No articles found. Try adjusting your search query or filters.",

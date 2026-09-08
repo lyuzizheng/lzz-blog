@@ -12,7 +12,7 @@ import { CHAPTER_NEGATIVES } from "@/lib/chapters";
  *
  * 100% aligned with /posts ReaderEyebrow:
  * - Left: "LZZ ATELIER" (homepage brand link)
- * - Center: 4 mini rectangular negative links (direct navigation, zero click-to-expand)
+ * - Center: 5 mini rectangular negative links (direct navigation, zero click-to-expand)
  * - Right: Language switch + Safelight darkroom switch
  *
  * Clean, lightweight, generous whitespace, zero cluttered popups.
@@ -31,7 +31,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
     <header
       className={`sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/90 backdrop-blur-md transition-colors duration-300 ${className}`}
     >
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 md:px-8">
+      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4 sm:px-6 md:px-8">
         {/* Brand / Homepage link */}
         <div className="flex items-center gap-3">
           <Link
@@ -43,7 +43,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
           </Link>
         </div>
 
-        {/* 4 mini 简约长方形胶片直接导航 (Direct Navigation, No Dropdowns) */}
+        {/* 5 mini 简约长方形胶片直接导航 (Direct Navigation, No Dropdowns) */}
         <nav
           aria-label={isZh ? "章节导航" : "Section chapter navigation"}
           className="flex items-center gap-1 overflow-x-auto py-0.5 sm:gap-2"

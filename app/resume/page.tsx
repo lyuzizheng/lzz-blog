@@ -29,7 +29,7 @@ export default function ResumePage() {
 
       {/* 2. 沉浸式固定单屏纵向分幕流转平台 (Vertical Snap-Deck Dynamics) */}
       <main
-        className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-1 flex-col overflow-hidden"
+        className="relative mx-auto flex h-[calc(100dvh-3.5rem)] w-full max-w-5xl flex-1 flex-col overflow-hidden"
         aria-label="Career Flight Path Deck"
       >
         <CareerDeck />
