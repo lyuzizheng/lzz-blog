@@ -121,7 +121,7 @@ export function StageExploration({ onExploreNext }: StageExplorationProps) {
           type="button"
           className="group inline-flex items-center gap-1 font-telemetry text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-ink-dominant cursor-pointer underline-offset-4 hover:underline"
         >
-          <span>{isZh ? "下翻 · 字节跳动" : "NEXT: BYTEDANCE / TIKTOK"}</span>
+          <span>{isZh ? "下翻 · TikTok 即时通讯" : "NEXT: TIKTOK IM & MESSAGING"}</span>
           <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:translate-y-0.5" />
         </button>
       </div>

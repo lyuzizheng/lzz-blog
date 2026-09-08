@@ -1,9 +1,21 @@
 /**
  * Career Deck Stage Types & Specifications
- * Reverse chronological order: Wise (2024-Present) -> Exploration (2023-2024) -> ByteDance (2021-2023) -> University & Roots (2017-2021)
+ * Sequence:
+ *  0. Overview & Intro (Hero)
+ *  1. Wise & Payments (2024–Present)
+ *  2. MariBank & Bondee (2023–2024)
+ *  3. TikTok IM Core & Interactions (2022–2023)
+ *  4. ByteDance Location & Infra (2021–2022)
+ *  5. NTU & Early Roots (2017–2021)
  */
 
-export type CareerStageId = "wise" | "exploration" | "bytedance" | "hero";
+export type CareerStageId =
+  | "hero"
+  | "wise"
+  | "exploration"
+  | "bytedance-im"
+  | "bytedance-infra"
+  | "education";
 
 export interface CareerStageSpec {
   id: CareerStageId;
@@ -17,8 +29,17 @@ export interface CareerStageSpec {
 
 export const CAREER_STAGES: CareerStageSpec[] = [
   {
-    id: "wise",
+    id: "hero",
     index: 0,
+    actNo: "00",
+    nameZh: "个人简介与链接",
+    nameEn: "Overview & Bio",
+    period: "PRESENT",
+    org: "ZIZHENG LYU",
+  },
+  {
+    id: "wise",
+    index: 1,
     actNo: "01",
     nameZh: "Wise 核心支付",
     nameEn: "Wise · Payments & AI",
@@ -27,7 +48,7 @@ export const CAREER_STAGES: CareerStageSpec[] = [
   },
   {
     id: "exploration",
-    index: 1,
+    index: 2,
     actNo: "02",
     nameZh: "银行信贷与初创",
     nameEn: "MariBank & Bondee",
@@ -35,18 +56,27 @@ export const CAREER_STAGES: CareerStageSpec[] = [
     org: "MARIBANK · BONDEE",
   },
   {
-    id: "bytedance",
-    index: 2,
+    id: "bytedance-im",
+    index: 3,
     actNo: "03",
-    nameZh: "字节跳动",
-    nameEn: "ByteDance & TikTok",
-    period: "2021 – 2023",
-    org: "BYTEDANCE · TIKTOK",
+    nameZh: "TikTok 即时通讯",
+    nameEn: "TikTok IM & Messaging",
+    period: "2022 – 2023",
+    org: "TIKTOK · SENIOR SWE",
   },
   {
-    id: "hero",
-    index: 3,
+    id: "bytedance-infra",
+    index: 4,
     actNo: "04",
+    nameZh: "海外定位与基建",
+    nameEn: "Location & Multi-DC",
+    period: "2021 – 2022",
+    org: "BYTEDANCE · CLOUD",
+  },
+  {
+    id: "education",
+    index: 5,
+    actNo: "05",
     nameZh: "教育与起点",
     nameEn: "NTU & Early Roots",
     period: "2017 – 2021",

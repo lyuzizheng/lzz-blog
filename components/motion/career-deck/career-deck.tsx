@@ -13,6 +13,7 @@ import { StageHero } from "./stage-hero";
 import { StageBytedance } from "./stage-bytedance";
 import { StageExploration } from "./stage-exploration";
 import { StageWise } from "./stage-wise";
+import { StageEducation } from "./stage-education";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -220,9 +221,12 @@ export function CareerDeck() {
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-25 dark:opacity-20 transition-opacity duration-500"
         >
           {currentStage.id === "hero" && <HeroCanvas />}
-          {currentStage.id === "bytedance" && <BytedanceCanvas />}
-          {currentStage.id === "exploration" && <ExplorationCanvas />}
           {currentStage.id === "wise" && <WiseCanvas />}
+          {currentStage.id === "exploration" && <ExplorationCanvas />}
+          {(currentStage.id === "bytedance-im" || currentStage.id === "bytedance-infra") && (
+            <BytedanceCanvas />
+          )}
+          {currentStage.id === "education" && <HeroCanvas />}
         </motion.div>
       </AnimatePresence>
 
@@ -238,20 +242,23 @@ export function CareerDeck() {
             exit="exit"
             className="flex h-full w-full flex-col justify-center overflow-y-auto"
           >
+            {currentStage.id === "hero" && (
+              <StageHero onExploreNext={() => goToStage(1)} />
+            )}
             {currentStage.id === "wise" && (
-              <StageWise onExploreNext={() => goToStage(1)} />
+              <StageWise onExploreNext={() => goToStage(2)} />
             )}
             {currentStage.id === "exploration" && (
-              <StageExploration onExploreNext={() => goToStage(2)} />
+              <StageExploration onExploreNext={() => goToStage(3)} />
             )}
-            {currentStage.id === "bytedance" && (
-              <StageBytedance onExploreNext={() => goToStage(3)} />
+            {currentStage.id === "bytedance-im" && (
+              <StageBytedance mode="im" onExploreNext={() => goToStage(4)} />
             )}
-            {currentStage.id === "hero" && (
-              <StageHero
-                onScrollToTop={() => goToStage(0)}
-                onExploreNext={() => goToStage(0)}
-              />
+            {currentStage.id === "bytedance-infra" && (
+              <StageBytedance mode="infra" onExploreNext={() => goToStage(5)} />
+            )}
+            {currentStage.id === "education" && (
+              <StageEducation onScrollToTop={() => goToStage(0)} />
             )}
           </motion.div>
         </AnimatePresence>
