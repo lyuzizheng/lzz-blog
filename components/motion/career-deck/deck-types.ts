@@ -1,9 +1,9 @@
 /**
  * Career Deck Stage Types & Specifications
- * Chronological order: University (2017-2021) -> ByteDance (2021-2023) -> Exploration (2023-2024) -> Wise (2024-Present)
+ * Reverse chronological order: Wise (2024-Present) -> Exploration (2023-2024) -> ByteDance (2021-2023) -> University & Roots (2017-2021)
  */
 
-export type CareerStageId = "hero" | "bytedance" | "exploration" | "wise";
+export type CareerStageId = "wise" | "exploration" | "bytedance" | "hero";
 
 export interface CareerStageSpec {
   id: CareerStageId;
@@ -17,39 +17,39 @@ export interface CareerStageSpec {
 
 export const CAREER_STAGES: CareerStageSpec[] = [
   {
-    id: "hero",
+    id: "wise",
     index: 0,
     actNo: "01",
-    nameZh: "大学与初心",
-    nameEn: "Origin & U-Wave",
-    period: "2017 – 2021",
-    org: "NTU · U-WAVE",
+    nameZh: "Wise 核心支付",
+    nameEn: "Wise · Payments & AI",
+    period: "2024 – PRESENT",
+    org: "WISE · IC3",
+  },
+  {
+    id: "exploration",
+    index: 1,
+    actNo: "02",
+    nameZh: "银行信贷与初创",
+    nameEn: "MariBank & Bondee",
+    period: "2023 – 2024",
+    org: "MARIBANK · BONDEE",
   },
   {
     id: "bytedance",
-    index: 1,
-    actNo: "02",
+    index: 2,
+    actNo: "03",
     nameZh: "字节跳动",
     nameEn: "ByteDance & TikTok",
     period: "2021 – 2023",
     org: "BYTEDANCE · TIKTOK",
   },
   {
-    id: "exploration",
-    index: 2,
-    actNo: "03",
-    nameZh: "探索与触礁",
-    nameEn: "Exploration & Unbound",
-    period: "2023 – 2024",
-    org: "BONDEE · MARIBANK",
-  },
-  {
-    id: "wise",
+    id: "hero",
     index: 3,
     actNo: "04",
-    nameZh: "Wise 与现在",
-    nameEn: "Wise & Northstar",
-    period: "2024 – PRESENT",
-    org: "WISE",
+    nameZh: "教育与起点",
+    nameEn: "NTU & Early Roots",
+    period: "2017 – 2021",
+    org: "NTU · U-WAVE",
   },
 ];
