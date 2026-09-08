@@ -21,7 +21,7 @@ import { openWipModal } from "@/components/ui";
  */
 
 type FilmKey = "blogs" | "career" | "photography" | "projects" | "records";
-type EmblemKind = "lines" | "flight" | "aperture" | "bento" | "timeline";
+type EmblemKind = "lines" | "flight" | "camera" | "bento" | "timeline";
 
 interface FilmSpec {
   key: FilmKey;
@@ -55,7 +55,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
     href: "/photography",
     frameNo: "▶ 03A",
     stock: "PORTRA 400",
-    emblem: "aperture",
+    emblem: "camera",
     pose: "left-[29%] top-[37%] -rotate-[3deg] sm:left-[40.5%] sm:top-[8%] sm:-rotate-[3deg]",
   },
   {
@@ -85,8 +85,8 @@ const MOBILE_LABEL_POSE: Record<FilmKey, string> = {
 };
 
 const DESKTOP_LABEL_POSE: Record<FilmKey, string> = {
-  blogs: "left-2 top-2",
-  career: "bottom-1.5 right-2 text-right",
+  blogs: "bottom-1.5 right-2 text-right",
+  career: "left-2 top-2",
   photography: "left-2 top-2",
   projects: "bottom-1.5 left-2",
   records: "bottom-1.5 right-2 text-right",
@@ -129,26 +129,27 @@ function FilmEmblem({ kind }: { kind: EmblemKind }) {
       </svg>
     );
   }
-  if (kind === "aperture") {
+  if (kind === "camera") {
     return (
       <svg viewBox="0 0 120 80" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <circle cx={60} cy={40} r={17} fill="none" style={{ stroke: INK }} strokeWidth={1.5} opacity={0.85} />
-        <circle cx={60} cy={40} r={7} fill="none" style={{ stroke: INK }} strokeWidth={1.25} />
-        {[0, 60, 120, 180, 240, 300].map((deg) => {
-          const rad = (deg * Math.PI) / 180;
-          return (
-            <line
-              key={deg}
-              x1={60 + 7 * Math.cos(rad)}
-              y1={40 + 7 * Math.sin(rad)}
-              x2={60 + 17 * Math.cos(rad)}
-              y2={40 + 17 * Math.sin(rad)}
-              style={{ stroke: INK }}
-              strokeWidth={1}
-              opacity={0.6}
-            />
-          );
-        })}
+        <path
+          d="M24 29H37L43 21H65L71 29H82V64H24Z"
+          fill="none"
+          style={{ stroke: INK }}
+          strokeWidth={1.5}
+          opacity={0.9}
+        />
+        <circle cx={53} cy={46} r={12} fill="none" style={{ stroke: INK }} strokeWidth={1.5} />
+        <circle cx={53} cy={46} r={5} fill="none" style={{ stroke: INK }} strokeWidth={1.25} opacity={0.75} />
+        <circle cx={72} cy={36} r={2} style={{ fill: INK }} opacity={0.75} />
+        <path d="M82 34H107V58H82" fill="none" style={{ stroke: INK }} strokeWidth={1.25} opacity={0.75} />
+        <rect x={88} y={40} width={13} height={12} fill="none" style={{ stroke: INK }} strokeWidth={1} opacity={0.65} />
+        {[36.5, 43, 49.5, 56].map((cy) => (
+          <React.Fragment key={cy}>
+            <circle cx={85.5} cy={cy} r={1} style={{ fill: INK }} opacity={0.65} />
+            <circle cx={103.5} cy={cy} r={1} style={{ fill: INK }} opacity={0.65} />
+          </React.Fragment>
+        ))}
       </svg>
     );
   }

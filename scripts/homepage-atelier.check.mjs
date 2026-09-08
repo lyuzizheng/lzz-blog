@@ -67,6 +67,8 @@ check(!filmStack.includes("PileFrame") && !filmStack.includes("PILE"), "scattere
 check(filmStack.includes("film-idle"), "frames must carry the idle drift class");
 check(filmStack.includes('["1", "2", "3", "4", "5"]'), "digit keys 1–5 must jump to chapters");
 check(filmStack.includes("mobile reads as 2 / 1 / 2"), "mobile film composition must document the 2 / 1 / 2 reading order");
+const mobileLabelPoses = filmStack.match(/const MOBILE_LABEL_POSE[^=]*= \{([\s\S]*?)\n\};/)?.[1] ?? "";
+const desktopLabelPoses = filmStack.match(/const DESKTOP_LABEL_POSE[^=]*= \{([\s\S]*?)\n\};/)?.[1] ?? "";
 for (const pose of [
   'blogs: "right-2 top-2 text-right"',
   'career: "left-2 top-2"',
@@ -74,19 +76,23 @@ for (const pose of [
   'projects: "bottom-2 left-2"',
   'records: "bottom-2 right-2 text-right"',
 ]) {
-  check(filmStack.includes(pose), `mobile film label pose missing: ${pose}`);
+  check(mobileLabelPoses.includes(pose), `mobile film label pose missing: ${pose}`);
 }
 check(filmStack.includes("MOBILE_LABEL_POSE[film.key]"), "mobile film labels must use their requested inner-square positions");
 for (const pose of [
-  'blogs: "left-2 top-2"',
-  'career: "bottom-1.5 right-2 text-right"',
+  'blogs: "bottom-1.5 right-2 text-right"',
+  'career: "left-2 top-2"',
   'photography: "left-2 top-2"',
   'projects: "bottom-1.5 left-2"',
   'records: "bottom-1.5 right-2 text-right"',
 ]) {
-  check(filmStack.includes(pose), `desktop film label pose missing: ${pose}`);
+  check(desktopLabelPoses.includes(pose), `desktop film label pose missing: ${pose}`);
 }
 check(filmStack.includes("DESKTOP_LABEL_POSE[film.key]"), "desktop film labels must use their requested inner-square positions");
+check(
+  filmStack.includes('emblem: "camera"') && filmStack.includes('if (kind === "camera")'),
+  "photography film must use the camera-and-film emblem"
+);
 check(filmStack.includes("hover:rotate-0") && filmStack.includes("focus-visible:rotate-0"), "hover must straighten frames with focus parity");
 check(!filmStack.includes("scatterHint") && !filmStack.includes("films.hint"), "no hint caption line under the bench (founder directive)");
 check(!homeAtelier.includes("t.home.colophon"), "colophon footer must not render on the homepage (founder directive)");
