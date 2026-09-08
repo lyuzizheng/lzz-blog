@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
 import { motionPhysics } from "@/tokens";
+import { useI18n } from "@/lib/i18n";
 import type { DarkroomPhoto, MonoMode } from "@/lib/darkroom";
 import { ExifProbe } from "./exif-probe";
 
@@ -87,6 +88,8 @@ export interface PhotoPlateProps {
 }
 
 export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlateProps) {
+  const { locale } = useI18n();
+  const isZh = locale === "zh";
   const [probe, setProbe] = useState(false);
   const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   /* Set when a long-press summons the probe: the release click is swallowed
@@ -158,7 +161,7 @@ export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlatePro
       onKeyDown={onKeyDown}
       tabIndex={0}
       role="button"
-      aria-label={`${photo.title} — ${photo.alt}. 打开暗房灯箱`}
+      aria-label={`${photo.title} — ${photo.alt}. ${isZh ? "打开暗房灯箱" : "Open lightbox"}`}
       className="group relative w-full cursor-zoom-in overflow-hidden rounded-md border border-border-plate bg-chamber outline-none focus-visible:border-ink-dominant"
     >
       {photo.src ? (

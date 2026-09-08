@@ -3,7 +3,27 @@
 import React from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
-import { Download, Mail, Rocket, Printer, ChevronDown } from "lucide-react";
+import { siteConfig } from "@/lib/site";
+import { Download, Mail, Rocket, ChevronDown } from "lucide-react";
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
 
 interface StageHeroProps {
   onExploreNext?: () => void;
@@ -18,12 +38,6 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
   const { locale } = useI18n();
   const isZh = locale === "zh";
 
-  const handlePrint = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (typeof window !== "undefined") {
-      window.print();
-    }
-  };
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-6 py-8 sm:px-8">
@@ -98,7 +112,7 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
         <div className="border-t border-border-plate/40 pt-4">
           <div className="flex flex-wrap items-center justify-between gap-y-3">
             <nav
-              aria-label="Resume actions"
+              aria-label={isZh ? "简历与联系方式" : "Resume actions"}
               className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-telemetry text-xs tracking-wider text-muted"
             >
               <a
@@ -115,16 +129,17 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
                 ·
               </span>
 
-              <button
-                onClick={handlePrint}
-                type="button"
+              <a
+                href={siteConfig.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline cursor-pointer"
-                title={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
-                aria-label={isZh ? "打印/生成 A4 简历" : "Print A4 Resume"}
+                title={isZh ? "领英个人主页 (LinkedIn)" : "LinkedIn Profile"}
+                aria-label="LinkedIn Profile"
               >
-                <Printer className="h-3.5 w-3.5 opacity-70" />
-                <span>{isZh ? "打印 A4" : "PRINT A4"}</span>
-              </button>
+                <LinkedinIcon className="h-3.5 w-3.5 opacity-70" />
+                <span>LINKEDIN</span>
+              </a>
 
               <span className="select-none text-muted opacity-40" aria-hidden="true">
                 ·

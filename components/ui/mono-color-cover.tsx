@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "@/lib/i18n";
 
 interface MonoColorCoverProps {
   title: string;
@@ -21,6 +22,8 @@ export function MonoColorCover({
   wordCount = 1200,
   className = "",
 }: MonoColorCoverProps) {
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
   // Generate a deterministic hash/number from title for specimen id & frame number
   const hash = title.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const specimenNo = String((hash % 99) + 1).padStart(2, "0");
@@ -115,17 +118,17 @@ export function MonoColorCover({
         <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border-plate/60 pt-3 text-xs font-telemetry text-muted">
           <div className="flex flex-wrap items-center gap-4">
             <div>
-              <span className="text-[10px] uppercase text-muted/80 block">DATE FILED</span>
+              <span className="text-[10px] uppercase text-muted/80 block">{isZh ? "归档日期" : "DATE FILED"}</span>
               <span className="font-semibold text-text-primary tabular-nums">{date.slice(0, 10)}</span>
             </div>
             <div>
-              <span className="text-[10px] uppercase text-muted/80 block">EST. READ</span>
-              <span className="font-semibold text-ink-dominant tabular-nums">{readingTime} MIN</span>
+              <span className="text-[10px] uppercase text-muted/80 block">{isZh ? "预估阅读" : "EST. READ"}</span>
+              <span className="font-semibold text-ink-dominant tabular-nums">{readingTime} {isZh ? t.posts.readingTime : "MIN"}</span>
             </div>
             {wordCount > 0 && (
               <div className="hidden sm:block">
-                <span className="text-[10px] uppercase text-muted/80 block">VOLUME</span>
-                <span className="font-semibold text-text-primary tabular-nums">{wordCount} WORDS</span>
+                <span className="text-[10px] uppercase text-muted/80 block">{isZh ? "全文字数" : "VOLUME"}</span>
+                <span className="font-semibold text-text-primary tabular-nums">{wordCount} {isZh ? t.posts.wordCount : "WORDS"}</span>
               </div>
             )}
           </div>

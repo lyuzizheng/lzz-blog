@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: PageProps) {
 
   if (!post) {
     return {
-      title: "文章未找到 · LZZ Blog",
-      description: "请求的文章不存在或已被移动。",
+      title: "文章未找到 · Post Not Found | LZZ Blog",
+      description: "请求的文章不存在或已被移动 · The requested post could not be found or has been moved.",
     };
   }
 

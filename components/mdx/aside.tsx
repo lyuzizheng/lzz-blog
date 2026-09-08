@@ -14,7 +14,7 @@ export function Aside({
   label?: string;
 }) {
   return (
-    <aside className="reader-aside" aria-label={label ?? "旁注"}>
+    <aside className="reader-aside" aria-label={label ?? "Marginalia / 旁注"}>
       {label && (
         <span className="reader-aside-label" aria-hidden>
           {label}

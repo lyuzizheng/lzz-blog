@@ -16,7 +16,8 @@ import { FilmStack } from "./film-stack";
  * for attention — the page is the cover of the atelier, not a landing page.
  */
 export function HomeAtelier() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
 
   return (
     <div className="relative flex h-[100dvh] w-full flex-col overflow-hidden">
@@ -93,7 +94,7 @@ export function HomeAtelier() {
 
             {/* Social matrix */}
             <nav
-              aria-label="Social links"
+              aria-label={isZh ? "社交媒体矩阵" : "Social links"}
               className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-telemetry text-[10px] tracking-wide text-muted sm:mt-4 sm:gap-x-3 sm:gap-y-2 sm:text-xs sm:tracking-wider"
             >
               {SOCIAL_LINKS.map((link, index) => (

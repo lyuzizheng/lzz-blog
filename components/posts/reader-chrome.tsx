@@ -12,8 +12,6 @@ import { useI18n } from "@/lib/i18n";
  * - Width: max-w-6xl
  */
 export function ReaderEyebrow({
-  backHref,
-  backLabel,
   showControls = true,
   className = "",
 }: {
@@ -22,9 +20,6 @@ export function ReaderEyebrow({
   showControls?: boolean;
   className?: string;
 } = {}) {
-  void backHref;
-  void backLabel;
-
   return <SiteHeader showControls={showControls} className={className} />;
 }
 

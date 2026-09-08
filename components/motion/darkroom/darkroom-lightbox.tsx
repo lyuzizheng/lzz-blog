@@ -145,7 +145,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={`${photo.title} 灯箱大图`}
+          aria-label={`${photo.title} ${isZh ? "灯箱大图" : "Lightbox view"}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -222,7 +222,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
             <button
               onClick={() => step(-1)}
               disabled={index === 0}
-              aria-label="上一张 (←/J)"
+              aria-label={isZh ? "上一张 (←/J)" : "Previous photo (←/J)"}
               className="absolute left-3 z-20 hidden cursor-pointer border border-white/30 bg-black/40 px-3 py-2 font-telemetry text-sm text-white/90 hover:border-white disabled:opacity-30 sm:block"
             >
               ←
@@ -230,7 +230,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
             <button
               onClick={() => step(1)}
               disabled={index === DARKROOM_PHOTOS.length - 1}
-              aria-label="下一张 (→/L)"
+              aria-label={isZh ? "下一张 (→/L)" : "Next photo (→/L)"}
               className="absolute right-3 z-20 hidden cursor-pointer border border-white/30 bg-black/40 px-3 py-2 font-telemetry text-sm text-white/90 hover:border-white disabled:opacity-30 sm:block"
             >
               →

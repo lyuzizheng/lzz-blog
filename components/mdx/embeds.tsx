@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Info, AlertTriangle, CheckCircle, ExternalLink, Lightbulb, AlertOctagon } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 // YouTube Embed Component
 export function YouTube({ id }: { id: string }) {
@@ -41,6 +42,9 @@ export function Bilibili({ id }: { id: string }) {
 
 // Tweet Card Component
 export function Tweet({ id, user }: { id: string; user?: string }) {
+  const { locale } = useI18n();
+  const isZh = locale === "zh";
+
   if (!id) return null;
   const tweetUrl = user
     ? `https://twitter.com/${user}/status/${id}`
@@ -58,13 +62,13 @@ export function Tweet({ id, user }: { id: string; user?: string }) {
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-ink-dominant hover:underline"
         >
-          <span>查看原推</span>
+          <span>{isZh ? "查看原推" : "View original post"}</span>
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
       <div className="mt-3 text-sm text-text-secondary">
         <p className="italic">
-          推文 ID: <span className="font-telemetry font-mono">{id}</span>
+          {isZh ? "推文 ID: " : "Tweet ID: "}<span className="font-telemetry font-mono">{id}</span>
         </p>
       </div>
     </div>
