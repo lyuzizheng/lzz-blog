@@ -83,7 +83,8 @@ jobs:
             echo "::error::CLOUDFLARE_API_TOKEN is not set in repository secrets! Please configure it in GitHub Settings -> Secrets -> Actions."
             exit 1
           fi
-          echo "🚀 Deploying to Cloudflare Workers with OpenNext Assets..."
+          export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-bf69da5249b63731ad79545d0095e8db}"
+          echo "🚀 Deploying to Cloudflare Workers with OpenNext Assets (Account: ${CLOUDFLARE_ACCOUNT_ID})..."
           npx opennextjs-cloudflare deploy
 
       - name: Verify Edge Deployment Health
