@@ -17,22 +17,29 @@ import { CHAPTER_NEGATIVES } from "@/lib/chapters";
  *
  * Clean, lightweight, generous whitespace, zero cluttered popups.
  */
-export function SiteHeader() {
-  const { t, locale } = useI18n();
+export interface SiteHeaderProps {
+  showControls?: boolean;
+  className?: string;
+}
+
+export function SiteHeader({ showControls = true, className = "" }: SiteHeaderProps = {}) {
+  const { locale } = useI18n();
   const isZh = locale === "zh";
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/90 backdrop-blur-md transition-colors duration-300">
+    <header
+      className={`sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/90 backdrop-blur-md transition-colors duration-300 ${className}`}
+    >
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 md:px-8">
         {/* Brand / Homepage link */}
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-cobalt uppercase sm:text-lg"
-            aria-label={t.common.atelier}
+            className="font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-cobalt sm:text-lg"
+            aria-label="Lzz-Blog"
           >
-            {t.common.atelier}
+            Lzz-Blog
           </Link>
         </div>
 
@@ -67,11 +74,15 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Right tools: Language + Safelight switch */}
-        <div className="flex items-center gap-2">
-          <LanguageSwitch />
-          <SafelightSwitch />
-        </div>
+        {/* Right tools: Language + Safelight switch (Eyebrow Minimalist Mode) */}
+        {showControls ? (
+          <div className="flex items-center gap-3">
+            <LanguageSwitch variant="eyebrow" />
+            <SafelightSwitch variant="eyebrow" />
+          </div>
+        ) : (
+          <div className="w-6" aria-hidden="true" />
+        )}
       </div>
     </header>
   );
