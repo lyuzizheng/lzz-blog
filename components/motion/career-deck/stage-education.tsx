@@ -16,78 +16,78 @@ export function StageEducation({}: StageEducationProps) {
   const isZh = locale === "zh";
 
   return (
-    <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-6 py-8 sm:px-8">
+    <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-6 overflow-hidden">
       {/* Faint Typographic Watermark Background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-4 right-0 z-0 select-none overflow-hidden opacity-[0.03] dark:opacity-[0.04]"
       >
-        <span className="font-display text-[8rem] font-black uppercase tracking-tighter leading-none text-ink-dominant sm:text-[12rem] md:text-[15rem]">
+        <span className="font-display text-[6rem] font-black uppercase tracking-tighter leading-none text-ink-dominant sm:text-[12rem] md:text-[15rem]">
           NTU
         </span>
       </div>
 
-      <div className="relative z-10 space-y-4 sm:space-y-5">
+      <div className="relative z-10 space-y-2.5 sm:space-y-4">
         {/* 1. Stage Eyebrow & Education Meta */}
-        <div className="border-b border-border-plate/60 pb-3 font-telemetry text-xs uppercase tracking-widest text-muted">
+        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">
           <div className="flex items-center justify-between">
             <span className="font-semibold text-ink-dominant">
               {isZh ? "05 // 教育背景与起点 · 新加坡 · 2017–2021" : "05 // NTU & EARLY ROOTS · SINGAPORE · 2017–2021"}
             </span>
-            <span className="text-[11px] opacity-75">B.ENG (HONORS) · MERIT SCHOLARSHIP</span>
+            <span className="text-[10px] sm:text-[11px] opacity-75">B.ENG (HONORS) · MERIT SCHOLARSHIP</span>
           </div>
-          <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
+          <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
             <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
               Nanyang Technological University
             </h2>
             <span className="text-muted opacity-40">·</span>
-            <span className="font-telemetry text-xs text-muted">
+            <span className="font-telemetry text-[11px] sm:text-xs text-muted">
               {isZh ? "计算机工程学士（荣誉学位）· NTU EEE" : "B.Eng. Honors in Computer Engineering"}
             </span>
           </div>
         </div>
 
         {/* 2. Educational & Milestone Highlights */}
-        <div className="grid grid-cols-3 divide-x divide-border-plate/60 rounded-[2px] border border-border-plate/60 bg-surface/40 py-2.5 text-center">
-          <div className="px-2">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-muted">
+        <div className="grid grid-cols-3 divide-x divide-border-plate/60 rounded-[2px] border border-border-plate/60 bg-surface/40 py-1.5 sm:py-2.5 text-center">
+          <div className="px-1.5 sm:px-2">
+            <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "校园注册用户" : "CAMPUS USERS"}
             </span>
-            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
               20,000<span className="text-xs font-normal text-ink-dominant">+</span>
             </div>
-            <p className="font-telemetry text-[9px] text-muted">
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
               {isZh ? "U-Wave 自然增长" : "U-Wave organic"}
             </p>
           </div>
 
-          <div className="px-2">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-muted">
+          <div className="px-1.5 sm:px-2">
+            <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "日活跃用户" : "DAILY ACTIVE"}
             </span>
-            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
               4,000<span className="text-xs font-normal text-ink-dominant"> DAU</span>
             </div>
-            <p className="font-telemetry text-[9px] text-muted">
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
               {isZh ? "坡岛高校生活工具" : "campus utility"}
             </p>
           </div>
 
-          <div className="px-2">
-            <span className="font-telemetry text-[10px] uppercase tracking-wider text-muted">
+          <div className="px-1.5 sm:px-2">
+            <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "全额奖学金" : "SCHOLARSHIP"}
             </span>
-            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
               100<span className="text-xs font-normal text-ink-dominant">%</span>
             </div>
-            <p className="font-telemetry text-[9px] text-muted">
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
               {isZh ? "南洋卓越奖学金" : "Full Merit Award"}
             </p>
           </div>
         </div>
 
         {/* 3. Non-AI Grounded Bullets */}
-        <ul className="space-y-2.5 font-body text-xs leading-relaxed text-secondary sm:text-sm">
+        <ul className="space-y-2 font-body text-[11px] leading-snug text-secondary sm:space-y-2.5 sm:text-sm sm:leading-relaxed">
           <li className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
@@ -112,7 +112,7 @@ export function StageEducation({}: StageEducationProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="hidden sm:flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -126,12 +126,14 @@ export function StageEducation({}: StageEducationProps) {
         </ul>
 
         {/* 4. Tech Stack Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-1 font-telemetry text-[11px] text-muted">
+        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
           <span className="font-semibold text-primary">STACK:</span>
-          {["Flutter", "Dart", "Java", "Spring Cloud", "MySQL", "Redis", "Distributed Systems"].map((tech) => (
+          {["Flutter", "Dart", "Java", "Spring Cloud", "MySQL", "Redis", "Distributed Systems"].map((tech, idx) => (
             <span
               key={tech}
-              className="rounded-[2px] border border-border-plate/60 bg-surface/60 px-1.5 py-0.5"
+              className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${
+                idx > 4 ? "hidden sm:inline-block" : "inline-block"
+              }`}
             >
               {tech}
             </span>

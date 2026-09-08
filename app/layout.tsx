@@ -126,7 +126,6 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-substrate text-primary font-body antialiased selection:bg-safelight/20 selection:text-safelight">
-        <BodyScrollLock />
         {/* BRAWUKA-87 · 0ms Zero-Blocking Instant Darkroom Exposure Veil */}
         <style
           dangerouslySetInnerHTML={{
@@ -284,6 +283,7 @@ export default function RootLayout({
         >
           <I18nProvider>
             <SmoothScrollProvider>
+              <BodyScrollLock />
               {/* Top Darkroom Exposure Beam & Route Navigation Progress Bar */}
               <ExposureProgress />
               {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}

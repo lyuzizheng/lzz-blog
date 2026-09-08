@@ -16,68 +16,68 @@ export function StageExploration({}: StageExplorationProps) {
   const isZh = locale === "zh";
 
   return (
-    <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-6 py-8 sm:px-8">
+    <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-6 overflow-hidden">
       {/* Faint Typographic Watermark Background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-4 right-0 z-0 select-none overflow-hidden opacity-[0.03] dark:opacity-[0.04]"
       >
-        <span className="font-display text-[7rem] font-black uppercase tracking-tighter leading-none text-ink-dominant sm:text-[11rem] md:text-[13rem]">
+        <span className="font-display text-[6rem] font-black uppercase tracking-tighter leading-none text-ink-dominant sm:text-[11rem] md:text-[13rem]">
           FINTECH
         </span>
       </div>
 
-      <div className="relative z-10 space-y-4 sm:space-y-5">
+      <div className="relative z-10 space-y-2.5 sm:space-y-4">
         {/* 1. Header & Role (统一为一个整合 Section) */}
-        <div className="border-b border-border-plate/60 pb-3 font-telemetry text-xs uppercase tracking-widest text-muted">
+        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">
           <div className="flex items-center justify-between">
             <span className="font-semibold text-ink-dominant">
               {isZh ? "02 // 银行信贷与云原生 · 新加坡 · 2023–2024" : "02 // BANKING & CLOUD-NATIVE · SINGAPORE · 2023–2024"}
             </span>
-            <span className="text-[11px] opacity-75">FULL-TIME · SENIOR SWE</span>
+            <span className="text-[10px] sm:text-[11px] opacity-75">FULL-TIME · SENIOR SWE</span>
           </div>
-          <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
+          <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
             <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
               Senior Software Engineer
             </h2>
             <span className="text-muted opacity-40">·</span>
-            <span className="font-telemetry text-xs text-muted">
+            <span className="font-telemetry text-[11px] sm:text-xs text-muted">
               MariBank (Sea Group) &amp; Bondee
             </span>
           </div>
         </div>
 
         {/* 2. Asymmetric Dual-Focus Highlight Cards */}
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase tracking-wider text-muted">
-              <span>{isZh ? "数字银行核心信贷" : "MARIBANK (SEA GROUP)"}</span>
-              <span className="tabular-nums">Apr 2024 – Jul 2024</span>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-2 sm:p-3">
+            <div className="flex items-center justify-between font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
+              <span className="truncate">{isZh ? "数字银行核心信贷" : "MARIBANK"}</span>
+              <span className="tabular-nums hidden sm:inline">Apr–Jul 24</span>
             </div>
-            <div className="mt-1 font-display text-sm font-bold text-primary">
-              {isZh ? "100% MAS 金融强监管合规" : "100% MAS Compliance & Audit"}
+            <div className="mt-0.5 sm:mt-1 font-display text-xs sm:text-sm font-bold text-primary">
+              {isZh ? "100% MAS 金融强监管合规" : "100% MAS Compliance"}
             </div>
-            <p className="mt-0.5 font-body text-xs text-muted">
+            <p className="mt-0.5 font-body text-[10px] sm:text-xs text-muted line-clamp-1 sm:line-clamp-none">
               {isZh ? "分布式事务一致性 · 个人消费贷与小微企业贷" : "Strict distributed consistency across high-value disbursals"}
             </p>
           </div>
 
-          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-3">
-            <div className="flex items-center justify-between font-telemetry text-[10px] uppercase tracking-wider text-muted">
-              <span>{isZh ? "云原生基础设施" : "BONDEE"}</span>
-              <span className="tabular-nums">Oct 2023 – Apr 2024</span>
+          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-2 sm:p-3">
+            <div className="flex items-center justify-between font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
+              <span className="truncate">{isZh ? "云原生基础设施" : "BONDEE"}</span>
+              <span className="tabular-nums hidden sm:inline">Oct 23–Apr 24</span>
             </div>
-            <div className="mt-1 font-display text-sm font-bold text-primary">
+            <div className="mt-0.5 sm:mt-1 font-display text-xs sm:text-sm font-bold text-primary">
               {isZh ? "新加坡 1 号工程师 · 0➔1 K8s" : "Employee #1 · Multi-Tenant K8s"}
             </div>
-            <p className="mt-0.5 font-body text-xs text-muted">
+            <p className="mt-0.5 font-body text-[10px] sm:text-xs text-muted line-clamp-1 sm:line-clamp-none">
               {isZh ? "自建 Vector + Kafka 日志链路大幅降低出向成本" : "Self-hosted log ingestion pipeline slashing cloud egress"}
             </p>
           </div>
         </div>
 
         {/* 3. Unified High-Signal Bullets (Grounded, non-AI prose) */}
-        <ul className="space-y-2.5 font-body text-xs leading-relaxed text-secondary sm:text-sm">
+        <ul className="space-y-2 font-body text-[11px] leading-snug text-secondary sm:space-y-2.5 sm:text-sm sm:leading-relaxed">
           <li className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
@@ -90,7 +90,7 @@ export function StageExploration({}: StageExplorationProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="hidden sm:flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -102,7 +102,7 @@ export function StageExploration({}: StageExplorationProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="hidden sm:flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -118,7 +118,7 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "自建 Vector + Kafka 可观测日志体系：" : "Vector + Kafka Observability Pipeline: "}
+                {isZh ? "自建 Vector + Kafka 可观测日志体系（Bondee）：" : "Vector + Kafka Observability Pipeline (Bondee): "}
               </strong>
               {isZh
                 ? "独立架构并部署自建 Vector + Kafka + Elasticsearch 全链路日志收集与检索体系，替代高昂的云厂商全托管方案，大幅削减海外跨区域网络出方向流量成本。"
@@ -128,12 +128,14 @@ export function StageExploration({}: StageExplorationProps) {
         </ul>
 
         {/* 4. Tech Stack Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-1 font-telemetry text-[11px] text-muted">
+        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
           <span className="font-semibold text-primary">STACK:</span>
-          {["Java", "Spring Cloud", "Go", "Kubernetes", "Vector", "Apache Kafka", "Elasticsearch", "Distributed Consistency"].map((tech) => (
+          {["Java", "Spring Cloud", "Go", "Kubernetes", "Vector", "Apache Kafka", "Elasticsearch", "Distributed Consistency"].map((tech, idx) => (
             <span
               key={tech}
-              className="rounded-[2px] border border-border-plate/60 bg-surface/60 px-1.5 py-0.5"
+              className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${
+                idx > 4 ? "hidden sm:inline-block" : "inline-block"
+              }`}
             >
               {tech}
             </span>
