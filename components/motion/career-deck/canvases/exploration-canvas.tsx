@@ -3,92 +3,59 @@ import React from "react";
 /**
  * Act 2 Thematic Canvas: Modernist Typographic Backdrop (MariBank & SeaMoney & Bondee)
  *
- * Clean, architectural branding backdrop:
- * - Bold layered brand names: MARIBANK + SEAMONEY + BONDEE
- * - Solid faint ink fill + razor-sharp hollow outline
- * - Minimalist corner framing & subtle ambient wash
+ * Diagonal Composition (\ Layout):
+ * - Top-Left: Solid bold "MARIBANK"
+ * - Bottom-Right: Razor-sharp outline "SEAMONEY"
+ * - Bottom-Left: Subtle accent "BONDEE"
+ * Placed in corners to ensure 100% visibility without being occluded by center cards.
  */
 export function ExplorationCanvas() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Ambient glow */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
+      {/* Ambient background glow */}
       <div
-        className="absolute inset-0 opacity-[0.035] dark:opacity-[0.05]"
+        className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
         style={{
           background:
-            "radial-gradient(circle at 25% 65%, var(--ink-dominant) 0%, transparent 60%)",
+            "radial-gradient(circle at 20% 30%, var(--ink-dominant) 0%, transparent 65%)",
         }}
       />
 
-      <svg
-        className="absolute inset-0 h-full w-full opacity-100 transition-opacity duration-500 select-none"
-        viewBox="0 0 1000 800"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        {/* Subtle architectural frame accents */}
-        <g stroke="var(--ink-dominant)" strokeWidth="0.8" opacity="0.12">
-          <path d="M 60 70 L 60 50 L 80 50" />
-          <path d="M 940 70 L 940 50 L 920 50" />
-          <path d="M 60 730 L 60 750 L 80 750" />
-          <path d="M 940 730 L 940 750 L 920 750" />
-          <line x1="100" y1="400" x2="900" y2="400" strokeDasharray="4 8" opacity="0.4" />
-        </g>
+      {/* Subtle corner architectural hairline crosshairs */}
+      <div className="absolute top-3 right-3 sm:top-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
+        <span>+ 02 // MARIBANK · SEAMONEY · BONDEE</span>
+      </div>
+      <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
+        <span>MAS REGULATED // DISTRIBUTED LEDGER +</span>
+      </div>
 
-        {/* --- High-Impact Editorial Typographic Backing --- */}
-        {/* 1. Primary Solid: MARIBANK */}
-        <text
-          x="500"
-          y="350"
-          textAnchor="middle"
-          fill="var(--ink-dominant)"
-          opacity="0.04"
-          className="font-display font-black tracking-tighter uppercase"
-          style={{ fontSize: "145px", letterSpacing: "-0.05em" }}
-        >
+      {/* 1. Top-Left: Solid Bold MARIBANK */}
+      <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">
+        <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
           MARIBANK
-        </text>
+        </span>
+      </div>
 
-        {/* 2. Secondary Outline: SEAMONEY */}
-        <text
-          x="500"
-          y="470"
-          textAnchor="middle"
-          fill="none"
-          stroke="var(--ink-dominant)"
-          strokeWidth="1.6"
-          opacity="0.065"
-          className="font-display font-black tracking-tighter uppercase"
-          style={{ fontSize: "125px", letterSpacing: "-0.04em" }}
+      {/* 2. Bottom-Right: Razor-Sharp Outline SEAMONEY */}
+      <div className="absolute -bottom-2 sm:bottom-3 md:bottom-8 right-2 sm:right-6 md:right-10 text-right leading-none">
+        <span
+          className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-black uppercase tracking-tighter leading-none"
+          style={{
+            WebkitTextStroke: "1.6px var(--ink-dominant)",
+            color: "transparent",
+            opacity: 0.12,
+          }}
         >
           SEAMONEY
-        </text>
+        </span>
+      </div>
 
-        {/* 3. Tertiary Accent: BONDEE */}
-        <text
-          x="500"
-          y="565"
-          textAnchor="middle"
-          fill="var(--ink-dominant)"
-          opacity="0.03"
-          className="font-display font-black tracking-tighter uppercase"
-          style={{ fontSize: "75px", letterSpacing: "-0.03em" }}
-        >
+      {/* 3. Bottom-Left Accent: BONDEE */}
+      <div className="absolute bottom-10 sm:bottom-14 md:bottom-20 left-3 sm:left-8 md:left-12 text-left leading-none hidden sm:block">
+        <span className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none text-ink-dominant opacity-[0.045] dark:opacity-[0.065]">
           BONDEE
-        </text>
-
-        {/* Minimalist Telemetry Meta */}
-        <g
-          fill="var(--ink-dominant)"
-          className="font-telemetry text-[9px] uppercase tracking-widest"
-          opacity="0.25"
-        >
-          <text x="70" y="70">MARIBANK // DIGITAL CREDIT CORE</text>
-          <text x="930" y="70" textAnchor="end">SEA GROUP · SINGAPORE</text>
-          <text x="70" y="745">MAS COMPLIANCE // DISTRIBUTED CONSISTENCY</text>
-          <text x="930" y="745" textAnchor="end">CLOUD-NATIVE K8S</text>
-        </g>
-      </svg>
+        </span>
+      </div>
     </div>
   );
 }

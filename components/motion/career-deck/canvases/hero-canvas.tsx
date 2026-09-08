@@ -7,123 +7,92 @@ interface HeroCanvasProps {
 /**
  * Act 0 & 5 Thematic Canvas: Modernist Typographic Backdrop (Profile & NTU)
  *
- * Clean, architectural branding backdrop:
- * - Bold layered brand names: PROFILE + SINGAPORE or NTU + SINGAPORE
- * - Solid faint ink fill + razor-sharp hollow outline
- * - Minimalist corner framing & subtle ambient wash
+ * Mode "hero" (\ Layout):
+ *  - Top-Left: Solid bold "PROFILE"
+ *  - Bottom-Right: Razor-sharp outline "SINGAPORE"
+ * Mode "education" (/ Layout):
+ *  - Top-Right: Solid bold "NTU"
+ *  - Bottom-Left: Razor-sharp outline "SINGAPORE"
+ * Placed in corners to ensure 100% visibility without being occluded by center cards.
  */
 export function HeroCanvas({ mode = "hero" }: HeroCanvasProps) {
   const isEducation = mode === "education";
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Subtle radial ambient glow */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
+      {/* Ambient background glow */}
       <div
         className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
         style={{
-          background:
-            "radial-gradient(circle at 50% 50%, var(--ink-dominant) 0%, transparent 60%)",
+          background: isEducation
+            ? "radial-gradient(circle at 80% 25%, var(--ink-dominant) 0%, transparent 65%)"
+            : "radial-gradient(circle at 20% 25%, var(--ink-dominant) 0%, transparent 65%)",
         }}
       />
 
-      <svg
-        className="absolute inset-0 h-full w-full opacity-100 transition-opacity duration-500 select-none"
-        viewBox="0 0 1000 800"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        {/* Subtle architectural frame accents */}
-        <g stroke="var(--ink-dominant)" strokeWidth="0.8" opacity="0.12">
-          <path d="M 60 70 L 60 50 L 80 50" />
-          <path d="M 940 70 L 940 50 L 920 50" />
-          <path d="M 60 730 L 60 750 L 80 750" />
-          <path d="M 940 730 L 940 750 L 920 750" />
-          <line x1="500" y1="60" x2="500" y2="740" strokeDasharray="4 8" opacity="0.4" />
-        </g>
+      {isEducation ? (
+        <>
+          {/* Subtle corner architectural telemetry */}
+          <div className="absolute top-3 left-3 sm:top-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
+            <span>+ 05 // NTU · COMPUTER ENGINEERING</span>
+          </div>
+          <div className="absolute bottom-3 right-3 sm:bottom-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
+            <span>FULL MERIT SCHOLARSHIP // HONORS +</span>
+          </div>
 
-        {/* --- High-Impact Editorial Typographic Backing --- */}
-        {isEducation ? (
-          <>
-            {/* 1. Primary Solid: NTU */}
-            <text
-              x="500"
-              y="380"
-              textAnchor="middle"
-              fill="var(--ink-dominant)"
-              opacity="0.04"
-              className="font-display font-black tracking-tighter uppercase"
-              style={{ fontSize: "200px", letterSpacing: "-0.05em" }}
-            >
+          {/* 1. Top-Right: Solid Bold NTU */}
+          <div className="absolute -top-2 sm:top-2 md:top-6 right-2 sm:right-6 md:right-10 text-right leading-none">
+            <span className="font-display text-7xl sm:text-9xl md:text-[12rem] lg:text-[15rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
               NTU
-            </text>
+            </span>
+          </div>
 
-            {/* 2. Secondary Outline: SINGAPORE */}
-            <text
-              x="500"
-              y="500"
-              textAnchor="middle"
-              fill="none"
-              stroke="var(--ink-dominant)"
-              strokeWidth="1.6"
-              opacity="0.065"
-              className="font-display font-black tracking-tighter uppercase"
-              style={{ fontSize: "110px", letterSpacing: "-0.04em" }}
+          {/* 2. Bottom-Left: Razor-Sharp Outline SINGAPORE */}
+          <div className="absolute -bottom-2 sm:bottom-3 md:bottom-8 left-2 sm:left-6 md:left-10 text-left leading-none">
+            <span
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none"
+              style={{
+                WebkitTextStroke: "1.6px var(--ink-dominant)",
+                color: "transparent",
+                opacity: 0.12,
+              }}
             >
               SINGAPORE
-            </text>
-          </>
-        ) : (
-          <>
-            {/* 1. Primary Solid: PROFILE */}
-            <text
-              x="500"
-              y="380"
-              textAnchor="middle"
-              fill="var(--ink-dominant)"
-              opacity="0.04"
-              className="font-display font-black tracking-tighter uppercase"
-              style={{ fontSize: "165px", letterSpacing: "-0.05em" }}
-            >
+            </span>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Subtle corner architectural telemetry */}
+          <div className="absolute top-3 right-3 sm:top-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
+            <span>+ 00 // OVERVIEW · LZZ ATELIER</span>
+          </div>
+          <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
+            <span>PRODUCT &amp; SYSTEMS ENGINEER +</span>
+          </div>
+
+          {/* 1. Top-Left: Solid Bold PROFILE */}
+          <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">
+            <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
               PROFILE
-            </text>
+            </span>
+          </div>
 
-            {/* 2. Secondary Outline: SINGAPORE */}
-            <text
-              x="500"
-              y="500"
-              textAnchor="middle"
-              fill="none"
-              stroke="var(--ink-dominant)"
-              strokeWidth="1.6"
-              opacity="0.065"
-              className="font-display font-black tracking-tighter uppercase"
-              style={{ fontSize: "110px", letterSpacing: "-0.04em" }}
+          {/* 2. Bottom-Right: Razor-Sharp Outline SINGAPORE */}
+          <div className="absolute -bottom-2 sm:bottom-3 md:bottom-8 right-2 sm:right-6 md:right-10 text-right leading-none">
+            <span
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none"
+              style={{
+                WebkitTextStroke: "1.6px var(--ink-dominant)",
+                color: "transparent",
+                opacity: 0.12,
+              }}
             >
               SINGAPORE
-            </text>
-          </>
-        )}
-
-        {/* Minimalist Telemetry Meta */}
-        <g
-          fill="var(--ink-dominant)"
-          className="font-telemetry text-[9px] uppercase tracking-widest"
-          opacity="0.25"
-        >
-          <text x="70" y="70">
-            {isEducation ? "NTU // COMPUTER ENGINEERING" : "LZZ ATELIER // CAREER & SYSTEMS"}
-          </text>
-          <text x="930" y="70" textAnchor="end">
-            SINGAPORE
-          </text>
-          <text x="70" y="745">
-            {isEducation ? "FULL MERIT SCHOLARSHIP // U-WAVE" : "FULL-STACK & DISTRIBUTED SYSTEMS"}
-          </text>
-          <text x="930" y="745" textAnchor="end">
-            {isEducation ? "CLASS OF 2021" : "2017–PRESENT"}
-          </text>
-        </g>
-      </svg>
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
