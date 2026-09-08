@@ -143,7 +143,7 @@ export function CareerDeck() {
     const diff = touchStartYRef.current - touchEndY;
     touchStartYRef.current = null;
 
-    if (Math.abs(diff) > 45) {
+    if (Math.abs(diff) > 35) {
       if (diff > 0) {
         goNext();
       } else {
@@ -206,7 +206,7 @@ export function CareerDeck() {
       onWheel={handleWheel}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-col overflow-hidden bg-substrate select-none"
+      className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-col overflow-hidden bg-substrate select-none overscroll-none touch-none"
       role="region"
       aria-label="Career Deck Vertical Snap Reel"
     >
@@ -231,7 +231,7 @@ export function CareerDeck() {
       </AnimatePresence>
 
       {/* 2. Main Stage Stage Frame with Vertical Snap Parallax */}
-      <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden pb-10 sm:pb-12">
+      <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden pb-8 sm:pb-12">
         <AnimatePresence custom={direction} mode="wait">
           <motion.div
             key={currentStage.id}
@@ -240,7 +240,7 @@ export function CareerDeck() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="flex h-full w-full flex-col justify-center overflow-y-auto"
+            className="flex h-full w-full flex-col justify-center overflow-hidden"
           >
             {currentStage.id === "hero" && (
               <StageHero onExploreNext={() => goToStage(1)} />
