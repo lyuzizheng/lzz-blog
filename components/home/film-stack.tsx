@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
+import { openWipModal } from "@/components/ui";
 
 /**
  * BRAWUKA-83 · FilmStack — the darkroom workbench, top layer.
@@ -138,28 +139,40 @@ function FilmEmblem({ kind }: { kind: EmblemKind }) {
 }
 
 function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
+  const isWip = film.key === "photography";
+
   return (
     <div className="overflow-hidden rounded-[2px] border border-border-plate bg-surface shadow-[var(--shadow-plate)]">
       {/* Top rebate: sprocket perforations + frame number */}
       <div className="relative h-4 w-full bg-[var(--bg-chamber)]">
         <div className="film-sprockets absolute inset-0" />
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 font-telemetry text-[8px] tracking-[0.2em] text-muted">
-          {film.frameNo}
-        </span>
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5 font-telemetry text-[8px] tracking-[0.2em] text-muted">
+          {isWip && (
+            <span className="rounded-[1px] bg-amber-500/25 border border-amber-500/40 px-1 py-0.2 text-[7px] font-bold text-amber-600 dark:text-amber-400 tracking-wider">
+              WIP
+            </span>
+          )}
+          <span>{film.frameNo}</span>
+        </div>
       </div>
       {/* Negative image area */}
       <div className="relative aspect-[3/2] w-full overflow-hidden bg-[var(--bg-surface)] transition-[filter] duration-300 group-hover:brightness-110 group-focus-within:brightness-110">
         <FilmEmblem kind={film.emblem} />
         <div className="halftone-screen pointer-events-none absolute inset-0 opacity-20" />
         <div className="film-exposure absolute inset-0 bg-[var(--color-phosphor)]" />
-        <span className="absolute bottom-1.5 left-2 font-display text-lg leading-none text-primary">
+        <span className="absolute bottom-1.5 left-2 font-display text-lg leading-none text-primary flex items-center gap-1.5">
           {label}
         </span>
+        {isWip && (
+          <span className="absolute top-1.5 right-1.5 rounded-[1px] bg-amber-500/20 border border-amber-500/40 px-1 text-[8px] font-bold text-amber-600 dark:text-amber-400 font-telemetry tracking-widest uppercase">
+            WIP
+          </span>
+        )}
       </div>
       {/* Bottom rebate: stock telemetry */}
       <div className="flex h-5 items-center justify-between bg-[var(--bg-chamber)] px-2 font-telemetry text-[8px] tracking-[0.16em] text-muted">
         <span>{film.stock}</span>
-        <span>EXP 36</span>
+        <span>{isWip ? "WIP // 显影中" : "EXP 36"}</span>
       </div>
     </div>
   );
@@ -183,7 +196,12 @@ export function FilmStack() {
       const digit = ["1", "2", "3", "4"].indexOf(e.key);
       if (digit >= 0) {
         e.preventDefault();
-        router.push(FILMS[digit]!.href);
+        const targetFilm = FILMS[digit]!;
+        if (targetFilm.key === "photography") {
+          openWipModal();
+        } else {
+          router.push(targetFilm.href);
+        }
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -203,6 +221,12 @@ export function FilmStack() {
             key={film.key}
             href={film.href}
             prefetch={false}
+            onClick={(e) => {
+              if (film.key === "photography") {
+                e.preventDefault();
+                openWipModal();
+              }
+            }}
             onMouseEnter={() => router.prefetch(film.href)}
             onFocus={() => router.prefetch(film.href)}
             aria-label={`${film.frameNo} · ${t.home.films[film.key]}`}

@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
+import { SafelightSwitch, LanguageSwitch, openWipModal } from "@/components/ui";
 import { useI18n } from "@/lib/i18n";
 import { CHAPTER_NEGATIVES } from "@/lib/chapters";
 
@@ -49,6 +49,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
           className="flex items-center gap-1 overflow-x-auto py-0.5 sm:gap-2"
         >
           {CHAPTER_NEGATIVES.map((neg) => {
+            const isWip = neg.key === "photography";
             const isActive =
               pathname === neg.href ||
               (neg.key === "blogs" && pathname.startsWith("/posts")) ||
@@ -58,6 +59,12 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
               <Link
                 key={neg.key}
                 href={neg.href}
+                onClick={(e) => {
+                  if (isWip) {
+                    e.preventDefault();
+                    openWipModal();
+                  }
+                }}
                 aria-current={isActive ? "page" : undefined}
                 className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
                   isActive
@@ -69,6 +76,11 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                 <span className="tracking-wider uppercase">
                   {isZh ? neg.labelZh : neg.label}
                 </span>
+                {isWip && (
+                  <span className="rounded-[1px] bg-amber-500/20 px-1 py-0.2 text-[8px] font-bold text-amber-600 dark:text-amber-400 border border-amber-500/30 tracking-tight ml-0.5">
+                    WIP
+                  </span>
+                )}
               </Link>
             );
           })}

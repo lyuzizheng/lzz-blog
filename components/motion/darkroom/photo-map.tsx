@@ -591,6 +591,9 @@ export function PhotoMap({
           <span className="truncate font-telemetry text-xs font-semibold tracking-widest uppercase text-text-primary">
             {isZh ? "摄影全屏地图" : "DARKROOM ATLAS"}
           </span>
+          <span className="rounded-[1px] bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-600 dark:text-amber-400 border border-amber-500/30 tracking-wider uppercase">
+            WIP
+          </span>
           <span className="hidden text-muted sm:inline">·</span>
 
           {/* Telemetry Indicator (PINS X · VISITED Y) */}
