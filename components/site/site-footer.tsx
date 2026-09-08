@@ -68,8 +68,13 @@ export function SiteFooter({ variant = "atelier" }: { variant?: "atelier" | "dar
             <Link href="/status" className="transition-colors hover:text-text-primary">
               {isZh ? "系统状态" : "STATUS"}
             </Link>
-            <a href="/resume.pdf" download className="transition-colors hover:text-text-primary">
-              {isZh ? "简历下载" : "DOWNLOAD PDF"}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-text-primary"
+            >
+              {isZh ? "简历 (PDF)" : "PDF RESUME"}
             </a>
         </div>
           </div>

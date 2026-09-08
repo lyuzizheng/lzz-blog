@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
-import { Download, Mail, Rocket, ChevronDown } from "lucide-react";
+import { FileText, Mail, Rocket, ChevronDown } from "lucide-react";
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -117,12 +117,13 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
             >
               <a
                 href="/resume.pdf"
-                download="Zizheng-Lyu-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 transition-colors hover:text-ink-dominant underline-offset-4 hover:underline cursor-pointer"
-                aria-label="Download PDF Resume"
+                aria-label={isZh ? "在新标签页打开预览 PDF 简历" : "Open PDF Resume in new tab"}
               >
-                <Download className="h-3.5 w-3.5 opacity-70" />
-                <span>{isZh ? "下载简历 (PDF)" : "RESUME (PDF)"}</span>
+                <FileText className="h-3.5 w-3.5 opacity-70" />
+                <span>{isZh ? "简历 (PDF)" : "RESUME (PDF)"}</span>
               </a>
 
               <span className="select-none text-muted opacity-40" aria-hidden="true">

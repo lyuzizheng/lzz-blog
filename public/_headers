@@ -23,4 +23,6 @@
 # Career Dossier PDF asset
 /resume.pdf
   Content-Type: application/pdf
+  Content-Disposition: inline; filename="Lyu_Zizheng_Resume.pdf"
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
