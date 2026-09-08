@@ -112,16 +112,49 @@ export function CareerDeck() {
     }
   }, [stageIndex, goToStage]);
 
-  // Wheel listener with threshold & cooldown
-  const lastWheelTimeRef = useRef(0);
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
-      const now = Date.now();
-      if (now - lastWheelTimeRef.current < 550) return;
+  // Wheel listener with delta accumulation, sub-tick sensitivity & momentum cooldown
+  const wheelAccumulatorRef = useRef(0);
+  const lastWheelTriggerRef = useRef(0);
+  const wheelResetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-      if (Math.abs(e.deltaY) > 30) {
-        lastWheelTimeRef.current = now;
-        if (e.deltaY > 0) {
+  const handleWheel = useCallback(
+    (e: WheelEvent | React.WheelEvent) => {
+      const native = "nativeEvent" in e ? e.nativeEvent : e;
+      if ((native as any).__careerDeckHandled) return;
+      (native as any).__careerDeckHandled = true;
+
+      // Prevent native browser scroll or rubber-banding
+      if ("cancelable" in e && e.cancelable) {
+        e.preventDefault();
+      }
+
+      const now = Date.now();
+      // Cooldown after transition: 420ms
+      if (now - lastWheelTriggerRef.current < 420) {
+        wheelAccumulatorRef.current = 0;
+        return;
+      }
+
+      // Handle both pixel-based trackpads and line-based mousewheels
+      const delta = e.deltaMode === 1 ? e.deltaY * 25 : e.deltaY;
+      wheelAccumulatorRef.current += delta;
+
+      if (wheelResetTimerRef.current) {
+        clearTimeout(wheelResetTimerRef.current);
+      }
+
+      // Reset accumulator on idle (120ms)
+      wheelResetTimerRef.current = setTimeout(() => {
+        wheelAccumulatorRef.current = 0;
+      }, 120);
+
+      const THRESHOLD = 16; // Gentle two-finger flick or 1 notch mouse wheel
+      if (Math.abs(wheelAccumulatorRef.current) >= THRESHOLD) {
+        const direction = wheelAccumulatorRef.current;
+        wheelAccumulatorRef.current = 0;
+        lastWheelTriggerRef.current = now;
+
+        if (direction > 0) {
           goNext();
         } else {
           goPrev();
@@ -131,25 +164,76 @@ export function CareerDeck() {
     [goNext, goPrev],
   );
 
-  // Touch swipe gesture listener
+  // Global window wheel listener so scrolling works seamlessly anywhere on screen
+  useEffect(() => {
+    const onWindowWheel = (e: WheelEvent) => {
+      handleWheel(e);
+    };
+
+    window.addEventListener("wheel", onWindowWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWindowWheel);
+    };
+  }, [handleWheel]);
+
+  // Touch swipe gesture listener with velocity & flick detection
   const touchStartYRef = useRef<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartTimeRef = useRef<number>(0);
+  const lastTouchTriggerRef = useRef<number>(0);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartYRef.current = e.touches[0].clientY;
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartTimeRef.current = Date.now();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartYRef.current === null) return;
-    const touchEndY = e.changedTouches[0].clientY;
-    const diff = touchStartYRef.current - touchEndY;
-    touchStartYRef.current = null;
+    const now = Date.now();
+    if (now - lastTouchTriggerRef.current < 380) {
+      touchStartYRef.current = null;
+      touchStartXRef.current = null;
+      return;
+    }
 
-    if (Math.abs(diff) > 35) {
-      if (diff > 0) {
-        goNext();
-      } else {
-        goPrev();
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffY = touchStartYRef.current - touchEndY;
+    const diffX = (touchStartXRef.current ?? touchEndX) - touchEndX;
+    const duration = Math.max(now - touchStartTimeRef.current, 1);
+
+    touchStartYRef.current = null;
+    touchStartXRef.current = null;
+
+    // Check vertical dominance
+    if (Math.abs(diffY) > Math.abs(diffX) * 0.75) {
+      const velocityY = Math.abs(diffY) / duration;
+      // Flick: small displacement (>12px) with fast velocity (>0.18 px/ms)
+      // Drag: displacement > 20px
+      const isFlick = velocityY > 0.18 && Math.abs(diffY) > 12;
+      const isDrag = Math.abs(diffY) > 20;
+
+      if (isFlick || isDrag) {
+        lastTouchTriggerRef.current = now;
+        if (diffY > 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
       }
     }
+  };
+
+  const handleTouchCancel = () => {
+    touchStartYRef.current = null;
+    touchStartXRef.current = null;
   };
 
   // Keyboard navigation
@@ -205,7 +289,9 @@ export function CareerDeck() {
     <div
       onWheel={handleWheel}
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
       className="relative flex h-[calc(100dvh-3.5rem)] w-full flex-col overflow-hidden bg-substrate select-none overscroll-none touch-none"
       role="region"
       aria-label="Career Deck Vertical Snap Reel"
