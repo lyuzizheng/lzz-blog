@@ -5,7 +5,7 @@ import type { Post } from "#site/content";
 
 export function PostAside({ post }: { post: Post }) {
   return (
-    <aside className="hidden lg:col-span-4 lg:block">
+    <aside className="hidden lg:block">
       <div className="sticky top-8 max-w-[15rem] space-y-8">
         {post.toc && post.toc.length > 0 && <TableOfContents items={post.toc} />}
 

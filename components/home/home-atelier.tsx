@@ -29,8 +29,8 @@ export function HomeAtelier() {
       </div>
 
       {/* Center column: identity + film stack enclosed in darkroom easel frame */}
-      <div className="relative z-10 mx-auto flex w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl flex-1 flex-col items-center justify-center px-4 py-4 sm:px-6 sm:py-6">
-        <div className="relative flex w-full flex-col items-center px-4 py-6 sm:px-8 sm:py-7 md:px-12 md:py-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl flex-1 flex-col items-center justify-center px-3 py-2 sm:px-6 sm:py-6">
+        <div className="relative flex w-full flex-col items-center px-3 py-3 sm:px-8 sm:py-7 md:px-12 md:py-8">
           {/* BRAWUKA-86 · Darkroom easel light-table frame enclosing identity + chapter negatives */}
           <div
             className="pointer-events-none absolute inset-0 rounded-[4px] border border-[var(--ink-faint)]"
@@ -79,23 +79,22 @@ export function HomeAtelier() {
               width={88}
               height={88}
               priority
-              className="rounded-full border border-border-plate object-cover shadow-[var(--shadow-plate)]"
-              style={{ width: 88, height: 88 }}
+              className="h-16 w-16 rounded-full border border-border-plate object-cover shadow-[var(--shadow-plate)] sm:h-[88px] sm:w-[88px]"
             />
-            <p className="mt-4 font-telemetry text-[11px] uppercase tracking-[0.24em] text-muted">
+            <p className="mt-2 font-telemetry text-[9px] uppercase tracking-[0.18em] text-muted sm:mt-4 sm:text-[11px] sm:tracking-[0.24em]">
               {t.home.tagline}
             </p>
-            <h1 className="mt-2 font-display text-3xl font-normal leading-tight tracking-tight text-primary sm:text-4xl">
+            <h1 className="mt-1 font-display text-2xl font-normal leading-tight tracking-tight text-primary sm:mt-2 sm:text-4xl">
               {t.home.title}
             </h1>
-            <p className="mt-3 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl font-body text-sm leading-relaxed text-muted sm:text-base">
+            <p className="mt-2 max-w-md font-body text-[12px] leading-[1.45] text-muted sm:mt-3 sm:max-w-xl sm:text-base sm:leading-relaxed md:max-w-2xl lg:max-w-3xl">
               {t.home.heroSubtitle}
             </p>
 
             {/* Social matrix */}
             <nav
               aria-label="Social links"
-              className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-telemetry text-xs tracking-wider text-muted"
+              className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-telemetry text-[10px] tracking-wide text-muted sm:mt-4 sm:gap-x-3 sm:gap-y-2 sm:text-xs sm:tracking-wider"
             >
               {SOCIAL_LINKS.map((link, index) => (
                 <React.Fragment key={link.key}>
@@ -117,7 +116,7 @@ export function HomeAtelier() {
             </nav>
           </header>
 
-          <div className="mt-6 w-full sm:mt-8">
+          <div className="mt-3 w-full sm:mt-8">
             <FilmStack />
           </div>
         </div>

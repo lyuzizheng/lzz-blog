@@ -13,7 +13,7 @@ export function PostNavigation({
   return (
     <nav
       aria-label="相邻文章"
-      className="mt-8 max-w-[40rem] border-t-2 border-border-strong xl:ml-[13.5rem]"
+      className="mt-8 max-w-[40rem] border-t-2 border-border-strong"
     >
       {prev && (
         <Link

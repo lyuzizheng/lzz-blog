@@ -54,7 +54,7 @@ export default async function PostDetailPage({ params }: PageProps) {
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
       <ReaderEyebrow backHref="/posts" backLabel="Posts & Thoughts" />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <div className="mb-8 lg:hidden">
           <TocMobileProgress items={post.toc} />
         </div>
@@ -62,14 +62,14 @@ export default async function PostDetailPage({ params }: PageProps) {
         <PostHeader post={post} />
         <PostCover post={post} />
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-          <div className="min-w-0 lg:col-span-8">
-            <div className="reader-article max-w-[40rem] xl:ml-[13.5rem]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,40rem)_14rem] lg:justify-between">
+          <div className="min-w-0">
+            <div className="reader-article max-w-[40rem]">
               <MdxContent code={post.content} />
             </div>
 
             {post.tags.length > 0 && (
-              <div className="mt-12 max-w-[40rem] border-t border-border-plate pt-4 xl:ml-[13.5rem]">
+              <div className="mt-12 max-w-[40rem] border-t border-border-plate pt-4">
                 <div className="flex flex-wrap items-center gap-2 font-telemetry text-xs text-muted">
                   <span className="tracking-[0.14em]">TAGS //</span>
                   {post.tags.map((tag) => (
