@@ -6,24 +6,117 @@ import {
   PrintResumeButton,
 } from "@/components/motion/resume";
 import { SiteHeader } from "@/components/site";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "履历与生涯航线 · Career Flight Path — LZZ Atelier · LZZ Blog",
+  title: "履历与工程生涯 · Career & Engineering — LZZ Atelier",
   description:
-    "Zizheng Lyu's career flight path and engineering capabilities: distributed systems, platform infrastructure, and product craftsmanship.",
+    "Lyu Zizheng (Product Engineer 3 @ Wise, Ex-ByteDance) — 5+ years architecting high-concurrency distributed systems, financial payment engines, and production AI evaluation infrastructure.",
+  keywords: [
+    "Lyu Zizheng",
+    "Resume",
+    "Curriculum Vitae",
+    "Product Engineer 3",
+    "Wise",
+    "ByteDance",
+    "TikTok IM",
+    "Distributed Systems",
+    "High Concurrency",
+    "Golang",
+    "Java",
+    "Kafka",
+    "Redis ZSET",
+    "AI Evaluation Infrastructure",
+    "Singapore Citizen",
+  ],
+  alternates: {
+    canonical: `${siteConfig.url}/resume`,
+  },
+  openGraph: {
+    title: "Lyu Zizheng · 履历与工程生涯 (Career & Engineering) — LZZ Atelier",
+    description:
+      "Senior Product & Systems Engineer with 5+ years of experience in high-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
+    url: `${siteConfig.url}/resume`,
+    siteName: siteConfig.name,
+    locale: "zh_CN",
+    type: "profile",
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "Lyu Zizheng · Career & Engineering",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lyu Zizheng · 履历与工程生涯 (Career & Engineering)",
+    description:
+      "Senior Product & Systems Engineer @ Wise. High-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
+    images: ["/og"],
+  },
 };
 
 /**
- * BRAWUKA-93 · Career 页面全景重构（固定单屏纵向分幕流转 + 定制阶段背景 + 真实战役数据沉淀）
+ * Career 页面全景（固定单屏纵向分幕流转 + 定制阶段背景 + 真实战役数据沉淀）
  * - 统一顶部导航：复用全局 SiteHeader，全站 100% 一致常驻
- * - 固定单屏纵向吸附流转：100dvh 容器，上下渐隐飞出（Vertical Fade + Y-Parallax + Scale 0.98→1.0）
- * - 专属舞台背景：4 款独立高精度 Thematic Stage Canvas (Wise / MariBank / Bondee / ByteDance)
- * - 真实战役数据沉淀：Wise AI Workflow 80k/mo、MariBank 金融一致性、Bondee Vector+Kafka、TikTok IM 20+ 微服务
+ * - 固定单屏纵向吸附流转：100dvh 容器，上下渐隐飞出（Vertical Fade + Y-Parallax）
+ * - 专属舞台背景：4 款独立高精度 Thematic Stage Canvas (Wise / Exploration / Bytedance / Hero)
+ * - 真实战役数据沉淀：Wise AI Workflow 80k/mo、MariBank 金融一致性、Bondee Vector+Kafka、TikTok IM
  * - 双模履历：交互浏览模式 + @media print 出版级 A4 纸质/PDF 导出
  */
 export default function ResumePage() {
+  // Structured Data (Schema.org ProfilePage & Person)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: "Lyu Zizheng · Career & Engineering Profile",
+    url: `${siteConfig.url}/resume`,
+    mainEntity: {
+      "@type": "Person",
+      name: "Lyu Zizheng",
+      alternateName: "吕子正",
+      jobTitle: "Senior Product & Systems Engineer",
+      worksFor: {
+        "@type": "Organization",
+        name: "Wise",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Nanyang Technological University",
+      },
+      url: `${siteConfig.url}/resume`,
+      image: `${siteConfig.url}/avatar.jpg`,
+      sameAs: [
+        siteConfig.social.linkedin,
+        siteConfig.social.github,
+        siteConfig.url,
+      ],
+      knowsAbout: [
+        "Distributed Systems",
+        "High Concurrency Architecture",
+        "Instant Messaging Protocols",
+        "Presence Engines",
+        "Financial Payment Core",
+        "AI Evaluation Infrastructure",
+        "Deterministic DAG State Machines",
+        "Golang",
+        "Java",
+        "Kafka",
+        "Redis",
+        "Kubernetes",
+      ],
+    },
+  };
+
   return (
     <div className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-substrate text-primary transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* 1. 统一顶部导航 (Header Parity - 100% 保持全局一致常驻) */}
       <SiteHeader />
 
