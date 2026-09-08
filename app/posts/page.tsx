@@ -5,47 +5,39 @@ import { ArchiveList, type ArchivePost } from "@/components/posts/archive-list";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "文章归档 · Posts & Thoughts | LZZ Blog — LZZ Atelier",
+  title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
   description:
-    "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
+    "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
   keywords: [
-    "分布式系统",
-    "高并发",
-    "即时通讯",
-    "TikTok IM",
-    "Wise",
-    "ByteDance",
-    "Golang",
-    "Java",
-    "Kafka",
-    "Redis",
-    "Distributed Systems",
+    ...siteConfig.keywords,
     "Engineering Blog",
+    "Architecture Essays",
   ],
   alternates: { canonical: `${siteConfig.url}/posts` },
   openGraph: {
-    title: "文章归档 · Posts & Thoughts | LZZ Blog",
+    title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
     description:
-      "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
+      "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
     url: `${siteConfig.url}/posts`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: "/og",
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Posts & Thoughts · LZZ Blog",
+        alt: "Posts & Thoughts · Lyu Zizheng",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "文章归档 · Posts & Thoughts | LZZ Blog",
+    title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
     description:
-      "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
-    images: ["/og"],
+      "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
+    images: [`${siteConfig.url}/opengraph-image`],
   },
 };
 

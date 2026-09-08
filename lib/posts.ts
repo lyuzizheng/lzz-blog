@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { posts, type Post } from "#site/content";
+import { siteConfig } from "@/lib/site";
 
 /**
  * Case-insensitive post lookup with alias and leaf-bundle support.
@@ -52,17 +53,17 @@ export function generatePostMetadata(post: Post, slug: string[]): Metadata {
   const ogImage = `/og?title=${encodeURIComponent(post.title)}&sub=${encodeURIComponent(ogSub)}`;
 
   return {
-    title: `${post.title} · LZZ Blog`,
-    description: post.summary || post.description || "LZZ Personal Blog & Engineering Atelier",
+    title: `${post.title} · Lyu Zizheng`,
+    description: post.summary || post.description || "Technical writing by Lyu Zizheng",
     keywords: post.tags,
-    authors: [{ name: post.author || "Zizheng Lyu" }],
+    authors: [{ name: post.author || siteConfig.author }],
     alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description: post.summary || post.description,
       type: "article",
       publishedTime: post.date,
-      authors: [post.author || "Zizheng Lyu"],
+      authors: [post.author || siteConfig.author],
       tags: post.tags,
       url,
       images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],

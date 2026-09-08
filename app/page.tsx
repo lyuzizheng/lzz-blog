@@ -4,50 +4,32 @@ import { HomeAtelier } from "@/components/home";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer | LZZ Atelier",
-  description:
-    "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance, NTU). High-concurrency distributed systems, real-time messaging, AI evaluation infrastructure, and 35mm photography.",
-  keywords: [
-    "Lyu Zizheng",
-    "Zizheng Lyu",
-    "吕子正",
-    "Product Engineer",
-    "Senior Software Engineer",
-    "Wise",
-    "ByteDance",
-    "TikTok IM",
-    "Distributed Systems",
-    "High Concurrency",
-    "AI Evaluation Infrastructure",
-    "Golang",
-    "Java",
-    "Photography",
-    "Singapore",
-  ],
+  title: "Lyu Zizheng (吕子正) — Senior Product & Systems Engineer",
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer",
-    description:
-      "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance). High-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
+    title: "Lyu Zizheng (吕子正) — Senior Product & Systems Engineer",
+    description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: "/og",
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Zizheng Lyu · Engineering Atelier",
+        alt: "Lyu Zizheng (吕子正) — Senior Product & Systems Engineer",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer",
-    description:
-      "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance). High-concurrency distributed systems, real-time messaging, and AI automation.",
-    images: ["/og"],
+    title: "Lyu Zizheng (吕子正) — Senior Product & Systems Engineer",
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/opengraph-image`],
   },
 };
 

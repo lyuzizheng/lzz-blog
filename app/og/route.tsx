@@ -4,14 +4,12 @@ import { siteConfig } from "@/lib/site";
 
 /**
  * Shared OG card endpoint: /og?title=…&sub=…
- * Per-article cards link here from generateMetadata (a colocated
- * opengraph-image under [...slug] is illegal — catch-all must be last).
- * NOTE: next/og requires explicit display:flex on every multi-child node.
+ * High-signal dynamic card for individual blog posts and special views.
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get("title") || "LZZ Blog";
-  const sub = searchParams.get("sub") || siteConfig.description;
+  const title = searchParams.get("title") || siteConfig.name;
+  const sub = searchParams.get("sub") || "Systems, Products & Stories";
 
   return new ImageResponse(
     (
@@ -24,25 +22,103 @@ export async function GET(request: NextRequest) {
           justifyContent: "space-between",
           backgroundColor: "#0D0E11",
           color: "#F4F4F5",
-          padding: "64px 72px",
-          fontFamily: "Georgia, 'Times New Roman', serif",
+          padding: "60px 72px",
+          fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, color: "#9BA0AB" }}>
-          <span>LZZ ATELIER</span>
-          <span>{siteConfig.url.replace("https://", "")}</span>
+        {/* Top Header */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: 20,
+            letterSpacing: "0.1em",
+            color: "#9BA0AB",
+            textTransform: "uppercase",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ fontWeight: 700, color: "#FFFFFF" }}>LYU ZIZHENG</span>
+            <span style={{ margin: "0 10px", color: "#4E75F8" }}>·</span>
+            <span>吕子正</span>
+          </div>
+          <span style={{ color: "#858C9B" }}>brabalawuka.cc</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <div style={{ display: "flex", width: 96, height: 6, backgroundColor: "#E54B4B" }} />
-          <div style={{ display: "flex", flexDirection: "column", fontSize: 64, lineHeight: 1.1 }}>
+
+        {/* Center Content */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "rgba(224, 84, 84, 0.12)",
+              border: "1px solid rgba(224, 84, 84, 0.35)",
+              borderRadius: "4px",
+              padding: "5px 12px",
+              fontSize: 16,
+              letterSpacing: "0.14em",
+              color: "#E05454",
+              textTransform: "uppercase",
+              marginBottom: 20,
+            }}
+          >
+            <span>ENGINEERING ESSAY</span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              fontSize: 56,
+              fontWeight: 700,
+              lineHeight: 1.15,
+              letterSpacing: "-0.02em",
+              color: "#FFFFFF",
+              marginBottom: 16,
+              maxWidth: "1020px",
+            }}
+          >
             <span>{title}</span>
           </div>
-          <div style={{ display: "flex", fontSize: 24, color: "#9BA0AB" }}>
+
+          <div
+            style={{
+              display: "flex",
+              fontSize: 24,
+              lineHeight: 1.4,
+              color: "#9BA0AB",
+            }}
+          >
             <span>{sub}</span>
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 22, color: "#9BA0AB" }}>
-          <span>{siteConfig.author}</span>
+
+        {/* Footer bar */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: 18,
+            borderTop: "1px solid #232733",
+            paddingTop: 24,
+            color: "#858C9B",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span>Wise Product Engineer</span>
+            <span style={{ margin: "0 10px" }}>·</span>
+            <span>Ex-TikTok IM</span>
+            <span style={{ margin: "0 10px" }}>·</span>
+            <span>Distributed Systems</span>
+          </div>
+          <span style={{ color: "#4E75F8", fontWeight: 600 }}>Read Article →</span>
         </div>
       </div>
     ),

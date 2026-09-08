@@ -3,42 +3,41 @@ import { DarkroomGallery, PhotographyMasterView } from "@/components/motion/dark
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "摄影画廊与暗房地图 · The Darkroom Atlas — LZZ Atelier",
+  title: "35mm 暗房与纪实摄影 | Lyu Zizheng",
   description:
-    "Photographic cartography with visited pins, geodetic EXIF telemetry, and the digital darkroom lightbox on Sony A7M4. 35mm film aesthetics.",
+    "索尼 A7M4 与 35mm 胶片摄影作品，包含带 GPS EXIF 遥测的交互式暗房地图与画廊。",
   keywords: [
+    ...siteConfig.keywords,
     "Photography",
     "Darkroom",
     "Sony A7M4",
     "35mm Film",
-    "EXIF Telemetry",
-    "Singapore Photography",
-    "Lyu Zizheng",
   ],
   alternates: { canonical: `${siteConfig.url}/photography` },
   openGraph: {
-    title: "摄影画廊与暗房地图 · The Darkroom Atlas — LZZ Atelier",
+    title: "35mm 暗房与纪实摄影 | Lyu Zizheng",
     description:
-      "Photographic cartography with visited pins, geodetic EXIF telemetry, and the digital darkroom lightbox on Sony A7M4.",
+      "索尼 A7M4 与 35mm 胶片摄影作品，包含带 GPS EXIF 遥测的交互式暗房地图与画廊。",
     url: `${siteConfig.url}/photography`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: "/og",
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "The Darkroom Atlas",
+        alt: "35mm 暗房与纪实摄影 | Lyu Zizheng",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "摄影画廊与暗房地图 · The Darkroom Atlas — LZZ Atelier",
+    title: "35mm 暗房与纪实摄影 | Lyu Zizheng",
     description:
-      "Photographic cartography with visited pins, geodetic EXIF telemetry, and the digital darkroom lightbox on Sony A7M4.",
-    images: ["/og"],
+      "索尼 A7M4 与 35mm 胶片摄影作品，包含带 GPS EXIF 遥测的交互式暗房地图与画廊。",
+    images: [`${siteConfig.url}/opengraph-image`],
   },
 };
 
