@@ -238,17 +238,20 @@ export function CareerDeck() {
             exit="exit"
             className="flex h-full w-full flex-col justify-center overflow-y-auto"
           >
-            {currentStage.id === "hero" && (
-              <StageHero onExploreNext={() => goToStage(1)} />
-            )}
-            {currentStage.id === "bytedance" && (
-              <StageBytedance onExploreNext={() => goToStage(2)} />
+            {currentStage.id === "wise" && (
+              <StageWise onExploreNext={() => goToStage(1)} />
             )}
             {currentStage.id === "exploration" && (
-              <StageExploration onExploreNext={() => goToStage(3)} />
+              <StageExploration onExploreNext={() => goToStage(2)} />
             )}
-            {currentStage.id === "wise" && (
-              <StageWise onScrollToTop={() => goToStage(0)} />
+            {currentStage.id === "bytedance" && (
+              <StageBytedance onExploreNext={() => goToStage(3)} />
+            )}
+            {currentStage.id === "hero" && (
+              <StageHero
+                onScrollToTop={() => goToStage(0)}
+                onExploreNext={() => goToStage(0)}
+              />
             )}
           </motion.div>
         </AnimatePresence>
