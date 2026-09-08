@@ -1,73 +1,51 @@
-import type { Metadata } from "next";
+import React from "react";
 import { notFound } from "next/navigation";
-import { posts } from "#site/content";
-import { MdxContent } from "@/components/mdx-content";
+import { MdxContent } from "@/components/mdx/mdx-content";
+import { TocMobileProgress } from "@/components/posts/toc";
 import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome";
 import { PostHeader } from "@/components/posts/post-header";
 import { PostCover } from "@/components/posts/post-cover";
-import { PostAside } from "@/components/posts/post-aside";
 import { PostNavigation } from "@/components/posts/post-navigation";
-import { TocMobileProgress } from "@/components/posts/toc-mobile-progress";
-import { siteConfig } from "@/lib/metadata";
+import { PostAside } from "@/components/posts/post-aside";
+import {
+  findPostBySlugSegments,
+  generatePostStaticParams,
+  generatePostMetadata,
+  getAdjacentPosts,
+} from "@/lib/posts";
 
-interface PostPageProps {
-  params: Promise<{ slug: string[] }>;
+interface PageProps {
+  params: Promise<{
+    slug: string[];
+  }>;
 }
 
-export async function generateStaticParams() {
-  return posts.map((post) => ({
-    slug: post.slugAsParams.split("/"),
-  }));
-}
+export { generatePostStaticParams as generateStaticParams };
 
-export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const slugPath = slug.join("/");
-  const post = posts.find((p) => p.slugAsParams === slugPath);
+  const post = findPostBySlugSegments(slug);
 
   if (!post) {
-    return {};
+    return {
+      title: "文章未找到 · LZZ Blog",
+      description: "请求的文章不存在或已被移动。",
+    };
   }
 
-  const ogUrl = new URL("/og", siteConfig.url);
-  ogUrl.searchParams.set("title", post.title);
-  if (post.description) {
-    ogUrl.searchParams.set("description", post.description);
-  }
-
-  return {
-    title: `${post.title} · Posts & Thoughts | LZZ Blog`,
-    description: post.description,
-    authors: [{ name: "Zizheng Lyu" }],
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: "article",
-      publishedTime: post.date,
-      url: `${siteConfig.url}${post.permalink}`,
-      images: [{ url: ogUrl.toString(), width: 1200, height: 630, alt: post.title }],
-    },
-  };
+  return generatePostMetadata(post, slug);
 }
 
-function getAdjacentPosts(currentPost: (typeof posts)[number]) {
-  const sorted = [...posts]
-    .filter((p) => !p.draft)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  const currentIndex = sorted.findIndex((p) => p.slug === currentPost.slug);
-
-  return {
-    prev: currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null,
-    next: currentIndex > 0 ? sorted[currentIndex - 1] : null,
-  };
-}
-
-export default async function PostPage({ params }: PostPageProps) {
+/**
+ * BRAWUKA-61 · 文章阅读页（主战场）：
+ * 屏内眉脚（Q10-A）/ 跨栏引言 / 左侧 <Aside> gutter（xl+）/
+ * 章节序号 rail（进度融合）/ 档案条目导航 / telemetry 单行。
+ */
+export default async function PostDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const slugPath = slug.join("/");
-  const post = posts.find((p) => p.slugAsParams === slugPath);
+  const post = findPostBySlugSegments(slug);
 
-  if (!post || post.draft) {
+  if (!post) {
     notFound();
   }
 
