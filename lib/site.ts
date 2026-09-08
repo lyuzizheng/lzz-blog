@@ -3,21 +3,31 @@
  * Canonical origin: https://brabalawuka.cc (from legacy_hugo/config.yml baseURL).
  */
 export const siteConfig = {
-  name: "LZZ Blog",
-  atelier: "LZZ Atelier · The Digital Darkroom & Print Atelier",
-  author: "Zizheng Lyu",
+  name: "Lyu Zizheng · 吕子正",
+  atelier: "LZZ Atelier · Lyu Zizheng",
+  author: "Lyu Zizheng",
+  authorZh: "吕子正",
   url: "https://brabalawuka.cc",
   locale: "zh-CN",
   description:
-    "Personal digital darkroom & engineering atelier of Zizheng Lyu. Physicality meets fluid dynamics: Next.js 15, Tailwind CSS v4, Lenis smooth scrolling.",
+    "吕子正（Lyu Zizheng）的技术主页与随笔。Wise 资深产品工程师，前字节跳动 TikTok IM 核心研发。聚焦高并发分布式系统、AI 评估基建与 35mm 胶片摄影。",
+  descriptionEn:
+    "Personal engineering atelier & technical essays of Lyu Zizheng. Senior Product & Systems Engineer at Wise (ex-ByteDance, NTU). High-concurrency distributed systems, real-time messaging, AI evaluation, and 35mm photography.",
   keywords: [
+    "Lyu Zizheng",
     "Zizheng Lyu",
-    "Next.js 15",
-    "Digital Darkroom",
-    "Print Atelier",
-    "Tailwind CSS v4",
-    "Lenis",
-    "Motion",
+    "吕子正",
+    "Wise Product Engineer",
+    "ByteDance Engineer",
+    "TikTok IM",
+    "Distributed Systems",
+    "High Concurrency",
+    "AI Evaluation",
+    "FinTech",
+    "Golang",
+    "Java",
+    "Singapore",
+    "Darkroom Photography",
   ],
   social: {
     twitter: "https://twitter.com/brabalawuka",

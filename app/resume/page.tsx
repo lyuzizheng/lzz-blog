@@ -9,52 +9,45 @@ import { SiteHeader } from "@/components/site";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "履历与工程生涯 · Career & Engineering — LZZ Atelier",
+  title: "Lyu Zizheng · 履历与工程生涯 (Career & Resume)",
   description:
-    "Lyu Zizheng (Product Engineer 3 @ Wise, Ex-ByteDance) — 5+ years architecting high-concurrency distributed systems, financial payment engines, and production AI evaluation infrastructure.",
+    "Wise 资深产品工程师（Tech Owner），前字节跳动 TikTok IM 核心研发。5 年+ 高并发分布式系统、实时通讯与金融 AI 自动化评估平台经验。",
   keywords: [
-    "Lyu Zizheng",
+    ...siteConfig.keywords,
     "Resume",
     "Curriculum Vitae",
     "Product Engineer 3",
-    "Wise",
-    "ByteDance",
-    "TikTok IM",
-    "Distributed Systems",
-    "High Concurrency",
-    "Golang",
-    "Java",
-    "Kafka",
     "Redis ZSET",
-    "AI Evaluation Infrastructure",
+    "Kafka",
     "Singapore Citizen",
   ],
   alternates: {
     canonical: `${siteConfig.url}/resume`,
   },
   openGraph: {
-    title: "Lyu Zizheng · 履历与工程生涯 (Career & Engineering) — LZZ Atelier",
+    title: "Lyu Zizheng · 履历与工程生涯 (Career & Resume)",
     description:
-      "Senior Product & Systems Engineer with 5+ years of experience in high-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
+      "Wise 资深产品工程师（Tech Owner），前字节跳动 TikTok IM 核心研发。5 年+ 高并发分布式系统、实时通讯与金融 AI 自动化评估平台经验。",
     url: `${siteConfig.url}/resume`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "profile",
     images: [
       {
-        url: "/og",
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Lyu Zizheng · Career & Engineering",
+        alt: "Lyu Zizheng · 履历与工程生涯",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lyu Zizheng · 履历与工程生涯 (Career & Engineering)",
+    title: "Lyu Zizheng · 履历与工程生涯 (Career & Resume)",
     description:
-      "Senior Product & Systems Engineer @ Wise. High-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
-    images: ["/og"],
+      "Wise 资深产品工程师（Tech Owner），前字节跳动 TikTok IM 核心研发。5 年+ 高并发分布式系统、实时通讯与金融 AI 自动化评估平台经验。",
+    images: [`${siteConfig.url}/opengraph-image`],
   },
 };
 
