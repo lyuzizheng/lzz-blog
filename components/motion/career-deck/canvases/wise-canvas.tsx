@@ -3,81 +3,51 @@ import React from "react";
 /**
  * Act 1 Thematic Canvas: Modernist Typographic Backdrop (Wise Payments)
  *
- * Clean, architectural branding backdrop:
- * - Bold layered brand names: WISE + PAYMENTS
- * - Solid faint ink fill + razor-sharp hollow outline
- * - Minimalist corner framing & subtle ambient wash
+ * Diagonal Composition (/ Layout):
+ * - Top-Right: Solid bold "WISE"
+ * - Bottom-Left: Razor-sharp outline "PAYMENTS"
+ * Placed in corners to ensure 100% visibility without being occluded by center cards.
  */
 export function WiseCanvas() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Ambient background wash */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
+      {/* Ambient background glow */}
       <div
-        className="absolute inset-0 opacity-[0.035] dark:opacity-[0.05]"
+        className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
         style={{
           background:
-            "radial-gradient(ellipse at 75% 40%, var(--ink-dominant) 0%, transparent 65%)",
+            "radial-gradient(ellipse at 80% 25%, var(--ink-dominant) 0%, transparent 65%)",
         }}
       />
 
-      <svg
-        className="absolute inset-0 h-full w-full opacity-100 transition-opacity duration-500 select-none"
-        viewBox="0 0 1000 800"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        {/* Subtle architectural frame accents */}
-        <g stroke="var(--ink-dominant)" strokeWidth="0.8" opacity="0.12">
-          {/* Minimal corner crosshairs */}
-          <path d="M 60 70 L 60 50 L 80 50" />
-          <path d="M 940 70 L 940 50 L 920 50" />
-          <path d="M 60 730 L 60 750 L 80 750" />
-          <path d="M 940 730 L 940 750 L 920 750" />
-          {/* Subtle center hairline */}
-          <line x1="500" y1="60" x2="500" y2="740" strokeDasharray="4 8" opacity="0.4" />
-        </g>
+      {/* Subtle corner architectural hairline crosshairs */}
+      <div className="absolute top-3 left-3 sm:top-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
+        <span>+ 01 // WISE · PAYOUTS DEFECTS</span>
+      </div>
+      <div className="absolute bottom-3 right-3 sm:bottom-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
+        <span>LONDON · SINGAPORE // £80K/MO +</span>
+      </div>
 
-        {/* --- High-Impact Editorial Typographic Backing --- */}
-        {/* 1. Primary Solid Brand Name */}
-        <text
-          x="500"
-          y="390"
-          textAnchor="middle"
-          fill="var(--ink-dominant)"
-          opacity="0.04"
-          className="font-display font-black tracking-tighter uppercase"
-          style={{ fontSize: "190px", letterSpacing: "-0.05em" }}
-        >
+      {/* 1. Top-Right: Solid Bold WISE */}
+      <div className="absolute -top-2 sm:top-2 md:top-6 right-2 sm:right-6 md:right-10 text-right leading-none">
+        <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
           WISE
-        </text>
+        </span>
+      </div>
 
-        {/* 2. Secondary Architectural Outline Brand */}
-        <text
-          x="500"
-          y="520"
-          textAnchor="middle"
-          fill="none"
-          stroke="var(--ink-dominant)"
-          strokeWidth="1.6"
-          opacity="0.065"
-          className="font-display font-black tracking-tighter uppercase"
-          style={{ fontSize: "115px", letterSpacing: "-0.04em" }}
+      {/* 2. Bottom-Left: Razor-Sharp Outline PAYMENTS */}
+      <div className="absolute -bottom-2 sm:bottom-3 md:bottom-8 left-2 sm:left-6 md:left-10 text-left leading-none">
+        <span
+          className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-black uppercase tracking-tighter leading-none"
+          style={{
+            WebkitTextStroke: "1.6px var(--ink-dominant)",
+            color: "transparent",
+            opacity: 0.12,
+          }}
         >
           PAYMENTS
-        </text>
-
-        {/* Minimalist Telemetry Meta */}
-        <g
-          fill="var(--ink-dominant)"
-          className="font-telemetry text-[9px] uppercase tracking-widest"
-          opacity="0.25"
-        >
-          <text x="70" y="70">WISE // FINTECH CORE</text>
-          <text x="930" y="70" textAnchor="end">LONDON · SINGAPORE</text>
-          <text x="70" y="745">DEFECTS GOVERNANCE // DETERMINISTIC AI</text>
-          <text x="930" y="745" textAnchor="end">£80K/MO ROI</text>
-        </g>
-      </svg>
+        </span>
+      </div>
     </div>
   );
 }
