@@ -79,9 +79,17 @@ const FILMS: ReadonlyArray<FilmSpec> = [
 const MOBILE_LABEL_POSE: Record<FilmKey, string> = {
   blogs: "right-2 top-2 text-right",
   career: "left-2 top-2",
-  photography: "bottom-2 left-2",
+  photography: "left-2 top-2",
   projects: "bottom-2 left-2",
   records: "bottom-2 right-2 text-right",
+};
+
+const DESKTOP_LABEL_POSE: Record<FilmKey, string> = {
+  blogs: "left-2 top-2",
+  career: "bottom-1.5 right-2 text-right",
+  photography: "left-2 top-2",
+  projects: "bottom-1.5 left-2",
+  records: "bottom-1.5 right-2 text-right",
 };
 
 const INK = "var(--ink-dominant)";
@@ -198,7 +206,9 @@ function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
         >
           {label}
         </span>
-        <span className="absolute bottom-1.5 left-2 hidden font-display text-lg leading-none text-primary sm:block">
+        <span
+          className={`absolute hidden font-display text-lg leading-none text-primary sm:block ${DESKTOP_LABEL_POSE[film.key]}`}
+        >
           {label}
         </span>
         {isWip && (

@@ -68,6 +68,22 @@ for (const ch of ["/posts", "/resume", "/photography", "/products", "/weekly-rec
   check(chaptersSource.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
 }
 check(siteHeader.includes("LanguageSwitch") && siteHeader.includes("SafelightSwitch"), "shared site header must include language and safelight switches");
+check(
+  siteHeader.includes('aria-controls="mobile-chapter-menu"') &&
+    siteHeader.includes("aria-expanded={menuOpen}"),
+  "shared site header must expose an accessible mobile chapter menu"
+);
+check(
+  siteHeader.includes('id="mobile-chapter-menu"') &&
+    siteHeader.includes("onNavigate={() => setMenuOpen(false)}"),
+  "mobile chapter menu must render the five labeled links and close after selection"
+);
+check(
+  siteHeader.includes("className=\"hidden min-w-0") &&
+    siteHeader.includes("sm:flex") &&
+    siteHeader.includes("sm:hidden"),
+  "shared site header must keep full navigation on desktop and condense it on mobile"
+);
 
 // 4. 大卡片时间线流（Big cards timeline with cover, title, description, tags, time, reading time）
 check(archiveList.includes("border-l") && archiveList.includes("border-border-plate"), "archive list must render single-column vertical timeline axis");
