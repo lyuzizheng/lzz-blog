@@ -304,15 +304,14 @@ export function CareerDeck() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-25 dark:opacity-20 transition-opacity duration-500"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-100 transition-opacity duration-500"
         >
-          {currentStage.id === "hero" && <HeroCanvas />}
+          {currentStage.id === "hero" && <HeroCanvas mode="hero" />}
           {currentStage.id === "wise" && <WiseCanvas />}
           {currentStage.id === "exploration" && <ExplorationCanvas />}
-          {(currentStage.id === "bytedance-im" || currentStage.id === "bytedance-infra") && (
-            <BytedanceCanvas />
-          )}
-          {currentStage.id === "education" && <HeroCanvas />}
+          {currentStage.id === "bytedance-im" && <BytedanceCanvas mode="im" />}
+          {currentStage.id === "bytedance-infra" && <BytedanceCanvas mode="infra" />}
+          {currentStage.id === "education" && <HeroCanvas mode="education" />}
         </motion.div>
       </AnimatePresence>
 

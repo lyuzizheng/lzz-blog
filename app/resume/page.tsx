@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: "profile",
     images: [
       {
-        url: `${siteConfig.url}/opengraph-image`,
+        url: `${siteConfig.url}/og?title=${encodeURIComponent("Lyu Zizheng · 履历与工程生涯")}&sub=${encodeURIComponent("Wise 资深产品工程师 · 前字节跳动 TikTok IM 核心研发 · NTU 全奖")}&badge=${encodeURIComponent("CAREER DOSSIER")}`,
         width: 1200,
         height: 630,
         alt: "Lyu Zizheng · 履历与工程生涯",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Lyu Zizheng · 履历与工程生涯 (Career & Resume)",
     description:
       "Wise 资深产品工程师（Tech Owner），前字节跳动 TikTok IM 核心研发。5 年+ 高并发分布式系统、实时通讯与金融 AI 自动化评估平台经验。",
-    images: [`${siteConfig.url}/opengraph-image`],
+    images: [`${siteConfig.url}/og?title=${encodeURIComponent("Lyu Zizheng · 履历与工程生涯")}&sub=${encodeURIComponent("Wise 资深产品工程师 · 前字节跳动 TikTok IM 核心研发 · NTU 全奖")}&badge=${encodeURIComponent("CAREER DOSSIER")}`],
   },
 };
 

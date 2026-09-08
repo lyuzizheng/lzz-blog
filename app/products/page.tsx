@@ -7,7 +7,7 @@ import { PRODUCTS } from "@/lib/products";
 export const metadata: Metadata = {
   title: "独立作品与实验产品 · Products | Lyu Zizheng",
   description:
-    "工作之余的独立产品实验：CanCan（本地对账台）、CoffeeMode（极简咖啡指南）、Our Village（社区成员系统）。",
+    "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
   keywords: [
     ...siteConfig.keywords,
     "CanCan",
@@ -21,17 +21,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "独立作品与实验产品 · Products | Lyu Zizheng",
     description:
-      "工作之余的独立产品实验：CanCan（本地对账台）、CoffeeMode（极简咖啡指南）、Our Village（社区成员系统）。",
+      "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
     url: `${siteConfig.url}/products`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: `${siteConfig.url}/opengraph-image`,
+        url: `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CoffeeMode 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
         width: 1200,
         height: 630,
-        alt: "Products & Side Projects · Lyu Zizheng",
+        alt: "独立作品与实验产品 · Products | Lyu Zizheng",
         type: "image/png",
       },
     ],
@@ -40,8 +40,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "独立作品与实验产品 · Products | Lyu Zizheng",
     description:
-      "工作之余的独立产品实验：CanCan（本地对账台）、CoffeeMode（极简咖啡指南）、Our Village（社区成员系统）。",
-    images: [`${siteConfig.url}/opengraph-image`],
+      "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
+    images: [
+      `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CoffeeMode 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
+    ],
   },
 };
 
