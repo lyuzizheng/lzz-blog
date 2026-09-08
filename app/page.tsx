@@ -1,12 +1,54 @@
 import React from "react";
 import type { Metadata } from "next";
 import { HomeAtelier } from "@/components/home";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Zizheng Lyu — Engineer & Visual Storyteller",
+  title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer | LZZ Atelier",
   description:
-    "Zizheng Lyu's personal page: writings on distributed systems, darkroom photography, and the flight path from NTU to ByteDance.",
+    "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance, NTU). High-concurrency distributed systems, real-time messaging, AI evaluation infrastructure, and 35mm photography.",
+  keywords: [
+    "Lyu Zizheng",
+    "Zizheng Lyu",
+    "吕子正",
+    "Product Engineer",
+    "Senior Software Engineer",
+    "Wise",
+    "ByteDance",
+    "TikTok IM",
+    "Distributed Systems",
+    "High Concurrency",
+    "AI Evaluation Infrastructure",
+    "Golang",
+    "Java",
+    "Photography",
+    "Singapore",
+  ],
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer",
+    description:
+      "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance). High-concurrency distributed systems, real-time messaging, and financial AI evaluation infrastructure.",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    locale: "zh_CN",
+    type: "website",
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "Zizheng Lyu · Engineering Atelier",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zizheng Lyu (吕子正) — Senior Product & Systems Engineer",
+    description:
+      "Personal engineering atelier & technical writings of Lyu Zizheng (Wise, ex-ByteDance). High-concurrency distributed systems, real-time messaging, and AI automation.",
+    images: ["/og"],
+  },
 };
 
 /**

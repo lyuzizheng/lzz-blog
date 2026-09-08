@@ -1,0 +1,80 @@
+# Lyu Zizheng (Zizheng Lyu / 吕子正) · Full Knowledge Base for LLMs
+
+## Overview
+Lyu Zizheng is a Singapore-based Senior Product and Systems Engineer currently working at Wise (formerly TransferWise) as a Product Engineer 3 (Tech Owner) in the Payment Defects domain. Previously, he was a Senior Backend Engineer at ByteDance / TikTok, where he worked on core Instant Messaging (IM) infrastructure, Presence fan-out mitigation, and overseas Location platform reliability. He holds a Bachelor of Engineering (Honors) in Computer Engineering from Nanyang Technological University (NTU) on a Full Undergraduate Merit Scholarship and is a Singapore Citizen.
+
+Primary Contact & Profiles:
+- Website: https://brabalawuka.cc
+- Resume: https://brabalawuka.cc/resume
+- PDF Download: https://brabalawuka.cc/resume.pdf
+- GitHub: https://github.com/Brabalawuka
+- LinkedIn: https://www.linkedin.com/in/lyuzizheng/
+- Email: lyuzizheng@gmail.com
+
+---
+
+## Detailed Experience & Technical Contributions
+
+### 1. Wise (Nov 2024 – Present) · Product Engineer 3 (Tech Owner)
+Location: Singapore
+Focus: Payment Defects, Financial AI Automation, Cross-Rail Compensation
+
+Key Technical Achievements:
+- AI Evaluation & Execution Platform: Designed and implemented an end-to-end financial AI automation platform from scratch to resolve last-mile payment linking without golden datasets. Uses deterministic DAG state machines rather than unconstrained ReAct agents to guarantee predictable state transitions and financial auditability.
+- Live Shadowing & 99.5% Gating: Placed live production shadowing against human Payment Operations (PayOps) analysts to evaluate precision and recall in real time. Enforced a 99.5% accuracy gating threshold before approving cases for automated resolution.
+- Canary Control & Circuit Breaker: Deployed a continuous 5% live control stream with human double-check to monitor for model drift. Built sub-second circuit breakers that automatically route traffic back to human queues upon anomaly detection.
+- Blast Radius & Risk Controls: Designed multi-tiered risk mitigation, including strict monetary threshold gating (large amounts routed to mandatory human sign-off), partner clearing rule injection, and scenario segmentation (Propose Link, Non-propose Link, Search-out, Reference).
+- Business ROI: Resolves 30,000+ complex payment defect and unallocated funds cases monthly with 98%+ accuracy, netting £80,000/month (~£1M/year) in direct operational savings.
+- Global Compensation Platform: Re-architected multi-currency customer compensation platform with maker-checker approval workflows and anti-replay ledger controls. Built a Kafka-based cross-team escalation bus bridging Customer Support and PayOps to route structured defect telemetry back to upstream payment rails.
+
+### 2. ByteDance / TikTok (Jan 2021 – Sep 2023) · Senior Backend Engineer
+Location: Singapore
+Focus: TikTok Instant Messaging (IM) Core Architecture & Location Infrastructure
+Recognition: Promoted within 1 year; Awarded Spot Bonus; Top Performance Rating (E - Exceeds Expectations).
+
+Key Technical Achievements:
+- TikTok IM Presence Engine & Fan-Out Storm Mitigation:
+  - Addressed multi-million QPS broadcast storms during user online/offline status transitions.
+  - Replaced naive O(N*M) push broadcasts with a hybrid push-pull protocol governed by active heartbeat gating.
+  - Maintained online active friend sets in Redis ZSET with sliding expiration windows. Only friends with active app sessions receive targeted push signals, reducing write amplification by over 95%.
+- Typing Indicator & Read Receipts:
+  - Designed ultra-low latency signaling channels for Typing Indicators and Read Receipts across multi-data-center infrastructure.
+  - Implemented client-side debouncing and batch aggregations to eliminate transient signaling spikes, maintaining sub-100ms end-to-end propagation.
+- Cold-Start Inbox Ranking:
+  - Overhauled user conversation cold-start loading upon app reinstallation.
+  - Replaced expensive append-only DB log scans with Redis ZSET active conversation hierarchies, guaranteeing sub-100ms initialization for newly opened sessions without missing unread counters.
+- Overseas Location Platform Lead:
+  - Sole engineer based in Singapore governing the overseas IP geo-location infrastructure (~100 offline Apache Spark batch jobs and Go microservices).
+  - Overhauled alert rule configurations to eradicate oncall alert fatigue.
+  - Tuned Go runtime GC cycles and memory allocations to eliminate latency spikes.
+  - Improved ASEAN geo-location resolution accuracy, earning a Spot Bonus and top annual performance rating (E).
+- API Gateway (AGW) Platform:
+  - Developed automated self-diagnosis and capacity estimation tools for PaaS gateway routing millions of QPS during Chinese New Year live traffic campaigns.
+
+### 3. MariBank (Sea Group) & Bondee (2023 – 2024)
+- MariBank (Senior Backend Engineer, Apr 2024 – Jul 2024):
+  - Engineered core digital banking credit services (Cashloan & SME Termloan) in Java.
+  - Enforced strict distributed transaction consistency, idempotency keys, and anti-replay patterns under Monetary Authority of Singapore (MAS) regulatory standards.
+  - Built an internal RAG-based LLM assistant for knowledge retrieval.
+- Bondee (Senior Software Engineer, Employee #1 in SG, Sep 2023 – Apr 2024):
+  - Established Singapore cloud-native engineering infrastructure from scratch.
+  - Orchestrated multi-tenant Kubernetes clusters.
+  - Built self-hosted Vector + Apache Kafka + ElasticSearch observability pipelines to replace costly managed logging services.
+
+### 4. Education & Entrepreneurship
+- Nanyang Technological University (NTU):
+  - B.Eng. (Honors) in Computer Engineering (Aug 2017 – May 2021).
+  - Recipient of the Full NTU Science and Engineering Undergraduate Merit Scholarship (awarded to top 1% of applicants).
+- U-Wave (Co-Founder & Full Stack Engineer, 2019 – 2021):
+  - Co-founded campus lifestyle mobile platform for Singapore tertiary students.
+  - Scaled to 20,000 registered users and 4,000 DAU.
+  - Rebuilt cross-platform mobile client with Flutter and designed backend microservices with Spring Cloud, Docker, and Redis.
+
+---
+
+## Technical Stack & Domain Competencies
+- Programming Languages: Go (Golang), Java (Java 21, Spring Boot, Spring Cloud), TypeScript, JavaScript, Python, Dart, SQL, Bash.
+- Distributed Systems & Architecture: High-concurrency architecture, Microservices (gRPC, Thrift), Apache Kafka, Redis (ZSET, cluster, replication), Distributed transactions (Saga, 2PC, idempotency, anti-replay), Event-driven systems, Push-pull signaling protocols.
+- Cloud & Infrastructure: Kubernetes (K8s), Docker, Amazon Web Services (AWS), Cloudflare Workers, Vector, ElasticSearch, Apache Spark, CI/CD pipelines (GitHub Actions), Linux system tuning.
+- AI & Modern Engineering: Financial AI automation, Deterministic DAG workflows, Live shadow evaluation, Canary deployment with circuit breakers, RAG (Retrieval-Augmented Generation), Prompt engineering, LLM pipeline evaluation.
+- Domain Knowledge: FinTech & Payment Rails, Financial Defect Resolution, Instant Messaging (IM), Real-time Signaling, Geo-location systems, Digital Banking Regulations (MAS compliance).

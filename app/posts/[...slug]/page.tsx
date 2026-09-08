@@ -13,6 +13,7 @@ import {
   generatePostMetadata,
   getAdjacentPosts,
 } from "@/lib/posts";
+import { siteConfig } from "@/lib/site";
 
 interface PageProps {
   params: Promise<{
@@ -51,8 +52,42 @@ export default async function PostDetailPage({ params }: PageProps) {
 
   const { prev, next } = getAdjacentPosts(post);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: post.title,
+    description: post.summary || post.description || "Technical writing by Lyu Zizheng",
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author || siteConfig.author,
+      url: siteConfig.url,
+      sameAs: [siteConfig.social.linkedin, siteConfig.social.github],
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/avatar.jpg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/posts/${slug.map((s) => s.toLowerCase()).join("/")}`,
+    },
+    keywords: post.tags,
+    inLanguage: "zh-CN",
+  };
+
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <ReaderEyebrow backHref="/posts" backLabel="Posts & Thoughts" />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <div className="mb-8 lg:hidden">

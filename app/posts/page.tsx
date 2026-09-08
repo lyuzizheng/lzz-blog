@@ -2,11 +2,51 @@ import type { Metadata } from "next";
 import { posts } from "#site/content";
 import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome";
 import { ArchiveList, type ArchivePost } from "@/components/posts/archive-list";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "文章 · Posts & Thoughts | LZZ Blog",
-  description: "全栈开发、系统实践与生活思考的个人文章列表。",
-  alternates: { canonical: "/posts" },
+  title: "文章归档 · Posts & Thoughts | LZZ Blog — LZZ Atelier",
+  description:
+    "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
+  keywords: [
+    "分布式系统",
+    "高并发",
+    "即时通讯",
+    "TikTok IM",
+    "Wise",
+    "ByteDance",
+    "Golang",
+    "Java",
+    "Kafka",
+    "Redis",
+    "Distributed Systems",
+    "Engineering Blog",
+  ],
+  alternates: { canonical: `${siteConfig.url}/posts` },
+  openGraph: {
+    title: "文章归档 · Posts & Thoughts | LZZ Blog",
+    description:
+      "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
+    url: `${siteConfig.url}/posts`,
+    siteName: siteConfig.name,
+    locale: "zh_CN",
+    type: "website",
+    images: [
+      {
+        url: "/og",
+        width: 1200,
+        height: 630,
+        alt: "Posts & Thoughts · LZZ Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "文章归档 · Posts & Thoughts | LZZ Blog",
+    description:
+      "深入分布式系统、高并发即时通讯、AI 工作流架构、底层调优与工程哲学的技术随笔与思考。",
+    images: ["/og"],
+  },
 };
 
 function toArchiveDtos(): ArchivePost[] {
@@ -34,8 +74,32 @@ function toArchiveDtos(): ArchivePost[] {
 export default function PostsArchivePage() {
   const dtos = toArchiveDtos();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "LZZ Blog · Posts & Thoughts",
+    description: "深入分布式系统、高并发即时通讯、AI 工作流架构与工程哲学的技术随笔与思考。",
+    url: `${siteConfig.url}/posts`,
+    author: {
+      "@type": "Person",
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    blogPost: dtos.slice(0, 20).map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.summary,
+      datePublished: post.date,
+      url: `${siteConfig.url}${post.permalink}`,
+    })),
+  };
+
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ReaderEyebrow backHref="/" backLabel="首页" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <ArchiveList posts={dtos} />
