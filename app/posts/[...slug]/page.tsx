@@ -53,8 +53,8 @@ export default async function PostDetailPage({ params }: PageProps) {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
+      <ReaderEyebrow backHref="/posts" backLabel="Posts & Thoughts" />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
-        <ReaderEyebrow backHref="/posts" backLabel="Posts & Thoughts" />
         <div className="mb-8 lg:hidden">
           <TocMobileProgress items={post.toc} />
         </div>
