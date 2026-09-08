@@ -29,7 +29,7 @@ export function HomeAtelier() {
       </div>
 
       {/* Center column: identity + film stack enclosed in darkroom easel frame */}
-      <div className="relative z-10 mx-auto flex w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl flex-1 flex-col items-center justify-center px-3 py-2 sm:px-6 sm:py-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-start px-3 pb-2 pt-20 sm:max-w-3xl sm:justify-center sm:px-6 sm:py-6 md:max-w-4xl lg:max-w-5xl">
         <div className="relative flex w-full flex-col items-center px-3 py-3 sm:px-8 sm:py-7 md:px-12 md:py-8">
           {/* BRAWUKA-86 · Darkroom easel light-table frame enclosing identity + chapter negatives */}
           <div

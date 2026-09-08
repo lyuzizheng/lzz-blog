@@ -28,6 +28,10 @@ check(homePage.includes("h-[100dvh]") && homePage.includes("overflow-hidden"), "
 check(!homePage.includes("HomeDeck") && !homePage.includes("SlideCover") && !homePage.includes("SlideIndex") && !homePage.includes("SlideColophon"), "homepage must not mount the retired deck/slides");
 check(homePage.includes("HomeAtelier"), "homepage must mount HomeAtelier");
 check(!homePage.includes("<SiteHeader") && !homePage.includes("<SiteFooter"), "homepage must keep global sticky chrome removed");
+check(
+  homeAtelier.includes("justify-start") && homeAtelier.includes("sm:justify-center"),
+  "homepage must lift the easel toward the top on mobile while preserving centered desktop composition"
+);
 for (const retired of [
   "components/home/home-deck.tsx",
   "components/home/slide-cover.tsx",
@@ -66,14 +70,23 @@ check(filmStack.includes("mobile reads as 2 / 1 / 2"), "mobile film composition 
 for (const pose of [
   'blogs: "right-2 top-2 text-right"',
   'career: "left-2 top-2"',
-  'photography: "bottom-2 left-2"',
+  'photography: "left-2 top-2"',
   'projects: "bottom-2 left-2"',
   'records: "bottom-2 right-2 text-right"',
 ]) {
   check(filmStack.includes(pose), `mobile film label pose missing: ${pose}`);
 }
 check(filmStack.includes("MOBILE_LABEL_POSE[film.key]"), "mobile film labels must use their requested inner-square positions");
-check(filmStack.includes("hidden font-display") && filmStack.includes("sm:block"), "desktop film labels must keep their existing position");
+for (const pose of [
+  'blogs: "left-2 top-2"',
+  'career: "bottom-1.5 right-2 text-right"',
+  'photography: "left-2 top-2"',
+  'projects: "bottom-1.5 left-2"',
+  'records: "bottom-1.5 right-2 text-right"',
+]) {
+  check(filmStack.includes(pose), `desktop film label pose missing: ${pose}`);
+}
+check(filmStack.includes("DESKTOP_LABEL_POSE[film.key]"), "desktop film labels must use their requested inner-square positions");
 check(filmStack.includes("hover:rotate-0") && filmStack.includes("focus-visible:rotate-0"), "hover must straighten frames with focus parity");
 check(!filmStack.includes("scatterHint") && !filmStack.includes("films.hint"), "no hint caption line under the bench (founder directive)");
 check(!homeAtelier.includes("t.home.colophon"), "colophon footer must not render on the homepage (founder directive)");

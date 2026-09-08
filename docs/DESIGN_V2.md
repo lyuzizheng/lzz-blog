@@ -133,7 +133,8 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 >
 > **BRAWUKA-86 迭代（2026-09-06 创始人反馈）**：视觉构图二次精调——背景大方形透光台/标尺线框上移框选头像与身份信息，形成一体化的大暗房画幅容器；移除头像上独立加的四个小取景角标框；移除背景中散落堆叠的虚化底片层（`PileFrame`），核心章节胶片常驻散落，回归克制高级的极简物料美学。
 >
-> **Weekly Records 迭代（2026-09-07）**：主页追加第 5 枚 `Weekly Records` 胶片，保持最后一个 DOM / 导航 / 数字键入口（键位 1–5）；移动端五枚胶片按 **2 / 1 / 2** 自然排布并轻微压边，标题留在内框画面中：Career 左上、Blogs 右上、Photography 左下、Projects 左下、Records 右下；桌面端沿工作台横向散落。该页见 §7.3.1。
+> **Weekly Records 迭代（2026-09-07）**：主页追加第 5 枚 `Weekly Records` 胶片，保持最后一个 DOM / 导航 / 数字键入口（键位 1–5）；移动端五枚胶片按 **2 / 1 / 2** 自然排布并轻微压边，标题留在内框画面中：Career 左上、Blogs 右上、Photography 左上、Projects 左下、Records 右下；桌面端沿工作台横向散落，标题位置为 Blogs 左上、Career 右下、Photography 左上、Projects 左下、Records 右下。该页见 §7.3.1。
+- 移动端主页画幅从垂直居中改为距顶 `5rem` 起排，减少顶部空场并保留呼吸感；`sm` 及以上仍保持居中构图。
 - Slide 1 封面：纸底 → 名字显影 → 3 帧胶片 stagger（load 序列，reduced-motion 下直接呈现）。
 - Slide 2 子页索引：四入口**散落叠放**（overprint collage：一大一小一窄条一章戳，压边 8–16px）；SVG 修饰只许**一个**细线 gesture 家族（钴蓝 1px）。
 - Slide 3 Colophon 终屏（见 §7.4）。
@@ -146,7 +147,7 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 
 > **BRAWUKA-85 迭代（2026-09-06 创始人方向）**：`/posts` 视觉形态定为**编辑部目录式列表（The Archive Reading Room）**——刊头一行收束（衬线大字「Blogs / 文章」+ 单行 mono telemetry `N DISPATCHES · YYYY—YYYY`）；按年分组平铺目录行（1px hairline 分隔、tabular mono `MM-DD` 日期、衬线标题、纯文本 `#tag`、阅读时长），年份以超大衬线数字作**静态**章节锚；hover 行标题 `translate-x-1` 缩进并转钴蓝，桌面端光标侧浮现接触印相微缩图（`pointer-events-none`，无封面不浮现）；过滤收敛为一行 mono 工具行（ALL / STUDY / ESSAY 下划线指示、无框 hairline 搜索、纯文本标签钴蓝选中态）。红线：零卡片、零图标墙（lucide ≤ 1）、零 `backdrop-blur`、零阴影上浮。`DESIGN.md` 1.2.2「出版物物料库」一条自此作废。
 >
-> **BRAWUKA-85 二轮迭代（2026-09-06 创始人 14:32 原话定稿）**：①刊头直白为 **Posts & Thoughts**（中英同文，无任何副标题/徽章）；②文章链路眉脚改为**主页同款极简 header**——左 `Lzz-Blog` 品牌链 + 中央 mini 长方形胶片 section 导航（01 BLOGS / 02 CAREER / 03 PHOTO / 04 PROJECTS / 05 RECORDS，当前板块高亮，`rounded-[2px]`，active 胶片带 `--shadow-plate` 物料投影）+ 右端语言/昼夜开关，§7.4 屏内眉脚在文章链路自此退役（Colophon 保留）；③列表改**单列垂直时间线**（左 1px 发丝轴线 + 年份菱形锚点，倒序），行级滚动显影用 framer-motion `whileInView`（`once`、y+12、0.3s easeOut，`useReducedMotion` 下直出）——§6 三禁令之「禁 fade-in slide-up」在此由创始人点名特赦为小幅度滚动小动画；④阅读页排版升级：分类/标签改纯文本 `[CATEGORY] / #tag`，摘要改侧规线 standfirst（**禁 italic**：Noto Serif SC 无真斜体，CJK 会被合成伪斜体），Display 标题放宽为 `clamp(2.25rem,4.5vw,3.75rem)/1.18`（§5.1 字阶对长中文标题的舒适性豁免）。
+> **BRAWUKA-85 二轮迭代（2026-09-06 创始人 14:32 原话定稿）**：①刊头直白为 **Posts & Thoughts**（中英同文，无任何副标题/徽章）；②文章链路眉脚改为**主页同款极简 header**——左 `Lzz-Blog` 品牌链；桌面中央保留 mini 长方形胶片 section 导航（01 BLOGS / 02 CAREER / 03 PHOTO / 04 PROJECTS / 05 RECORDS，当前板块高亮，`rounded-[2px]`，active 胶片带 `--shadow-plate` 物料投影）；移动端收束为 44px 菜单按钮，展开后显示五个完整编号与名称，并支持选中、点外部或 `Esc` 关闭；右端保留语言/昼夜开关。§7.4 屏内眉脚在文章链路自此退役（Colophon 保留）；③列表改**单列垂直时间线**（左 1px 发丝轴线 + 年份菱形锚点，倒序），行级滚动显影用 framer-motion `whileInView`（`once`、y+12、0.3s easeOut，`useReducedMotion` 下直出）——§6 三禁令之「禁 fade-in slide-up」在此由创始人点名特赦为小幅度滚动小动画；④阅读页排版升级：分类/标签改纯文本 `[CATEGORY] / #tag`，摘要改侧规线 standfirst（**禁 italic**：Noto Serif SC 无真斜体，CJK 会被合成伪斜体），Display 标题放宽为 `clamp(2.25rem,4.5vw,3.75rem)/1.18`（§5.1 字阶对长中文标题的舒适性豁免）。
 >
 > **BRAWUKA-85 三轮迭代（2026-09-06 创始人 14:56 原话定稿）**：单行纯文字「太简约、看不出内容」——列表行升级为**编辑部大卡片**（保留时间线轴线与年份菱形锚点）：每卡 = Cover Photo（移动端 `aspect-[16/10]` 起、桌面 `lg:w-[40%]` 左图右文；无封面文章用 `--halftone-dot-color` 半色调暗房 specimen 版画代替，禁灰占位图）+ 衬线大标题（hover 转钴蓝 + `translate-x-1`）+ 多行摘要（`line-clamp-3`）+ hairline 卡脚（标签小章 + 阅读时长）。卡壳规范：`rounded-[4px]`（大画幅容器沿用主页透光台 4px 先例，小元素仍锁 0/2px）、hairline 描边、hover 仅描边转专色 + 封面图罩内 `scale-[1.03]`（图在罩内缩放，卡身不上浮不投影）。「零卡片」红线自此作废，「零 hover 上浮 / 零毛玻璃 / 零图标墙 / 零 rounded-xl」红线不变。
 
