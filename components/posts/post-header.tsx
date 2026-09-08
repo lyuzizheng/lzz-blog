@@ -1,8 +1,12 @@
 "use client";
 
 import type { Post } from "#site/content";
+import { useI18n } from "@/lib/i18n";
 
 export function PostHeader({ post }: { post: Post }) {
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
+
   return (
     <header className="mb-10 max-w-3xl">
       {post.tags.length > 0 && (
@@ -39,15 +43,15 @@ export function PostHeader({ post }: { post: Post }) {
           {post.date.slice(0, 10)}
         </time>
         <span className="text-border-plate">·</span>
-        <span className="tabular-nums">{post.reading_time} 分钟阅读</span>
+        <span className="tabular-nums">{post.reading_time} {t.posts.readingTime}</span>
         {post.word_count > 0 && (
           <>
             <span className="text-border-plate">·</span>
-            <span className="tabular-nums">{Math.round(post.word_count)} 字</span>
+            <span className="tabular-nums">{Math.round(post.word_count)} {t.posts.wordCount}</span>
           </>
         )}
         <span className="ml-auto uppercase tracking-wider opacity-75">
-          BY {post.author.toUpperCase()}
+          {isZh ? `作者 / ${post.author.toUpperCase()}` : `BY ${post.author.toUpperCase()}`}
         </span>
       </div>
     </header>

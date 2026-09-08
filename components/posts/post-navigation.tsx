@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 import type { Post } from "#site/content";
 
 export function PostNavigation({
@@ -10,9 +11,12 @@ export function PostNavigation({
   prev: Post | null;
   next: Post | null;
 }) {
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
+
   return (
     <nav
-      aria-label="相邻文章"
+      aria-label={isZh ? "相邻文章导航" : "Adjacent posts"}
       className="mt-8 max-w-[40rem] border-t-2 border-border-strong"
     >
       {prev && (
@@ -21,7 +25,7 @@ export function PostNavigation({
           className="group flex items-baseline justify-between gap-4 border-b border-border-plate/60 py-4"
         >
           <span className="shrink-0 font-telemetry text-[11px] tracking-[0.14em] text-muted">
-            ← PREV
+            ← {isZh ? t.posts.prevPost : "PREV"}
           </span>
           <span className="text-right font-display text-lg leading-snug text-text-primary group-hover:text-ink-dominant">
             {prev.title}
@@ -37,7 +41,7 @@ export function PostNavigation({
             {next.title}
           </span>
           <span className="shrink-0 font-telemetry text-[11px] tracking-[0.14em] text-muted">
-            NEXT →
+            {isZh ? t.posts.nextPost : "NEXT"} →
           </span>
         </Link>
       )}

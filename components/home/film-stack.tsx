@@ -178,6 +178,8 @@ function FilmEmblem({ kind }: { kind: EmblemKind }) {
 
 function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
   const isWip = film.key === "photography";
+  const { locale } = useI18n();
+  const isZh = locale === "zh";
 
   return (
     <div className="overflow-hidden rounded-[2px] border border-border-plate bg-surface shadow-[var(--shadow-plate)]">
@@ -217,7 +219,7 @@ function FrameBody({ film, label }: { film: FilmSpec; label: string }) {
       {/* Bottom rebate: stock telemetry */}
       <div className="flex h-5 items-center justify-between bg-[var(--bg-chamber)] px-2 font-telemetry text-[8px] tracking-[0.16em] text-muted">
         <span>{film.stock}</span>
-        <span>{isWip ? "WIP // 显影中" : "EXP 36"}</span>
+        <span>{isWip ? (isZh ? "WIP // 显影中" : "WIP // DEVELOPING") : "EXP 36"}</span>
       </div>
     </div>
   );

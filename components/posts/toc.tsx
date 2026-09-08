@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 
 export interface TocEntry {
@@ -105,6 +106,8 @@ function scrollToId(decodedId: string) {
  */
 export function TableOfContents({ items = [], className = "" }: TocProps) {
   const { activeId, progress } = useTocState(items);
+  const { t, locale } = useI18n();
+  const isZh = locale === "zh";
 
   if (!items || items.length === 0) {
     return null;
@@ -155,9 +158,9 @@ export function TableOfContents({ items = [], className = "" }: TocProps) {
   };
 
   return (
-    <nav aria-label="章节" className={className ?? ""}>
+    <nav aria-label={isZh ? "文章章节" : "Table of Contents"} className={className ?? ""}>
       <div className="flex items-baseline justify-between font-telemetry text-[11px] tracking-[0.14em]">
-        <span className="font-bold text-text-primary">§ INDEX</span>
+        <span className="font-bold text-text-primary">§ {isZh ? t.posts.toc : "INDEX"}</span>
         <span className="tabular-nums text-muted">{progress}%</span>
       </div>
       <div className="relative mt-3 pl-3">

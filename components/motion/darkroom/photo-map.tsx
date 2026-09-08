@@ -384,7 +384,7 @@ export function PhotoMap({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       role="region"
-      aria-label="摄影全屏拖拽地图"
+      aria-label={isZh ? "摄影全屏拖拽地图" : "Photography Atlas Map"}
     >
       {/* Halftone & Paper Texture Layer */}
       <div className="halftone-screen pointer-events-none absolute inset-0 z-0 opacity-25" />
@@ -577,7 +577,7 @@ export function PhotoMap({
 
       {/* Q10-A In-Screen Eyebrow (No global sticky chrome) */}
       <header
-        aria-label="地图暗房眉题"
+        aria-label={isZh ? "地图暗房眉题" : "Darkroom Map Header"}
         className="relative z-20 flex w-full items-center justify-between border-b-2 border-border-strong bg-substrate/90 px-4 py-3 backdrop-blur-sm sm:px-8 sm:py-4"
       >
         <div className="flex min-w-0 items-center gap-3">
@@ -630,7 +630,7 @@ export function PhotoMap({
 
       {/* Floating HUD Controls (Zoom, Presets, Fit) */}
       <aside
-        aria-label="地图漫游控制面板"
+        aria-label={isZh ? "地图漫游控制面板" : "Map controls"}
         className="pointer-events-auto absolute bottom-12 left-4 z-20 flex flex-col gap-2 sm:left-8"
       >
         <div className="flex flex-col overflow-hidden rounded-sm border border-border-strong bg-surface/95 shadow-md">
@@ -639,7 +639,7 @@ export function PhotoMap({
             onClick={handleZoomIn}
             className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
             title={isZh ? "放大地图" : "Zoom In"}
-            aria-label="放大"
+            aria-label={isZh ? "放大地图" : "Zoom In"}
           >
             <Plus className="h-4 w-4" />
           </button>
@@ -648,7 +648,7 @@ export function PhotoMap({
             onClick={handleZoomOut}
             className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
             title={isZh ? "缩小地图" : "Zoom Out"}
-            aria-label="缩小"
+            aria-label={isZh ? "缩小地图" : "Zoom Out"}
           >
             <Minus className="h-4 w-4" />
           </button>
@@ -657,7 +657,7 @@ export function PhotoMap({
             onClick={handleFitPins}
             className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
             title={isZh ? "全览所有图钉" : "Fit All Pins"}
-            aria-label="全览"
+            aria-label={isZh ? "全览所有图钉" : "Fit All Pins"}
           >
             <Maximize2 className="h-4 w-4" />
           </button>
@@ -666,7 +666,7 @@ export function PhotoMap({
             onClick={handleReset}
             className="flex h-9 w-9 items-center justify-center text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
             title={isZh ? "重置为狮城视角" : "Reset to Singapore"}
-            aria-label="重置"
+            aria-label={isZh ? "重置为狮城视角" : "Reset to Singapore"}
           >
             <RotateCcw className="h-4 w-4" />
           </button>
@@ -692,7 +692,7 @@ export function PhotoMap({
 
       {/* In-Screen Footer / Colophon Telemetry */}
       <footer
-        aria-label="底图参数与配方"
+        aria-label={isZh ? "底图参数与配方" : "Atlas Telemetry & Recipes"}
         className="pointer-events-none relative z-10 mt-auto flex w-full items-center justify-between border-t border-border-default bg-substrate/85 px-4 py-2 font-telemetry text-[11px] tabular-nums text-muted backdrop-blur-sm sm:px-8"
       >
         <div className="flex items-center gap-3">

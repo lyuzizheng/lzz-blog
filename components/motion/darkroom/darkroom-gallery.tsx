@@ -134,10 +134,10 @@ export function DarkroomGallery() {
             REEL // {String(reelIndex + 1).padStart(2, "0")} / {String(DARKROOM_PHOTOS.length).padStart(2, "0")}
           </span>
           <div className="flex items-center gap-2">
-            <button onClick={() => stepReel(-1)} aria-label="上一帧" className="cursor-pointer border border-border-plate px-2 py-0.5 hover:border-ink-dominant hover:text-primary">
+            <button onClick={() => stepReel(-1)} aria-label={isZh ? "上一帧" : "Previous frame"} className="cursor-pointer border border-border-plate px-2 py-0.5 hover:border-ink-dominant hover:text-primary">
               ← PREV
             </button>
-            <button onClick={() => stepReel(1)} aria-label="下一帧" className="cursor-pointer border border-border-plate px-2 py-0.5 hover:border-ink-dominant hover:text-primary">
+            <button onClick={() => stepReel(1)} aria-label={isZh ? "下一帧" : "Next frame"} className="cursor-pointer border border-border-plate px-2 py-0.5 hover:border-ink-dominant hover:text-primary">
               NEXT →
             </button>
           </div>
@@ -213,6 +213,8 @@ function ImmersiveFrame({
   onOpen: (photo: DarkroomPhoto) => void;
   reduced: boolean;
 }) {
+  const { locale } = useI18n();
+  const isZh = locale === "zh";
   const [i, setI] = useState(0);
   const photo = DARKROOM_PHOTOS[i];
 
@@ -259,7 +261,7 @@ function ImmersiveFrame({
             <button
               key={p.id}
               onClick={() => setI(idx)}
-              aria-label={`跳转到 ${p.title}`}
+              aria-label={`${isZh ? "跳转到" : "Jump to"} ${p.title}`}
               className={`h-1.5 cursor-pointer rounded-full transition-all ${idx === i ? "w-8 bg-ink-dominant" : "w-3 bg-border-plate hover:bg-ink-dominant/50"}`}
             />
           ))}
