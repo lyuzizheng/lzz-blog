@@ -2,12 +2,49 @@ import type { Metadata } from "next";
 import { getHealthPayload } from "@/lib/health";
 import { SiteHeader, SiteFooter, StatusHeader } from "@/components/site";
 import { StatusConsole } from "@/components/site/status-console";
+import { siteConfig } from "@/lib/site";
 import packageJson from "@/package.json";
 
 export const metadata: Metadata = {
-  title: "系统状态 · System Status | LZZ Blog",
+  title: "系统状态与边缘遥测 · System Status | Lyu Zizheng",
   description:
-    "LZZ atelier system status and edge telemetry probe console: runtime pulse, release artifacts, and architecture verification gates. Readiness probe: /api/health.",
+    "运行健康度、边缘遥测指标与 Next.js 15 静态编译架构验收探针。",
+  keywords: [
+    ...siteConfig.keywords,
+    "Telemetry",
+    "Edge Probes",
+    "System Status",
+  ],
+  alternates: {
+    canonical: `${siteConfig.url}/status`,
+  },
+  openGraph: {
+    title: "系统状态与边缘遥测 · System Status | Lyu Zizheng",
+    description:
+      "运行健康度、边缘遥测指标与 Next.js 15 静态编译架构验收探针。",
+    url: `${siteConfig.url}/status`,
+    siteName: siteConfig.name,
+    locale: "zh_CN",
+    type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}/og?title=${encodeURIComponent("系统状态与边缘遥测")}&sub=${encodeURIComponent("Runtime Health · Edge Telemetry · Build Gates")}&badge=${encodeURIComponent("EDGE TELEMETRY")}`,
+        width: 1200,
+        height: 630,
+        alt: "系统状态与边缘遥测 · System Status | Lyu Zizheng",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "系统状态与边缘遥测 · System Status | Lyu Zizheng",
+    description:
+      "运行健康度、边缘遥测指标与 Next.js 15 静态编译架构验收探针。",
+    images: [
+      `${siteConfig.url}/og?title=${encodeURIComponent("系统状态与边缘遥测")}&sub=${encodeURIComponent("Runtime Health · Edge Telemetry · Build Gates")}&badge=${encodeURIComponent("EDGE TELEMETRY")}`,
+    ],
+  },
 };
 
 function CardShell({

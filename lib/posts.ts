@@ -50,7 +50,7 @@ export function generatePostStaticParams(): { slug: string[] }[] {
 export function generatePostMetadata(post: Post, slug: string[]): Metadata {
   const url = `/posts/${slug.map((s) => s.toLowerCase()).join("/")}`;
   const ogSub = `${new Date(post.date).toISOString().slice(0, 10)} · ${(post.tags ?? []).slice(0, 3).join(" / ") || "ESSAY"}`;
-  const ogImage = `/og?title=${encodeURIComponent(post.title)}&sub=${encodeURIComponent(ogSub)}`;
+  const ogImage = `${siteConfig.url}/og?title=${encodeURIComponent(post.title)}&sub=${encodeURIComponent(ogSub)}&badge=${encodeURIComponent("ENGINEERING ESSAY")}`;
 
   return {
     title: `${post.title} · Lyu Zizheng`,
@@ -66,7 +66,15 @@ export function generatePostMetadata(post: Post, slug: string[]): Metadata {
       authors: [post.author || siteConfig.author],
       tags: post.tags,
       url,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",

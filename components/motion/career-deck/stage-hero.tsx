@@ -41,16 +41,6 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-8 overflow-hidden">
-      {/* Faint Typographic Watermark Background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-4 right-0 z-0 select-none overflow-hidden opacity-[0.03] dark:opacity-[0.04]"
-      >
-        <span className="font-display text-[6rem] font-black uppercase tracking-tighter leading-none text-ink-dominant sm:text-[12rem] md:text-[15rem]">
-          PROFILE
-        </span>
-      </div>
-
       <div className="relative z-10 space-y-2.5 sm:space-y-5">
         {/* 1. Header & Identity */}
         <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">

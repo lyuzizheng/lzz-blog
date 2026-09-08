@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
   description:
-    "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
+    "深入分布式系统架构、高并发即时通讯与系统调优的技术随笔与工程实践。",
   keywords: [
     ...siteConfig.keywords,
     "Engineering Blog",
@@ -17,17 +17,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
     description:
-      "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
+      "深入分布式系统架构、高并发即时通讯与系统调优的技术随笔与工程实践。",
     url: `${siteConfig.url}/posts`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: `${siteConfig.url}/opengraph-image`,
+        url: `${siteConfig.url}/og?title=${encodeURIComponent("文章与思考 · Posts & Thoughts")}&sub=${encodeURIComponent("分布式系统 · 高并发架构 · 系统工程思考")}&badge=${encodeURIComponent("POSTS ARCHIVE")}`,
         width: 1200,
         height: 630,
-        alt: "Posts & Thoughts · Lyu Zizheng",
+        alt: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
         type: "image/png",
       },
     ],
@@ -36,8 +36,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "文章与思考 · Posts & Thoughts | Lyu Zizheng",
     description:
-      "深入分布式系统架构、高并发即时通讯、AI 评估工作流、系统调优与工程哲学的技术随笔。",
-    images: [`${siteConfig.url}/opengraph-image`],
+      "深入分布式系统架构、高并发即时通讯与系统调优的技术随笔与工程实践。",
+    images: [
+      `${siteConfig.url}/og?title=${encodeURIComponent("文章与思考 · Posts & Thoughts")}&sub=${encodeURIComponent("分布式系统 · 高并发架构 · 系统工程思考")}&badge=${encodeURIComponent("POSTS ARCHIVE")}`,
+    ],
   },
 };
 
