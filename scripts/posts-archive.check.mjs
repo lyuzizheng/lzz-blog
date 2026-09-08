@@ -34,6 +34,7 @@ const archiveList = [
   "components/posts/archive-timeline.tsx",
 ].map(read).join("\n");
 const readerChrome = read("components/posts/reader-chrome.tsx");
+const siteHeader = read("components/site/site-header.tsx");
 const postDetailPage = read("app/posts/[...slug]/page.tsx");
 const postHeader = read("components/posts/post-header.tsx");
 const zh = read("lib/i18n/dictionaries/zh.ts");
@@ -60,12 +61,13 @@ check(!postsPage.includes("BookOpen") && !archiveList.includes("BookOpen"), "Boo
 check(!archiveList.includes("t.posts.subtitle"), "marketing subtitle must not be rendered in the masthead");
 
 // 3. Header 契约：5 mini 简约长方形胶片作为 section navigation，与主页一致
-check(readerChrome.includes("CHAPTER_NEGATIVES"), "reader header must declare 5 chapter negatives");
+check(readerChrome.includes("SiteHeader"), "reader chrome must delegate to the shared site header");
+check(siteHeader.includes("CHAPTER_NEGATIVES"), "shared site header must declare 5 chapter negatives");
 const chaptersSource = read("lib/chapters.ts");
 for (const ch of ["/posts", "/resume", "/photography", "/products", "/weekly-records"]) {
   check(chaptersSource.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
 }
-check(readerChrome.includes("LanguageSwitch") && readerChrome.includes("SafelightSwitch"), "reader header must include language and safelight switches");
+check(siteHeader.includes("LanguageSwitch") && siteHeader.includes("SafelightSwitch"), "shared site header must include language and safelight switches");
 
 // 4. 大卡片时间线流（Big cards timeline with cover, title, description, tags, time, reading time）
 check(archiveList.includes("border-l") && archiveList.includes("border-border-plate"), "archive list must render single-column vertical timeline axis");

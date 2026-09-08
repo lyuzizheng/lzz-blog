@@ -11,7 +11,7 @@ import { CHAPTER_NEGATIVES } from "@/lib/chapters";
  * BRAWUKA-45 / BRAWUKA-93 · Shared Unified Header
  *
  * 100% aligned with /posts ReaderEyebrow:
- * - Left: "LZZ ATELIER" (homepage brand link)
+ * - Left: "Lzz-Blog" (homepage brand link)
  * - Center: 5 mini rectangular negative links (direct navigation, zero click-to-expand)
  * - Right: Language switch + Safelight darkroom switch
  *
@@ -31,12 +31,12 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
     <header
       className={`sticky top-0 z-40 w-full border-b border-border-plate bg-substrate/90 backdrop-blur-md transition-colors duration-300 ${className}`}
     >
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4 sm:px-6 md:px-8">
+      <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-2 px-4 sm:px-6 md:px-8">
         {/* Brand / Homepage link */}
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-cobalt sm:text-lg"
+            className="shrink-0 whitespace-nowrap font-display text-sm font-bold tracking-tight text-primary transition-colors hover:text-cobalt sm:text-lg"
             aria-label="Lzz-Blog"
           >
             Lzz-Blog
@@ -46,7 +46,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
         {/* 5 mini 简约长方形胶片直接导航 (Direct Navigation, No Dropdowns) */}
         <nav
           aria-label={isZh ? "章节导航" : "Section chapter navigation"}
-          className="flex items-center gap-1 overflow-x-auto py-0.5 sm:gap-2"
+          className="flex min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto py-0.5 sm:gap-2"
         >
           {CHAPTER_NEGATIVES.map((neg) => {
             const isActive =
@@ -58,15 +58,16 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
               <Link
                 key={neg.key}
                 href={neg.href}
+                aria-label={`${neg.frameNo} ${isZh ? neg.labelZh : neg.label}`}
                 aria-current={isActive ? "page" : undefined}
-                className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
+                className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-1.5 py-0.5 font-telemetry text-[11px] transition-all duration-150 sm:px-2 ${
                   isActive
                     ? "border-cobalt bg-surface text-cobalt font-semibold shadow-plate"
                     : "border-border-plate/60 bg-chamber/40 text-muted hover:border-border-plate hover:text-primary hover:bg-surface"
                 }`}
               >
                 <span className="text-[9px] opacity-60 tabular-nums">{neg.frameNo}</span>
-                <span className="tracking-wider uppercase">
+                <span className="hidden tracking-wider uppercase sm:inline">
                   {isZh ? neg.labelZh : neg.label}
                 </span>
               </Link>
@@ -76,7 +77,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
 
         {/* Right tools: Language + Safelight switch (Eyebrow Minimalist Mode) */}
         {showControls ? (
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <LanguageSwitch variant="eyebrow" />
             <SafelightSwitch variant="eyebrow" />
           </div>
