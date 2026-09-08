@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/i18n";
  * - Left: "Lzz-Blog" (homepage link)
  * - Center: 5 mini rectangular negatives as section navigation (matching homepage workbench)
  * - Right: Minimalist Language switch + Safelight switch
- * - Width: max-w-5xl
+ * - Width: max-w-6xl
  */
 export function ReaderEyebrow({
   backHref,

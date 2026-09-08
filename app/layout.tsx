@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore, ExposureProgress, AtelierVeilDismiss } from "@/components/motion";
 import { BodyScrollLock } from "@/components/body-scroll-lock";
 import { I18nProvider } from "@/lib/i18n";
+import { WipModal } from "@/components/ui";
 import { fontVariables } from "@/lib/fonts";
 import { rootMetadata, rootViewport } from "@/lib/metadata";
 
@@ -212,6 +213,8 @@ export default function RootLayout({
               {/* 3%~5% Silver Halide Film Grain Overlay (Fixed, 0 CLS) */}
               <FilmGrainOverlay />
               <ScrollRestore>{children}</ScrollRestore>
+              {/* Global Darkroom WIP Modal Notice */}
+              <WipModal />
             </SmoothScrollProvider>
           </I18nProvider>
         </ThemeProvider>

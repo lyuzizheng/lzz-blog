@@ -37,7 +37,7 @@ export default function PostsArchivePage() {
   return (
     <div className="relative flex min-h-screen flex-col bg-substrate text-primary transition-colors duration-300">
       <ReaderEyebrow backHref="/" backLabel="首页" />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <ArchiveList posts={dtos} />
         <ReaderColophon />
       </main>

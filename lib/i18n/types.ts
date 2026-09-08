@@ -157,9 +157,15 @@ export interface Translations {
   products: {
     title: string;
     subtitle: string;
+    badge: string;
     deckHint: string;
     scrollDown: string;
     externalLink: string;
     status: string;
+    viewCode: string;
+    visitSite: string;
+    githubRepo: string;
+    liveSite: string;
+    summary: string;
   };
 }

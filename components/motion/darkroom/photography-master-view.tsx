@@ -53,6 +53,21 @@ export function PhotographyMasterView({
 
   return (
     <div className="relative min-h-screen w-full bg-substrate text-primary">
+      {/* Top WIP Banner */}
+      <aside
+        aria-label="WIP Notice"
+        className="relative z-30 flex items-center justify-center gap-2 border-b border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-telemetry text-xs text-amber-700 dark:text-amber-300"
+      >
+        <span className="rounded-[2px] border border-amber-500/40 bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold tracking-wider uppercase text-amber-600 dark:text-amber-400">
+          WIP
+        </span>
+        <span>
+          {isZh
+            ? "摄影暗房尚未完工（设计与全屏地图冲洗显影中），当前仅供预览"
+            : "The Darkroom Photography Atlas is under active development. Preview mode only."}
+        </span>
+      </aside>
+
       {activeView === "map" ? (
         <PhotoMap
           mode={mode}
