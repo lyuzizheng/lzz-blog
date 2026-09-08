@@ -14,7 +14,7 @@ import { StageBytedance } from "./stage-bytedance";
 import { StageExploration } from "./stage-exploration";
 import { StageWise } from "./stage-wise";
 import { StageEducation } from "./stage-education";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, ArrowUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 /**
@@ -231,7 +231,7 @@ export function CareerDeck() {
       </AnimatePresence>
 
       {/* 2. Main Stage Stage Frame with Vertical Snap Parallax */}
-      <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden">
+      <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden pb-10 sm:pb-12">
         <AnimatePresence custom={direction} mode="wait">
           <motion.div
             key={currentStage.id}
@@ -341,16 +341,28 @@ export function CareerDeck() {
           ·
         </span>
 
-        <button
-          onClick={goNext}
-          disabled={stageIndex === totalStages - 1}
-          className="inline-flex items-center gap-0.5 transition-colors hover:text-ink-dominant disabled:opacity-20 disabled:pointer-events-none cursor-pointer underline-offset-4 hover:underline"
-          title="Next Stage (ArrowDown / J)"
-          aria-label="Next Stage"
-        >
-          <span className="text-[11px]">{isZh ? "下一章" : "NEXT"}</span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-        </button>
+        {stageIndex === totalStages - 1 ? (
+          <button
+            onClick={() => goToStage(0)}
+            className="inline-flex items-center gap-0.5 transition-colors hover:text-ink-dominant cursor-pointer underline-offset-4 hover:underline"
+            title={isZh ? "回至篇首" : "Return to Top"}
+            aria-label={isZh ? "回至篇首" : "Return to Top"}
+          >
+            <ArrowUp className="h-3.5 w-3.5 opacity-60" />
+            <span className="text-[11px]">{isZh ? "回至篇首" : "TOP"}</span>
+          </button>
+        ) : (
+          <button
+            onClick={goNext}
+            disabled={stageIndex === totalStages - 1}
+            className="inline-flex items-center gap-0.5 transition-colors hover:text-ink-dominant disabled:opacity-20 disabled:pointer-events-none cursor-pointer underline-offset-4 hover:underline"
+            title="Next Stage (ArrowDown / J)"
+            aria-label="Next Stage"
+          >
+            <span className="text-[11px]">{isZh ? "下一章" : "NEXT"}</span>
+            <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+          </button>
+        )}
       </nav>
 
       {/* 5. Mobile Progress Bar at Top */}
