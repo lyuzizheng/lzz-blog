@@ -6,6 +6,7 @@ import { I18nProvider } from "@/lib/i18n";
 import { WipModal } from "@/components/ui";
 import { fontVariables } from "@/lib/fonts";
 import { rootMetadata, rootViewport } from "@/lib/metadata";
+import { siteConfig } from "@/lib/site";
 
 export { rootMetadata as metadata, rootViewport as viewport };
 
@@ -39,13 +40,88 @@ export default function RootLayout({
                   if (l === 'zh') {
                     document.documentElement.setAttribute('lang', 'zh-CN');
                     document.documentElement.setAttribute('data-locale', 'zh');
-                  } else if (l === 'en') {
-                    document.documentElement.setAttribute('lang', 'en');
-                    document.documentElement.setAttribute('data-locale', 'en');
                   }
                 } catch(e) {}
               })();
             `,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          id="global-schema-ld"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteConfig.url}/#website`,
+                  url: siteConfig.url,
+                  name: "LZZ Atelier",
+                  alternateName: "LZZ Blog",
+                  description: siteConfig.description,
+                  inLanguage: ["zh-CN", "en"],
+                  publisher: {
+                    "@id": `${siteConfig.url}/#author`,
+                  },
+                },
+                {
+                  "@type": "Person",
+                  "@id": `${siteConfig.url}/#author`,
+                  name: "Lyu Zizheng",
+                  alternateName: ["Zizheng Lyu", "吕子正", "Brabalawuka"],
+                  jobTitle: "Senior Product & Systems Engineer",
+                  url: siteConfig.url,
+                  image: `${siteConfig.url}/avatar.jpg`,
+                  nationality: {
+                    "@type": "Country",
+                    name: "Singapore",
+                  },
+                  homeLocation: {
+                    "@type": "Place",
+                    name: "Singapore",
+                    address: {
+                      "@type": "PostalAddress",
+                      addressCountry: "SG",
+                      addressLocality: "Singapore",
+                    },
+                    geo: {
+                      "@type": "GeoCoordinates",
+                      latitude: 1.3521,
+                      longitude: 103.8198,
+                    },
+                  },
+                  worksFor: {
+                    "@type": "Organization",
+                    name: "Wise",
+                    sameAs: "https://wise.com",
+                  },
+                  alumniOf: {
+                    "@type": "CollegeOrUniversity",
+                    name: "Nanyang Technological University",
+                    sameAs: "https://www.ntu.edu.sg",
+                  },
+                  sameAs: [
+                    siteConfig.social.github,
+                    siteConfig.social.linkedin,
+                    siteConfig.social.twitter,
+                  ],
+                  knowsAbout: [
+                    "Distributed Systems",
+                    "High Concurrency Architecture",
+                    "Instant Messaging Systems",
+                    "Presence Protocols",
+                    "Financial Payment Engineering",
+                    "AI Evaluation Pipelines",
+                    "Golang",
+                    "Java",
+                    "Kafka",
+                    "Redis",
+                    "Kubernetes",
+                  ],
+                },
+              ],
+            }),
           }}
         />
       </head>

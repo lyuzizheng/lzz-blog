@@ -7,9 +7,10 @@ import { siteConfig } from "@/lib/site";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const statics: MetadataRoute.Sitemap = [
-    { url: siteConfig.url, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
+    { url: siteConfig.url, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${siteConfig.url}/posts`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
-    { url: `${siteConfig.url}/resume`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteConfig.url}/resume`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${siteConfig.url}/llms.txt`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     {
       url: `${siteConfig.url}/photography`,
       lastModified: new Date(),
@@ -42,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteConfig.url}${p.permalink}`,
       lastModified: new Date(p.date),
       changeFrequency: "yearly" as const,
-      priority: 0.6,
+      priority: 0.7,
     }));
 
   return [...statics, ...articles];
