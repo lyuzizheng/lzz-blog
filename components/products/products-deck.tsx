@@ -55,12 +55,15 @@ export function ProductsDeck() {
         >
           {PRODUCTS.map((product, idx) => {
             const isActive = activeTab === product.id;
+            const isWip = product.statusCode === "in_development";
+            const isOurVillage = product.id === "our-village";
+
             return (
               <button
                 key={product.id}
                 type="button"
                 onClick={() => scrollToCard(product.id)}
-                className={`group flex shrink-0 items-center gap-1 rounded-[2px] border px-2.5 py-1 transition-all cursor-pointer ${
+                className={`group flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2.5 py-1 transition-all cursor-pointer ${
                   isActive
                     ? "border-ink-dominant bg-surface text-ink-dominant font-semibold shadow-xs"
                     : "border-border-plate/60 bg-chamber/40 text-muted hover:border-border-plate hover:text-primary"
@@ -69,6 +72,16 @@ export function ProductsDeck() {
               >
                 <span className="text-[10px] opacity-70">§0{idx + 1}</span>
                 <span className="tracking-wider">{product.name}</span>
+                {isWip && (
+                  <span className="rounded-[1px] bg-amber-500/20 border border-amber-500/30 px-1 py-0.2 text-[8px] font-bold text-amber-600 dark:text-amber-400">
+                    WIP
+                  </span>
+                )}
+                {isOurVillage && (
+                  <span className="rounded-[1px] bg-emerald-500/15 border border-emerald-500/30 px-1 py-0.2 text-[8px] font-bold text-emerald-600 dark:text-emerald-400">
+                    {isZh ? "官网" : "SITE"}
+                  </span>
+                )}
               </button>
             );
           })}

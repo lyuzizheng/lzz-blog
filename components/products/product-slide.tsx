@@ -30,9 +30,13 @@ export const ProductCard = React.forwardRef<HTMLElement, ProductCardProps>(
     ref,
   ) {
     const isFirst = index === 0;
+    const isWip = product.statusCode === "in_development";
+    const isOurVillage = product.id === "our-village";
     const tagline = isZh ? product.taglineZh : product.taglineEn;
     const secondaryTagline = isZh ? product.taglineEn : product.taglineZh;
-    const statusStamp = isZh ? product.statusStampZh : product.statusStampEn;
+    const statusStamp = isWip
+      ? (isZh ? "WIP · 开发中" : "WIP · In Dev")
+      : (isZh ? "已上线 · 官网" : "Official Site · Live");
     const linkText = isZh ? product.link.labelZh : product.link.label;
 
     return (
@@ -65,10 +69,18 @@ export const ProductCard = React.forwardRef<HTMLElement, ProductCardProps>(
               </div>
 
               <div
-                className="inline-flex items-center gap-1.5 rounded-[2px] border border-ink-dominant/30 bg-ink-dominant/10 px-2 py-0.5 font-telemetry text-[10px] font-semibold text-ink-dominant shadow-xs"
+                className={`inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[10px] font-semibold shadow-xs ${
+                  isWip
+                    ? "border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400"
+                    : "border-emerald-600/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                }`}
                 role="status"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-ink-dominant animate-pulse" />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    isWip ? "bg-amber-500 animate-pulse" : "bg-emerald-500 animate-pulse"
+                  }`}
+                />
                 <span>{statusStamp}</span>
               </div>
             </div>
@@ -97,9 +109,21 @@ export const ProductCard = React.forwardRef<HTMLElement, ProductCardProps>(
 
             {/* 3. Product Name & Bilingual Taglines */}
             <div className="space-y-1.5">
-              <h2 className="font-display text-2xl font-bold tracking-tight text-primary group-hover:text-ink-dominant transition-colors sm:text-[26px]">
-                {product.name}
-              </h2>
+              <div className="flex items-center gap-2">
+                <h2 className="font-display text-2xl font-bold tracking-tight text-primary group-hover:text-ink-dominant transition-colors sm:text-[26px]">
+                  {product.name}
+                </h2>
+                {isWip && (
+                  <span className="rounded-[1px] bg-amber-500/20 border border-amber-500/40 px-1.5 py-0.2 text-[8px] font-bold text-amber-600 dark:text-amber-400 font-telemetry tracking-wider uppercase">
+                    WIP
+                  </span>
+                )}
+                {isOurVillage && (
+                  <span className="rounded-[1px] bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 text-[8px] font-bold text-emerald-600 dark:text-emerald-400 font-telemetry tracking-wider uppercase">
+                    {isZh ? "官方网站" : "OFFICIAL"}
+                  </span>
+                )}
+              </div>
 
               <p className="font-serif text-xs leading-relaxed text-secondary sm:text-sm font-medium">
                 {tagline}
@@ -137,7 +161,11 @@ export const ProductCard = React.forwardRef<HTMLElement, ProductCardProps>(
               </Link>
 
               <span className="font-telemetry text-[10px] text-muted tracking-wide">
-                {product.link.kind === "github" ? "GitHub" : (isZh ? "已上线" : "Live URL")}
+                {product.link.kind === "github"
+                  ? "GitHub"
+                  : isOurVillage
+                  ? (isZh ? "官方网站" : "Official Site")
+                  : (isZh ? "WIP 预览" : "WIP Preview")}
               </span>
             </div>
           </div>
