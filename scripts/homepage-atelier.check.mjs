@@ -1,6 +1,6 @@
 /**
  * BRAWUKA-78/83/86 verification suite: single-screen atelier homepage — no scroll,
- * identity card inside large workbench easel frame, 4 permanently scattered
+ * identity card inside large workbench easel frame, 5 permanently scattered
  * chapter negatives (blurred under-pile removed), ambient motion, workbench SVG line art.
  */
 import fs from "node:fs";
@@ -50,18 +50,30 @@ check(!homeAtelier.includes("border-t border-current") && !homeAtelier.includes(
 check(homeAtelier.includes("SOCIAL_LINKS"), "identity card must render the social matrix from SOCIAL_LINKS");
 check(homeAtelier.includes("t.home.title") && homeAtelier.includes("t.home.heroSubtitle"), "identity card must render localized name + bio");
 check(exists("public/avatar.jpg"), "public/avatar.jpg must exist");
-// 4. 工作台实景（BRAWUKA-83/86）：四条路由常驻散落 + 极简工作台（底片堆层已移除）+ 无提示文案
-for (const route of ["/posts", "/resume", "/photography", "/products"]) {
+// 4. 工作台实景（BRAWUKA-83/86）：五条路由常驻散落 + 极简工作台（底片堆层已移除）+ 无提示文案
+for (const route of ["/posts", "/resume", "/photography", "/products", "/weekly-records"]) {
   check(filmStack.includes(`"${route}"`), `film stack must carry a frame for ${route}`);
 }
-for (const label of ["blogs", "career", "photography", "projects"]) {
+for (const label of ["blogs", "career", "photography", "projects", "records"]) {
   check(filmStack.includes(label), `film stack must label a frame: ${label}`);
 }
 check(filmStack.includes("<Link"), "the four chapter negatives must be permanently live links (no stack/scatter state machine)");
 check(!filmStack.includes("setScattered") && !filmStack.includes("useState"), "scatter/collect state machine must be removed");
 check(!filmStack.includes("PileFrame") && !filmStack.includes("PILE"), "scattered blurred under-pile negatives must be removed (founder directive BRAWUKA-86)");
 check(filmStack.includes("film-idle"), "frames must carry the idle drift class");
-check(filmStack.includes('["1", "2", "3", "4"]'), "digit keys 1–4 must jump to chapters");
+check(filmStack.includes('["1", "2", "3", "4", "5"]'), "digit keys 1–5 must jump to chapters");
+check(filmStack.includes("mobile reads as 2 / 1 / 2"), "mobile film composition must document the 2 / 1 / 2 reading order");
+for (const pose of [
+  'blogs: "right-2 top-2 text-right"',
+  'career: "left-2 top-2"',
+  'photography: "bottom-2 left-2"',
+  'projects: "bottom-2 left-2"',
+  'records: "bottom-2 right-2 text-right"',
+]) {
+  check(filmStack.includes(pose), `mobile film label pose missing: ${pose}`);
+}
+check(filmStack.includes("MOBILE_LABEL_POSE[film.key]"), "mobile film labels must use their requested inner-square positions");
+check(filmStack.includes("hidden font-display") && filmStack.includes("sm:block"), "desktop film labels must keep their existing position");
 check(filmStack.includes("hover:rotate-0") && filmStack.includes("focus-visible:rotate-0"), "hover must straighten frames with focus parity");
 check(!filmStack.includes("scatterHint") && !filmStack.includes("films.hint"), "no hint caption line under the bench (founder directive)");
 check(!homeAtelier.includes("t.home.colophon"), "colophon footer must not render on the homepage (founder directive)");
@@ -86,4 +98,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("homepage-atelier OK: single 100dvh frame, identity card inside workbench easel frame, 4 scattered chapter negatives (clean minimal bench), workbench SVG, reduced-motion fallbacks.");
+console.log("homepage-atelier OK: single 100dvh frame, identity card inside workbench easel frame, 5 scattered chapter negatives (mobile 2/1/2), workbench SVG, reduced-motion fallbacks.");

@@ -48,8 +48,22 @@ export interface Translations {
       career: string;
       photography: string;
       projects: string;
+      records: string;
       label: string;
     };
+  };
+  weeklyRecords: {
+    title: string;
+    subtitle: string;
+    personal: string;
+    personalDescription: string;
+    personalEmpty: string;
+    work: string;
+    workDescription: string;
+    agentMaintained: string;
+    atAGlance: string;
+    calendarCoverage: string;
+    coverageNote: string;
   };
   posts: {
     noResults: string;

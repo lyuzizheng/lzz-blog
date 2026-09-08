@@ -3,7 +3,7 @@
 > **状态**：定稿，可实施。替代 `docs/DESIGN.md` 的色彩 / 排印 / 动效 / IA 章节；暗房隐喻保留，执行方式以本文件为准。
 > **范围**：整站视觉语言，**文章阅读页是主战场**（自由滚动例外），其次列表页，最后首页向 BRAWUKA-57 对齐。
 > **方法论来源**：`mono-color` skill `design-system/` catalogs（colors / typography / compositions / rhythm / imperfections / carriers）的 Web 转写。
-> **Grill 存档**：Q1–Q7 全 A + 三修正；Q8 锁 4 子页；Q9 六项全按推荐；Q10 锁 **A**。详见 §10。
+> **Grill 存档**：Q1–Q7 全 A + 三修正；Q8 原锁 4 子页，现追加 Weekly Records 为第 5 子页；Q9 六项全按推荐；Q10 锁 **A**。详见 §10。
 
 ---
 
@@ -12,7 +12,7 @@
 | # | 病灶（main 分支证据） | 新语言（一句话） | 落点 |
 |---|---|---|---|
 | 1 | `SiteHeader`：`sticky + bg-substrate/85 + backdrop-blur-md` 毛玻璃；`border-white/10` 无对比级 | Q10-A：删全局 chrome，换**屏内眉脚**（本屏 eyebrow + Colophon 终屏），必留昼夜点 / 索引 / 语义 nav | §7.4 |
-| 2 | 三段式八股 Landing：Hero + Bento 图标墙（Compass/Sparkles/Layers）+ Tokens 色板验证区 | 首页只许 3 屏：封面 → 四入口散落 → Colophon；禁图标墙，入口用 overprint collage 散落 | §7.1 |
+| 2 | 三段式八股 Landing：Hero + Bento 图标墙（Compass/Sparkles/Layers）+ Tokens 色板验证区 | 首页为单屏工作台 + 五枚章节胶片；禁图标墙，入口用 35mm 负片散落 | §7.1 |
 | 3 | Tokens 色板、`SPECIMEN 2026-N1` 徽章直接上首页 | telemetry 三合法位置：屏内眉题数据条、图片 caption、Colophon 寄存器；余者皆 bug | §5.6 |
 | 4 | `SpotlightCard` 光晕、`MagneticButton` 磁吸、全页过渡，与业务状态零绑定 | Q9⑥：三件套删除；动效只绑定阅读进度 / 章节位置 / 主题切换（加码项亦须绑定状态） | §6 |
 | 5 | Display 巨大 / 正文极小两档跳跃，字重 400/600，全站无衬线 | 文学衬线正文（Noto Serif SC 锁定）+ 5 档字阶 + 字重呼吸（与阅读位置绑定） | §4, §5.1 |
@@ -129,26 +129,37 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 
 > **BRAWUKA-78 推翻（2026-09-06 创始人新方向）**：本节三屏 deck 作废。首页改为**单屏无滚动暗房工作台**（`100dvh`，无 Slide 2/3）：中央身份卡片（avatar + 名字 + 一句话 + 社交链接行）+ 四枚 35mm 负片叠放，点击 spring 散落为 Blogs/Career/Photography/Projects 四入口，Esc/点空白收拢；reduced-motion 静态规整排布。屏内眉脚（§7.4）契约保留。
 >
-> **BRAWUKA-83 迭代（2026-09-06 创始人反馈）**：取消"叠放 → 点击散落"状态机——四张章节胶片**常驻散落**、各自直接是链接（保留 hover 回正上浮 + 显影、idle 呼吸、数字键 1–4）；工作台下半区新增**模糊底片堆层**（6~8 张无标签负片，低透明度 + `blur(1.5px)`，纯装饰 pointer-events:none）；背景层追加**工作台 SVG 蚀刻**（灯箱台面、刻度尺、套准标记、胶片罐、放大镜——1px 发丝单线族）。
+> **BRAWUKA-83 迭代（2026-09-06 创始人反馈）**：取消"叠放 → 点击散落"状态机——章节胶片**常驻散落**、各自直接是链接（保留 hover 回正上浮 + 显影、idle 呼吸）；工作台下半区新增**模糊底片堆层**（6~8 张无标签负片，低透明度 + `blur(1.5px)`，纯装饰 pointer-events:none）；背景层追加**工作台 SVG 蚀刻**（灯箱台面、刻度尺、套准标记、胶片罐、放大镜——1px 发丝单线族）。
 >
-> **BRAWUKA-86 迭代（2026-09-06 创始人反馈）**：视觉构图二次精调——背景大方形透光台/标尺线框上移框选头像与身份信息，形成一体化的大暗房画幅容器；移除头像上独立加的四个小取景角标框；移除背景中散落堆叠的虚化底片层（`PileFrame`），四张核心章节胶片常驻散落，回归克制高级的极简物料美学。
+> **BRAWUKA-86 迭代（2026-09-06 创始人反馈）**：视觉构图二次精调——背景大方形透光台/标尺线框上移框选头像与身份信息，形成一体化的大暗房画幅容器；移除头像上独立加的四个小取景角标框；移除背景中散落堆叠的虚化底片层（`PileFrame`），核心章节胶片常驻散落，回归克制高级的极简物料美学。
+>
+> **Weekly Records 迭代（2026-09-07）**：主页追加第 5 枚 `Weekly Records` 胶片，保持最后一个 DOM / 导航 / 数字键入口（键位 1–5）；移动端五枚胶片按 **2 / 1 / 2** 自然排布并轻微压边，标题留在内框画面中：Career 左上、Blogs 右上、Photography 左下、Projects 左下、Records 右下；桌面端沿工作台横向散落。该页见 §7.3.1。
 - Slide 1 封面：纸底 → 名字显影 → 3 帧胶片 stagger（load 序列，reduced-motion 下直接呈现）。
 - Slide 2 子页索引：四入口**散落叠放**（overprint collage：一大一小一窄条一章戳，压边 8–16px）；SVG 修饰只许**一个**细线 gesture 家族（钴蓝 1px）。
 - Slide 3 Colophon 终屏（见 §7.4）。
 - 移动端：入视口自动显影，**禁纯 hover 交互**。
 
-### 7.2 四子页（Now 不做）
-`Writings / Darkroom / Flight / Products` 独立页。Writings 列表 + 内容自由滚动（deck 例外）。
+### 7.2 五子页
+`Writings / Darkroom / Flight / Products / Weekly Records` 独立页。Writings 与 Weekly Records 内容自由滚动（deck 例外）。
+
+`/posts`、文章阅读页、`/resume` 舞台与 `/weekly-records` 共用 `max-w-5xl` 内容画幅；header 与正文处于同一窄画幅，宽屏两侧保留明确留白，背景纸面可满屏但信息层不得铺满视口。
 
 > **BRAWUKA-85 迭代（2026-09-06 创始人方向）**：`/posts` 视觉形态定为**编辑部目录式列表（The Archive Reading Room）**——刊头一行收束（衬线大字「Blogs / 文章」+ 单行 mono telemetry `N DISPATCHES · YYYY—YYYY`）；按年分组平铺目录行（1px hairline 分隔、tabular mono `MM-DD` 日期、衬线标题、纯文本 `#tag`、阅读时长），年份以超大衬线数字作**静态**章节锚；hover 行标题 `translate-x-1` 缩进并转钴蓝，桌面端光标侧浮现接触印相微缩图（`pointer-events-none`，无封面不浮现）；过滤收敛为一行 mono 工具行（ALL / STUDY / ESSAY 下划线指示、无框 hairline 搜索、纯文本标签钴蓝选中态）。红线：零卡片、零图标墙（lucide ≤ 1）、零 `backdrop-blur`、零阴影上浮。`DESIGN.md` 1.2.2「出版物物料库」一条自此作废。
 >
-> **BRAWUKA-85 二轮迭代（2026-09-06 创始人 14:32 原话定稿）**：①刊头直白为 **Posts & Thoughts**（中英同文，无任何副标题/徽章）；②文章链路眉脚改为**主页同款极简 header**——左 `LZZ ATELIER` 品牌链 + 中央四枚 mini 长方形胶片 section 导航（01 BLOGS / 02 CAREER / 03 PHOTO / 04 PROJECTS，当前板块高亮，`rounded-[2px]`，active 胶片带 `--shadow-plate` 物料投影）+ 右端语言/昼夜开关，§7.4 屏内眉脚在文章链路自此退役（Colophon 保留）；③列表改**单列垂直时间线**（左 1px 发丝轴线 + 年份菱形锚点，倒序），行级滚动显影用 framer-motion `whileInView`（`once`、y+12、0.3s easeOut，`useReducedMotion` 下直出）——§6 三禁令之「禁 fade-in slide-up」在此由创始人点名特赦为小幅度滚动小动画；④阅读页排版升级：分类/标签改纯文本 `[CATEGORY] / #tag`，摘要改侧规线 standfirst（**禁 italic**：Noto Serif SC 无真斜体，CJK 会被合成伪斜体），Display 标题放宽为 `clamp(2.25rem,4.5vw,3.75rem)/1.18`（§5.1 字阶对长中文标题的舒适性豁免）。
+> **BRAWUKA-85 二轮迭代（2026-09-06 创始人 14:32 原话定稿）**：①刊头直白为 **Posts & Thoughts**（中英同文，无任何副标题/徽章）；②文章链路眉脚改为**主页同款极简 header**——左 `Lzz-Blog` 品牌链 + 中央 mini 长方形胶片 section 导航（01 BLOGS / 02 CAREER / 03 PHOTO / 04 PROJECTS / 05 RECORDS，当前板块高亮，`rounded-[2px]`，active 胶片带 `--shadow-plate` 物料投影）+ 右端语言/昼夜开关，§7.4 屏内眉脚在文章链路自此退役（Colophon 保留）；③列表改**单列垂直时间线**（左 1px 发丝轴线 + 年份菱形锚点，倒序），行级滚动显影用 framer-motion `whileInView`（`once`、y+12、0.3s easeOut，`useReducedMotion` 下直出）——§6 三禁令之「禁 fade-in slide-up」在此由创始人点名特赦为小幅度滚动小动画；④阅读页排版升级：分类/标签改纯文本 `[CATEGORY] / #tag`，摘要改侧规线 standfirst（**禁 italic**：Noto Serif SC 无真斜体，CJK 会被合成伪斜体），Display 标题放宽为 `clamp(2.25rem,4.5vw,3.75rem)/1.18`（§5.1 字阶对长中文标题的舒适性豁免）。
 >
 > **BRAWUKA-85 三轮迭代（2026-09-06 创始人 14:56 原话定稿）**：单行纯文字「太简约、看不出内容」——列表行升级为**编辑部大卡片**（保留时间线轴线与年份菱形锚点）：每卡 = Cover Photo（移动端 `aspect-[16/10]` 起、桌面 `lg:w-[40%]` 左图右文；无封面文章用 `--halftone-dot-color` 半色调暗房 specimen 版画代替，禁灰占位图）+ 衬线大标题（hover 转钴蓝 + `translate-x-1`）+ 多行摘要（`line-clamp-3`）+ hairline 卡脚（标签小章 + 阅读时长）。卡壳规范：`rounded-[4px]`（大画幅容器沿用主页透光台 4px 先例，小元素仍锁 0/2px）、hairline 描边、hover 仅描边转专色 + 封面图罩内 `scale-[1.03]`（图在罩内缩放，卡身不上浮不投影）。「零卡片」红线自此作废，「零 hover 上浮 / 零毛玻璃 / 零图标墙 / 零 rounded-xl」红线不变。
 
 ### 7.3 Products（一屏一产品，不展开架构）
 - 只收工作之外：`CoffeeMode`（开发中 · 找咖指南）、`CanCan`（开发中 · 网站已上线 · 财务证据库 + 对账台）、`Our Village`（已上线 · 社区成员系统）。
 - 每屏一句话 + 状态章 + 外链。状态词不对创始人只回三个词即改。
+
+### 7.3.1 Weekly Records（自然滚动时间线）
+- `/weekly-records` 采用自然纵向滚动，不进入一屏一 section 的 deck 模型。
+- 页面以横向 **Personal / Work** tabs 共用同一内容位置，Work 默认选中；切换时旧时间线淡出、新时间线淡入，不再纵向堆放两个大区，并尊重 reduced-motion。
+- Personal 由站点所有者维护，自动化与 agents 只允许更新 Work 数据。
+- 每组记录按周倒序，每周以发丝时间轴、日期区间、At a glance、主题化摘要与 Calendar coverage 组成；禁止重复的仪表板卡片与敏感业务细节。
+- 历史记录从 Confluence Weekly Record 迁入；后续更新追加到 `lib/weekly-records.ts` 顶部，并保持公开可读、数字可核验、关联工作合并叙述。
 
 ### 7.4 Q10-A（全锁）：删全局 chrome，换屏内眉脚
 - 文章 / 列表页不再用全局 sticky header + footer：本屏 eyebrow（索引回链 + 章节 + 语言切换 + 昼夜点）与屏内 foot（Colophon 一行）代替。
@@ -179,6 +190,6 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 - Q1：纸 `#F5F1E8`（温润方向）。
 - Q1–Q7：全 A（以 Phase 1 草案提案为准），加三修正：①旁注放**左侧**；②动画加码（spring + scroll 显影 + 字重呼吸 + grain/shader 底噪，均与状态绑定，三禁令不变）；③滚动模型（列表 / 内容正常滚、摄影拖拽地图 + visited pins、其余一屏一 section）。
 - Deck 追加：策展翻页 + resume 单生涯一屏 + FRAME/J/K/`#slide` + 风控（§8）。
-- Q8：4 子页（Writings/Darkroom/Flight/Products），Now 不做；Slide 2 散落拼贴规范；Products 文案三句（§7.3）。
+- Q8：原 4 子页追加 Weekly Records 为第 5 子页；主页以五枚章节胶片承载入口，Products 文案三句（§7.3）。
 - Q9：①钴蓝维持 ②night `#E05454` 接受 ③Noto Serif SC ④`<Aside>` ⑤emerald 特赦（STATUS 一词）⑥三件套删；§7 `/now` 删除。
 - Q10：锁 **A**（删全局 chrome，换屏内眉脚 + Colophon 终屏）。

@@ -2,15 +2,12 @@
 
 import React from "react";
 import { SiteHeader } from "@/components/site/site-header";
-import { SafelightSwitch } from "@/components/ui/safelight-switch";
-import { LanguageSwitch } from "@/components/ui/language-switch";
 import { useI18n } from "@/lib/i18n";
-import { CHAPTER_NEGATIVES } from "@/lib/chapters";
 
 /**
  * Editorial Reader Header (Unified via SiteHeader):
  * - Left: "Lzz-Blog" (homepage link)
- * - Center: 4 mini rectangular negatives as section navigation (matching homepage workbench)
+ * - Center: 5 mini rectangular negatives as section navigation (matching homepage workbench)
  * - Right: Minimalist Language switch + Safelight switch
  * - Width: max-w-6xl
  */
@@ -25,9 +22,6 @@ export function ReaderEyebrow({
   showControls?: boolean;
   className?: string;
 } = {}) {
-  void CHAPTER_NEGATIVES;
-  void SafelightSwitch;
-  void LanguageSwitch;
   void backHref;
   void backLabel;
 
