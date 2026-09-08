@@ -133,7 +133,7 @@ dossierDrawer: { stiffness: 300, damping: 32, mass: 1.0 }  // 旁注折叠、移
 >
 > **BRAWUKA-86 迭代（2026-09-06 创始人反馈）**：视觉构图二次精调——背景大方形透光台/标尺线框上移框选头像与身份信息，形成一体化的大暗房画幅容器；移除头像上独立加的四个小取景角标框；移除背景中散落堆叠的虚化底片层（`PileFrame`），核心章节胶片常驻散落，回归克制高级的极简物料美学。
 >
-> **Weekly Records 迭代（2026-09-07）**：主页追加第 5 枚 `Weekly Records` 胶片，保持最后一个 DOM / 导航 / 数字键入口（键位 1–5）；移动端五枚胶片按 **2 / 1 / 2** 自然排布并轻微压边，标题留在内框画面中：Career 左上、Blogs 右上、Photography 左上、Projects 左下、Records 右下；桌面端沿工作台横向散落，标题位置为 Blogs 右下、Career 左上、Photography 左上、Projects 左下、Records 右下。Photography 内框使用相机与胶片组合线稿。该页见 §7.3.1。
+> **Weekly Records 迭代（2026-09-07）**：主页追加第 5 枚 `Weekly Records` 胶片，保持最后一个 DOM / 导航 / 数字键入口（键位 1–5）；移动端五枚胶片按 **2 / 1 / 2** 自然排布并轻微压边，标题留在内框画面中：Career 左上、Blogs 右上、Photography 左上、Projects 左下、Records 右下；桌面端沿工作台横向散落，标题位置为 Blogs 右下、Career 左上、Photography 左上、Projects 左下、Records 右下。Photography 内框使用轻量、抽象的相机与胶片组合线稿。该页见 §7.3.1。
 - 移动端主页画幅从垂直居中改为距顶 `5rem` 起排，减少顶部空场并保留呼吸感；`sm` 及以上仍保持居中构图。
 - Slide 1 封面：纸底 → 名字显影 → 3 帧胶片 stagger（load 序列，reduced-motion 下直接呈现）。
 - Slide 2 子页索引：四入口**散落叠放**（overprint collage：一大一小一窄条一章戳，压边 8–16px）；SVG 修饰只许**一个**细线 gesture 家族（钴蓝 1px）。

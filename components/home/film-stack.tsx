@@ -132,24 +132,20 @@ function FilmEmblem({ kind }: { kind: EmblemKind }) {
   if (kind === "camera") {
     return (
       <svg viewBox="0 0 120 80" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <path
-          d="M24 29H37L43 21H65L71 29H82V64H24Z"
+        <g
+          transform="translate(18 14) scale(0.72)"
           fill="none"
           style={{ stroke: INK }}
-          strokeWidth={1.5}
-          opacity={0.9}
-        />
-        <circle cx={53} cy={46} r={12} fill="none" style={{ stroke: INK }} strokeWidth={1.5} />
-        <circle cx={53} cy={46} r={5} fill="none" style={{ stroke: INK }} strokeWidth={1.25} opacity={0.75} />
-        <circle cx={72} cy={36} r={2} style={{ fill: INK }} opacity={0.75} />
-        <path d="M82 34H107V58H82" fill="none" style={{ stroke: INK }} strokeWidth={1.25} opacity={0.75} />
-        <rect x={88} y={40} width={13} height={12} fill="none" style={{ stroke: INK }} strokeWidth={1} opacity={0.65} />
-        {[36.5, 43, 49.5, 56].map((cy) => (
-          <React.Fragment key={cy}>
-            <circle cx={85.5} cy={cy} r={1} style={{ fill: INK }} opacity={0.65} />
-            <circle cx={103.5} cy={cy} r={1} style={{ fill: INK }} opacity={0.65} />
-          </React.Fragment>
-        ))}
+          strokeLinecap="square"
+          strokeLinejoin="miter"
+          opacity={0.58}
+        >
+          <path d="M24 29H37L43 21H65L71 29H82V64H24Z" strokeWidth={1.25} />
+          <circle cx={53} cy={46} r={11} strokeWidth={1.1} />
+          <circle cx={53} cy={46} r={4} strokeWidth={0.9} opacity={0.7} />
+          <path d="M82 35H107V57H82" strokeWidth={1} opacity={0.7} />
+          <line x1={89} y1={46} x2={101} y2={46} strokeWidth={0.8} opacity={0.55} />
+        </g>
       </svg>
     );
   }
