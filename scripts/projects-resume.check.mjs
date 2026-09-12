@@ -41,7 +41,7 @@ for (const title of ["架构底座", "复杂前端", "算法管道", "工程效�
 }
 check(dossier.includes("CAPABILITY_DIMENSIONS"), "dossier must render from CAPABILITY_DIMENSIONS");
 check(dossier.includes("aria-expanded"), "dossier toggles must expose aria-expanded");
-check(dossier.includes("dossierDrawer"), "dossier motion must use the dossierDrawer spring preset");
+check(dossier.includes("gridTemplateRows") || dossier.includes("dossierDrawer"), "dossier drawer must animate via the grid-rows transition (or dossierDrawer spring preset)");
 check(dossier.includes("NEEDS-OWNER"), "tbd bullets must be marked NEEDS-OWNER");
 check(printSheet.includes('status === "verified"') || printSheet.includes("verified"), "print sheet must filter to verified facts only");
 

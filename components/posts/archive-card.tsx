@@ -1,7 +1,7 @@
 "use client";
 
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import type { ArchivePost } from "./archive-list";
 
 interface ArchiveCardProps {
@@ -9,24 +9,56 @@ interface ArchiveCardProps {
   index: number;
   readingTimeLabel: string;
   reduced: boolean | null;
+  /** First card is the LCP candidate: load its cover eagerly. */
+  eager?: boolean;
 }
 
+/**
+ * Reveal-on-scroll card. Uses IntersectionObserver + CSS transition on
+ * transform/opacity only — identical motion to the old framer-motion
+ * `whileInView` (once, -30px margin, 0.35s easeOut, staggered delay) without
+ * pulling the animation runtime into the /posts first-load bundle.
+ */
 export function ArchiveCard({
   post,
   index,
   readingTimeLabel,
   reduced,
+  eager = false,
 }: ArchiveCardProps) {
+  const ref = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (reduced) {
+      setInView(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-30px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [reduced]);
+
+  const hidden = !reduced && !inView;
+
   return (
-    <motion.article
-      key={post.slug}
-      initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{
-        duration: 0.35,
-        delay: Math.min(index * 0.04, 0.2),
-        ease: "easeOut",
+    <article
+      ref={ref}
+      className="transition-[opacity,transform] duration-[350ms] ease-out will-change-[opacity,transform]"
+      style={{
+        opacity: hidden ? 0 : 1,
+        transform: hidden ? "translateY(16px)" : "translateY(0)",
+        transitionDelay: `${Math.min(index * 40, 200)}ms`,
       }}
     >
       <Link
@@ -39,7 +71,9 @@ export function ArchiveCard({
             <img
               src={post.cover_image}
               alt={post.title}
-              loading="lazy"
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={eager ? "high" : "auto"}
+              decoding="async"
               className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           ) : (
@@ -106,6 +140,6 @@ export function ArchiveCard({
           </div>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }

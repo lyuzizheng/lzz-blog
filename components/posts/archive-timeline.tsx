@@ -18,7 +18,7 @@ export function ArchiveTimeline({
 }: ArchiveTimelineProps) {
   return (
     <div className="relative border-l border-border-plate pl-5 sm:pl-8 space-y-16">
-      {groupedByYear.map(([year, yearPosts]) => (
+      {groupedByYear.map(([year, yearPosts], yearIdx) => (
         <section key={year} aria-label={`${year} ${yearArchiveLabel}`} className="space-y-6">
           <div className="relative -ml-[25px] sm:-ml-[37px] flex items-center gap-3 pt-2 pb-2">
             <div className="h-2 w-2 rotate-45 border border-ink-dominant bg-substrate ring-4 ring-substrate" />
@@ -39,6 +39,7 @@ export function ArchiveTimeline({
                 index={idx}
                 readingTimeLabel={readingTimeLabel}
                 reduced={reduced}
+                eager={yearIdx === 0 && idx === 0}
               />
             ))}
           </div>

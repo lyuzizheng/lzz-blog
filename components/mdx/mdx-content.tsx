@@ -1,11 +1,10 @@
-"use client";
-
-import React, { useMemo } from "react";
+import React from "react";
 import * as runtime from "react/jsx-runtime";
 import Link from "next/link";
 import { CodeBlock } from "./code-block";
 import { Aside } from "./aside";
 import { YouTube, Bilibili, Tweet, Spotify, Notice } from "./embeds";
+import { probePublicImage } from "@/lib/image-size";
 
 interface MdxContentProps {
   code: string;
@@ -141,6 +140,8 @@ const defaultComponents = {
     if (!src) return null;
     const isCentered = src.includes("#center");
     const cleanSrc = src.replace(/#center$/, "");
+    // Intrinsic dimensions prevent CLS while the image streams in.
+    const size = probePublicImage(cleanSrc);
     return (
       <figure className={`my-8 block ${isCentered ? "text-center" : ""}`}>
         <div className="inline-block max-w-full overflow-hidden border border-border-plate bg-surface p-1">
@@ -149,8 +150,11 @@ const defaultComponents = {
             src={cleanSrc}
             alt={alt || ""}
             title={title}
-            className="max-h-[600px] w-auto max-w-full object-contain mx-auto"
+            width={size?.width}
+            height={size?.height}
+            className="h-auto max-h-[600px] w-auto max-w-full object-contain mx-auto"
             loading="lazy"
+            decoding="async"
             {...props}
           />
         </div>
@@ -181,18 +185,28 @@ const defaultComponents = {
 };
 
 export function MdxContent({ code, components = {}, className = "" }: MdxContentProps) {
-  const Component = useMemo(() => {
-    if (!code) return null;
-    try {
-      const fn = new Function(code);
-      return fn({ ...runtime }).default as React.ComponentType<{
-        components?: Record<string, unknown>;
-      }>;
-    } catch (err) {
-      console.error("Failed to evaluate MDX code:", err);
-      return null;
+  // Evaluated during server render (SSG): the compiled MDX code string and the
+  // rendered article never enter the client bundle or the RSC payload.
+  let Component: React.ComponentType<{
+    components?: Record<string, unknown>;
+  }> | null = null;
+  try {
+    if (code) {
+      const evaluated: unknown = new Function(code)({ ...runtime });
+      if (
+        evaluated !== null &&
+        typeof evaluated === "object" &&
+        "default" in evaluated &&
+        typeof evaluated.default === "function"
+      ) {
+        Component = evaluated.default as React.ComponentType<{
+          components?: Record<string, unknown>;
+        }>;
+      }
     }
-  }, [code]);
+  } catch (err) {
+    console.error("Failed to evaluate MDX code:", err);
+  }
 
   if (!Component) {
     return (
