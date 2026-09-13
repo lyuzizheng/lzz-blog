@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-motion";
+import { AnimatePresence, m, useMotionValue, useTransform } from "framer-motion";
+import { MotionDomMax } from "../lazy-motion-dom-max";
 import { motionPhysics } from "@/tokens";
 import { useI18n } from "@/lib/i18n";
 import {
@@ -140,9 +141,10 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
   const photo = index !== null ? DARKROOM_PHOTOS[index] : null;
 
   return (
+    <MotionDomMax>
     <AnimatePresence>
       {photo && index !== null && (
-        <motion.div
+        <m.div
           role="dialog"
           aria-modal="true"
           aria-label={`${photo.title} ${isZh ? "灯箱大图" : "Lightbox view"}`}
@@ -154,7 +156,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
           onClick={onClose}
         >
           {/* Dimmed backdrop: drag distance bleeds light back in. */}
-          <motion.div aria-hidden style={{ opacity: backdropOpacity }} className="absolute inset-0 bg-black" />
+          <m.div aria-hidden style={{ opacity: backdropOpacity }} className="absolute inset-0 bg-black" />
           {/* Top telemetry bar */}
           <div
             className="relative z-10 flex items-center justify-between px-4 py-3 font-telemetry text-[11px] tracking-[0.14em] text-white/80"
@@ -182,7 +184,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
             onDoubleClick={() => setScale((s) => (s > 1 ? 1 : 2.2))}
           >
             <AnimatePresence mode="wait" initial={false} custom={index}>
-              <motion.figure
+              <m.figure
                 key={photo.id}
                 drag={reduced || scale > 1 ? false : "y"}
                 style={{ y: dragY, scale, aspectRatio: `${photo.width} / ${photo.height}` }}
@@ -215,7 +217,7 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
                 {mode !== "true" && (
                   <div className="halftone-screen pointer-events-none absolute inset-0 opacity-25" />
                 )}
-              </motion.figure>
+              </m.figure>
             </AnimatePresence>
 
             {/* Step arrows (desktop) */}
@@ -261,9 +263,10 @@ export function DarkroomLightbox({ index, mode, onClose, onStep }: DarkroomLight
               </button>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
+    </MotionDomMax>
   );
 }
 

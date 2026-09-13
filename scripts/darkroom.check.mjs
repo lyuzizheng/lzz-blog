@@ -82,7 +82,20 @@ check(lightbox.includes('role="dialog"') && lightbox.includes('aria-modal="true"
 check(plate.includes('role="button"') && plate.includes("tabIndex"), "plates must be keyboard-operable");
 
 // 8. Route + nav wiring
-check(page.includes("DarkroomGallery"), "app/photography must render the gallery");
+// BRAWUKA-271: the gallery is code-split — the page renders it through
+// PhotographyMasterView (dynamic import) plus a server-rendered
+// DarkroomStaticGrid <noscript> fallback, so the contract is "reachable",
+// not "statically imported by the page module".
+const masterView = read("components/motion/darkroom/photography-master-view.tsx");
+const staticGrid = read("components/motion/darkroom/darkroom-static-grid.tsx");
+check(
+  page.includes("PhotographyMasterView") && masterView.includes("DarkroomGallery"),
+  "app/photography must render the gallery (via PhotographyMasterView)",
+);
+check(
+  page.includes("DarkroomStaticGrid") && staticGrid.includes("DARKROOM_PHOTOS"),
+  "app/photography must ship a no-JS static gallery fallback",
+);
 const chapters = read("lib/chapters.ts");
 check(chapters.includes("/photography"), "site header must link to /photography");
 

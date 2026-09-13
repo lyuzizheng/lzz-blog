@@ -39,7 +39,7 @@ export function ArchiveTimeline({
                 index={idx}
                 readingTimeLabel={readingTimeLabel}
                 reduced={reduced}
-                eager={yearIdx === 0 && idx === 0}
+                eager={yearIdx === 0 && idx < 2}
               />
             ))}
           </div>

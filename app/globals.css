@@ -716,6 +716,37 @@ h4:hover .heading-anchor {
 }
 
 /* ==========================================================================
+   BRAWUKA-271 · Archive card first-paint entrance (LCP path).
+   Eager cards paint in SSR HTML and play this CSS-only entrance instead of
+   waiting for hydration + IntersectionObserver. Matches the IO reveal:
+   opacity 0→1, translateY(16px)→0, 350ms ease-out.
+   ========================================================================== */
+@keyframes archive-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-archive-card-in {
+  animation: archive-card-in 350ms ease-out both;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-archive-card-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
    Atelier Veil & Loading Telemetry Multilingual Typography
    Controls instant zero-shift bilingual display between English and Chinese.
    ========================================================================== */

@@ -1,18 +1,30 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import {
   DARKROOM_PHOTOS,
   type DarkroomPhoto,
   type MonoMode,
 } from "@/lib/darkroom";
 import { PhotoMap } from "./photo-map";
-import { DarkroomGallery } from "./darkroom-gallery";
-import { DarkroomLightbox } from "./darkroom-lightbox";
 import { PhotographyHeader } from "./photography-header";
 import { SiteHeader, SiteFooter } from "@/components/site";
 import { Map } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+
+/* BRAWUKA-271: the gallery (masonry/reel/immersive) and the lightbox are
+   off the default map view — split them out of the first-load chunk and
+   fetch on first use. ssr:false keeps them out of the SSR preload list;
+   the page-level <noscript> fallback covers no-JS crawlers. */
+const DarkroomGallery = dynamic(
+  () => import("./darkroom-gallery").then((mod) => mod.DarkroomGallery),
+  { ssr: false }
+);
+const DarkroomLightbox = dynamic(
+  () => import("./darkroom-lightbox").then((mod) => mod.DarkroomLightbox),
+  { ssr: false }
+);
 
 export type PhotographyMainView = "map" | "gallery";
 
@@ -35,11 +47,15 @@ export function PhotographyMasterView({
   const [activeView, setActiveView] = useState<PhotographyMainView>(initialView);
   const mode: MonoMode = "true";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  /* Mount the lightbox chunk only after the first open; keep it mounted
+     afterwards so AnimatePresence can play the exit animation. */
+  const [lightboxMounted, setLightboxMounted] = useState(false);
 
   const openPhoto = useCallback((photo: DarkroomPhoto) => {
-    const idx = DARKROOM_PHOTOS.findIndex((p) => p.id === photo.id);
-    if (idx >= 0) {
-      setLightboxIndex(idx);
+    const index = DARKROOM_PHOTOS.findIndex((p) => p.id === photo.id);
+    if (index >= 0) {
+      setLightboxMounted(true);
+      setLightboxIndex(index);
     }
   }, []);
 
@@ -108,14 +124,16 @@ export function PhotographyMasterView({
           <SiteFooter variant="darkroom" />
         </div>
       )}
-
-      {/* Shared Physical Lightbox on top of both Map and Gallery */}
-      <DarkroomLightbox
-        index={lightboxIndex}
-        mode={mode}
-        onClose={closeLightbox}
-        onStep={stepLightbox}
-      />
+      {/* Shared Physical Lightbox on top of both Map and Gallery —
+          deferred chunk mounts on first open, then stays for exit anims. */}
+      {lightboxMounted && (
+        <DarkroomLightbox
+          index={lightboxIndex}
+          mode={mode}
+          onClose={closeLightbox}
+          onStep={stepLightbox}
+        />
+      )}
     </div>
   );
 }
