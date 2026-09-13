@@ -54,6 +54,35 @@ for (const mdFile of walkMd(contentDir)) {
       }
     }
   }
+
+  // BRAWUKA-48: Scan frontmatter cover.image references with exact readdir match
+  const fmMatch = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (fmMatch) {
+    const fm = fmMatch[1];
+    const isDraft = /^\s*draft:\s*true/m.test(fm);
+    if (!isDraft) {
+      const coverMatch = fm.match(/cover:\s*\n((?:\s+.*\n?)*)/);
+      if (coverMatch) {
+        const coverBlock = coverMatch[1];
+        const isRelative = /relative:\s*true/.test(coverBlock);
+        const imgMatch = coverBlock.match(/image:\s*["']?([^"'\r\n#\s]+)/);
+        if (imgMatch && isRelative) {
+          let ref = imgMatch[1].replace(/#center$/, "");
+          if (!/^(https?:\/\/|data:|\/)/.test(ref)) {
+            if (ref.startsWith("./")) ref = ref.slice(2);
+            checked += 1;
+            if (!siblings.has(ref)) {
+              const hint = [...siblings].filter((s) => s.toLowerCase() === ref.toLowerCase());
+              console.error(
+                `FAIL case-sensitive frontmatter cover: ${path.relative(root, mdFile)} -> ${imgMatch[1]} (disk has: ${hint.join(", ") || "no match"})`,
+              );
+              failures += 1;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 console.log(`case-sensitive assets OK: ${checked} image refs exact-matched on disk`);

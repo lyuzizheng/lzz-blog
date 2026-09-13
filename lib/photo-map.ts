@@ -125,7 +125,7 @@ function deriveLocationName(title: string, _gpsRaw: string, coords: GeoCoordinat
 /**
  * Derive grouped pins from DARKROOM_PHOTOS.
  */
-function derivePhotoMapPins(photos: ReadonlyArray<DarkroomPhoto>): ReadonlyArray<PhotoMapPin> {
+export function derivePhotoMapPins(photos: ReadonlyArray<DarkroomPhoto>): ReadonlyArray<PhotoMapPin> {
   const pins: PhotoMapPin[] = [];
 
   for (const photo of photos) {
