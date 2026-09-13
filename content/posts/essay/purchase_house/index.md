@@ -7,10 +7,6 @@ categories: ["随笔"]
 summary: "买房是个大工程，有检索，看房，make offer，offer 被拒绝，被卖方中介忽悠，砍价，各种手续，贷款等一系列漫长的过程。看似复杂，其实我发现从看房到拿钥匙也许都用不了四个月-----关键在于你对于整个过程的认知和感受是否到位，如果你有买房计划但是觉得无从下手，欢迎阅读整篇文章，也欢迎 pm 我获取更多信息"
 hide: false
 draft: true
-cover:
-    image: "cover.jpg"
-    relative: true
-    alt: "2022年终总结"
 
 ---
 

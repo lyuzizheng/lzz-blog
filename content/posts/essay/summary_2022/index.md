@@ -8,7 +8,7 @@ summary: "今天是2022大年初一，窗外细雨绵绵---也是非常适合写
 hide: false
 draft: false
 cover:
-    image: "cover.jpg"
+    image: "cover.JPG"
     relative: true
     alt: "2022年终总结"
 

@@ -177,7 +177,6 @@ export const zh: Translations = {
     title: "独立产品与项目",
     subtitle: "工作之余的独立产品实验与工程作品展台",
     badge: "04 // 独立产品与实验展台",
-    deckHint: "一屏三卡片 · 独立产品概览",
     scrollDown: "向下滑动查看更多 ↓",
     externalLink: "官方外链",
     status: "状态章",

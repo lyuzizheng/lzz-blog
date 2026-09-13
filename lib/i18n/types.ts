@@ -158,7 +158,6 @@ export interface Translations {
     title: string;
     subtitle: string;
     badge: string;
-    deckHint: string;
     scrollDown: string;
     externalLink: string;
     status: string;

@@ -22,6 +22,7 @@ import {
 } from "@/lib/darkroom";
 import {
   PHOTO_MAP_PINS,
+  derivePhotoMapPins,
   formatGpsCoordinates,
   projectMercator,
   unprojectMercator,
@@ -46,6 +47,7 @@ const MAX_ZOOM = 14;
 
 interface PhotoMapProps {
   readonly mode?: MonoMode;
+  readonly photos?: ReadonlyArray<DarkroomPhoto>;
   readonly onOpenPhoto?: (photo: DarkroomPhoto) => void;
   readonly onSwitchToMasonry?: () => void;
 }
@@ -65,6 +67,7 @@ interface PhotoMapProps {
  */
 export function PhotoMap({
   mode = "true",
+  photos,
   onOpenPhoto,
   onSwitchToMasonry,
 }: PhotoMapProps) {
@@ -141,8 +144,85 @@ export function PhotoMap({
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  // Pins derived from photos
-  const pins = PHOTO_MAP_PINS;
+  // Pins derived from photos prop (BRAWUKA-66)
+  const pins = useMemo(
+    () => (photos ? derivePhotoMapPins(photos) : PHOTO_MAP_PINS),
+    [photos]
+  );
+
+  // Spiderfy / collision layout: pins close to each other fan out when zoom >= 2.5 (BRAWUKA-66)
+  const layoutPins = useMemo(() => {
+    const SPIDERFY_MIN_ZOOM = 2.5;
+    const SPIDERFY_SCREEN_RADIUS = 52; // screen-space dispersion radius in pixels
+
+    // Group pins by spatial proximity in Mercator world coordinates
+    const clusters: Array<Array<{ pin: PhotoMapPin; basePx: number; basePy: number }>> = [];
+    for (const pin of pins) {
+      const { nx, ny } = projectMercator(pin.coordinates);
+      const basePx = nx * MAP_WORLD_W;
+      const basePy = ny * MAP_WORLD_H;
+
+      let placed = false;
+      for (const cluster of clusters) {
+        const c0 = cluster[0];
+        const dist = Math.hypot(c0.basePx - basePx, c0.basePy - basePy);
+        // Clusters within ~12px in world space (approx 0.05 deg)
+        if (dist < 12) {
+          cluster.push({ pin, basePx, basePy });
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        clusters.push([{ pin, basePx, basePy }]);
+      }
+    }
+
+    const result: Array<{
+      pin: PhotoMapPin;
+      basePx: number;
+      basePy: number;
+      drawPx: number;
+      drawPy: number;
+      isSpiderfied: boolean;
+    }> = [];
+
+    for (const cluster of clusters) {
+      if (cluster.length === 1 || zoom < SPIDERFY_MIN_ZOOM) {
+        for (const item of cluster) {
+          result.push({
+            pin: item.pin,
+            basePx: item.basePx,
+            basePy: item.basePy,
+            drawPx: item.basePx,
+            drawPy: item.basePy,
+            isSpiderfied: false,
+          });
+        }
+      } else {
+        // Centroid of the cluster
+        const avgX = cluster.reduce((sum, it) => sum + it.basePx, 0) / cluster.length;
+        const avgY = cluster.reduce((sum, it) => sum + it.basePy, 0) / cluster.length;
+        const worldRadius = SPIDERFY_SCREEN_RADIUS / zoom;
+
+        cluster.forEach((item, idx) => {
+          const angle = (2 * Math.PI * idx) / cluster.length - Math.PI / 2;
+          const drawPx = avgX + worldRadius * Math.cos(angle);
+          const drawPy = avgY + worldRadius * Math.sin(angle);
+          result.push({
+            pin: item.pin,
+            basePx: avgX,
+            basePy: avgY,
+            drawPx,
+            drawPy,
+            isSpiderfied: true,
+          });
+        });
+      }
+    }
+
+    return result;
+  }, [pins, zoom]);
 
   // Graticules cache
   const graticules = useMemo(() => generateGraticules(MAP_WORLD_W, MAP_WORLD_H), []);
@@ -285,34 +365,41 @@ export function PhotoMap({
     animFrameRef.current = requestAnimationFrame(inertialStep);
   };
 
-  // Wheel zoom centered at mouse pointer
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>): void => {
-    e.preventDefault();
-    if (animFrameRef.current) {
-      cancelAnimationFrame(animFrameRef.current);
-      animFrameRef.current = null;
-    }
+  // Native non-passive wheel listener to eliminate passive event console warnings (BRAWUKA-66)
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
 
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    const onWheel = (e: WheelEvent): void => {
+      e.preventDefault();
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
+      }
 
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+      const rect = el.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
 
-    // Zoom multiplier
-    const factor = e.deltaY < 0 ? 1.15 : 0.85;
-    const nextZoom = Math.min(Math.max(zoom * factor, MIN_ZOOM), MAX_ZOOM);
+      const factor = e.deltaY < 0 ? 1.15 : 0.85;
 
-    // Maintain point under cursor
-    const pointX = (mouseX - pan.x) / zoom;
-    const pointY = (mouseY - pan.y) / zoom;
+      setZoom((prevZoom) => {
+        const nextZoom = Math.min(Math.max(prevZoom * factor, MIN_ZOOM), MAX_ZOOM);
+        setPan((prevPan) => {
+          const pointX = (mouseX - prevPan.x) / prevZoom;
+          const pointY = (mouseY - prevPan.y) / prevZoom;
+          return {
+            x: mouseX - pointX * nextZoom,
+            y: mouseY - pointY * nextZoom,
+          };
+        });
+        return nextZoom;
+      });
+    };
 
-    const nextPanX = mouseX - pointX * nextZoom;
-    const nextPanY = mouseY - pointY * nextZoom;
-
-    setZoom(nextZoom);
-    setPan({ x: nextPanX, y: nextPanY });
-  };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
 
   // Touch pinch-to-zoom support
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
@@ -460,12 +547,10 @@ export function PhotoMap({
           })}
         </g>
 
-        {/* Visited Pins Layer */}
+        {/* Visited Pins Layer with Spiderfy expansion (BRAWUKA-66) */}
         <g className="pins-layer">
-          {pins.map((pin) => {
-            const { nx, ny } = projectMercator(pin.coordinates);
-            const px = nx * MAP_WORLD_W;
-            const py = ny * MAP_WORLD_H;
+          {layoutPins.map((item) => {
+            const { pin, drawPx, drawPy, isSpiderfied, basePx, basePy } = item;
             const isVisited = visitedIds.has(pin.id);
             const isSelected = selectedPin?.id === pin.id;
 
@@ -473,72 +558,84 @@ export function PhotoMap({
             const pinScale = Math.min(Math.max(1 / zoom, 0.45), 2.2);
 
             return (
-              <g
-                key={pin.id}
-                transform={`translate(${px}, ${py}) scale(${pinScale})`}
-                className="cursor-pointer transition-transform duration-150 ease-out hover:scale-125"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePinClick(pin);
-                }}
-                role="button"
-                tabIndex={0}
-                aria-label={`${pin.title} · ${pin.locationName} (${isVisited ? "已探索" : "未探索"})`}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handlePinClick(pin);
-                  }
-                }}
-              >
-                {/* Outer Pulsing Sonar Ring */}
-                {!reducedMotion && (
-                  <circle
-                    r={isSelected ? 26 : 18}
-                    className="fill-none stroke-ink-dominant/30 motion-safe:animate-ping"
-                    strokeWidth={1.5}
-                    style={{ animationDuration: "3s" }}
+              <g key={pin.id}>
+                {isSpiderfied && (
+                  <line
+                    x1={basePx}
+                    y1={basePy}
+                    x2={drawPx}
+                    y2={drawPy}
+                    className="stroke-ink-dominant/45"
+                    strokeWidth={0.8 / zoom}
+                    strokeDasharray="2 3"
                   />
                 )}
+                <g
+                  transform={`translate(${drawPx}, ${drawPy}) scale(${pinScale})`}
+                  className="cursor-pointer transition-transform duration-150 ease-out hover:scale-125"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePinClick(pin);
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${pin.title} · ${pin.locationName} (${isVisited ? "已探索" : "未探索"})`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handlePinClick(pin);
+                    }
+                  }}
+                >
+                  {/* Outer Pulsing Sonar Ring */}
+                  {!reducedMotion && (
+                    <circle
+                      r={isSelected ? 26 : 18}
+                      className="fill-none stroke-ink-dominant/30 motion-safe:animate-ping"
+                      strokeWidth={1.5}
+                      style={{ animationDuration: "3s" }}
+                    />
+                  )}
 
-                {/* Concentric Target Ring */}
-                <circle
-                  r={isSelected ? 16 : 11}
-                  className={`${isSelected ? "fill-ink-dominant/20 stroke-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                  strokeWidth={2}
-                />
-
-                {/* Target Reticle Crosshair */}
-                <line x1={-14} y1={0} x2={14} y2={0} className="stroke-ink-dominant/40" strokeWidth={1} />
-                <line x1={0} y1={-14} x2={0} y2={14} className="stroke-ink-dominant/40" strokeWidth={1} />
-
-                {/* Central Optical Core (Solid if Visited, Hollow Aperture if Unvisited) */}
-                <circle
-                  r={isVisited ? 5 : 3}
-                  className={`${isVisited ? "fill-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                  strokeWidth={1.5}
-                />
-
-                {/* Pin Telemetry Callout Pill */}
-                <g transform="translate(18, -12)">
-                  <rect
-                    x={0}
-                    y={-10}
-                    width={pin.title.length * 13 + 64}
-                    height={22}
-                    rx={2}
-                    className={`border border-border-default ${isSelected ? "fill-ink-dominant text-badge" : "fill-surface/95 text-primary"} shadow-sm transition-colors`}
+                  {/* Concentric Target Ring */}
+                  <circle
+                    r={isSelected ? 16 : 11}
+                    className={`${isSelected ? "fill-ink-dominant/20 stroke-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
+                    strokeWidth={2}
                   />
-                  <text
-                    x={6}
-                    y={5}
-                    className={`font-telemetry text-[10px] font-medium tracking-wider ${isSelected ? "fill-badge" : "fill-text-primary"}`}
-                  >
-                    <tspan className="font-bold tracking-widest text-ink-dominant">
-                      {pin.primaryPhoto.frame} ·{" "}
-                    </tspan>
-                    {pin.title}
-                  </text>
+
+                  {/* Target Reticle Crosshair */}
+                  <line x1={-14} y1={0} x2={14} y2={0} className="stroke-ink-dominant/40" strokeWidth={1} />
+                  <line x1={0} y1={-14} x2={0} y2={14} className="stroke-ink-dominant/40" strokeWidth={1} />
+
+                  {/* Central Optical Core (Solid if Visited, Hollow Aperture if Unvisited) */}
+                  <circle
+                    r={isVisited ? 5 : 3}
+                    className={`${isVisited ? "fill-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
+                    strokeWidth={1.5}
+                  />
+
+                  {/* Pin Telemetry Callout Pill */}
+                  <g transform="translate(18, -12)">
+                    <rect
+                      x={0}
+                      y={-10}
+                      width={pin.title.length * 13 + 64}
+                      height={22}
+                      rx={2}
+                      className={`border border-border-default ${isSelected ? "fill-ink-dominant text-badge" : "fill-surface/95 text-primary"} shadow-sm transition-colors`}
+                    />
+                    <text
+                      x={6}
+                      y={5}
+                      className={`font-telemetry text-[10px] font-medium tracking-wider ${isSelected ? "fill-badge" : "fill-text-primary"}`}
+                    >
+                      <tspan className="font-bold tracking-widest text-ink-dominant">
+                        {pin.primaryPhoto.frame} ·{" "}
+                      </tspan>
+                      {pin.title}
+                    </text>
+                  </g>
                 </g>
               </g>
             );
@@ -546,7 +643,7 @@ export function PhotoMap({
         </g>
       </>
     ),
-    [graticules, zoom, pins, visitedIds, selectedPin, reducedMotion, handlePinClick]
+    [graticules, zoom, layoutPins, visitedIds, selectedPin, reducedMotion, handlePinClick]
   );
   return (
     <div
@@ -556,7 +653,6 @@ export function PhotoMap({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onWheel={handleWheel}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       role="region"

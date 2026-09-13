@@ -179,7 +179,6 @@ export const en: Translations = {
     title: "Independent Products & Works",
     subtitle: "Curated Independent Engineering & Digital Experiments",
     badge: "04 // INDEPENDENT PRODUCTS & FORGE",
-    deckHint: "Single Page · 3 Curated Products",
     scrollDown: "Scroll down for more ↓",
     externalLink: "External Channel",
     status: "Status Stamp",
