@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
-import type { Post } from "#site/content";
+
+export interface AdjacentPost {
+  permalink: string;
+  title: string;
+}
 
 export function PostNavigation({
   prev,
   next,
 }: {
-  prev: Post | null;
-  next: Post | null;
+  prev: AdjacentPost | null;
+  next: AdjacentPost | null;
 }) {
   const { t, locale } = useI18n();
   const isZh = locale === "zh";

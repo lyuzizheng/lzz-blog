@@ -1,9 +1,19 @@
 "use client";
 
-import type { Post } from "#site/content";
 import { useI18n } from "@/lib/i18n";
 
-export function PostHeader({ post }: { post: Post }) {
+export interface PostHeaderProps {
+  title: string;
+  summary?: string;
+  category: string;
+  tags: string[];
+  date: string;
+  author: string;
+  readingTime?: number;
+  wordCount?: number;
+}
+
+export function PostHeader({ post }: { post: PostHeaderProps }) {
   const { t, locale } = useI18n();
   const isZh = locale === "zh";
 
@@ -42,12 +52,11 @@ export function PostHeader({ post }: { post: Post }) {
         <time dateTime={post.date} className="tabular-nums">
           {post.date.slice(0, 10)}
         </time>
-        <span className="text-border-plate">·</span>
-        <span className="tabular-nums">{post.reading_time} {t.posts.readingTime}</span>
-        {post.word_count > 0 && (
+        <span className="tabular-nums">{post.readingTime} {t.posts.readingTime}</span>
+        {(post.wordCount ?? 0) > 0 && (
           <>
             <span className="text-border-plate">·</span>
-            <span className="tabular-nums">{Math.round(post.word_count)} {t.posts.wordCount}</span>
+            <span className="tabular-nums">{Math.round(post.wordCount ?? 0)} {t.posts.wordCount}</span>
           </>
         )}
         <span className="ml-auto uppercase tracking-wider opacity-75">

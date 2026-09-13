@@ -1,6 +1,10 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScrollProvider, FilmGrainOverlay, ScrollRestore, ExposureProgress, AtelierVeilDismiss } from "@/components/motion";
+import { SmoothScrollProvider } from "@/components/motion/smooth-scroll-provider";
+import { FilmGrainOverlay } from "@/components/motion/grain-overlay";
+import { ScrollRestore } from "@/components/motion/route-transition";
+import { ExposureProgress } from "@/components/motion/exposure-progress";
+import { AtelierVeilDismiss } from "@/components/motion/atelier-veil";
 import { BodyScrollLock } from "@/components/body-scroll-lock";
 import { I18nProvider } from "@/lib/i18n";
 import { WipModal } from "@/components/ui";

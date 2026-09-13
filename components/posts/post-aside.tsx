@@ -1,10 +1,16 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n";
-import { TableOfContents } from "./toc";
-import type { Post } from "#site/content";
+import { TableOfContents, type TocEntry } from "./toc";
 
-export function PostAside({ post }: { post: Post }) {
+export interface PostAsideProps {
+  toc?: TocEntry[];
+  slug: string;
+  category: string;
+  status: string;
+}
+
+export function PostAside({ post }: { post: PostAsideProps }) {
   const { t, locale } = useI18n();
   const isZh = locale === "zh";
 

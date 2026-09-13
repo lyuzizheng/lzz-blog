@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/hooks/use-prefers-reduced-motion";
 import { useI18n } from "@/lib/i18n";
 import { ArchiveFilters } from "./archive-filters";
 import { ArchiveTimeline } from "./archive-timeline";
@@ -31,7 +31,7 @@ function computeChannels(posts: ArchivePost[]) {
  */
 export function ArchiveList({ posts }: { posts: ArchivePost[] }) {
   const { t } = useI18n();
-  const reduced = useReducedMotion();
+  const reduced = usePrefersReducedMotion();
 
   const [activeChannel, setActiveChannel] = useState<"all" | "study" | "essay">("all");
   const [searchQuery, setSearchQuery] = useState("");

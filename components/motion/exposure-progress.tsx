@@ -126,9 +126,9 @@ export function ExposureProgress() {
       className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[2px] overflow-hidden"
     >
       <div
-        className="h-full bg-[var(--ink-dominant,#2148B8)] transition-all duration-200 ease-out"
+        className="h-full w-full origin-left bg-[var(--ink-dominant,#2148B8)] transition-transform duration-200 ease-out"
         style={{
-          width: `${progress}%`,
+          transform: `scaleX(${progress / 100})`,
           opacity: visible ? 1 : 0,
           boxShadow: "0 0 8px var(--ink-dominant)",
         }}

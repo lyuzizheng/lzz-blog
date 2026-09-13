@@ -194,6 +194,11 @@ export function PhotoMap({
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
+  // Cursor coordinate readout — rAF-throttled so pointermove issues at most
+  // one state update per frame instead of one per event.
+  const cursorRafRef = useRef<number | null>(null);
+  const pendingCoordsRef = useRef<GeoCoordinates | null>(null);
+
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>): void => {
     // Calculate cursor world coords for telemetry
     const rect = containerRef.current?.getBoundingClientRect();
@@ -205,7 +210,15 @@ export function PhotoMap({
       const nx = worldX / MAP_WORLD_W;
       const ny = worldY / MAP_WORLD_H;
       if (nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1) {
-        setCursorCoords(unprojectMercator(nx, ny));
+        pendingCoordsRef.current = unprojectMercator(nx, ny);
+        if (!cursorRafRef.current) {
+          cursorRafRef.current = requestAnimationFrame(() => {
+            cursorRafRef.current = null;
+            if (pendingCoordsRef.current) {
+              setCursorCoords(pendingCoordsRef.current);
+            }
+          });
+        }
       }
     }
 
@@ -367,11 +380,174 @@ export function PhotoMap({
   };
 
   // Pin click handler
-  const handlePinClick = (pin: PhotoMapPin): void => {
+  const handlePinClick = useCallback((pin: PhotoMapPin): void => {
     markPinVisited(pin.id);
     setSelectedPin(pin);
-  };
+  }, [markPinVisited]);
 
+  // The map's cartography (graticules, continents, contours, labels, pins) is
+  // memoized: per-frame pan updates then only rewrite the transform attribute
+  // on the wrapping <g> instead of re-rendering the ~200-node SVG subtree.
+  const mapContent = useMemo(
+    () => (
+      <>
+        {/* Graticule Latitude & Longitude Coordinate Grid */}
+        <g className="graticule-lines stroke-border-default/40" strokeWidth={1 / zoom} strokeDasharray="4 6">
+          {graticules.map((gLine) => (
+            <path key={gLine.id} d={gLine.path} />
+          ))}
+        </g>
+
+        {/* Graticule Labels */}
+        <g className="graticule-labels fill-muted/70 font-telemetry" fontSize={10 / zoom}>
+          {graticules.slice(0, 10).map((gLine) => (
+            <text key={`label-${gLine.id}`} x={120} y={parseFloat(gLine.path.split(",")[1]) - 4 / zoom}>
+              {gLine.label}
+            </text>
+          ))}
+        </g>
+
+        {/* Continents & Landmasses */}
+        <g className="continents fill-surface/90 stroke-border-default" strokeWidth={1.2 / zoom}>
+          {CONTINENT_PATHS.map((continent) => (
+            <path key={continent.id} d={continent.d} />
+          ))}
+        </g>
+
+        {/* Topographic Mountain Contours (Altay/Xinjiang Massif) */}
+        <g className="topography stroke-ink-dominant/30 fill-none" strokeWidth={0.8 / zoom} strokeDasharray="2 3">
+          {TOPOGRAPHIC_CONTOURS.map((contour) => (
+            <path key={contour.id} d={contour.d} />
+          ))}
+        </g>
+
+        {/* Detailed Singapore Island & Straits Coastlines */}
+        <g className="singapore-coastline fill-chamber stroke-ink-dominant/50" strokeWidth={0.6 / zoom}>
+          {SINGAPORE_DETAILED_PATHS.map((sgPath) => (
+            <path key={sgPath.id} d={sgPath.d} />
+          ))}
+        </g>
+
+        {/* Maritime Straits & Cartographic Annotations */}
+        <g className="cartographic-labels fill-text-secondary/60 font-telemetry select-none" textAnchor="middle">
+          {CARTOGRAPHIC_LABELS.map((item) => {
+            const { nx, ny } = projectMercator({ lat: item.lat, lng: item.lng });
+            const lx = nx * MAP_WORLD_W;
+            const ly = ny * MAP_WORLD_H;
+            const baseSize = item.size === "lg" ? 14 : item.size === "md" ? 11 : 9;
+            return (
+              <g key={item.text} transform={`translate(${lx}, ${ly})`}>
+                <text
+                  y={0}
+                  fontSize={baseSize / zoom}
+                  letterSpacing="0.16em"
+                  className="font-semibold uppercase"
+                >
+                  {item.text}
+                </text>
+                {item.subtext && (
+                  <text
+                    y={(baseSize + 3) / zoom}
+                    fontSize={(baseSize - 2) / zoom}
+                    letterSpacing="0.1em"
+                    className="fill-muted/75"
+                  >
+                    {item.subtext}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </g>
+
+        {/* Visited Pins Layer */}
+        <g className="pins-layer">
+          {pins.map((pin) => {
+            const { nx, ny } = projectMercator(pin.coordinates);
+            const px = nx * MAP_WORLD_W;
+            const py = ny * MAP_WORLD_H;
+            const isVisited = visitedIds.has(pin.id);
+            const isSelected = selectedPin?.id === pin.id;
+
+            // Scale pin inverse to zoom with min/max clamps so it stays clickable
+            const pinScale = Math.min(Math.max(1 / zoom, 0.45), 2.2);
+
+            return (
+              <g
+                key={pin.id}
+                transform={`translate(${px}, ${py}) scale(${pinScale})`}
+                className="cursor-pointer transition-transform duration-150 ease-out hover:scale-125"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePinClick(pin);
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`${pin.title} · ${pin.locationName} (${isVisited ? "已探索" : "未探索"})`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handlePinClick(pin);
+                  }
+                }}
+              >
+                {/* Outer Pulsing Sonar Ring */}
+                {!reducedMotion && (
+                  <circle
+                    r={isSelected ? 26 : 18}
+                    className="fill-none stroke-ink-dominant/30 motion-safe:animate-ping"
+                    strokeWidth={1.5}
+                    style={{ animationDuration: "3s" }}
+                  />
+                )}
+
+                {/* Concentric Target Ring */}
+                <circle
+                  r={isSelected ? 16 : 11}
+                  className={`${isSelected ? "fill-ink-dominant/20 stroke-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
+                  strokeWidth={2}
+                />
+
+                {/* Target Reticle Crosshair */}
+                <line x1={-14} y1={0} x2={14} y2={0} className="stroke-ink-dominant/40" strokeWidth={1} />
+                <line x1={0} y1={-14} x2={0} y2={14} className="stroke-ink-dominant/40" strokeWidth={1} />
+
+                {/* Central Optical Core (Solid if Visited, Hollow Aperture if Unvisited) */}
+                <circle
+                  r={isVisited ? 5 : 3}
+                  className={`${isVisited ? "fill-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
+                  strokeWidth={1.5}
+                />
+
+                {/* Pin Telemetry Callout Pill */}
+                <g transform="translate(18, -12)">
+                  <rect
+                    x={0}
+                    y={-10}
+                    width={pin.title.length * 13 + 64}
+                    height={22}
+                    rx={2}
+                    className={`border border-border-default ${isSelected ? "fill-ink-dominant text-badge" : "fill-surface/95 text-primary"} shadow-sm transition-colors`}
+                  />
+                  <text
+                    x={6}
+                    y={5}
+                    className={`font-telemetry text-[10px] font-medium tracking-wider ${isSelected ? "fill-badge" : "fill-text-primary"}`}
+                  >
+                    <tspan className="font-bold tracking-widest text-ink-dominant">
+                      {pin.primaryPhoto.frame} ·{" "}
+                    </tspan>
+                    {pin.title}
+                  </text>
+                </g>
+              </g>
+            );
+          })}
+        </g>
+      </>
+    ),
+    [graticules, zoom, pins, visitedIds, selectedPin, reducedMotion, handlePinClick]
+  );
   return (
     <div
       ref={containerRef}
@@ -419,159 +595,7 @@ export function PhotoMap({
 
         {/* Transforming Virtual Map Group */}
         <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-          {/* Graticule Latitude & Longitude Coordinate Grid */}
-          <g className="graticule-lines stroke-border-default/40" strokeWidth={1 / zoom} strokeDasharray="4 6">
-            {graticules.map((gLine) => (
-              <path key={gLine.id} d={gLine.path} />
-            ))}
-          </g>
-
-          {/* Graticule Labels */}
-          <g className="graticule-labels fill-muted/70 font-telemetry" fontSize={10 / zoom}>
-            {graticules.slice(0, 10).map((gLine) => (
-              <text key={`label-${gLine.id}`} x={120} y={parseFloat(gLine.path.split(",")[1]) - 4 / zoom}>
-                {gLine.label}
-              </text>
-            ))}
-          </g>
-
-          {/* Continents & Landmasses */}
-          <g className="continents fill-surface/90 stroke-border-default" strokeWidth={1.2 / zoom}>
-            {CONTINENT_PATHS.map((continent) => (
-              <path key={continent.id} d={continent.d} />
-            ))}
-          </g>
-
-          {/* Topographic Mountain Contours (Altay/Xinjiang Massif) */}
-          <g className="topography stroke-ink-dominant/30 fill-none" strokeWidth={0.8 / zoom} strokeDasharray="2 3">
-            {TOPOGRAPHIC_CONTOURS.map((contour) => (
-              <path key={contour.id} d={contour.d} />
-            ))}
-          </g>
-
-          {/* Detailed Singapore Island & Straits Coastlines */}
-          <g className="singapore-coastline fill-chamber stroke-ink-dominant/50" strokeWidth={0.6 / zoom}>
-            {SINGAPORE_DETAILED_PATHS.map((sgPath) => (
-              <path key={sgPath.id} d={sgPath.d} />
-            ))}
-          </g>
-
-          {/* Maritime Straits & Cartographic Annotations */}
-          <g className="cartographic-labels fill-text-secondary/60 font-telemetry select-none" textAnchor="middle">
-            {CARTOGRAPHIC_LABELS.map((item) => {
-              const { nx, ny } = projectMercator({ lat: item.lat, lng: item.lng });
-              const lx = nx * MAP_WORLD_W;
-              const ly = ny * MAP_WORLD_H;
-              const baseSize = item.size === "lg" ? 14 : item.size === "md" ? 11 : 9;
-              return (
-                <g key={item.text} transform={`translate(${lx}, ${ly})`}>
-                  <text
-                    y={0}
-                    fontSize={baseSize / zoom}
-                    letterSpacing="0.16em"
-                    className="font-semibold uppercase"
-                  >
-                    {item.text}
-                  </text>
-                  {item.subtext && (
-                    <text
-                      y={(baseSize + 3) / zoom}
-                      fontSize={(baseSize - 2) / zoom}
-                      letterSpacing="0.1em"
-                      className="fill-muted/75"
-                    >
-                      {item.subtext}
-                    </text>
-                  )}
-                </g>
-              );
-            })}
-          </g>
-
-          {/* Visited Pins Layer */}
-          <g className="pins-layer">
-            {pins.map((pin) => {
-              const { nx, ny } = projectMercator(pin.coordinates);
-              const px = nx * MAP_WORLD_W;
-              const py = ny * MAP_WORLD_H;
-              const isVisited = visitedIds.has(pin.id);
-              const isSelected = selectedPin?.id === pin.id;
-
-              // Scale pin inverse to zoom with min/max clamps so it stays clickable
-              const pinScale = Math.min(Math.max(1 / zoom, 0.45), 2.2);
-
-              return (
-                <g
-                  key={pin.id}
-                  transform={`translate(${px}, ${py}) scale(${pinScale})`}
-                  className="cursor-pointer transition-transform duration-150 ease-out hover:scale-125"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePinClick(pin);
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`${pin.title} · ${pin.locationName} (${isVisited ? "已探索" : "未探索"})`}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      handlePinClick(pin);
-                    }
-                  }}
-                >
-                  {/* Outer Pulsing Sonar Ring */}
-                  {!reducedMotion && (
-                    <circle
-                      r={isSelected ? 26 : 18}
-                      className="fill-none stroke-ink-dominant/30 motion-safe:animate-ping"
-                      strokeWidth={1.5}
-                      style={{ animationDuration: "3s" }}
-                    />
-                  )}
-
-                  {/* Concentric Target Ring */}
-                  <circle
-                    r={isSelected ? 16 : 11}
-                    className={`${isSelected ? "fill-ink-dominant/20 stroke-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                    strokeWidth={2}
-                  />
-
-                  {/* Target Reticle Crosshair */}
-                  <line x1={-14} y1={0} x2={14} y2={0} className="stroke-ink-dominant/40" strokeWidth={1} />
-                  <line x1={0} y1={-14} x2={0} y2={14} className="stroke-ink-dominant/40" strokeWidth={1} />
-
-                  {/* Central Optical Core (Solid if Visited, Hollow Aperture if Unvisited) */}
-                  <circle
-                    r={isVisited ? 5 : 3}
-                    className={`${isVisited ? "fill-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                    strokeWidth={1.5}
-                  />
-
-                  {/* Pin Telemetry Callout Pill */}
-                  <g transform="translate(18, -12)">
-                    <rect
-                      x={0}
-                      y={-10}
-                      width={pin.title.length * 13 + 64}
-                      height={22}
-                      rx={2}
-                      className={`border border-border-default ${isSelected ? "fill-ink-dominant text-badge" : "fill-surface/95 text-primary"} shadow-sm transition-colors`}
-                    />
-                    <text
-                      x={6}
-                      y={5}
-                      className={`font-telemetry text-[10px] font-medium tracking-wider ${isSelected ? "fill-badge" : "fill-text-primary"}`}
-                    >
-                      <tspan className="font-bold tracking-widest text-ink-dominant">
-                        {pin.primaryPhoto.frame} ·{" "}
-                      </tspan>
-                      {pin.title}
-                    </text>
-                  </g>
-                </g>
-              );
-            })}
-          </g>
+          {mapContent}
         </g>
       </svg>
 

@@ -1,5 +1,8 @@
 import React from "react";
 import { notFound } from "next/navigation";
+// KaTeX stylesheet is scoped to post pages — it is render-blocking CSS, so it
+// must not ship in the global bundle for routes that never render math.
+import "katex/dist/katex.min.css";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { TocMobileProgress } from "@/components/posts/toc";
 import { ReaderEyebrow, ReaderColophon } from "@/components/posts/reader-chrome";
@@ -94,8 +97,31 @@ export default async function PostDetailPage({ params }: PageProps) {
           <TocMobileProgress items={post.toc} />
         </div>
 
-        <PostHeader post={post} />
-        <PostCover post={post} />
+        <PostHeader
+          post={{
+            title: post.title,
+            summary: post.summary,
+            category: post.category,
+            tags: post.tags,
+            date: post.date,
+            author: post.author,
+            readingTime: post.reading_time,
+            wordCount: post.word_count,
+          }}
+        />
+        <PostCover
+          post={{
+            title: post.title,
+            category: post.category,
+            tags: post.tags,
+            date: post.date,
+            readingTime: post.reading_time,
+            wordCount: post.word_count,
+            coverImage: post.cover_image,
+            coverAlt: post.cover?.alt,
+            coverCaption: post.cover?.caption,
+          }}
+        />
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,40rem)_14rem] lg:justify-between">
           <div className="min-w-0">
@@ -123,7 +149,14 @@ export default async function PostDetailPage({ params }: PageProps) {
             <PostNavigation prev={prev} next={next} />
           </div>
 
-          <PostAside post={post} />
+          <PostAside
+            post={{
+              toc: post.toc,
+              slug: post.slug,
+              category: post.category,
+              status: post.status,
+            }}
+          />
         </div>
 
         <ReaderColophon />

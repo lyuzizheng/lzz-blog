@@ -63,17 +63,23 @@ function useTocState(items: TocEntry[]) {
 
     headingElements.forEach((el) => observer.observe(el));
 
-    // Scroll progress handler
+    // Scroll progress handler — rAF-throttled so each frame issues at most one
+    // state update, and skipped entirely when the rounded value is unchanged.
+    let rafId = 0;
     const handleScroll = () => {
-      const totalScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        const currentProgress = Math.min(
-          100,
-          Math.max(0, Math.round((window.scrollY / totalScroll) * 100))
-        );
-        setProgress(currentProgress);
-      }
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        const totalScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        if (totalScroll > 0) {
+          const currentProgress = Math.min(
+            100,
+            Math.max(0, Math.round((window.scrollY / totalScroll) * 100))
+          );
+          setProgress((prev) => (prev === currentProgress ? prev : currentProgress));
+        }
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -82,6 +88,7 @@ function useTocState(items: TocEntry[]) {
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [allUrls]);
 
@@ -170,8 +177,8 @@ export function TableOfContents({ items = [], className = "" }: TocProps) {
         />
         <div
           aria-hidden
-          className="absolute left-0 top-1 w-[2px] bg-ink-dominant transition-[height] duration-150 ease-out"
-          style={{ height: `${progress}%` }}
+          className="absolute bottom-1 left-0 top-1 w-[2px] origin-top bg-ink-dominant transition-transform duration-150 ease-out"
+          style={{ transform: `scaleY(${progress / 100})` }}
         />
         <div className="max-h-[calc(100vh-240px)] overflow-y-auto pr-1">
           {renderItems(items)}

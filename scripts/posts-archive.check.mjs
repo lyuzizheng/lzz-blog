@@ -87,7 +87,7 @@ check(
 
 // 4. 大卡片时间线流（Big cards timeline with cover, title, description, tags, time, reading time）
 check(archiveList.includes("border-l") && archiveList.includes("border-border-plate"), "archive list must render single-column vertical timeline axis");
-check(archiveList.includes("framer-motion") && archiveList.includes("whileInView"), "archive list must use framer-motion whileInView for subtle scroll animations");
+check(archiveList.includes("IntersectionObserver"), "archive list must use IntersectionObserver-driven scroll-in reveal animations");
 check(archiveList.includes("post.cover_image"), "big cards must render cover photo");
 check(archiveList.includes("post.summary"), "big cards must render post description/summary");
 check(archiveList.includes("post.tags"), "big cards must render post tags");
@@ -131,7 +131,7 @@ for (const key of ["noResults", "yearArchive", "readingTime"]) {
   check(zh.includes(`${key}:`) && en.includes(`${key}:`), `live key '${key}' must exist in both zh and en dictionaries`);
 }
 check(archiveList.includes("t.posts.yearArchive"), "year count must consume the live yearArchive i18n key (no hardcoded locale ternaries)");
-check(archiveList.includes("useReducedMotion"), "whileInView scroll-in rows must honor prefers-reduced-motion");
+check(archiveList.includes("usePrefersReducedMotion") || archiveList.includes("useReducedMotion"), "scroll-in rows must honor prefers-reduced-motion");
 check(!postDetailPage.includes("italic"), "standfirst must not use italic (Noto Serif SC has no true italic; CJK gets faux-oblique)");
 
 if (failures.length > 0) {

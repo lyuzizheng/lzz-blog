@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { motionPhysics } from "@/tokens";
 
 interface LenisContextValue {
@@ -20,7 +20,10 @@ interface SmoothScrollProviderProps {
 
 /**
  * Global Lenis smooth inertial scrolling provider
- * Configured with motionPhysics tokens and prefers-reduced-motion fallback
+ * Configured with motionPhysics tokens and prefers-reduced-motion fallback.
+ * Lenis itself is dynamically imported after hydration so the library stays
+ * out of the first-load JS bundle (it is also never needed on the fixed
+ * single-screen routes, which stop it immediately anyway).
  */
 export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
@@ -33,29 +36,34 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       return;
     }
 
-    const lenis = new Lenis({
-      lerp: motionPhysics.lenis.lerp,
-      duration: motionPhysics.lenis.duration,
-      smoothWheel: motionPhysics.lenis.smoothWheel,
-      wheelMultiplier: motionPhysics.lenis.wheelMultiplier,
-      touchMultiplier: motionPhysics.lenis.touchMultiplier,
-      infinite: false,
-    });
-
-    setLenisInstance(lenis);
+    let lenis: Lenis | null = null;
+    let cancelled = false;
 
     function onAnimationFrame(time: number) {
-      lenis.raf(time);
+      lenis?.raf(time);
       rafIdRef.current = requestAnimationFrame(onAnimationFrame);
     }
 
-    rafIdRef.current = requestAnimationFrame(onAnimationFrame);
+    import("lenis").then(({ default: LenisCtor }) => {
+      if (cancelled) return;
+      lenis = new LenisCtor({
+        lerp: motionPhysics.lenis.lerp,
+        duration: motionPhysics.lenis.duration,
+        smoothWheel: motionPhysics.lenis.smoothWheel,
+        wheelMultiplier: motionPhysics.lenis.wheelMultiplier,
+        touchMultiplier: motionPhysics.lenis.touchMultiplier,
+        infinite: false,
+      });
+      setLenisInstance(lenis);
+      rafIdRef.current = requestAnimationFrame(onAnimationFrame);
+    });
 
     return () => {
+      cancelled = true;
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
       }
-      lenis.destroy();
+      lenis?.destroy();
       setLenisInstance(null);
     };
   }, []);
