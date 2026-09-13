@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "velite dev & next dev --turbopack",
     "build": "velite && next build",
+    "analyze": "ANALYZE=true velite && ANALYZE=true next build",
     "build:worker": "velite && opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
@@ -22,7 +23,6 @@
     "resume:build": "bash scripts/build-resume.sh"
   },
   "dependencies": {
-
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.7",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
+    "@next/bundle-analyzer": "^16.3.5",
     "@opennextjs/cloudflare": "^1.20.6",
     "@tailwindcss/postcss": "^4.0.9",
     "@types/katex": "^0.16.8",

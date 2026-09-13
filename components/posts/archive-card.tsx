@@ -18,6 +18,10 @@ interface ArchiveCardProps {
  * transform/opacity only — identical motion to the old framer-motion
  * `whileInView` (once, -30px margin, 0.35s easeOut, staggered delay) without
  * pulling the animation runtime into the /posts first-load bundle.
+ *
+ * BRAWUKA-271: `eager` cards skip the IO gate entirely — they are the LCP
+ * candidates, so they paint in the SSR HTML and play a pure-CSS entrance
+ * (`archive-card-in`) at first paint instead of waiting for hydration.
  */
 export function ArchiveCard({
   post,
@@ -27,10 +31,10 @@ export function ArchiveCard({
   eager = false,
 }: ArchiveCardProps) {
   const ref = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(eager);
 
   useEffect(() => {
-    if (reduced) {
+    if (reduced || eager) {
       setInView(true);
       return;
     }
@@ -47,19 +51,27 @@ export function ArchiveCard({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [reduced]);
+  }, [reduced, eager]);
 
   const hidden = !reduced && !inView;
 
   return (
     <article
       ref={ref}
-      className="transition-[opacity,transform] duration-[350ms] ease-out will-change-[opacity,transform]"
-      style={{
-        opacity: hidden ? 0 : 1,
-        transform: hidden ? "translateY(16px)" : "translateY(0)",
-        transitionDelay: `${Math.min(index * 40, 200)}ms`,
-      }}
+      className={
+        eager
+          ? "animate-archive-card-in"
+          : "transition-[opacity,transform] duration-[350ms] ease-out will-change-[opacity,transform]"
+      }
+      style={
+        eager
+          ? { animationDelay: `${Math.min(index * 40, 200)}ms` }
+          : {
+              opacity: hidden ? 0 : 1,
+              transform: hidden ? "translateY(16px)" : "translateY(0)",
+              transitionDelay: `${Math.min(index * 40, 200)}ms`,
+            }
+      }
     >
       <Link
         href={post.permalink}

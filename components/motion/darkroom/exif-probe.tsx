@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { motionPhysics } from "@/tokens";
 import { darkroomReadoutRows, type DarkroomPhoto } from "@/lib/darkroom";
 
@@ -13,7 +13,7 @@ import { darkroomReadoutRows, type DarkroomPhoto } from "@/lib/darkroom";
  */
 export function ExifProbe({ photo, visible }: { photo: DarkroomPhoto; visible: boolean }) {
   return (
-    <motion.div
+    <m.div
       aria-hidden={!visible}
       initial={false}
       animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
@@ -36,6 +36,6 @@ export function ExifProbe({ photo, visible }: { photo: DarkroomPhoto; visible: b
           <dd className="min-w-0 flex-1 truncate text-terracotta">{photo.chemistry}</dd>
         </div>
       </dl>
-    </motion.div>
+    </m.div>
   );
 }

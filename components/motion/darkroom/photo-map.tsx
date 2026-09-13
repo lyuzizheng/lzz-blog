@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   Layers,
   MapPin as MapPinIcon,
@@ -10,7 +10,6 @@ import {
   Minus,
   Plus,
   RotateCcw,
-  X,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { usePrefersReducedMotion } from "@/lib/hooks/use-prefers-reduced-motion";
@@ -37,7 +36,13 @@ import {
   TOPOGRAPHIC_CONTOURS,
   generateGraticules,
 } from "./map-data";
-import { PhotoPlate } from "./photo-plate";
+/* BRAWUKA-271: the pin-collection drawer is the map's only framer-motion
+   consumer — defer it so the animation runtime stays out of first-load JS. */
+const PinCollectionDrawer = dynamic(
+  () =>
+    import("./pin-collection-drawer").then((mod) => mod.PinCollectionDrawer),
+  { ssr: false }
+);
 
 const STORAGE_KEY_VISITED = "lzz_visited_photo_pins_v1";
 const MAP_WORLD_W = 3600;
@@ -86,6 +91,9 @@ export function PhotoMap({
 
   // Selected pin for collection drawer
   const [selectedPin, setSelectedPin] = useState<PhotoMapPin | null>(null);
+  /* Mount the deferred drawer chunk on first pin click; keep it mounted so
+     AnimatePresence can play the exit animation. */
+  const [drawerMounted, setDrawerMounted] = useState(false);
 
   // Visited pins state (stored in localStorage)
   const [visitedIds, setVisitedIds] = useState<Set<string>>(() => new Set());
@@ -469,6 +477,7 @@ export function PhotoMap({
   // Pin click handler
   const handlePinClick = useCallback((pin: PhotoMapPin): void => {
     markPinVisited(pin.id);
+    setDrawerMounted(true);
     setSelectedPin(pin);
   }, [markPinVisited]);
 
@@ -831,89 +840,17 @@ export function PhotoMap({
         </div>
       </footer>
 
-      {/* Pin Collection Slide-Over Drawer */}
-      <AnimatePresence>
-        {selectedPin && (
-          <motion.div
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="pointer-events-auto absolute top-16 right-4 bottom-12 z-30 flex w-full max-w-md flex-col overflow-hidden rounded-sm border-2 border-border-strong bg-surface shadow-2xl sm:top-20 sm:right-8 sm:bottom-14"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="collection-title"
-          >
-            {/* Drawer Header */}
-            <div className="flex items-start justify-between border-b border-border-default bg-chamber p-4 sm:p-5">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 font-telemetry text-[11px] font-bold tracking-widest uppercase text-ink-dominant">
-                  <MapPinIcon className="h-3.5 w-3.5" />
-                  <span>{selectedPin.primaryPhoto.frame} · {isZh ? "已定位" : "LOCATED"}</span>
-                </div>
-                <h2 id="collection-title" className="font-display text-2xl font-normal text-primary">
-                  {selectedPin.title}
-                </h2>
-                <p className="font-telemetry text-xs text-muted">
-                  {selectedPin.locationName} · {selectedPin.gpsRaw}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setSelectedPin(null)}
-                className="rounded-sm p-1 text-muted hover:bg-surface hover:text-text-primary transition-colors"
-                aria-label={isZh ? "关闭抽屉" : "Close drawer"}
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Collection Photo Plates List */}
-            <div className="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6" data-lenis-prevent>
-              <div className="space-y-1 font-telemetry text-[11px] text-muted">
-                <p className="uppercase tracking-wider">
-                  {isZh ? "底片展藏" : "DARKROOM SPECIMENS"} ({selectedPin.photos.length})
-                </p>
-                <p className="text-[10px]">CAPTURED: {selectedPin.takenAt}</p>
-              </div>
-
-              <div className="space-y-6">
-                {selectedPin.photos.map((photo) => (
-                  <div
-                    key={photo.id}
-                    className="space-y-3 rounded-sm border border-border-plate bg-substrate p-3 sm:p-4"
-                  >
-                    <PhotoPlate
-                      photo={photo}
-                      mode={mode}
-                      onOpen={onOpenPhoto}
-                    />
-
-                    <div className="flex items-center justify-between font-telemetry text-xs">
-                      <span className="font-bold text-ink-dominant">{photo.frame}</span>
-                      <button
-                        type="button"
-                        onClick={() => onOpenPhoto?.(photo)}
-                        className="rounded-sm border border-border-default bg-surface px-2.5 py-1 font-semibold uppercase tracking-wider text-text-primary hover:border-ink-dominant hover:text-ink-dominant transition-colors"
-                      >
-                        {isZh ? "进入暗房检视 (LIGHTBOX)" : "ENTER DARKROOM"} →
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Drawer Footer */}
-            <div className="border-t border-border-default bg-chamber px-4 py-3 font-telemetry text-[11px] text-muted sm:px-6">
-              <span className="tabular-nums">
-                ILFORD & KODAK EMULSION · MULTIGRADE MONO
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Pin Collection Slide-Over Drawer — deferred chunk, mounts on first
+          pin click and stays mounted for exit animations. */}
+      {drawerMounted && (
+        <PinCollectionDrawer
+          pin={selectedPin}
+          mode={mode}
+          reducedMotion={reducedMotion}
+          onClose={() => setSelectedPin(null)}
+          onOpenPhoto={onOpenPhoto}
+        />
+      )}
     </div>
   );
 }

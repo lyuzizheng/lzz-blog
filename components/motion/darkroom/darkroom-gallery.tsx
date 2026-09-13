@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { MotionDomMax } from "../lazy-motion-dom-max";
 import { motionPhysics } from "@/tokens";
 import { useI18n } from "@/lib/i18n";
 import { usePrefersReducedMotion } from "@/lib/hooks/use-prefers-reduced-motion";
@@ -75,6 +76,7 @@ export function DarkroomGallery() {
   );
 
   return (
+    <MotionDomMax>
     <div>
       {/* Control deck: view switch + mono-color ink switch */}
       <div className="mb-6 flex flex-col gap-3 border-y border-border-plate py-3 lg:flex-row lg:items-center lg:justify-between">
@@ -145,7 +147,7 @@ export function DarkroomGallery() {
       )}
 
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div
+        <m.div
           key={view}
           initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
           animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -190,7 +192,7 @@ export function DarkroomGallery() {
           {view === "immersive" && (
             <ImmersiveFrame mode={mode} onOpen={openAt} reduced={reduced} />
           )}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
 
       <DarkroomLightbox
@@ -200,6 +202,7 @@ export function DarkroomGallery() {
         onStep={setLightboxIndex}
       />
     </div>
+    </MotionDomMax>
   );
 }
 
@@ -238,7 +241,7 @@ function ImmersiveFrame({
         </span>
       </div>
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div
+        <m.div
           key={photo.id}
           initial={reduced ? { opacity: 0 } : { opacity: 0, x: 40 }}
           animate={reduced ? { opacity: 1 } : { opacity: 1, x: 0 }}
@@ -246,7 +249,7 @@ function ImmersiveFrame({
           transition={{ type: "spring", ...motionPhysics.springs.trayFloat }}
         >
           <PhotoPlate photo={photo} mode={mode} onOpen={onOpen} eager />
-        </motion.div>
+        </m.div>
       </AnimatePresence>
       <div className="flex items-center justify-between border-t border-border-plate px-4 py-3">
         <button

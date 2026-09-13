@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { DarkroomGallery, PhotographyMasterView } from "@/components/motion/darkroom";
+import { PhotographyMasterView } from "@/components/motion/darkroom/photography-master-view";
+import { DarkroomStaticGrid } from "@/components/motion/darkroom/darkroom-static-grid";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -49,9 +50,7 @@ export default function PhotographyPage() {
     <>
       <PhotographyMasterView initialView="map" />
       <noscript>
-        <div className="mx-auto max-w-6xl px-4 py-8">
-          <DarkroomGallery />
-        </div>
+        <DarkroomStaticGrid />
       </noscript>
     </>
   );

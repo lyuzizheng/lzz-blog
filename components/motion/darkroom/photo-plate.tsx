@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { motionPhysics } from "@/tokens";
 import { useI18n } from "@/lib/i18n";
 import type { DarkroomPhoto, MonoMode } from "@/lib/darkroom";
@@ -143,7 +143,7 @@ export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlatePro
   };
 
   return (
-    <motion.figure
+    <m.figure
       layout
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -206,6 +206,6 @@ export function PhotoPlate({ photo, mode, onOpen, eager = false }: PhotoPlatePro
       </figcaption>
 
       <ExifProbe photo={photo} visible={probe} />
-    </motion.figure>
+    </m.figure>
   );
 }

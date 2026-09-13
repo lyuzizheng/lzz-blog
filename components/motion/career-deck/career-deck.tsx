@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { m, AnimatePresence, type Variants } from "framer-motion";
+import { MotionDomAnimation } from "../lazy-motion-dom-animation";
 import { CAREER_STAGES } from "./deck-types";
 import {
   HeroCanvas,
@@ -286,6 +287,7 @@ export function CareerDeck() {
   const currentStage = CAREER_STAGES[stageIndex];
 
   return (
+    <MotionDomAnimation>
     <div
       onWheel={handleWheel}
       onTouchStart={handleTouchStart}
@@ -298,7 +300,7 @@ export function CareerDeck() {
     >
       {/* 1. Thematic Stage Canvas (Faint, non-distracting SVG background) */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <m.div
           key={currentStage.id}
           variants={canvasVariants}
           initial="enter"
@@ -312,13 +314,13 @@ export function CareerDeck() {
           {currentStage.id === "bytedance-im" && <BytedanceCanvas mode="im" />}
           {currentStage.id === "bytedance-infra" && <BytedanceCanvas mode="infra" />}
           {currentStage.id === "education" && <HeroCanvas mode="education" />}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
 
       {/* 2. Main Stage Stage Frame with Vertical Snap Parallax */}
       <div className="relative z-10 flex h-full w-full flex-1 items-center justify-center overflow-hidden pb-8 sm:pb-12">
         <AnimatePresence custom={direction} mode="wait">
-          <motion.div
+          <m.div
             key={currentStage.id}
             custom={direction}
             variants={stageVariants}
@@ -345,7 +347,7 @@ export function CareerDeck() {
             {currentStage.id === "education" && (
               <StageEducation onScrollToTop={() => goToStage(0)} />
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
 
@@ -461,5 +463,6 @@ export function CareerDeck() {
         />
       </div>
     </div>
+    </MotionDomAnimation>
   );
 }

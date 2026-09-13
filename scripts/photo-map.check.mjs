@@ -102,7 +102,10 @@ check(masterViewSrc.includes("openPhoto"), "master view must handle openPhoto ca
 
 // Fallback to Masonry
 check(masterViewSrc.includes("DarkroomGallery"), "master view must include DarkroomGallery as alternate view");
-check(pageSrc.includes("noscript") && pageSrc.includes("DarkroomGallery"), "app/photography/page.tsx must provide <noscript> DarkroomGallery fallback");
+// BRAWUKA-271: <noscript> fallback is the server-rendered DarkroomStaticGrid
+// (same photos, zero client JS) so the interactive gallery chunk stays
+// out of the first-load bundle.
+check(pageSrc.includes("noscript") && pageSrc.includes("DarkroomStaticGrid"), "app/photography/page.tsx must provide a <noscript> static gallery fallback");
 check(mapDataSrc.includes("MAP_VIEW_PRESETS"), "map-data must export MAP_VIEW_PRESETS for quick viewpoints");
 
 if (failures.length > 0) {

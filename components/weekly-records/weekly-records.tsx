@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { MotionDomAnimation } from "@/components/motion/lazy-motion-dom-animation";
 import { ReaderColophon, ReaderEyebrow } from "@/components/posts/reader-chrome";
 import { useI18n } from "@/lib/i18n";
 import {
@@ -118,6 +119,7 @@ export function WeeklyRecords() {
   };
 
   return (
+    <MotionDomAnimation>
     <div className="relative min-h-screen bg-substrate text-primary transition-colors duration-300">
       <ReaderEyebrow />
       <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
@@ -180,7 +182,7 @@ export function WeeklyRecords() {
 
         <AnimatePresence mode="wait" initial={false}>
           {activeTab === "personal" ? (
-            <motion.section
+            <m.section
               key="personal"
               id="personal-panel"
               role="tabpanel"
@@ -216,9 +218,9 @@ export function WeeklyRecords() {
                   />
                 </div>
               )}
-            </motion.section>
+            </m.section>
           ) : (
-            <motion.section
+            <m.section
               key="work"
               id="work-panel"
               role="tabpanel"
@@ -255,12 +257,13 @@ export function WeeklyRecords() {
                   {WORK_RECORDS_SOURCE_NOTE}
                 </p>
               </aside>
-            </motion.section>
+            </m.section>
           )}
         </AnimatePresence>
 
         <ReaderColophon />
       </main>
     </div>
+    </MotionDomAnimation>
   );
 }
