@@ -26,8 +26,8 @@ check(component.includes("AnimatePresence") && component.includes("useReducedMot
 check(component.includes("<RecordsTimeline") && component.includes("WORK_WEEKLY_RECORDS"), "Work tab must render the agent-maintained timeline");
 check(!component.includes('href="#personal"') && !component.includes('href="#work"'), "record tabs must replace the old vertically stacked anchor sections");
 check(records.includes("PERSONAL_WEEKLY_RECORDS") && records.includes("must not change"), "Personal records must remain outside the weekly agent workflow");
-check((records.match(/period: "/g) || []).length === 10, "initial Work timeline must contain all 10 Confluence weekly records");
-check(records.includes('period: "31 Aug–6 Sep 2026"'), "timeline must include the latest imported week");
+check((records.match(/period: "/g) || []).length === 11, "Work timeline must contain all 11 Confluence weekly records");
+check(records.includes('period: "7–13 Sep 2026"'), "timeline must include the latest imported week");
 check(records.includes('period: "29 Jun–5 Jul 2026"'), "timeline must include the oldest imported week");
 check(chapters.includes('href: "/weekly-records"') && chapters.includes('frameNo: "05"'), "Weekly Records must be the fifth chapter negative");
 check(sitemap.includes("/weekly-records"), "sitemap must publish the Weekly Records route");
@@ -39,4 +39,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("weekly-records OK: fifth chapter film, Personal/Work cross-fade tabs, 10 imported Work entries, bilingual shell, sitemap.");
+console.log("weekly-records OK: fifth chapter film, Personal/Work cross-fade tabs, 11 imported Work entries, bilingual shell, sitemap.");
