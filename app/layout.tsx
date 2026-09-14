@@ -279,12 +279,7 @@ export default function RootLayout({
           </div>
         </div>
         <AtelierVeilDismiss />
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="night"
-          enableSystem={false}
-          disableTransitionOnChange={false}
-        >
+        <ThemeProvider>
           <I18nProvider>
             <SmoothScrollProvider>
               <BodyScrollLock />
