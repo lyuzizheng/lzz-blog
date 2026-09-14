@@ -12,8 +12,10 @@
     "binding": "ASSETS"
   },
   "cache": {
-    "enabled": true,
-    "cross_version_cache": true
+    // Do NOT set cross_version_cache: it persists caches.default across
+    // deploys, and OpenNext's cache interception + regional incremental
+    // cache live there — stale HTML would survive every deploy.
+    "enabled": true
   },
   "routes": [
     {
