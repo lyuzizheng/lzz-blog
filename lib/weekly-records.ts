@@ -23,6 +23,32 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "7–13 Sep 2026",
+    dateTime: "2026-09-07",
+    atAGlance:
+      "11 owned Jira items resolved, one follow-up remained in progress, 4 Confluence pages contributed to, 192 Slack messages authored, and 9 accepted work meetings totalling 15 hours.",
+    highlights: [
+      {
+        title: "AI-assisted operations",
+        body: "Advanced the shared foundation for evaluation, evidence capture, rollout controls, monitoring, and manual fallback. Implementation, review, and roadmap work kept the workflow moving toward controlled live use.",
+      },
+      {
+        title: "Operational reliability",
+        body: "Completed 11 tracked work items across workflow reliability, permissions, and operational process improvements. One assigned follow-up remained in progress at week end.",
+      },
+      {
+        title: "Planning and documentation",
+        body: "Contributed to 4 Confluence pages covering the workflow roadmap, evaluation and rollout approach, lifecycle controls, and project status.",
+      },
+      {
+        title: "Collaboration",
+        body: "Authored 192 Slack messages and contributed implementation and review follow-ups across teams. Codex supported focused analysis, delivery, and review work throughout the week.",
+      },
+    ],
+    calendar:
+      "The primary Google Calendar contained 23 events: 9 accepted work meetings totalling 15 hours, 4 pending work invitations totalling 2 hours 15 minutes, one declined work invitation lasting 1 hour, 5 transparent working-location entries, and 4 personal or time-off entries. Only accepted work meetings are included in the collaboration total.",
+  },
+  {
     period: "31 Aug–6 Sep 2026",
     dateTime: "2026-08-31",
     atAGlance:
