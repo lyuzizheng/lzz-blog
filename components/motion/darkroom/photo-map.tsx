@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import type { Map as MapLibreMap } from "maplibre-gl";
 import {
   MapPin as MapPinIcon,
   Maximize2,
@@ -20,23 +21,26 @@ import {
 } from "@/lib/darkroom";
 import {
   PHOTO_MAP_PINS,
+  MAP_VIEW_PRESETS,
+  DEFAULT_MAP_PRESET,
   derivePhotoMapPins,
   formatGpsCoordinates,
-  projectMercator,
-  unprojectMercator,
   type GeoCoordinates,
   type PhotoMapPin,
 } from "@/lib/photo-map";
-import {
-  CARTOGRAPHIC_LABELS,
-  CONTINENT_PATHS,
-  MAP_VIEW_PRESETS,
-  SINGAPORE_DETAILED_PATHS,
-  TOPOGRAPHIC_CONTOURS,
-  generateGraticules,
-} from "./map-data";
-/* BRAWUKA-271: the pin-collection drawer is the map's only framer-motion
-   consumer — defer it so the animation runtime stays out of first-load JS. */
+import "./photo-map-canvas.css";
+
+/* BRAWUKA-343: the atlas runs on MapLibre GL + OpenStreetMap vector tiles —
+   a heavy runtime that must never enter the first-load chunk. The canvas and
+   the framer-motion drawer both stay behind next/dynamic; the SSR surface is
+   the eyebrow, the boot placeholder and the telemetry footer. */
+const PhotoMapCanvas = dynamic(
+  () => import("./photo-map-canvas").then((mod) => mod.PhotoMapCanvas),
+  {
+    ssr: false,
+    loading: () => <PhotoMapBoot />,
+  }
+);
 const PinCollectionDrawer = dynamic(
   () =>
     import("./pin-collection-drawer").then((mod) => mod.PinCollectionDrawer),
@@ -44,53 +48,42 @@ const PinCollectionDrawer = dynamic(
 );
 
 const STORAGE_KEY_VISITED = "lzz_visited_photo_pins_v1";
-const MAP_WORLD_W = 3600;
-const MAP_WORLD_H = 2200;
-const MIN_ZOOM = 0.8;
-const MAX_ZOOM = 14;
+
+/** SSR + first-paint surface while the maplibre chunk and style JSON load.
+    Lives in the shell so it never drags the maplibre chunk into first load. */
+function PhotoMapBoot() {
+  return (
+    <div className="photo-map-boot" aria-hidden="true">
+      <span className="photo-map-boot__label">Triangulating Atlas · OSM Vector</span>
+    </div>
+  );
+}
 
 interface PhotoMapProps {
   readonly mode?: MonoMode;
   readonly photos?: ReadonlyArray<DarkroomPhoto>;
   readonly onOpenPhoto?: (photo: DarkroomPhoto) => void;
-  readonly onSwitchToMasonry?: () => void;
 }
 
 /**
- * BRAWUKA-65 · Fullscreen Draggable Paper Map with Visited Pins.
+ * BRAWUKA-343 · The Darkroom Atlas — /photography's single, official interface.
  *
- * Implements Phase 2-4 specifications:
- * 1. Fullscreen interactive map with inertial pan & damping.
- * 2. Pin coordinates parsed strictly from `content/photos.json` (no secondary dataset).
- * 3. Mono-color paper print aesthetics: `#F5F1E8` paper base, halftone dot matrix,
- *    cartographic graticule rules, cobalt blue pins (`#2148B8` / `#E05454`).
- * 4. Q10-A Eyebrow with `PINS X · VISITED Y` telemetry, LanguageSwitch, and SafelightSwitch.
- * 5. Pin click opens location collection drawer; clicking a photo launches Darkroom Lightbox.
- * 6. Risk control: prefers-reduced-motion disables inertia; touch-action isolation;
- *    instant fallback to masonry list.
+ * A full-screen world map on OpenStreetMap data (MapLibre GL + OpenFreeMap
+ * vector tiles), pins derived live from `content/photos.json` GPS telemetry
+ * (BRAWUKA-65 engine — no hand-written pin dataset). Pin click opens the
+ * collection drawer; a photo plate there launches the shared darkroom
+ * lightbox. The classic masonry gallery is retired — no parallel view.
  */
-export function PhotoMap({
-  mode = "true",
-  photos,
-  onOpenPhoto,
-  onSwitchToMasonry,
-}: PhotoMapProps) {
+export function PhotoMap({ mode = "true", photos, onOpenPhoto }: PhotoMapProps) {
   const { locale } = useI18n();
   const isZh = locale === "zh";
   const reducedMotion = usePrefersReducedMotion();
-  const patternId = useId().replace(/[^a-zA-Z0-9]/g, "");
 
-  // Container & viewport dimensions. Start at 0 so the initial centering
-  // effect waits for the real measurement — centering on the old 1200x800
-  // placeholder pushed all pins off-screen on narrow viewports (BRAWUKA-343).
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [viewportSize, setViewportSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+  // Live map instance — arrives once the canvas chunk + style JSON load.
+  const mapRef = useRef<MapLibreMap | null>(null);
+  const [mapReady, setMapReady] = useState(false);
 
-  // Pan and Zoom transform state
-  const [zoom, setZoom] = useState<number>(1.2);
-  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-
-  // Selected pin for collection drawer
+  // Selected pin for the collection drawer
   const [selectedPin, setSelectedPin] = useState<PhotoMapPin | null>(null);
   /* Mount the deferred drawer chunk on first pin click; keep it mounted so
      AnimatePresence can play the exit animation. */
@@ -99,17 +92,14 @@ export function PhotoMap({
   // Visited pins state (stored in localStorage)
   const [visitedIds, setVisitedIds] = useState<Set<string>>(() => new Set());
 
-  // Cursor geo coordinates readout
-  const [cursorCoords, setCursorCoords] = useState<GeoCoordinates>({ lat: 1.28, lng: 103.85 });
-
-  // Dragging & inertial physics refs
-  const isDraggingRef = useRef(false);
-  const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const panStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const lastPosRef = useRef<{ x: number; y: number; time: number }>({ x: 0, y: 0, time: 0 });
-  const velocityRef = useRef<{ vx: number; vy: number }>({ vx: 0, vy: 0 });
-  const animFrameRef = useRef<number | null>(null);
-  const pinchDistRef = useRef<number | null>(null);
+  // Cursor geo coordinates + zoom telemetry
+  const [cursorCoords, setCursorCoords] = useState<GeoCoordinates>({
+    lat: DEFAULT_MAP_PRESET.lat,
+    lng: DEFAULT_MAP_PRESET.lng,
+  });
+  const [zoom, setZoom] = useState<number>(DEFAULT_MAP_PRESET.zoom);
+  const cursorRafRef = useRef<number | null>(null);
+  const pendingCoordsRef = useRef<GeoCoordinates | null>(null);
 
   // Initialize visited pins from localStorage
   useEffect(() => {
@@ -140,584 +130,110 @@ export function PhotoMap({
     });
   }, []);
 
-  // Update container dimensions
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const updateSize = (): void => {
-      const rect = el.getBoundingClientRect();
-      setViewportSize({ w: rect.width || window.innerWidth, h: rect.height || window.innerHeight });
-    };
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-
   // Pins derived from photos prop (BRAWUKA-66)
   const pins = useMemo(
     () => (photos ? derivePhotoMapPins(photos) : PHOTO_MAP_PINS),
     [photos]
   );
 
-  // Spiderfy / collision layout: pins close to each other fan out when zoom >= 2.5 (BRAWUKA-66)
-  const layoutPins = useMemo(() => {
-    const SPIDERFY_MIN_ZOOM = 2.5;
-    const SPIDERFY_SCREEN_RADIUS = 52; // screen-space dispersion radius in pixels
-
-    // Group pins by spatial proximity in Mercator world coordinates
-    const clusters: Array<Array<{ pin: PhotoMapPin; basePx: number; basePy: number }>> = [];
-    for (const pin of pins) {
-      const { nx, ny } = projectMercator(pin.coordinates);
-      const basePx = nx * MAP_WORLD_W;
-      const basePy = ny * MAP_WORLD_H;
-
-      let placed = false;
-      for (const cluster of clusters) {
-        const c0 = cluster[0];
-        const dist = Math.hypot(c0.basePx - basePx, c0.basePy - basePy);
-        // Clusters within ~12px in world space (approx 0.05 deg)
-        if (dist < 12) {
-          cluster.push({ pin, basePx, basePy });
-          placed = true;
-          break;
-        }
-      }
-      if (!placed) {
-        clusters.push([{ pin, basePx, basePy }]);
-      }
-    }
-
-    const result: Array<{
-      pin: PhotoMapPin;
-      basePx: number;
-      basePy: number;
-      drawPx: number;
-      drawPy: number;
-      isSpiderfied: boolean;
-    }> = [];
-
-    for (const cluster of clusters) {
-      if (cluster.length === 1 || zoom < SPIDERFY_MIN_ZOOM) {
-        for (const item of cluster) {
-          result.push({
-            pin: item.pin,
-            basePx: item.basePx,
-            basePy: item.basePy,
-            drawPx: item.basePx,
-            drawPy: item.basePy,
-            isSpiderfied: false,
-          });
-        }
-      } else {
-        // Centroid of the cluster
-        const avgX = cluster.reduce((sum, it) => sum + it.basePx, 0) / cluster.length;
-        const avgY = cluster.reduce((sum, it) => sum + it.basePy, 0) / cluster.length;
-        const worldRadius = SPIDERFY_SCREEN_RADIUS / zoom;
-
-        cluster.forEach((item, idx) => {
-          const angle = (2 * Math.PI * idx) / cluster.length - Math.PI / 2;
-          const drawPx = avgX + worldRadius * Math.cos(angle);
-          const drawPy = avgY + worldRadius * Math.sin(angle);
-          result.push({
-            pin: item.pin,
-            basePx: avgX,
-            basePy: avgY,
-            drawPx,
-            drawPy,
-            isSpiderfied: true,
-          });
-        });
-      }
-    }
-
-    return result;
-  }, [pins, zoom]);
-
-  // Graticules cache
-  const graticules = useMemo(() => generateGraticules(MAP_WORLD_W, MAP_WORLD_H), []);
-
-  // Helper: center viewport on target lat/lng and zoom
-  const centerOnCoordinates = useCallback(
-    (lat: number, lng: number, targetZoom: number) => {
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
-        animFrameRef.current = null;
-      }
-      const { nx, ny } = projectMercator({ lat, lng });
-      const targetX = nx * MAP_WORLD_W;
-      const targetY = ny * MAP_WORLD_H;
-      const newPanX = viewportSize.w / 2 - targetX * targetZoom;
-      const newPanY = viewportSize.h / 2 - targetY * targetZoom;
-
-      setZoom(targetZoom);
-      setPan({ x: newPanX, y: newPanY });
-    },
-    [viewportSize],
-  );
-
-  // Initial centering on Singapore preset
-  const hasInitializedRef = useRef(false);
-  useEffect(() => {
-    if (hasInitializedRef.current || viewportSize.w === 0) return;
-    hasInitializedRef.current = true;
-    const defaultPreset = MAP_VIEW_PRESETS[0]; // Singapore
-    centerOnCoordinates(defaultPreset.lat, defaultPreset.lng, defaultPreset.zoom);
-  }, [centerOnCoordinates, viewportSize]);
-
-  // Pointer event handlers for drag & pan
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
-    // Only handle primary button / touch
-    if (e.button !== 0 && e.pointerType === "mouse") return;
-    /* BRAWUKA-343: interactive chrome (pins, HUD controls, drawer, eyebrow and
-       footer links) must keep its own clicks. setPointerCapture on this
-       container retargets every child's click to the container, killing pin
-       taps and zoom buttons alike — so only the bare map starts pan+capture. */
-    if (
-      e.target instanceof Element &&
-      e.target.closest("button, a, [role='button'], [role='dialog'], header, footer, aside")
-    ) {
-      return;
-    }
-    if (animFrameRef.current) {
-      cancelAnimationFrame(animFrameRef.current);
-      animFrameRef.current = null;
-    }
-
-    isDraggingRef.current = true;
-    dragStartRef.current = { x: e.clientX, y: e.clientY };
-    panStartRef.current = { x: pan.x, y: pan.y };
-    lastPosRef.current = { x: e.clientX, y: e.clientY, time: performance.now() };
-    velocityRef.current = { vx: 0, vy: 0 };
-
-    // Capture pointer
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-
-  // Cursor coordinate readout — rAF-throttled so pointermove issues at most
-  // one state update per frame instead of one per event.
-  const cursorRafRef = useRef<number | null>(null);
-  const pendingCoordsRef = useRef<GeoCoordinates | null>(null);
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>): void => {
-    // Calculate cursor world coords for telemetry
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (rect) {
-      const screenX = e.clientX - rect.left;
-      const screenY = e.clientY - rect.top;
-      const worldX = (screenX - pan.x) / zoom;
-      const worldY = (screenY - pan.y) / zoom;
-      const nx = worldX / MAP_WORLD_W;
-      const ny = worldY / MAP_WORLD_H;
-      if (nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1) {
-        pendingCoordsRef.current = unprojectMercator(nx, ny);
-        if (!cursorRafRef.current) {
-          cursorRafRef.current = requestAnimationFrame(() => {
-            cursorRafRef.current = null;
-            if (pendingCoordsRef.current) {
-              setCursorCoords(pendingCoordsRef.current);
-            }
-          });
-        }
-      }
-    }
-
-    if (!isDraggingRef.current) return;
-
-    const now = performance.now();
-    const dt = Math.max(now - lastPosRef.current.time, 1);
-    const dx = e.clientX - lastPosRef.current.x;
-    const dy = e.clientY - lastPosRef.current.y;
-
-    velocityRef.current = {
-      vx: (dx / dt) * 16,
-      vy: (dy / dt) * 16,
-    };
-
-    lastPosRef.current = { x: e.clientX, y: e.clientY, time: now };
-
-    const totalDx = e.clientX - dragStartRef.current.x;
-    const totalDy = e.clientY - dragStartRef.current.y;
-
-    setPan({
-      x: panStartRef.current.x + totalDx,
-      y: panStartRef.current.y + totalDy,
-    });
-  };
-
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>): void => {
-    if (!isDraggingRef.current) return;
-    isDraggingRef.current = false;
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch {
-      // Ignore
-    }
-
-    // If reduced motion, stop immediately with zero coasting
-    if (reducedMotion) return;
-
-    const vxInit = velocityRef.current.vx;
-    const vyInit = velocityRef.current.vy;
-    if (Math.abs(vxInit) < 0.1 && Math.abs(vyInit) < 0.1) return;
-
-    let vx = vxInit;
-    let vy = vyInit;
-    const DAMPING = 0.92;
-
-    const inertialStep = (): void => {
-      vx *= DAMPING;
-      vy *= DAMPING;
-
-      if (Math.abs(vx) < 0.05 && Math.abs(vy) < 0.05) {
-        animFrameRef.current = null;
-        return;
-      }
-
-      setPan((prev) => ({
-        x: prev.x + vx,
-        y: prev.y + vy,
-      }));
-
-      animFrameRef.current = requestAnimationFrame(inertialStep);
-    };
-
-    animFrameRef.current = requestAnimationFrame(inertialStep);
-  };
-
-  // Native non-passive wheel listener to eliminate passive event console warnings (BRAWUKA-66)
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const onWheel = (e: WheelEvent): void => {
-      e.preventDefault();
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
-        animFrameRef.current = null;
-      }
-
-      const rect = el.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      const factor = e.deltaY < 0 ? 1.15 : 0.85;
-
-      setZoom((prevZoom) => {
-        const nextZoom = Math.min(Math.max(prevZoom * factor, MIN_ZOOM), MAX_ZOOM);
-        setPan((prevPan) => {
-          const pointX = (mouseX - prevPan.x) / prevZoom;
-          const pointY = (mouseY - prevPan.y) / prevZoom;
-          return {
-            x: mouseX - pointX * nextZoom,
-            y: mouseY - pointY * nextZoom,
-          };
-        });
-        return nextZoom;
-      });
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
+  const handleMapReady = useCallback((map: MapLibreMap) => {
+    mapRef.current = map;
+    setMapReady(true);
   }, []);
 
-  // Touch pinch-to-zoom support
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
-    if (e.touches.length === 2) {
-      const t1 = e.touches[0];
-      const t2 = e.touches[1];
-      const dist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
-
-      if (pinchDistRef.current !== null && pinchDistRef.current > 0) {
-        const factor = dist / pinchDistRef.current;
-        const nextZoom = Math.min(Math.max(zoom * factor, MIN_ZOOM), MAX_ZOOM);
-
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (rect) {
-          const midX = (t1.clientX + t2.clientX) / 2 - rect.left;
-          const midY = (t1.clientY + t2.clientY) / 2 - rect.top;
-          const pointX = (midX - pan.x) / zoom;
-          const pointY = (midY - pan.y) / zoom;
-
-          setZoom(nextZoom);
-          setPan({
-            x: midX - pointX * nextZoom,
-            y: midY - pointY * nextZoom,
-          });
+  // rAF-throttled cursor telemetry — at most one state update per frame.
+  const handleCursorMove = useCallback((coords: GeoCoordinates) => {
+    pendingCoordsRef.current = coords;
+    if (!cursorRafRef.current) {
+      cursorRafRef.current = requestAnimationFrame(() => {
+        cursorRafRef.current = null;
+        if (pendingCoordsRef.current) {
+          setCursorCoords(pendingCoordsRef.current);
         }
-      }
-      pinchDistRef.current = dist;
+      });
     }
-  };
+  }, []);
 
-  const handleTouchEnd = (): void => {
-    pinchDistRef.current = null;
-  };
+  useEffect(() => {
+    return () => {
+      if (cursorRafRef.current) cancelAnimationFrame(cursorRafRef.current);
+    };
+  }, []);
 
-  // Zoom control buttons
-  const handleZoomIn = (): void => {
-    const nextZoom = Math.min(zoom * 1.35, MAX_ZOOM);
-    const centerX = viewportSize.w / 2;
-    const centerY = viewportSize.h / 2;
-    const pointX = (centerX - pan.x) / zoom;
-    const pointY = (centerY - pan.y) / zoom;
+  const handleZoomChange = useCallback((nextZoom: number) => {
     setZoom(nextZoom);
-    setPan({ x: centerX - pointX * nextZoom, y: centerY - pointY * nextZoom });
-  };
+  }, []);
 
-  const handleZoomOut = (): void => {
-    const nextZoom = Math.max(zoom * 0.75, MIN_ZOOM);
-    const centerX = viewportSize.w / 2;
-    const centerY = viewportSize.h / 2;
-    const pointX = (centerX - pan.x) / zoom;
-    const pointY = (centerY - pan.y) / zoom;
-    setZoom(nextZoom);
-    setPan({ x: centerX - pointX * nextZoom, y: centerY - pointY * nextZoom });
-  };
+  // Camera commands — straight onto the live map instance.
+  const flyToPreset = useCallback(
+    (presetId: string) => {
+      const map = mapRef.current;
+      if (!map) return;
+      if (presetId === "global") {
+        fitAllPins();
+        return;
+      }
+      const preset = MAP_VIEW_PRESETS.find((p) => p.id === presetId);
+      if (!preset) return;
+      map.flyTo({
+        center: [preset.lng, preset.lat],
+        zoom: preset.zoom,
+        duration: reducedMotion ? 0 : 900,
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [reducedMotion]
+  );
 
-  const handleReset = (): void => {
-    const defaultPreset = MAP_VIEW_PRESETS[0];
-    centerOnCoordinates(defaultPreset.lat, defaultPreset.lng, defaultPreset.zoom);
-  };
+  const fitAllPins = useCallback(() => {
+    const map = mapRef.current;
+    if (!map || pins.length === 0) return;
+    const lngs = pins.map((p) => p.coordinates.lng);
+    const lats = pins.map((p) => p.coordinates.lat);
+    map.fitBounds(
+      [
+        [Math.min(...lngs), Math.min(...lats)],
+        [Math.max(...lngs), Math.max(...lats)],
+      ],
+      {
+        padding: { top: 90, bottom: 90, left: 90, right: 90 },
+        maxZoom: 10,
+        duration: reducedMotion ? 0 : 900,
+      }
+    );
+  }, [pins, reducedMotion]);
 
-  const handleFitPins = (): void => {
-    // Show all pins
-    const globalPreset = MAP_VIEW_PRESETS[2];
-    centerOnCoordinates(globalPreset.lat, globalPreset.lng, globalPreset.zoom);
-  };
+  const handleZoomIn = useCallback(() => {
+    mapRef.current?.zoomIn({ duration: reducedMotion ? 0 : 200 });
+  }, [reducedMotion]);
+
+  const handleZoomOut = useCallback(() => {
+    mapRef.current?.zoomOut({ duration: reducedMotion ? 0 : 200 });
+  }, [reducedMotion]);
+
+  const handleReset = useCallback(() => {
+    flyToPreset(DEFAULT_MAP_PRESET.id);
+  }, [flyToPreset]);
 
   // Pin click handler
-  const handlePinClick = useCallback((pin: PhotoMapPin): void => {
-    markPinVisited(pin.id);
-    setDrawerMounted(true);
-    setSelectedPin(pin);
-  }, [markPinVisited]);
-
-  // The map's cartography (graticules, continents, contours, labels, pins) is
-  // memoized: per-frame pan updates then only rewrite the transform attribute
-  // on the wrapping <g> instead of re-rendering the ~200-node SVG subtree.
-  const mapContent = useMemo(
-    () => (
-      <>
-        {/* Graticule Latitude & Longitude Coordinate Grid */}
-        <g className="graticule-lines stroke-border-default/40" strokeWidth={1 / zoom} strokeDasharray="4 6">
-          {graticules.map((gLine) => (
-            <path key={gLine.id} d={gLine.path} />
-          ))}
-        </g>
-
-        {/* Graticule Labels */}
-        <g className="graticule-labels fill-muted/70 font-telemetry" fontSize={10 / zoom}>
-          {graticules.slice(0, 10).map((gLine) => (
-            <text key={`label-${gLine.id}`} x={120} y={parseFloat(gLine.path.split(",")[1]) - 4 / zoom}>
-              {gLine.label}
-            </text>
-          ))}
-        </g>
-
-        {/* Continents & Landmasses */}
-        <g className="continents fill-surface/90 stroke-border-default" strokeWidth={1.2 / zoom}>
-          {CONTINENT_PATHS.map((continent) => (
-            <path key={continent.id} d={continent.d} />
-          ))}
-        </g>
-
-        {/* Topographic Mountain Contours (Altay/Xinjiang Massif) */}
-        <g className="topography stroke-ink-dominant/30 fill-none" strokeWidth={0.8 / zoom} strokeDasharray="2 3">
-          {TOPOGRAPHIC_CONTOURS.map((contour) => (
-            <path key={contour.id} d={contour.d} />
-          ))}
-        </g>
-
-        {/* Detailed Singapore Island & Straits Coastlines */}
-        <g className="singapore-coastline fill-chamber stroke-ink-dominant/50" strokeWidth={0.6 / zoom}>
-          {SINGAPORE_DETAILED_PATHS.map((sgPath) => (
-            <path key={sgPath.id} d={sgPath.d} />
-          ))}
-        </g>
-
-        {/* Maritime Straits & Cartographic Annotations */}
-        <g className="cartographic-labels fill-text-secondary/60 font-telemetry select-none" textAnchor="middle">
-          {CARTOGRAPHIC_LABELS.map((item) => {
-            const { nx, ny } = projectMercator({ lat: item.lat, lng: item.lng });
-            const lx = nx * MAP_WORLD_W;
-            const ly = ny * MAP_WORLD_H;
-            const baseSize = item.size === "lg" ? 14 : item.size === "md" ? 11 : 9;
-            return (
-              <g key={item.text} transform={`translate(${lx}, ${ly})`}>
-                <text
-                  y={0}
-                  fontSize={baseSize / zoom}
-                  letterSpacing="0.16em"
-                  className="font-semibold uppercase"
-                >
-                  {item.text}
-                </text>
-                {item.subtext && (
-                  <text
-                    y={(baseSize + 3) / zoom}
-                    fontSize={(baseSize - 2) / zoom}
-                    letterSpacing="0.1em"
-                    className="fill-muted/75"
-                  >
-                    {item.subtext}
-                  </text>
-                )}
-              </g>
-            );
-          })}
-        </g>
-
-        {/* Visited Pins Layer with Spiderfy expansion (BRAWUKA-66) */}
-        <g className="pins-layer">
-          {layoutPins.map((item) => {
-            const { pin, drawPx, drawPy, isSpiderfied, basePx, basePy } = item;
-            const isVisited = visitedIds.has(pin.id);
-            const isSelected = selectedPin?.id === pin.id;
-
-            // Scale pin inverse to zoom with min/max clamps so it stays clickable
-            const pinScale = Math.min(Math.max(1 / zoom, 0.45), 2.2);
-
-            return (
-              <g key={pin.id}>
-                {isSpiderfied && (
-                  <line
-                    x1={basePx}
-                    y1={basePy}
-                    x2={drawPx}
-                    y2={drawPy}
-                    className="stroke-ink-dominant/45"
-                    strokeWidth={0.8 / zoom}
-                    strokeDasharray="2 3"
-                  />
-                )}
-                <g
-                  transform={`translate(${drawPx}, ${drawPy}) scale(${pinScale})`}
-                  className="cursor-pointer transition-transform duration-150 ease-out hover:scale-125"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePinClick(pin);
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`${pin.title} · ${pin.locationName} (${isVisited ? "已探索" : "未探索"})`}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      handlePinClick(pin);
-                    }
-                  }}
-                >
-                  {/* Outer Pulsing Sonar Ring */}
-                  {!reducedMotion && (
-                    <circle
-                      r={isSelected ? 26 : 18}
-                      className="fill-none stroke-ink-dominant/30 motion-safe:animate-ping"
-                      strokeWidth={1.5}
-                      style={{ animationDuration: "3s" }}
-                    />
-                  )}
-
-                  {/* Concentric Target Ring */}
-                  <circle
-                    r={isSelected ? 16 : 11}
-                    className={`${isSelected ? "fill-ink-dominant/20 stroke-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                    strokeWidth={2}
-                  />
-
-                  {/* Target Reticle Crosshair */}
-                  <line x1={-14} y1={0} x2={14} y2={0} className="stroke-ink-dominant/40" strokeWidth={1} />
-                  <line x1={0} y1={-14} x2={0} y2={14} className="stroke-ink-dominant/40" strokeWidth={1} />
-
-                  {/* Central Optical Core (Solid if Visited, Hollow Aperture if Unvisited) */}
-                  <circle
-                    r={isVisited ? 5 : 3}
-                    className={`${isVisited ? "fill-ink-dominant" : "fill-surface stroke-ink-dominant"} transition-colors`}
-                    strokeWidth={1.5}
-                  />
-
-                  {/* Pin Telemetry Callout Pill */}
-                  <g transform="translate(18, -12)">
-                    <rect
-                      x={0}
-                      y={-10}
-                      width={pin.title.length * 13 + 64}
-                      height={22}
-                      rx={2}
-                      className={`border border-border-default ${isSelected ? "fill-ink-dominant text-badge" : "fill-surface/95 text-primary"} shadow-sm transition-colors`}
-                    />
-                    <text
-                      x={6}
-                      y={5}
-                      className={`font-telemetry text-[10px] font-medium tracking-wider ${isSelected ? "fill-badge" : "fill-text-primary"}`}
-                    >
-                      <tspan className="font-bold tracking-widest text-ink-dominant">
-                        {pin.primaryPhoto.frame} ·{" "}
-                      </tspan>
-                      {pin.title}
-                    </text>
-                  </g>
-                </g>
-              </g>
-            );
-          })}
-        </g>
-      </>
-    ),
-    [graticules, zoom, layoutPins, visitedIds, selectedPin, reducedMotion, handlePinClick]
+  const handlePinClick = useCallback(
+    (pin: PhotoMapPin): void => {
+      markPinVisited(pin.id);
+      setDrawerMounted(true);
+      setSelectedPin(pin);
+    },
+    [markPinVisited]
   );
+
   return (
     <div
-      ref={containerRef}
-      className="relative flex h-screen w-full flex-col overflow-hidden bg-substrate select-none touch-none"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      className="relative flex h-screen w-full flex-col overflow-hidden bg-substrate text-primary select-none"
       role="region"
-      aria-label={isZh ? "摄影全屏拖拽地图" : "Photography Atlas Map"}
+      aria-label={isZh ? "摄影世界地图" : "Photography Atlas"}
     >
-      {/* Halftone & Paper Texture Layer */}
-      <div className="halftone-screen pointer-events-none absolute inset-0 z-0 opacity-25" />
-
-      {/* SVG Map Canvas */}
-      <svg
-        className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
-        style={{ touchAction: "none" }}
-      >
-        <defs>
-          {/* Lithographic Halftone Pattern */}
-          <pattern
-            id={`dots-${patternId}`}
-            width="14"
-            height="14"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="2" cy="2" r="1.1" className="fill-ink-dominant/20" />
-            <circle cx="9" cy="9" r="0.9" className="fill-ink-dominant/15" />
-          </pattern>
-
-          {/* Paper Ink Filter */}
-          <filter id={`grain-${patternId}`}>
-            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
-            <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.04 0" />
-          </filter>
-        </defs>
-
-        {/* Ocean Background Tint with Halftone Screen */}
-        <rect width="100%" height="100%" className="fill-substrate" />
-        <rect width="100%" height="100%" fill={`url(#dots-${patternId})`} opacity="0.6" />
-
-        {/* Transforming Virtual Map Group */}
-        <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-          {mapContent}
-        </g>
-      </svg>
-
-      {/* Q10-A In-Screen Eyebrow (No global sticky chrome) */}
+      {/* Q10-A In-Screen Eyebrow */}
       <header
-        aria-label={isZh ? "地图暗房眉题" : "Darkroom Map Header"}
+        aria-label={isZh ? "地图暗房眉题" : "Darkroom Atlas Header"}
         className="relative z-20 flex w-full items-center justify-between border-b-2 border-border-strong bg-substrate/90 px-4 py-3 backdrop-blur-sm sm:px-8 sm:py-4"
       >
         <div className="flex min-w-0 items-center gap-3">
@@ -729,7 +245,7 @@ export function PhotoMap({
           </Link>
           <span className="text-muted">/</span>
           <span className="truncate font-telemetry text-xs font-semibold tracking-widest uppercase text-text-primary">
-            {isZh ? "摄影全屏地图" : "DARKROOM ATLAS"}
+            {isZh ? "摄影世界地图" : "DARKROOM ATLAS"}
           </span>
           <span className="hidden text-muted sm:inline">·</span>
 
@@ -744,121 +260,128 @@ export function PhotoMap({
           </div>
         </div>
 
-        {/* Eyebrow Right: LanguageSwitch, SafelightSwitch. BRAWUKA-343: the
-            gallery switcher moved to the footer colophon — the map is the
-            official interface, no parallel entry on the first screen. */}
+        {/* Eyebrow Right: LanguageSwitch, SafelightSwitch. The map is the only
+            interface — no gallery switcher anywhere on the first screen. */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           <LanguageSwitch />
           <SafelightSwitch />
         </div>
       </header>
 
-      {/* Floating HUD Controls (Zoom, Presets, Fit) */}
-      <aside
-        aria-label={isZh ? "地图漫游控制面板" : "Map controls"}
-        className="pointer-events-auto absolute bottom-12 left-4 z-20 flex flex-col gap-2 sm:left-8"
-      >
-        <div className="flex flex-col overflow-hidden rounded-sm border border-border-strong bg-surface/95 shadow-md">
-          <button
-            type="button"
-            onClick={handleZoomIn}
-            className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
-            title={isZh ? "放大地图" : "Zoom In"}
-            aria-label={isZh ? "放大地图" : "Zoom In"}
-          >
-            <Plus className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={handleZoomOut}
-            className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
-            title={isZh ? "缩小地图" : "Zoom Out"}
-            aria-label={isZh ? "缩小地图" : "Zoom Out"}
-          >
-            <Minus className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={handleFitPins}
-            className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
-            title={isZh ? "全览所有图钉" : "Fit All Pins"}
-            aria-label={isZh ? "全览所有图钉" : "Fit All Pins"}
-          >
-            <Maximize2 className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="flex h-9 w-9 items-center justify-center text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors"
-            title={isZh ? "重置为狮城视角" : "Reset to Singapore"}
-            aria-label={isZh ? "重置为狮城视角" : "Reset to Singapore"}
-          >
-            <RotateCcw className="h-4 w-4" />
-          </button>
-        </div>
+      {/* Atlas region — the OSM vector canvas fills everything between the
+          eyebrow and the telemetry footer. */}
+      <div className="relative min-h-0 flex-1">
+        <PhotoMapCanvas
+          pins={pins}
+          visitedIds={visitedIds}
+          selectedPinId={selectedPin?.id ?? null}
+          reducedMotion={reducedMotion}
+          onReady={handleMapReady}
+          onPinClick={handlePinClick}
+          onCursorMove={handleCursorMove}
+          onZoomChange={handleZoomChange}
+        />
 
-        {/* View Presets Pill Strip */}
-        <div className="hidden flex-col gap-1 rounded-sm border border-border-default bg-surface/95 p-1.5 shadow-sm sm:flex">
-          <span className="px-1 font-telemetry text-[9px] font-bold tracking-widest uppercase text-muted">
-            {isZh ? "聚落速览" : "PRESETS"}
-          </span>
-          {MAP_VIEW_PRESETS.map((preset) => (
+        {/* Floating HUD Controls (Zoom, Presets, Fit) — live once the map is. */}
+        <aside
+          aria-label={isZh ? "地图漫游控制面板" : "Map controls"}
+          className="pointer-events-auto absolute bottom-4 left-4 z-20 flex flex-col gap-2 sm:left-8"
+        >
+          <div className="flex flex-col overflow-hidden rounded-sm border border-border-strong bg-surface/95 shadow-md">
             <button
-              key={preset.id}
               type="button"
-              onClick={() => centerOnCoordinates(preset.lat, preset.lng, preset.zoom)}
-              className="rounded-sm px-2 py-1 text-left font-telemetry text-[11px] font-semibold tracking-wider text-text-secondary hover:bg-chamber hover:text-ink-dominant transition-colors"
+              onClick={handleZoomIn}
+              disabled={!mapReady}
+              className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors disabled:opacity-40"
+              title={isZh ? "放大地图" : "Zoom In"}
+              aria-label={isZh ? "放大地图" : "Zoom In"}
             >
-              {preset.label}
+              <Plus className="h-4 w-4" />
             </button>
-          ))}
-        </div>
-      </aside>
+            <button
+              type="button"
+              onClick={handleZoomOut}
+              disabled={!mapReady}
+              className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors disabled:opacity-40"
+              title={isZh ? "缩小地图" : "Zoom Out"}
+              aria-label={isZh ? "缩小地图" : "Zoom Out"}
+            >
+              <Minus className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={fitAllPins}
+              disabled={!mapReady}
+              className="flex h-9 w-9 items-center justify-center border-b border-border-default text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors disabled:opacity-40"
+              title={isZh ? "全览所有图钉" : "Fit All Pins"}
+              aria-label={isZh ? "全览所有图钉" : "Fit All Pins"}
+            >
+              <Maximize2 className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              disabled={!mapReady}
+              className="flex h-9 w-9 items-center justify-center text-text-primary hover:bg-chamber hover:text-ink-dominant transition-colors disabled:opacity-40"
+              title={isZh ? "重置为狮城视角" : "Reset to Singapore"}
+              aria-label={isZh ? "重置为狮城视角" : "Reset to Singapore"}
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* View Presets Pill Strip */}
+          <div className="hidden flex-col gap-1 rounded-sm border border-border-default bg-surface/95 p-1.5 shadow-sm sm:flex">
+            <span className="px-1 font-telemetry text-[9px] font-bold tracking-widest uppercase text-muted">
+              {isZh ? "聚落速览" : "PRESETS"}
+            </span>
+            {MAP_VIEW_PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => flyToPreset(preset.id)}
+                disabled={!mapReady}
+                className="rounded-sm px-2 py-1 text-left font-telemetry text-[11px] font-semibold tracking-wider text-text-secondary hover:bg-chamber hover:text-ink-dominant transition-colors disabled:opacity-40"
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        {/* Pin Collection Slide-Over Drawer — deferred chunk, mounts on first
+            pin click and stays mounted for exit animations. */}
+        {drawerMounted && (
+          <PinCollectionDrawer
+            pin={selectedPin}
+            mode={mode}
+            reducedMotion={reducedMotion}
+            onClose={() => setSelectedPin(null)}
+            onOpenPhoto={onOpenPhoto}
+          />
+        )}
+      </div>
 
       {/* In-Screen Footer / Colophon Telemetry */}
       <footer
-        aria-label={isZh ? "底图参数与配方" : "Atlas Telemetry & Recipes"}
-        className="pointer-events-none relative z-10 mt-auto flex w-full items-center justify-between border-t border-border-default bg-substrate/85 px-4 py-2 font-telemetry text-[11px] tabular-nums text-muted backdrop-blur-sm sm:px-8"
+        aria-label={isZh ? "底图参数与来源" : "Atlas Telemetry & Sources"}
+        className="pointer-events-none relative z-10 flex w-full items-center justify-between border-t border-border-default bg-substrate/85 px-4 py-2 font-telemetry text-[11px] tabular-nums text-muted backdrop-blur-sm sm:px-8"
       >
         <div className="flex items-center gap-3">
-          <span>
-            {formatGpsCoordinates(cursorCoords)}
-          </span>
+          <span>{formatGpsCoordinates(cursorCoords)}</span>
           <span className="hidden sm:inline">·</span>
           <span className="hidden sm:inline">ZOOM {zoom.toFixed(1)}X</span>
         </div>
 
         <div className="flex items-center gap-3">
+          {/* Basemap credit — the map canvas also carries the live
+              OpenFreeMap/OSM attribution control. */}
           <span className="hidden uppercase tracking-wider sm:inline">
-            PAPER #F5F1E8 · INK #2148B8
+            OSM · OPENFREEMAP VECTOR
           </span>
-          {/* BRAWUKA-343: the classic gallery survives as a secondary archive —
-              a quiet colophon link, never a parallel first-screen entry. */}
-          {onSwitchToMasonry && (
-            <button
-              type="button"
-              onClick={onSwitchToMasonry}
-              className="pointer-events-auto uppercase tracking-wider hover:text-ink-dominant transition-colors"
-              title={isZh ? "打开传统画廊档案（二级视图）" : "Open the classic masonry archive"}
-            >
-              {isZh ? "画廊档案" : "GALLERY ARCHIVE"} →
-            </button>
-          )}
           <span>© 2026 LZZ ATELIER</span>
         </div>
       </footer>
-
-      {/* Pin Collection Slide-Over Drawer — deferred chunk, mounts on first
-          pin click and stays mounted for exit animations. */}
-      {drawerMounted && (
-        <PinCollectionDrawer
-          pin={selectedPin}
-          mode={mode}
-          reducedMotion={reducedMotion}
-          onClose={() => setSelectedPin(null)}
-          onOpenPhoto={onOpenPhoto}
-        />
-      )}
     </div>
   );
 }

@@ -1,14 +1,16 @@
 /**
- * BRAWUKA-65 gate: validates the Phase 2-4 Photo Map contracts.
+ * BRAWUKA-343 gate: validates the Darkroom Atlas contracts (OSM basemap era).
  *
- * Source-text & runtime gate (same convention as darkroom.check.mjs & flight-path.check.mjs):
+ * Source-text & runtime gate (same convention as darkroom.check.mjs):
  * 1. Data source: pins derived from `content/photos.json` (no hand-written secondary source).
  * 2. GPS parsing: DMS strings (`1°17'N 103°51'E`) parsed accurately to decimal coordinates.
- * 3. Draggable map: inertia + damping physics loop with prefers-reduced-motion safety guard.
- * 4. Paper-styled basemap: mono halftone dot screen, #F5F1E8 substrate, cobalt blue pins (#2148B8).
- * 5. Telemetry & eyebrow: Q10-A in-screen eyebrow with PINS and VISITED telemetry, LanguageSwitch, and SafelightSwitch.
+ * 3. OSM basemap: MapLibre GL + OpenFreeMap vector tiles — never tile.openstreetmap.org
+ *    (OSMF policy throttles heavy production use), never the retired self-drawn paper SVG.
+ * 4. Gallery retired: no DarkroomGallery, no ?view=gallery deep link, no view switcher.
+ * 5. Telemetry & eyebrow: Q10-A in-screen eyebrow with PINS and VISITED telemetry,
+ *    LanguageSwitch, and SafelightSwitch.
  * 6. Lightbox integration: pin click opens collection drawer, photo plate launches shared Lightbox.
- * 7. Graceful degradation: masonry gallery fallback via view switcher and <noscript>.
+ * 7. Graceful degradation: <noscript> static grid + a WebGL-unavailable pin index.
  */
 
 import fs from "node:fs";
@@ -33,11 +35,11 @@ const photoMapEngine = read("lib/photo-map.ts");
 check(photoMapEngine.includes("parseGpsCoordinates"), "lib/photo-map.ts must export parseGpsCoordinates");
 check(photoMapEngine.includes("derivePhotoMapPins"), "lib/photo-map.ts must export derivePhotoMapPins");
 check(photoMapEngine.includes("PHOTO_MAP_PINS"), "lib/photo-map.ts must export PHOTO_MAP_PINS");
-check(photoMapEngine.includes("projectMercator"), "lib/photo-map.ts must export projectMercator");
+check(photoMapEngine.includes("MAP_VIEW_PRESETS"), "lib/photo-map.ts must export MAP_VIEW_PRESETS camera presets");
 
 // Verify GPS parser logic runtime test
 function parseDms(s) {
-  const dmsRegex = /(\d+(?:\.\d+)?)\s*°\s*(?:(\d+(?:\.\d+)?)\s*['\u2032])?\s*(?:(\d+(?:\.\d+)?)\s*["\u2033])?\s*([NSEWnsew])/g;
+  const dmsRegex = /(\d+(?:\.\d+)?)\s*°\s*(?:(\d+(?:\.\d+)?)\s*['′])?\s*(?:(\d+(?:\.\d+)?)\s*["″])?\s*([NSEWnsew])/g;
   const matches = [];
   let m;
   while ((m = dmsRegex.exec(s)) !== null) {
@@ -74,20 +76,33 @@ check(Math.abs(testAltay.lat - 47.8333) < 0.001, `Altay lat should be ~47.8333 (
 
 // 3. Map component contracts
 const photoMapSrc = read("components/motion/darkroom/photo-map.tsx");
+const canvasSrc = read("components/motion/darkroom/photo-map-canvas.tsx");
 const masterViewSrc = read("components/motion/darkroom/photography-master-view.tsx");
 const pageSrc = read("app/photography/page.tsx");
-const mapDataSrc = read("components/motion/darkroom/map-data.ts");
 
-// Inertia & Damping
-check(photoMapSrc.includes("DAMPING = 0.92") || photoMapSrc.includes("DAMPING"), "photo-map must implement velocity damping");
-check(photoMapSrc.includes("requestAnimationFrame"), "photo-map must use requestAnimationFrame for smooth inertia");
-check(photoMapSrc.includes("prefers-reduced-motion"), "photo-map must honor prefers-reduced-motion for inertia risk control");
-check(photoMapSrc.includes("touchAction: \"none\"") || photoMapSrc.includes("touch-none"), "photo-map must isolate touch events to avoid scrolling conflicts");
+// OSM basemap via MapLibre + OpenFreeMap (never the OSMF tile endpoint)
+check(canvasSrc.includes("maplibre-gl"), "photo-map-canvas must run on maplibre-gl");
+check(canvasSrc.includes("openfreemap.org/styles/positron"), "basemap must be OpenFreeMap positron vector tiles (OSM data)");
+check(!canvasSrc.includes("tile.openstreetmap.org"), "must never hit tile.openstreetmap.org directly (OSMF tile policy)");
+check(canvasSrc.includes("attributionControl"), "map must mount the attribution control (OSM/OpenFreeMap credit)");
+check(canvasSrc.includes("retintPositronToPaper"), "positron style must be retinted into the paper palette");
+check(canvasSrc.includes("isWebGL2Available"), "canvas must feature-detect WebGL2 (maplibre v6 dropped supported())");
+check(canvasSrc.includes("photo-map-fallback"), "canvas must render a readable pin index when WebGL is unavailable");
+// MapLibre v6 worker must be served from /maplibre/ (derived-from-chunk URL 404s under webpack)
+check(canvasSrc.includes('setWorkerUrl("/maplibre/maplibre-gl-worker.mjs")'), "canvas must pin the maplibre worker URL to /maplibre/");
+const pkg = JSON.parse(read("package.json"));
+check(
+  pkg.scripts.build.includes("copy-maplibre-worker") && pkg.scripts.dev.includes("copy-maplibre-worker") && pkg.scripts["build:worker"].includes("copy-maplibre-worker"),
+  "dev/build/build:worker must run scripts/copy-maplibre-worker.mjs so the worker asset exists",
+);
 
-// Paperized Mono Aesthetics
-check(photoMapSrc.includes("halftone-screen") || photoMapSrc.includes("halftone"), "photo-map must render halftone pattern for paper print aesthetic");
-check(photoMapSrc.includes("bg-substrate"), "photo-map must use V2 paper substrate background");
-check(photoMapSrc.includes("fill-ink-dominant") || photoMapSrc.includes("stroke-ink-dominant"), "photo-map pins must use ink-dominant (cobalt blue / safelight red)");
+// Code split: the maplibre runtime stays out of the first-load chunk
+check(photoMapSrc.includes('dynamic(') && photoMapSrc.includes("photo-map-canvas"), "photo-map must dynamic-import the maplibre canvas (ssr:false)");
+check(photoMapSrc.includes("ssr: false"), "maplibre canvas must be client-only (ssr:false)");
+
+// Reduced-motion risk control
+check(canvasSrc.includes("reducedMotion"), "canvas must honor prefers-reduced-motion (zero-duration camera moves)");
+check(photoMapSrc.includes("prefers-reduced-motion") || photoMapSrc.includes("usePrefersReducedMotion"), "photo-map must honor prefers-reduced-motion");
 
 // Telemetry & In-Screen Eyebrow
 check(photoMapSrc.includes("PINS") && photoMapSrc.includes("VISITED"), "eyebrow must display PINS and VISITED telemetry");
@@ -100,13 +115,17 @@ check(photoMapSrc.includes("selectedPin"), "pin click must link to collection dr
 check(masterViewSrc.includes("DarkroomLightbox"), "master view must host the shared DarkroomLightbox");
 check(masterViewSrc.includes("openPhoto"), "master view must handle openPhoto callback");
 
-// Fallback to Masonry
-check(masterViewSrc.includes("DarkroomGallery"), "master view must include DarkroomGallery as alternate view");
-// BRAWUKA-271: <noscript> fallback is the server-rendered DarkroomStaticGrid
-// (same photos, zero client JS) so the interactive gallery chunk stays
-// out of the first-load bundle.
+// 4. Gallery retired (Owner directive 2026-09-16) — no parallel view survives
+check(!masterViewSrc.includes("DarkroomGallery"), "master view must NOT include DarkroomGallery (retired)");
+check(!pageSrc.includes("view=gallery") && !pageSrc.includes("searchParams"), "page must not parse ?view= deep links (gallery retired)");
+check(!photoMapSrc.includes("onSwitchToMasonry"), "map must not offer a masonry switcher");
+check(
+  !fs.existsSync(path.join(root, "components/motion/darkroom/darkroom-gallery.tsx")),
+  "darkroom-gallery.tsx must be deleted",
+);
+
+// 7. No-JS fallback: <noscript> static grid stays
 check(pageSrc.includes("noscript") && pageSrc.includes("DarkroomStaticGrid"), "app/photography/page.tsx must provide a <noscript> static gallery fallback");
-check(mapDataSrc.includes("MAP_VIEW_PRESETS"), "map-data must export MAP_VIEW_PRESETS for quick viewpoints");
 
 if (failures.length > 0) {
   console.error("photo-map check FAILED:");
@@ -115,5 +134,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `photo-map OK: 8 GPS photos parsed, inertia+damping engine, Q10-A telemetry eyebrow, mono paperization, lightbox wiring, and masonry fallback.`,
+  `photo-map OK: ${gpsPhotos.length} GPS photos → pins, MapLibre + OpenFreeMap (OSM) basemap with paper retint, gallery retired, Q10-A telemetry eyebrow, lightbox wiring, noscript + no-WebGL fallbacks.`,
 );

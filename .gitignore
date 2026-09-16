@@ -95,3 +95,6 @@ tsconfig.tsbuildinfo
 # Cloudflare & OpenNext
 .open-next/
 .wrangler/
+
+# BRAWUKA-343: maplibre worker assets are copied from node_modules at build time
+public/maplibre/

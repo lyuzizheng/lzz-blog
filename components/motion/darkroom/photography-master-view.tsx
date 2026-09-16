@@ -8,53 +8,24 @@ import {
   type MonoMode,
 } from "@/lib/darkroom";
 import { PhotoMap } from "./photo-map";
-import { PhotographyHeader } from "./photography-header";
-import { SiteHeader, SiteFooter } from "@/components/site";
-import { Map } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
 
-/* BRAWUKA-271: the gallery (masonry/reel/immersive) and the lightbox are
-   off the default map view — split them out of the first-load chunk and
-   fetch on first use. ssr:false keeps them out of the SSR preload list;
-   the page-level <noscript> fallback covers no-JS crawlers. */
-const DarkroomGallery = dynamic(
-  () => import("./darkroom-gallery").then((mod) => mod.DarkroomGallery),
-  { ssr: false }
-);
+/* BRAWUKA-271: the lightbox stays off the first-load chunk and mounts on
+   first use. ssr:false keeps it out of the SSR preload list; the page-level
+   <noscript> fallback covers no-JS crawlers. */
 const DarkroomLightbox = dynamic(
   () => import("./darkroom-lightbox").then((mod) => mod.DarkroomLightbox),
   { ssr: false }
 );
 
-export type PhotographyMainView = "map" | "gallery";
-
-interface PhotographyMasterViewProps {
-  readonly initialView?: PhotographyMainView;
-}
-
 /**
- * BRAWUKA-65 · Photography Master View
+ * BRAWUKA-343 · Photography Master View
  *
- * Defaults to the full-screen interactive paper map with visited pins (Phase 2-4).
- * Supports seamless switching to the classic masonry/reel/immersive gallery (BRAWUKA-38),
- * sharing a single physical Lightbox instance so navigation flow is never broken.
+ * The Darkroom Atlas (OSM world map + GPS pins) is the single, official
+ * /photography interface — the classic masonry gallery is retired (Owner
+ * directive 2026-09-16). The shared physical lightbox survives as the map's
+ * photo inspector: pin → collection drawer → lightbox.
  */
-export function PhotographyMasterView({
-  initialView = "map",
-}: PhotographyMasterViewProps) {
-  const { locale } = useI18n();
-  const isZh = locale === "zh";
-  const [activeView, setActiveViewState] = useState<PhotographyMainView>(initialView);
-  /* BRAWUKA-343: the gallery is a secondary, deep-linkable view — mirror view
-     switches into the URL so refresh/share lands back on the same view. */
-  const setActiveView = useCallback((view: PhotographyMainView) => {
-    setActiveViewState(view);
-    window.history.replaceState(
-      null,
-      "",
-      view === "gallery" ? "/photography?view=gallery" : "/photography",
-    );
-  }, []);
+export function PhotographyMasterView() {
   const mode: MonoMode = "true";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   /* Mount the lightbox chunk only after the first open; keep it mounted
@@ -79,48 +50,9 @@ export function PhotographyMasterView({
 
   return (
     <div className="relative min-h-screen w-full bg-substrate text-primary">
-      {activeView === "map" ? (
-        <PhotoMap
-          mode={mode}
-          onOpenPhoto={openPhoto}
-          onSwitchToMasonry={() => setActiveView("gallery")}
-        />
-      ) : (
-        <div className="relative flex min-h-screen flex-col justify-between">
-          <SiteHeader />
-
-          <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-8 sm:px-6 sm:py-12">
-            {/* Top Switcher Bar to return to Map */}
-            <div className="mb-6 flex items-center justify-between border-b border-border-default pb-3">
-              <div className="flex items-center gap-2 font-telemetry text-xs text-muted">
-                <span className="font-bold uppercase tracking-wider text-ink-dominant">
-                  THE DARKROOM
-                </span>
-                <span>/</span>
-                <span>{isZh ? "传统画廊视图" : "MASONRY & REEL ARCHIVE"}</span>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setActiveView("map")}
-                className="flex items-center gap-1.5 rounded-sm border-2 border-border-strong bg-surface px-3 py-1.5 font-telemetry text-xs font-bold uppercase tracking-wider text-ink-dominant hover:bg-chamber transition-colors shadow-xs"
-                title={isZh ? "切换至全屏漫游地图" : "Switch to Fullscreen Map"}
-              >
-                <Map className="h-3.5 w-3.5" />
-                <span>{isZh ? "返回全屏漫游地图" : "RETURN TO MAP"} →</span>
-              </button>
-            </div>
-
-            <PhotographyHeader />
-
-            <DarkroomGallery />
-          </main>
-
-          <SiteFooter variant="darkroom" />
-        </div>
-      )}
-      {/* Shared Physical Lightbox on top of both Map and Gallery —
-          deferred chunk mounts on first open, then stays for exit anims. */}
+      <PhotoMap mode={mode} onOpenPhoto={openPhoto} />
+      {/* Shared Physical Lightbox — deferred chunk mounts on first open, then
+          stays mounted for exit animations. */}
       {lightboxMounted && (
         <DarkroomLightbox
           index={lightboxIndex}

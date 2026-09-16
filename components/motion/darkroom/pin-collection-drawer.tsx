@@ -44,7 +44,7 @@ export function PinCollectionDrawer({
             animate={{ opacity: 1, x: 0 }}
             exit={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="pointer-events-auto absolute top-16 right-4 bottom-12 left-4 z-30 flex w-auto max-w-md flex-col overflow-hidden rounded-sm border-2 border-border-strong bg-surface shadow-2xl sm:top-20 sm:right-8 sm:bottom-14 sm:left-auto sm:w-full"
+            className="pointer-events-auto absolute top-4 right-4 bottom-4 left-4 z-30 flex w-auto max-w-md flex-col overflow-hidden rounded-sm border-2 border-border-strong bg-surface shadow-2xl sm:top-6 sm:right-8 sm:bottom-6 sm:left-auto sm:w-full"
             role="dialog"
             aria-modal="true"
             aria-labelledby="collection-title"

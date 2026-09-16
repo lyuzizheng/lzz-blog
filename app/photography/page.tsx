@@ -45,18 +45,12 @@ export const metadata: Metadata = {
   },
 };
 
-interface PhotographyPageProps {
-  readonly searchParams: Promise<{ view?: string | string[] }>;
-}
-
-export default async function PhotographyPage({ searchParams }: PhotographyPageProps) {
-  const { view } = await searchParams;
-  /* BRAWUKA-343: the paper map is the official interface; the classic gallery
-     survives only as a secondary archive, deep-linkable via ?view=gallery. */
-  const initialView = view === "gallery" ? "gallery" : "map";
+export default function PhotographyPage() {
+  /* BRAWUKA-343: the Darkroom Atlas (OSM world map) is the only interface —
+     the classic gallery is retired, no ?view= deep links remain. */
   return (
     <>
-      <PhotographyMasterView initialView={initialView} />
+      <PhotographyMasterView />
       <noscript>
         <DarkroomStaticGrid />
       </noscript>
