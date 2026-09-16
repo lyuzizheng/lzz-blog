@@ -44,7 +44,17 @@ export function PhotographyMasterView({
 }: PhotographyMasterViewProps) {
   const { locale } = useI18n();
   const isZh = locale === "zh";
-  const [activeView, setActiveView] = useState<PhotographyMainView>(initialView);
+  const [activeView, setActiveViewState] = useState<PhotographyMainView>(initialView);
+  /* BRAWUKA-343: the gallery is a secondary, deep-linkable view — mirror view
+     switches into the URL so refresh/share lands back on the same view. */
+  const setActiveView = useCallback((view: PhotographyMainView) => {
+    setActiveViewState(view);
+    window.history.replaceState(
+      null,
+      "",
+      view === "gallery" ? "/photography?view=gallery" : "/photography",
+    );
+  }, []);
   const mode: MonoMode = "true";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   /* Mount the lightbox chunk only after the first open; keep it mounted
@@ -69,21 +79,6 @@ export function PhotographyMasterView({
 
   return (
     <div className="relative min-h-screen w-full bg-substrate text-primary">
-      {/* Top WIP Banner */}
-      <aside
-        aria-label="WIP Notice"
-        className="relative z-30 flex items-center justify-center gap-2 border-b border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-telemetry text-xs text-amber-700 dark:text-amber-300"
-      >
-        <span className="rounded-[2px] border border-amber-500/40 bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold tracking-wider uppercase text-amber-600 dark:text-amber-400">
-          WIP
-        </span>
-        <span>
-          {isZh
-            ? "摄影暗房尚未完工（设计与全屏地图冲洗显影中），当前仅供预览"
-            : "The Darkroom Photography Atlas is under active development. Preview mode only."}
-        </span>
-      </aside>
-
       {activeView === "map" ? (
         <PhotoMap
           mode={mode}

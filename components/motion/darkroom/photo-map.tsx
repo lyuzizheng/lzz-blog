@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
-  Layers,
   MapPin as MapPinIcon,
   Maximize2,
   Minus,
@@ -81,9 +80,11 @@ export function PhotoMap({
   const reducedMotion = usePrefersReducedMotion();
   const patternId = useId().replace(/[^a-zA-Z0-9]/g, "");
 
-  // Container & viewport dimensions
+  // Container & viewport dimensions. Start at 0 so the initial centering
+  // effect waits for the real measurement — centering on the old 1200x800
+  // placeholder pushed all pins off-screen on narrow viewports (BRAWUKA-343).
   const containerRef = useRef<HTMLDivElement>(null);
-  const [viewportSize, setViewportSize] = useState<{ w: number; h: number }>({ w: 1200, h: 800 });
+  const [viewportSize, setViewportSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
 
   // Pan and Zoom transform state
   const [zoom, setZoom] = useState<number>(1.2);
@@ -267,6 +268,16 @@ export function PhotoMap({
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
     // Only handle primary button / touch
     if (e.button !== 0 && e.pointerType === "mouse") return;
+    /* BRAWUKA-343: interactive chrome (pins, HUD controls, drawer, eyebrow and
+       footer links) must keep its own clicks. setPointerCapture on this
+       container retargets every child's click to the container, killing pin
+       taps and zoom buttons alike — so only the bare map starts pan+capture. */
+    if (
+      e.target instanceof Element &&
+      e.target.closest("button, a, [role='button'], [role='dialog'], header, footer, aside")
+    ) {
+      return;
+    }
     if (animFrameRef.current) {
       cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = null;
@@ -720,13 +731,10 @@ export function PhotoMap({
           <span className="truncate font-telemetry text-xs font-semibold tracking-widest uppercase text-text-primary">
             {isZh ? "摄影全屏地图" : "DARKROOM ATLAS"}
           </span>
-          <span className="rounded-[1px] bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-600 dark:text-amber-400 border border-amber-500/30 tracking-wider uppercase">
-            WIP
-          </span>
           <span className="hidden text-muted sm:inline">·</span>
 
           {/* Telemetry Indicator (PINS X · VISITED Y) */}
-          <div className="flex items-center gap-1.5 rounded-sm border border-border-default bg-surface px-2.5 py-0.5 font-telemetry text-[11px] font-bold tracking-widest uppercase tabular-nums text-text-secondary">
+          <div className="flex items-center gap-1.5 whitespace-nowrap rounded-sm border border-border-default bg-surface px-2.5 py-0.5 font-telemetry text-[11px] font-bold tracking-widest uppercase tabular-nums text-text-secondary">
             <MapPinIcon className="h-3 w-3 text-ink-dominant" />
             <span>PINS {pins.length}</span>
             <span className="text-muted">·</span>
@@ -736,22 +744,10 @@ export function PhotoMap({
           </div>
         </div>
 
-        {/* Eyebrow Right: View Switcher, LanguageSwitch, SafelightSwitch */}
+        {/* Eyebrow Right: LanguageSwitch, SafelightSwitch. BRAWUKA-343: the
+            gallery switcher moved to the footer colophon — the map is the
+            official interface, no parallel entry on the first screen. */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-          {/* View Switcher: MAP vs MASONRY */}
-          {onSwitchToMasonry && (
-            <button
-              type="button"
-              onClick={onSwitchToMasonry}
-              className="flex items-center gap-1.5 rounded-sm border border-border-default bg-surface px-2.5 py-1 font-telemetry text-xs font-medium tracking-wider uppercase text-text-secondary hover:border-ink-dominant hover:text-ink-dominant transition-colors"
-              title={isZh ? "切换至传统瀑布流画廊" : "Switch to Masonry Gallery"}
-            >
-              <Layers className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">{isZh ? "画廊视图" : "MASONRY"}</span>
-            </button>
-          )}
-
-          <div className="h-4 w-px bg-border-default" />
           <LanguageSwitch />
           <SafelightSwitch />
         </div>
@@ -836,6 +832,18 @@ export function PhotoMap({
           <span className="hidden uppercase tracking-wider sm:inline">
             PAPER #F5F1E8 · INK #2148B8
           </span>
+          {/* BRAWUKA-343: the classic gallery survives as a secondary archive —
+              a quiet colophon link, never a parallel first-screen entry. */}
+          {onSwitchToMasonry && (
+            <button
+              type="button"
+              onClick={onSwitchToMasonry}
+              className="pointer-events-auto uppercase tracking-wider hover:text-ink-dominant transition-colors"
+              title={isZh ? "打开传统画廊档案（二级视图）" : "Open the classic masonry archive"}
+            >
+              {isZh ? "画廊档案" : "GALLERY ARCHIVE"} →
+            </button>
+          )}
           <span>© 2026 LZZ ATELIER</span>
         </div>
       </footer>

@@ -45,10 +45,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PhotographyPage() {
+interface PhotographyPageProps {
+  readonly searchParams: Promise<{ view?: string | string[] }>;
+}
+
+export default async function PhotographyPage({ searchParams }: PhotographyPageProps) {
+  const { view } = await searchParams;
+  /* BRAWUKA-343: the paper map is the official interface; the classic gallery
+     survives only as a secondary archive, deep-linkable via ?view=gallery. */
+  const initialView = view === "gallery" ? "gallery" : "map";
   return (
     <>
-      <PhotographyMasterView initialView="map" />
+      <PhotographyMasterView initialView={initialView} />
       <noscript>
         <DarkroomStaticGrid />
       </noscript>
