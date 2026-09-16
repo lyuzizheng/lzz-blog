@@ -120,6 +120,19 @@ summary: "一句话摘要，进列表与 RSS。"
 - 想快速录入：把相机回放页抄成 `Sony A7M4 · … · f/1.4 · 1/250s · ISO 100` 一行，
   按 schema 手动拆分字段即可
 
+### 旅行记录 / 地图图钉（BRAWUKA-343）
+
+`/photography` 的唯一界面是世界地图（MapLibre GL + OpenFreeMap 矢量瓦片，OSM 数据），
+图钉**完全由** `content/photos.json` 里每张照片的 `exif.gps` 派生（`lib/photo-map.ts`
+的 DMS/十进制解析引擎），没有任何手写的 pin 数据集。
+
+后续手动上传旅行记录 = 按本节流程追加 `photos.json` 条目并带上 `gps` 字段
+（`1°17'N 103°51'E` 或 `1.2833, 103.85` 均可）——新记录在下次构建后自动成为地图图钉，
+无需改任何代码；不带 `gps` 的条目只进静态网格与暗房检视，不上图。
+若未来旅行记录要独立于照片存在，扩展方式为在 `content/` 下新增同级集合 +
+在 `scripts/` 加对应 schema 校验（沿用 `darkroom.check.mjs` / `photo-map.check.mjs` 的
+source-text 门禁惯例），不要绕过校验直接喂数据。
+
 ---
 
 ## 5. 换一份简历 PDF

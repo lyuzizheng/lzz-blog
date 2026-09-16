@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SafelightSwitch, LanguageSwitch, openWipModal } from "@/components/ui";
+import { SafelightSwitch, LanguageSwitch } from "@/components/ui";
 import { useI18n } from "@/lib/i18n";
 import { CHAPTER_NEGATIVES } from "@/lib/chapters";
 
@@ -75,7 +75,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
           className="hidden min-w-0 flex-1 items-center justify-center gap-2 overflow-x-auto py-0.5 sm:flex"
         >
           {CHAPTER_NEGATIVES.map((neg) => {
-            const isWip = neg.key === "photography";
             const isActive =
               pathname === neg.href ||
               (neg.key === "blogs" && pathname.startsWith("/posts")) ||
@@ -85,12 +84,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
               <Link
                 key={neg.key}
                 href={neg.href}
-                onClick={(e) => {
-                  if (isWip) {
-                    e.preventDefault();
-                    openWipModal();
-                  }
-                }}
                 aria-label={`${neg.frameNo} ${isZh ? neg.labelZh : neg.label}`}
                 aria-current={isActive ? "page" : undefined}
                 className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
@@ -103,11 +96,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                 <span className="tracking-wider uppercase">
                   {isZh ? neg.labelZh : neg.label}
                 </span>
-                {isWip && (
-                  <span className="rounded-[1px] bg-amber-500/20 px-1 py-0.2 text-[8px] font-bold text-amber-600 dark:text-amber-400 border border-amber-500/30 tracking-tight ml-0.5">
-                    WIP
-                  </span>
-                )}
               </Link>
             );
           })}
@@ -150,7 +138,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
             >
               <div className="mx-auto max-w-5xl">
                 {CHAPTER_NEGATIVES.map((neg) => {
-                  const isWip = neg.key === "photography";
                   const isActive =
                     pathname === neg.href ||
                     (neg.key === "blogs" && pathname.startsWith("/posts")) ||
@@ -161,13 +148,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                       key={neg.key}
                       href={neg.href}
                       aria-current={isActive ? "page" : undefined}
-                      onClick={(event) => {
-                        if (isWip) {
-                          event.preventDefault();
-                          setMenuOpen(false);
-                          openWipModal();
-                        }
-                      }}
                       onNavigate={() => setMenuOpen(false)}
                       className={`flex min-h-11 items-center gap-4 border-b border-border-plate px-2 font-telemetry transition-colors last:border-b-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ink-dominant ${
                         isActive
@@ -181,11 +161,6 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                       >
                         {isZh ? neg.labelZh : neg.label}
                       </span>
-                      {isWip && (
-                        <span className="ml-auto rounded-[1px] border border-amber-500/30 bg-amber-500/20 px-1 text-[8px] font-bold tracking-tight text-amber-600 dark:text-amber-400">
-                          WIP
-                        </span>
-                      )}
                     </Link>
                   );
                 })}

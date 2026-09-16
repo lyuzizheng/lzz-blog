@@ -1,11 +1,11 @@
 import { DARKROOM_PHOTOS } from "@/lib/darkroom";
 
 /**
- * BRAWUKA-271 · No-JS / crawler fallback for the darkroom gallery.
- *
- * Server-rendered static masonry of the same photos the interactive
- * DarkroomGallery shows — deliberately free of client components so the
- * gallery bundle stays out of the /photography first-load chunk.
+ * BRAWUKA-271 · No-JS / crawler fallback for /photography.
+ * BRAWUKA-343 · The interactive gallery is retired — the Darkroom Atlas (OSM
+ * world map) is the only interface, and this server-rendered grid is its
+ * no-JS reading: every framed photo with zero client JS, kept out of the
+ * first-load chunk by construction.
  */
 export function DarkroomStaticGrid() {
   return (

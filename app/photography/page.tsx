@@ -46,9 +46,11 @@ export const metadata: Metadata = {
 };
 
 export default function PhotographyPage() {
+  /* BRAWUKA-343: the Darkroom Atlas (OSM world map) is the only interface —
+     the classic gallery is retired, no ?view= deep links remain. */
   return (
     <>
-      <PhotographyMasterView initialView="map" />
+      <PhotographyMasterView />
       <noscript>
         <DarkroomStaticGrid />
       </noscript>

@@ -1,9 +1,17 @@
 /**
  * BRAWUKA-65 · Photo Map & GPS Data Engine
+ * BRAWUKA-343 · Basemap migrated to OpenStreetMap vector tiles (MapLibre GL +
+ * OpenFreeMap); this module stays the single source of truth for pins.
  *
  * Derives map pins and regional collections strictly from `content/photos.json` (via DARKROOM_PHOTOS).
  * Supports DMS (`1°17'N 103°51'E`), DMS with seconds (`1°17'30"N 103°51'15"E`), and decimal coordinates.
  * No external hand-written pin datasets permitted (Q8 / Phase 2-4 invariant).
+ *
+ * Travel-record seam (Owner 2026-09-16: 「后面我手动上传旅行记录」): future
+ * travel records land as additional entries in `content/photos.json` (or a
+ * sibling collection under `content/` validated by the same schema scripts).
+ * Pin derivation here is count-agnostic — new entries surface as pins the
+ * moment their EXIF carries GPS, with zero code changes and no fake data.
  */
 
 import { DARKROOM_PHOTOS, type DarkroomPhoto } from "./darkroom";
@@ -161,21 +169,46 @@ export function derivePhotoMapPins(photos: ReadonlyArray<DarkroomPhoto>): Readon
 export const PHOTO_MAP_PINS: ReadonlyArray<PhotoMapPin> = derivePhotoMapPins(DARKROOM_PHOTOS);
 
 /**
- * Web Mercator projection (normalized 0..1 coordinates).
+ * BRAWUKA-343 · Camera presets in MapLibre zoom levels (Web Mercator).
+ * SINGAPORE: city-cluster pins separate beyond ~24px at z≥12.
+ * XINJIANG: frames both Altay & Sayram Lake pins (~600km apart).
+ * ALL PINS is not a camera — the canvas fits bounds of every live pin.
  */
-export function projectMercator(coords: GeoCoordinates): { nx: number; ny: number } {
-  const nx = (coords.lng + 180) / 360;
-  const latRad = Math.max(Math.min(coords.lat, 85.051129), -85.051129) * (Math.PI / 180);
-  const ny = (1 - Math.log(Math.tan(Math.PI / 4 + latRad / 2)) / Math.PI) / 2;
-  return { nx, ny };
+export interface PhotoMapPreset {
+  readonly id: string;
+  readonly label: string;
+  readonly hint: string;
+  readonly lat: number;
+  readonly lng: number;
+  readonly zoom: number;
 }
 
-/**
- * Inverse Web Mercator projection.
- */
-export function unprojectMercator(nx: number, ny: number): GeoCoordinates {
-  const lng = nx * 360 - 180;
-  const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * ny)));
-  const lat = (latRad * 180) / Math.PI;
-  return { lat, lng };
-}
+export const MAP_VIEW_PRESETS: ReadonlyArray<PhotoMapPreset> = [
+  {
+    id: "singapore",
+    label: "SINGAPORE",
+    hint: "狮城暗房聚落",
+    lat: 1.29,
+    lng: 103.8,
+    zoom: 11.5,
+  },
+  {
+    id: "xinjiang",
+    label: "XINJIANG",
+    hint: "天山阿勒泰旷野",
+    lat: 46.0,
+    lng: 84.8,
+    zoom: 6,
+  },
+  {
+    id: "global",
+    label: "ALL PINS",
+    hint: "丝路与南洋全览",
+    lat: 24.0,
+    lng: 92.0,
+    zoom: 3,
+  },
+];
+
+/** Default camera = first preset (Singapore). */
+export const DEFAULT_MAP_PRESET = MAP_VIEW_PRESETS[0];
