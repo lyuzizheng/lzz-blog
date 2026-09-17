@@ -84,6 +84,18 @@ const ROUTES = [
     label: "Status Darkroom Console",
   },
   {
+    path: "/maplibre/maplibre-gl-worker.mjs",
+    expectedStatus: 200,
+    expectedContentType: "text/javascript",
+    label: "MapLibre Web Worker (BRAWUKA-343 build-copy)",
+  },
+  {
+    path: "/maplibre/maplibre-gl-shared.mjs",
+    expectedStatus: 200,
+    expectedContentType: "text/javascript",
+    label: "MapLibre Shared Chunk (BRAWUKA-343 build-copy)",
+  },
+  {
     path: "/resume.pdf",
     expectedStatus: 200,
     expectedContentType: "",
