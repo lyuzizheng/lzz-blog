@@ -2,7 +2,7 @@
  * BRAWUKA-62 数据源：04 Products (/products) 独立子页数据真源。
  *
  * 规范约束（依据 BRAWUKA-61 Q8 锁死与 BRAWUKA-62 交付要求）：
- * 1. 独立子页 04 Products (/products)，只收工作之外的产品，IM 不算。首批 3 个：CoffeeMode、CanCan、Our Village。Now 不做。
+ * 1. 独立子页 04 Products (/products)，只收工作之外的产品，IM 不算。首批 3 个：CafeMood、CanCan、Our Village。Now 不做。
  * 2. 每产品一句话（≤40 字）+ 状态章（开发中 / 已上线，三词可调）+ 一个外链；不展开架构、不写 roadmap。
  * 3. 封面图按 DESIGN V2 语言（Pale Beige #F5F1E8 纸基 + 钴蓝 #2148B8 单专色 + mono 网点），每产品一幅简介配图。
  * 4. 成品直接落到 /products 一屏一产品结构（策展式 deck 模型）。
@@ -18,8 +18,8 @@ interface ProductLink {
 }
 
 export interface ProductItem {
-  readonly id: "coffeemode" | "cancan" | "our-village";
-  /** 产品展示名，如 CoffeeMode */
+  readonly id: "cafemood" | "cancan" | "our-village";
+  /** 产品展示名，如 CafeMood */
   readonly name: string;
   /** 战役代号与索引编号，如 PLATE 01 · FRAME 01A */
   readonly plateNumber: string;
@@ -48,10 +48,10 @@ export interface ProductItem {
 
 export const PRODUCTS: readonly ProductItem[] = [
   {
-    id: "coffeemode",
-    name: "CoffeeMode",
+    id: "cafemood",
+    name: "CafeMood",
     plateNumber: "01 / 03",
-    codename: "COFFEEMODE · SPEC // 0000",
+    codename: "CAFEMOOD · SPEC // 0000",
     taglineZh: "[WIP 施工中] 发现好咖啡馆与办公友好空间，三秒极速签到且无广告打扰。",
     taglineEn: "[WIP] Find specialty coffee & laptop-friendly cafes with 3-second check-in and zero ads.",
     statusCode: "in_development",
@@ -64,7 +64,7 @@ export const PRODUCTS: readonly ProductItem[] = [
       href: "https://github.com/lyuzizheng/coffeemode",
       kind: "github",
     },
-    coverSvg: "/products/coffeemode-mono.svg",
+    coverSvg: "/products/cafemood-mono.svg",
     coordinates: "LAT 01°17'58\"N · LON 103°51'08\"E",
     techSignature: ["Next.js 16", "Apple MapKit JS", "Cloudflare Workers", "Supabase Auth"],
   },

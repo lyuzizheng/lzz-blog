@@ -20,7 +20,7 @@ import {
  * BRAWUKA-343 · Darkroom Atlas — real world basemap on OpenStreetMap data.
  *
  * Stack: MapLibre GL + OpenFreeMap vector tiles (key-less, quota-less, OSM
- * data — the same stack CoffeeMode runs). Never tiles.openstreetmap.org
+ * data — the same stack CafeMood runs). Never tiles.openstreetmap.org
  * directly: the OSMF tile policy throttles heavy production use.
  *
  * The positron style is fetched once and retinted into the paper palette

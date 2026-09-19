@@ -22,7 +22,7 @@ const home = read("app/page.tsx");
 const resumePage = read("app/resume/page.tsx");
 
 // 1. Products dataset: the 3 named products, no fabricated numbers
-for (const id of ["cancan", "coffeemode", "our-village"]) {
+for (const id of ["cancan", "cafemood", "our-village"]) {
   check(products.includes(`"${id}"`), `PRODUCTS must include "${id}"`);
 }
 for (const field of ["codename", "taglineZh", "taglineEn", "statusCode", "link", "coverSvg", "techSignature"]) {

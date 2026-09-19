@@ -38,7 +38,7 @@
 
 ## 2. Independent Products
 - **CanCan** (https://cancan.actoria.top): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles.
-- **CoffeeMode** (https://coffee.actoria.top): High-performance curated specialty cafe discovery guide with offline-first architecture.
+- **CafeMood** (https://coffee.actoria.top): High-performance curated specialty cafe discovery guide with offline-first architecture.
 - **Our Village** (https://village.actoria.top): Decentralized community collaboration and membership management platform.
 
 ---
