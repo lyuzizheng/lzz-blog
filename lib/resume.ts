@@ -26,6 +26,8 @@ export const RESUME_BASICS = {
   location: "Singapore · 01°20′N 103°49′E",
   email: "lvzizhengde@gmail.com",
   education: "Nanyang Technological University · B.Eng. Computer Engineering (Merit Scholarship)",
+  summary:
+    "An engineer at heart and a builder by nature, bridging deep systems craftsmanship with genuine user empathy. From weathering high-concurrency storms at TikTok to orchestrating deterministic fintech workflows at Wise, I thrive on bringing zero-to-one products to life while lifting the team around me. More importantly, values engineering ethic and believes good software products must do good to societies.",
 } as const;
 
 export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [

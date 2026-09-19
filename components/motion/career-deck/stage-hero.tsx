@@ -64,17 +64,17 @@ export function StageHero({ onExploreNext }: StageHeroProps) {
 
         {/* 2. Core Philosophy (用户指定原句陈述) */}
         <blockquote className="border-l-2 border-ink-dominant/60 pl-3 sm:pl-4 font-serif text-xs sm:text-sm italic leading-relaxed text-secondary">
-          &ldquo;A results-driven full-stack engineer with a passion for user-centric product development.
-          Proactive in fostering a cooperative team environment and mentoring new talent.
-          Excels in guiding projects from conception to successful completion.
+          &ldquo;An engineer at heart and a builder by nature, bridging deep systems craftsmanship with genuine user empathy.
+          From weathering high-concurrency storms at TikTok to orchestrating deterministic fintech workflows at Wise,
+          I thrive on bringing zero-to-one products to life while lifting the team around me.
           More importantly, values engineering ethic and believes good software products must do good to societies.&rdquo;
         </blockquote>
 
         {/* 3. Authentic Bio Statement (自然专业、消除 AI 腔) */}
         <p className="font-body text-xs sm:text-sm leading-relaxed text-secondary">
           {isZh
-            ? "以结果为导向的全栈与系统工程师，专注以用户为中心的产品开发。现居新加坡，拥有 5 年以上海量并发与金融系统实战经验。曾先后负责 TikTok 即时通讯核心架构与海外基础架构、MariBank 数字银行信贷核心，目前在 Wise 负责核心支付缺陷治理与确定性 AI 自动化平台研发。"
-            : "A results-oriented product and systems engineer based in Singapore with 5+ years of experience engineering high-concurrency systems and financial backends. Previously architected core social messaging at TikTok and digital credit engines at MariBank; currently building payment defect automation and deterministic AI workflow platforms at Wise."}
+            ? "骨子里的工程师与天生的产品创造者，专注兼具底层可靠性与极致用户体验的软件开发。现居新加坡，拥有 5 年以上海量并发与金融核心实战经验。曾先后负责 TikTok 即时通讯核心架构与海外基础架构、MariBank 数字银行信贷核心，目前在 Wise 负责核心支付缺陷治理与确定性 AI 自动化平台研发。"
+            : "An engineer at heart and a builder by nature, bridging deep systems craftsmanship with genuine user empathy. Based in Singapore with 5+ years of experience engineering high-concurrency systems and financial backends across TikTok, MariBank, and Wise."}
         </p>
 
         {/* 4. Action Hub & Downward Indicator */}
