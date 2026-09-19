@@ -101,6 +101,49 @@ export function CareerDeck() {
     [stageIndex, totalStages],
   );
 
+  // Deep links: URL hash ↔ stage (#wise, #exploration, #bytedance-im, …).
+  // Hero (index 0) keeps the canonical bare /resume — no hash.
+  const stageIndexFromHash = useCallback((hash: string): number => {
+    const id = hash.replace(/^#/, "");
+    return CAREER_STAGES.findIndex((s) => s.id === id);
+  }, []);
+
+  // Apply initial hash on mount + follow external hash changes
+  // (back/forward navigation, pasted deep links). Bypasses the animation
+  // lock deliberately: a deep link must never be swallowed mid-transition.
+  useEffect(() => {
+    const applyHash = () => {
+      const target = stageIndexFromHash(window.location.hash);
+      if (target < 0 || target === stageIndex) return;
+      isAnimatingRef.current = true;
+      setDirection(target > stageIndex ? 1 : -1);
+      setStageIndex(target);
+      setTimeout(() => {
+        isAnimatingRef.current = false;
+      }, 550);
+    };
+
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, [stageIndex, stageIndexFromHash]);
+
+  // Reflect the active stage in the URL so every act is shareable.
+  // replaceState (not pushState): deck navigation is one logical page —
+  // scroll-through shouldn't flood history, and it never fires hashchange.
+  useEffect(() => {
+    const stage = CAREER_STAGES[stageIndex];
+    const desired = stageIndex === 0 ? "" : `#${stage.id}`;
+    if (window.location.hash === desired) return;
+    window.history.replaceState(
+      null,
+      "",
+      desired === ""
+        ? window.location.pathname + window.location.search
+        : desired,
+    );
+  }, [stageIndex]);
+
   const goNext = useCallback(() => {
     if (stageIndex < totalStages - 1) {
       goToStage(stageIndex + 1);

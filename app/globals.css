@@ -5,9 +5,9 @@
     --theme-name: "safelight-darkroom";
 
     /* Canvas Substrates & Surface Plates (Obsidian Darkroom) */
-    --bg-substrate: #100F0E;
-    --bg-surface: #171512;
-    --bg-chamber: #1E1A17;
+    --bg-substrate: #0D0E11;
+    --bg-surface: #14151B;
+    --bg-chamber: #181920;
 
     /* Ink Spectrum (Safelight Spectrum: 75% / 25%) */
     --ink-dominant: #E05454;
@@ -99,9 +99,9 @@
     --theme-name: "safelight-darkroom";
 
     /* Canvas Substrates & Surface Plates */
-    --bg-substrate: #100F0E;
-    --bg-surface: #171512;
-    --bg-chamber: #1E1A17;
+    --bg-substrate: #0D0E11;
+    --bg-surface: #14151B;
+    --bg-chamber: #181920;
 
     /* Ink Spectrum (Safelight Spectrum: 75% / 25%) */
     --ink-dominant: #E05454;
