@@ -77,9 +77,9 @@ export const CAREER_STAGES: CareerStageSpec[] = [
     id: "education",
     index: 5,
     actNo: "05",
-    nameZh: "教育与起点",
-    nameEn: "NTU & Early Roots",
-    period: "2017 – 2021",
-    org: "NTU · U-WAVE",
+    nameZh: "产品与起点",
+    nameEn: "Products & Roots",
+    period: "2017 – PRESENT",
+    org: "PRODUCTS · NTU",
   },
 ];
