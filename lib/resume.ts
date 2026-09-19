@@ -51,7 +51,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "CAREER_DOSSIER N10",
       },
       {
-        text: "Location 业务线近百 Spark 离线任务错峰治理与标准告警体系建设，根除告警疲劳",
+        text: "Location 业务线与 AGW 网关工具：近百 Spark 离线任务错峰治理消除告警疲劳；研发 API 网关自助诊断与用量预估工具",
         status: "verified",
         source: "CAREER_DOSSIER N07",
       },
@@ -155,10 +155,10 @@ export const PRINT_EMPLOYMENT: PrintEmployment[] = [
     line: "新加坡首位员工（兼研发/协调/BD）；自建 DaemonSet + Vector + Kafka + ES 日志收集管线，替代昂贵云托管方案。",
   },
   {
-    period: "2021-08 – 2023-09",
+    period: "2021-01 – 2023-09",
     org: "ByteDance · TikTok",
-    role: "Backend · IM / Location",
-    line: "TikTok IM：独立设计在线状态引擎（5分钟心跳门禁抗百万 QPS 广播风暴）；搭建低延迟信令解决正在输入与已读回执跨机房时钟漂移；协同落地 SG/US/EU 多主同步与冷启动 Bug 修复；获团队快速晋升与 Spot Bonus。",
+    role: "Backend · IM / Location & AGW",
+    line: "TikTok IM：独立设计在线状态引擎（5分钟心跳门禁抗百万 QPS 广播风暴）；搭建低延迟信令解决正在输入与已读回执跨机房时钟漂移；协同落地 SG/US/EU 多主同步与冷启动修复。Location & AGW：近百离线任务错峰治理与 pprof 调优；研发 API 网关自助诊断与容量预估工具；获 1 年快速晋升与 Spot Bonus。",
   },
   {
     period: "2019-08 – Present",

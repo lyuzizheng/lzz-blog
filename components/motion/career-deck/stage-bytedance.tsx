@@ -218,11 +218,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "海量高吞吐 Go 服务性能压榨（pprof 深度调优）：" : "High-Throughput Go Service Profiling: "}
+                {isZh ? "海量高吞吐 Go 调优与 API 网关（AGW）工具：" : "High-Throughput Go Profiling & AGW Tooling: "}
               </strong>
               {isZh
-                ? "针对海量吞吐的在线定位微服务，通过 pprof 深入分析堆内存分配与性能瓶颈；预设 map 与 slice 初始容量避免扩容损耗，重排 struct 字段内存对齐减少 padding 浪费，精细调整 GC pacing，显著压降内存占用与 p99 耗时，大幅提升东盟（ASEAN）地区 IP 定位精度。"
-                : "Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy."}
+                ? "针对海量吞吐的在线定位微服务，通过 pprof 深入分析堆内存分配与性能瓶颈；预设容量、重排 struct 字段内存对齐并精调 GC pacing，显著提升东盟（ASEAN）定位精度；同时为核心中台 API 网关（AGW）研发自动化自助诊断与容量预估工具，保障千万级 QPS 流量重保。"
+                : "Optimized memory footprint and p99 latency for high-volume Go microservices using pprof (map/slice pre-allocation, struct alignment, GC tuning), significantly boosting ASEAN geo-accuracy; developed automated self-diagnosis and capacity estimation tools for core PaaS API Gateway (AGW) routing millions of QPS during peak campaigns."}
             </div>
           </li>
 

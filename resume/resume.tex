@@ -101,7 +101,7 @@ Senior Product \& Systems Engineer with 5+ years of experience in high-concurren
 \end{itemize}
 \sectionsep
 
-\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Aug 2021 -- Sep 2023}
+\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Jan 2021 -- Sep 2023}
 \begin{itemize}
     \item \textbf{TikTok-Social-Instant Messaging (IM)}
     \begin{itemize}
@@ -110,11 +110,12 @@ Senior Product \& Systems Engineer with 5+ years of experience in high-concurren
     \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences.
     \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
-    \item \textbf{Overseas Location Platform (Sole Singapore SWE | Spot Bonus | Top Rating E)}
+    \item \textbf{Overseas Location Platform \& Gateway Tooling (Sole SG SWE | Spot Bonus | Top Rating E)}
     \begin{itemize}
     \justifying
     \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue.
     \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy.
+    \item \textbf{API Gateway (AGW) Tooling}: Developed automated self-diagnosis and capacity estimation tools for the core PaaS API gateway routing millions of QPS during peak traffic campaigns.
     \end{itemize}
 \end{itemize}
 \sectionsep 
