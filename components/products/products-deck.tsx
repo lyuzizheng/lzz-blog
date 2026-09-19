@@ -87,9 +87,9 @@ export function ProductsDeck() {
           })}
         </nav>
 
-        {/* 3. Three Vertical Cards Container (单页三卡片并排 · 手机竖排 Snap-y 适配) */}
+        {/* 3. Three Vertical Cards Container (单页三卡片并排 · 移动端纵向流式滚动) */}
         <div
-          className="my-4 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-6 snap-y snap-mandatory md:snap-none"
+          className="my-4 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-6"
           role="region"
           aria-label="Products Grid"
         >
