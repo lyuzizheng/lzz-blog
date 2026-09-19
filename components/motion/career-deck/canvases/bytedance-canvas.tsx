@@ -65,10 +65,10 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
         <>
           {/* Subtle corner architectural telemetry */}
           <div className="absolute top-3 right-3 sm:top-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
-            <span>+ 04 // BYTEDANCE · OVERSEAS INFRA</span>
+            <span>+ 04 // BYTEDANCE · LOCATION PLATFORM</span>
           </div>
           <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
-            <span>LOCATION PLATFORM // MULTI-DC +</span>
+            <span>7×24 ONCALL ENDURANCE // HIGH STRESS RESILIENCE +</span>
           </div>
 
           {/* 1. Top-Left: Solid Bold BYTEDANCE */}
@@ -78,17 +78,17 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
             </span>
           </div>
 
-          {/* 2. Bottom-Right: Razor-Sharp Outline INFRA */}
+          {/* 2. Bottom-Right: Razor-Sharp Outline RESILIENCE */}
           <div className="absolute -bottom-2 sm:bottom-3 md:bottom-8 right-2 sm:right-6 md:right-10 text-right leading-none">
             <span
-              className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[13rem] font-black uppercase tracking-tighter leading-none"
+              className="font-display text-5xl sm:text-7xl md:text-9xl lg:text-[11.5rem] font-black uppercase tracking-tighter leading-none"
               style={{
                 WebkitTextStroke: "1.6px var(--ink-dominant)",
                 color: "transparent",
                 opacity: 0.12,
               }}
             >
-              INFRA
+              RESILIENCE
             </span>
           </div>
         </>

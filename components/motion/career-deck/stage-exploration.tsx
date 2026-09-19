@@ -45,10 +45,10 @@ export function StageExploration({}: StageExplorationProps) {
               <span className="tabular-nums hidden sm:inline">Apr–Jul 24</span>
             </div>
             <div className="mt-0.5 sm:mt-1 font-display text-xs sm:text-sm font-bold text-primary">
-              {isZh ? "100% MAS 金融强监管合规" : "100% MAS Compliance"}
+              {isZh ? "状态机驱动的信贷一致性" : "State-Machine Credit Consistency"}
             </div>
             <p className="mt-0.5 font-body text-[10px] sm:text-xs text-muted line-clamp-1 sm:line-clamp-none">
-              {isZh ? "分布式事务一致性 · 个人消费贷与小微企业贷" : "Strict distributed consistency across high-value disbursals"}
+              {isZh ? "阶段性强一致 + 流程最终一致 · Cashloan & SME Termloan" : "Phase-wise strong consistency via DB tx + eventual consistency"}
             </p>
           </div>
 
@@ -58,10 +58,10 @@ export function StageExploration({}: StageExplorationProps) {
               <span className="tabular-nums hidden sm:inline">Oct 23–Apr 24</span>
             </div>
             <div className="mt-0.5 sm:mt-1 font-display text-xs sm:text-sm font-bold text-primary">
-              {isZh ? "新加坡 1 号工程师 · 0➔1 K8s" : "Employee #1 · Multi-Tenant K8s"}
+              {isZh ? "新加坡 1 号员工 · 多重角色" : "Employee #1 · Multi-Role Dev/BD"}
             </div>
             <p className="mt-0.5 font-body text-[10px] sm:text-xs text-muted line-clamp-1 sm:line-clamp-none">
-              {isZh ? "自建 Vector + Kafka 日志链路大幅降低出向成本" : "Self-hosted log ingestion pipeline slashing cloud egress"}
+              {isZh ? "自建 Vector + Kafka + ES 日志链路替代昂贵托管" : "Self-hosted Vector + Kafka + ES log pipeline replacing cloud services"}
             </p>
           </div>
         </div>
@@ -72,11 +72,11 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "数字银行核心信贷底座（MariBank）：" : "Digital Banking Credit Engine (MariBank): "}
+                {isZh ? "信贷核心与状态机一致性（MariBank）：" : "Credit Core & State Machines (MariBank): "}
               </strong>
               {isZh
-                ? "负责个人消费信贷（Cashloan）与中小微企业经营贷（SME Termloan）核心业务，严格遵循新加坡金融管理局（MAS）金融监管要求与审计标准。"
-                : "Engineered core digital banking credit engine services (Cashloan & SME Termloan) in Java, strictly complying with MAS regulatory standards."}
+                ? "负责个人消费贷（Cashloan）与小微企业贷（SME Termloan）核心业务，梳理借贷数据流，基于数据库事务与状态机保障各阶段强一致，实现全流程最终一致性。"
+                : "Engineered core credit services (Cashloan & SME Termloan) in Java, implementing state machines to ensure phase-wise strong consistency via DB transactions and end-to-end eventual consistency."}
             </div>
           </li>
 
@@ -84,23 +84,11 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "分布式一致性与防重放校验：" : "Distributed Consistency & Anti-Replay: "}
+                {isZh ? "新加坡 1 号员工与多领域协作（Bondee）：" : "SG Employee #1 & Cross-Discipline Execution (Bondee): "}
               </strong>
               {isZh
-                ? "在复杂资金划转与授信链路中，严格实施分布式事务一致性（Distributed Consistency）、高并发防重放、状态机防乱序与幂等校验机制。"
-                : "Enforced strict distributed transaction consistency, state-machine idempotency, and anti-replay patterns across high-value banking credit disbursals."}
-            </div>
-          </li>
-
-          <li className="hidden sm:flex items-start gap-2">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-            <div>
-              <strong className="font-semibold text-primary">
-                {isZh ? "新加坡 1 号工程师云原生基建（Bondee）：" : "Employee #1 & Cloud-Native Setup (Bondee): "}
-              </strong>
-              {isZh
-                ? "作为新加坡团队 1 号软件工程师，从零搭建多租户 Kubernetes（K8s）生产集群底座，开发自动化测试调度与后端弹性扩缩容工具。"
-                : "Joined as Employee #1 in Singapore; established foundational cloud-native infrastructure, multi-tenant Kubernetes clusters, and autoscaling tooling."}
+                ? "作为新加坡团队首位工程师，身兼后端研发、研究项目协调、商务拓展（BD）与摄影制作等多重职责。"
+                : "Joined as Employee #1 in Singapore, wearing multiple hats across backend engineering, research project coordination, business development, and photography."}
             </div>
           </li>
 
@@ -108,11 +96,11 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "自建 Vector + Kafka 可观测日志体系（Bondee）：" : "Vector + Kafka Observability Pipeline (Bondee): "}
+                {isZh ? "自建 Vector + Kafka + ES 日志收集链路（Bondee）：" : "Self-Hosted Vector + Kafka + ES Logging (Bondee): "}
               </strong>
               {isZh
-                ? "独立架构并部署自建 Vector + Kafka + Elasticsearch 全链路日志收集与检索体系，替代高昂的云厂商全托管方案，大幅削减海外跨区域网络出方向流量成本。"
-                : "Architected and deployed self-hosted Vector + Kafka + Elasticsearch log ingestion pipelines, replacing legacy managed cloud logging and slashing recurring egress costs."}
+                ? "独立部署 DaemonSet + Vector + Kafka + Elasticsearch 全链路日志收集与检索体系，替代高昂的云厂商全托管方案，大幅削减云资源成本。"
+                : "Deployed self-hosted DaemonSet + Vector + Kafka + Elasticsearch log ingestion pipelines, replacing expensive managed cloud logging and cutting recurring costs."}
             </div>
           </li>
         </ul>
@@ -120,7 +108,7 @@ export function StageExploration({}: StageExplorationProps) {
         {/* 4. Tech Stack Pills */}
         <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
           <span className="font-semibold text-primary">STACK:</span>
-          {["Java", "Spring Cloud", "Go", "Kubernetes", "Vector", "Apache Kafka", "Elasticsearch", "Distributed Consistency"].map((tech, idx) => (
+          {["Java", "Spring Cloud", "Go", "Docker", "Vector", "Apache Kafka", "Elasticsearch", "Distributed State Machines"].map((tech, idx) => (
             <span
               key={tech}
               className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${

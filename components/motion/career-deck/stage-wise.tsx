@@ -25,7 +25,7 @@ export function StageWise({}: StageWiseProps) {
             <span className="font-semibold text-ink-dominant">
               {isZh ? "01 // WISE · 新加坡 · 2024–至今" : "01 // WISE · SINGAPORE · 2024–PRESENT"}
             </span>
-            <span className="text-[10px] sm:text-[11px] opacity-75">FULL-TIME · IC3</span>
+            <span className="text-[10px] sm:text-[11px] opacity-75">FULL-TIME · IC3 · TECH OWNER</span>
           </div>
           <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
             <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
@@ -33,7 +33,7 @@ export function StageWise({}: StageWiseProps) {
             </h2>
             <span className="text-muted opacity-40">·</span>
             <span className="font-telemetry text-[11px] sm:text-xs text-muted">
-              {isZh ? "Payment Defects Team · 核心支付错账治理" : "Payment Defects Team · Core Payouts"}
+              {isZh ? "Regional Platform Team · Payment Defects, Incidents & Tooling" : "Regional Platform Team · Payment Defects, Incidents & Tooling"}
             </span>
           </div>
         </div>
@@ -52,12 +52,12 @@ export function StageWise({}: StageWiseProps) {
 
           <div className="px-1.5 sm:px-2">
             <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
-              {isZh ? "核验准确率" : "ACCURACY"}
+              {isZh ? "核验准确率" : "PRECISION / RECALL"}
             </span>
             <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
-              98<span className="text-xs font-normal text-ink-dominant">%+</span>
+              99.8<span className="text-xs font-normal text-ink-dominant">%</span>
             </div>
-            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "影子流量比对" : "matching rate"}</p>
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "40% 召回 · 98%+ 准确率" : "40% recall · 98%+ accuracy"}</p>
           </div>
 
           <div className="px-1.5 sm:px-2">
@@ -77,23 +77,11 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "AI Workflow Platform 架构设计：" : "AI Workflow Platform Architecture: "}
+                {isZh ? "AI 自动化规划与评估平台（AI Workflow Platform & Evaluation / Tech Owner）：" : "AI Workflow Platform & Evaluation Roadmap: "}
               </strong>
               {isZh
-                ? "针对最后 0.5% 依赖繁琐人工操作的资金对账（Last-mile Linking），在无基准数据集场景下，从零搭建基于确定性 DAG 状态机的金融 AI 自动化平台。"
-                : "Architected financial AI Evaluation & DAG Automation Platform from scratch: designed deterministic state machines for last-mile payment linking without golden datasets."}
-            </div>
-          </li>
-
-          <li className="hidden sm:flex items-start gap-2">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-            <div>
-              <strong className="font-semibold text-primary">
-                {isZh ? "实时影子比对与熔断风控：" : "Live Shadowing & Blast Radius Control: "}
-              </strong>
-              {isZh
-                ? "采用实时影子流量（Live Shadowing）比对 PayOps 人工作业，设置 99.5% 准确率门禁；生产环境保持 5% 金丝雀对照流检测漂移并支持毫秒级熔断；大额与高风险场景强制双人复核，保障资金安全零事故。"
-                : "Implemented real-time live shadowing against PayOps manual operations, 99.5% accuracy gating, and 5% canary control traffic with sub-second circuit-breaker failover and risk-tiered large amount threshold gating."}
+                ? "负责自动化与工单领域的平台路线图规划与任务拆解，定义平台如何支持各区域团队接入非 Happy-path 异常场景（如各地区定制对账策略、特定银行渠道的 Payout 异常自动化）；从 0 到 1 搭建 AI 评估平台（AI Evaluation Platform），确立基线实时监控（Live Monitoring against baseline）与第三方 Ops 双盲评审（Third Ops Blind Evaluation），作为全组后续新自动化准入的审计与兜底标准。"
+                : "Formulated technical roadmaps and team planning for the regional platform tooling team, enabling regional engineers to onboard non-happy-path exception automations (bespoke linking strategies, banking partner payout defects); initialised and built the core AI Evaluation Platform with baseline live monitoring and third-party Ops blind evaluations as the audit and safeguard standard for future automations."}
             </div>
           </li>
 
@@ -101,23 +89,23 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "可衡量业务 ROI 与运营降本：" : "Operational Impact & Direct Savings: "}
+                {isZh ? "最后一公里资金对账 AI 工作流（Initialise + 带 1 个 Grad）：" : "Last-Mile Payment Linking AI Workflow: "}
               </strong>
               {isZh
-                ? "跨全球异构清算渠道与币种规则，每月自动化消化 30,000+ 资金错账案件，核验准确率 98%+，扣除模型调用成本后直接贡献净节约 £80,000 英镑/月（年化近百万英镑）。"
-                : "Automated 30,000+ complex payment defect cases/month with 98%+ accuracy across heterogeneous partner rules, securing £80,000 GBP/month (~£1M/year) in direct operational savings."}
+                ? "针对 0.5% 最复杂的长尾滞留资金对账，在无金集场景下设计基于确定性 DAG 状态机的 AI 工作流；坚持金融零容错工程底线，严格调优为 99.8% Precision（极高精度防错划）与 40% Recall，稳定月均自动处理 30,000+ 笔错账案件，扣除推理成本后净贡献 £80,000 英镑/月（年化近百万镑）运营降本。"
+                : "Designed deterministic DAG state machines for edge-case unallocated fund matching without golden datasets, tuning for 99.8% precision and 40% recall to eliminate financial risk; automated 30,000+ monthly defect cases, yielding £80,000/month direct operational savings."}
             </div>
           </li>
 
-          <li className="hidden sm:flex items-start gap-2">
+          <li className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "Compensation 赔付系统与工单协同：" : "Compensation Engine & Escalation System: "}
+                {isZh ? "集中式跨团队升级系统（Lead + 带 1 个 Grad + 跨团队协同）：" : "Centralised Cross-Team Escalation System: "}
               </strong>
               {isZh
-                ? "重构跨渠道客户赔付平台，实施多方合规双人复核与资金防重放；基于 Kafka 搭建客服（CS）与资金运营（PayOps）双向流转平台，利用结构化遥测数据推动上游根因治理。"
-                : "Re-architected global Compensation Platform with double-approval compliance controls; built Kafka-based bidirectional escalation system bridging CS and PayOps to eliminate upstream ticket triggers."}
+                ? "搭建基于 Kafka 的集中式 Escalation 核心服务，替代此前 CS、PayOps、Fraud、KYC 之间依靠 Slack/Zendesk 的碎片化沟通；自研目标系统接入 SDK，标准化 receive → ack → de-escalate 生命周期协议，支持团队升级路径与原因分类的平台化配置，已在 CS ↔ PayOps、Fraud → CS、KYC → CS 生产环境稳定运行。"
+                : "Built a Kafka-based orchestration service to replace ad-hoc Slack/Zendesk handoffs across disparate ops systems (CS, PayOps, Fraud, KYC); authored client integration SDKs standardising lifecycle states (receive, ack, de-escalate) and configurable team-to-team routing, currently live across CS ↔ PayOps, Fraud → CS, and KYC → CS corridors."}
             </div>
           </li>
         </ul>
