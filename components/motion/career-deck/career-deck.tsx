@@ -100,6 +100,7 @@ export function CareerDeck() {
   // Hero (index 0) keeps the canonical bare /resume — no hash.
   const stageIndexFromHash = useCallback((hash: string): number => {
     const id = hash.replace(/^#/, "");
+    if (id === "products" || id === "roots") return 5;
     return CAREER_STAGES.findIndex((s) => s.id === id);
   }, []);
 
