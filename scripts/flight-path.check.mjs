@@ -88,7 +88,7 @@ check(stageHero.includes("ChevronDown") || stageHero.includes("onExploreNext"), 
 
 // Act 1 Wise
 check(stageWise.includes("30,000"), "StageWise must display 30,000+ monthly cases");
-check(stageWise.includes("98"), "StageWise must display 98%+ matching accuracy");
+check(stageWise.includes("99.8"), "StageWise must display 99.8% precision");
 check(stageWise.includes("£80,000"), "StageWise must display £80,000 monthly savings");
 check(stageWise.includes("AI Workflow Platform"), "StageWise must highlight the AI Workflow Platform");
 

@@ -34,7 +34,7 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
         <>
           {/* 1. Top-Right: Solid Bold TIKTOK */}
           <div className="absolute -top-2 sm:top-2 md:top-6 right-2 sm:right-6 md:right-10 text-right leading-none">
-            <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
+            <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.035] dark:opacity-[0.045]">
               TIKTOK
             </span>
           </div>
@@ -44,9 +44,9 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
             <span
               className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-black uppercase tracking-tighter leading-none"
               style={{
-                WebkitTextStroke: "1.6px var(--ink-dominant)",
+                WebkitTextStroke: "1.2px var(--ink-dominant)",
                 color: "transparent",
-                opacity: 0.12,
+                opacity: 0.055,
               }}
             >
               BYTEDANCE
@@ -55,11 +55,9 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
         </>
       ) : (
         <>
-
-
           {/* 1. Top-Left: Solid Bold BYTEDANCE */}
           <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">
-            <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
+            <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.035] dark:opacity-[0.045]">
               BYTEDANCE
             </span>
           </div>
@@ -69,9 +67,9 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
             <span
               className="font-display text-5xl sm:text-7xl md:text-9xl lg:text-[11.5rem] font-black uppercase tracking-tighter leading-none"
               style={{
-                WebkitTextStroke: "1.6px var(--ink-dominant)",
+                WebkitTextStroke: "1.2px var(--ink-dominant)",
                 color: "transparent",
-                opacity: 0.12,
+                opacity: 0.055,
               }}
             >
               RESILIENCE

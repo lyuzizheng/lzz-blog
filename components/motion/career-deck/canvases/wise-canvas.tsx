@@ -24,7 +24,7 @@ export function WiseCanvas() {
 
       {/* 1. Top-Right: Solid Bold WISE */}
       <div className="absolute -top-2 sm:top-2 md:top-6 right-2 sm:right-6 md:right-10 text-right leading-none">
-        <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
+        <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.035] dark:opacity-[0.045]">
           WISE
         </span>
       </div>
@@ -34,9 +34,9 @@ export function WiseCanvas() {
         <span
           className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-black uppercase tracking-tighter leading-none"
           style={{
-            WebkitTextStroke: "1.6px var(--ink-dominant)",
+            WebkitTextStroke: "1.2px var(--ink-dominant)",
             color: "transparent",
-            opacity: 0.12,
+            opacity: 0.055,
           }}
         >
           PAYMENTS

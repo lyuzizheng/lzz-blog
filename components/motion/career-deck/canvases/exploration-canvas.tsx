@@ -25,7 +25,7 @@ export function ExplorationCanvas() {
 
       {/* 1. Top-Left: Solid Bold MARIBANK */}
       <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">
-        <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
+        <span className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12.5rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.035] dark:opacity-[0.045]">
           MARIBANK
         </span>
       </div>
@@ -35,9 +35,9 @@ export function ExplorationCanvas() {
         <span
           className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-black uppercase tracking-tighter leading-none"
           style={{
-            WebkitTextStroke: "1.6px var(--ink-dominant)",
+            WebkitTextStroke: "1.2px var(--ink-dominant)",
             color: "transparent",
-            opacity: 0.12,
+            opacity: 0.055,
           }}
         >
           SEAMONEY
@@ -45,8 +45,8 @@ export function ExplorationCanvas() {
       </div>
 
       {/* 3. Bottom-Left Accent: BONDEE */}
-      <div className="absolute bottom-10 sm:bottom-14 md:bottom-20 left-3 sm:left-8 md:left-12 text-left leading-none hidden sm:block">
-        <span className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none text-ink-dominant opacity-[0.045] dark:opacity-[0.065]">
+      <div className="absolute bottom-6 sm:bottom-14 md:bottom-20 left-3 sm:left-8 md:left-12 text-left leading-none">
+        <span className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none text-ink-dominant opacity-[0.03] dark:opacity-[0.04]">
           BONDEE
         </span>
       </div>
