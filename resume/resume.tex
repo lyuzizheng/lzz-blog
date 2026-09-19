@@ -97,25 +97,25 @@ An engineer at heart and a builder by nature, bridging deep systems craftsmanshi
 \resumeHeading{Bondee}{Senior Software Engineer (Employee \#1 in SG)}{SG}{Sep 2023 -- Apr 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Founding Engineering \& Observability Pipeline}: Joined as Singapore Employee \#1 (spanning backend development, research coordination, and BD); deployed a self-hosted log ingestion and observability pipeline using Vector (DaemonSet) + Kafka + ElasticSearch, replacing expensive cloud-managed logging.
+    \item \textbf{Founding Infrastructure \& Observability Pipeline}: Joined as Employee \#1 in Singapore; architected a self-hosted log collection and observability pipeline using Vector (DaemonSet), Kafka, and ElasticSearch, replacing costly cloud logging services.
 \end{itemize}
 \sectionsep
 
-\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Jan 2021 -- Sep 2023}
+\resumeHeading{ByteDance}{Senior Backend Engineer}{SG}{Jan 2021 -- Sep 2023}
 \begin{itemize}
-    \item \textbf{TikTok-Social-Instant Messaging (IM)}
+    \item \textbf{TikTok Instant Messaging (IM) Core Architecture}
     \begin{itemize}
     \justifying
-    \item \textbf{Online Status Engine (End-to-End Owner)}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against messaging penetration.
-    \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Unified typing and read receipts into a dedicated low-latency bypass pipeline to resolve causality inversions (typing before read); anchored read cursors to message ID timestamps to eliminate multi-DC clock skew and state divergence.
-    \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance with multi-master conflict mitigations; resolved critical cold-start bug where active group chats flooded single-chain fetches, ensuring reliable sub-100ms multi-chat inbox recovery.
+    \item \textbf{Online Presence Engine}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ write amplification by restricting fan-out strictly to active online friends, balancing presence freshness against user engagement.
+    \item \textbf{Real-Time Typing Indicators \& Read Receipts}: Unified typing signals and read receipts into a dedicated low-latency bypass pipeline to resolve causality inversions (typing before read); anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and state divergence.
+    \item \textbf{Multi-DC Replication \& Cold-Start Recovery}: Co-engineered cross-region replication across SG, US, and EU datacenters with multi-master conflict resolution under GDPR/US compliance; resolved critical cold-start bug where active group chats flooded single-chain fetches, guaranteeing reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
-    \item \textbf{Overseas Location Platform \& Gateway Tooling (Sole SG SWE | Spot Bonus | Top Rating E)}
+    \item \textbf{Overseas Location Platform \& API Gateway Infrastructure}
     \begin{itemize}
     \justifying
-    \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); eliminated queue racing from 12am/2am batch overlap via pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall fatigue.
-    \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof (capacity pre-allocation, struct alignment, GC tuning), significantly boosting ASEAN geo-accuracy.
-    \item \textbf{API Gateway (AGW) Tooling}: Developed automated self-diagnosis and capacity estimation tools for the core PaaS API gateway routing millions of QPS during peak traffic campaigns.
+    \item \textbf{Spark ETL Pipeline Governance}: Sole engineer in Singapore governing the overseas IP geo-location stack ($\sim$100 offline Spark jobs); eliminated queue racing from 12am/2am batch overlap via pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall fatigue.
+    \item \textbf{High-Throughput Go Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof (capacity pre-allocation, struct alignment, GC tuning), significantly boosting ASEAN geo-accuracy; earned team \textbf{Spot Bonus} and top annual rating (\textbf{Top E}).
+    \item \textbf{API Gateway (AGW) Tooling}: Developed automated self-diagnosis and capacity estimation tools for the core PaaS API gateway routing millions of QPS during peak traffic campaigns; promoted within 1 year.
     \end{itemize}
 \end{itemize}
 \sectionsep 
@@ -128,14 +128,14 @@ An engineer at heart and a builder by nature, bridging deep systems craftsmanshi
 \resumeHeading{Independent Products}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{CanCan} (\href{https://cancan.money}{\underline{cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture; alongside \textbf{CoffeeMode} (cafe discovery for remote workers) and \textbf{Our Village} (decentralized community platform).
+    \item \textbf{CanCan} (\href{https://cancan-4tj.pages.dev}{\underline{cancan.pages.dev}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture; alongside \textbf{CoffeeMode} (specialty cafe discovery) and \textbf{Our Village} (neighborhood community platform).
 \end{itemize}
 \sectionsep
 
-\resumeHeading{U-Wave (Campus Lifestyle Platform)}{Co-Founder \& Full-Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
+\resumeHeading{U-Wave (Campus Community Platform)}{Co-Founder \& Lead Full-Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
 \begin{itemize}
 \justifying
-    \item Co-founded campus lifestyle platform from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
+    \item Co-founded campus lifestyle mobile platform from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
 \end{itemize}
 \sectionsep
 

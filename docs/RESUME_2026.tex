@@ -81,67 +81,61 @@ An engineer at heart and a builder by nature, bridging deep systems craftsmanshi
 \resumeHeading{WISE}{Product Engineer 3 (Tech Owner)}{SG}{Nov 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{Financial AI Automation \& Evaluation Infrastructure}: Architected an end-to-end AI evaluation and execution platform from scratch for last-mile payment linking without golden datasets; engineered deterministic DAG state machines with real-time live shadowing against PayOps, 99.5\% accuracy gating, and a 5\% canary control stream with sub-second circuit-breaker failover.
-    \item \textbf{Payment Defects \& Direct Business Impact}: Automated 30,000+ complex payment defect and unallocated funds cases monthly with 98\%+ accuracy across heterogeneous currency and clearing rail rules; designed risk-tiered blast radius controls (large-amount threshold gating to human approval), yielding \textbf{\textsterling 80,000/month ($\sim$\textsterling 1M/year)} direct operational savings.
-    \item \textbf{Global Compensation Platform \& Cross-Team Escalation}: Re-architected global multi-currency Compensation Platform with automated compliance checks and maker-checker controls; built a Kafka-based cross-team escalation pipeline between Customer Support and PayOps, leveraging structured defect telemetry to eliminate upstream ticket causes.
+    \item \textbf{AI Workflow Platform \& Evaluation Infrastructure}: As Tech Owner, established the technical roadmap for regional platform tooling; engineered the core AI Evaluation Platform with live baseline monitoring and Ops double-blind audits, enabling regional teams to self-serve custom payout defect automations.
+    \item \textbf{Last-Mile Payment Linking AI Workflow}: Initiated and led end-to-end delivery of a deterministic DAG state machine for unallocated funds matching with a junior engineer; tuned workflow to \textbf{99.8\% precision} and \textbf{40\% recall}, automating 30,000+ monthly defect cases and yielding \textbf{\textsterling 80,000/month direct operational savings}.
+    \item \textbf{Centralised Cross-Team Escalation Platform}: Led the architecture and cross-team rollout of a Kafka-based orchestration service to replace fragmented Slack/Zendesk handoffs across CS, PayOps, Fraud, and KYC; authored client integration SDKs standardizing lifecycle protocols across primary operational corridors.
 \end{itemize}
 \sectionsep
 
 \resumeHeading{MariBank (Sea Group)}{Senior Backend Engineer}{SG}{Apr 2024 -- Jul 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Digital Banking Credit Core}: Engineered core credit services (Cashloan \& SME Termloan) in Java, enforcing distributed transaction consistency, idempotency, and anti-replay patterns under MAS regulatory compliance; built an internal RAG-based LLM assistant for knowledge retrieval.
+    \item \textbf{Digital Banking Credit Core}: Engineered credit core services (Cashloan \& SME Termloan) in Java; implemented state-machine workflows ensuring phase-wise strong consistency via database transactions and idempotency, coupled with eventual consistency across the end-to-end loan lifecycle.
 \end{itemize}
 \sectionsep
 
 \resumeHeading{Bondee}{Senior Software Engineer (Employee \#1 in SG)}{SG}{Sep 2023 -- Apr 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Cloud-Native Infrastructure}: Established foundational cloud-native infrastructure as employee \#1 in Singapore; orchestrated multi-tenant K8s environments and deployed self-hosted Vector + Kafka + ElasticSearch observability pipelines to replace costly managed logging stacks.
+    \item \textbf{Founding Infrastructure \& Observability Pipeline}: Joined as Employee \#1 in Singapore; architected a self-hosted log collection and observability pipeline using Vector (DaemonSet), Kafka, and ElasticSearch, replacing costly cloud logging services.
 \end{itemize}
 \sectionsep
 
-\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Jan 2021 -- Sep 2023}
+\resumeHeading{ByteDance}{Senior Backend Engineer}{SG}{Jan 2021 -- Sep 2023}
 \begin{itemize}
-    \item \textbf{TikTok-Social-Instant Messaging (IM)}
+    \item \textbf{TikTok Instant Messaging (IM) Core Architecture}
     \begin{itemize}
     \justifying
-    \item \textbf{Presence Engine \& Fan-out Storm Mitigation}: Engineered a hybrid push-pull protocol with active heartbeat gating via Redis ZSET to mitigate multi-million QPS broadcast storms during user status changes, eliminating $O(N \times M)$ write amplification by restricting push dispatches exclusively to online, active friends.
-    \item \textbf{Typing Indicator \& Read Receipts}: Implemented ultra-low latency signaling mechanisms for Read Receipts and Typing Indicators across multi-data-center infrastructure; designed client-side debouncing and batch aggregation to eliminate transient signaling spikes while maintaining sub-100ms response.
-    \item \textbf{End-to-End Latency Tuning \& Cold Start Ranking}: Overhauled inbox cold-start loading via ZSET active conversation hierarchies to replace append-only DB table scans (delivering sub-100ms initialization for newly re-installed apps); optimized cross-region RPC payloads and routing paths to reduce P99 latency across core messaging services.
-    \item \textbf{Domain Ownership \& Security Compliance}: Served as Tech Owner for IM core microservices; mentored new engineers and led cross-functional safety/security technical initiatives ensuring compliance with US security standards and EU GDPR.
+    \item \textbf{Online Presence Engine}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ write amplification by restricting fan-out strictly to active online friends, balancing presence freshness against user engagement.
+    \item \textbf{Real-Time Typing Indicators \& Read Receipts}: Unified typing signals and read receipts into a dedicated low-latency bypass pipeline to resolve causality inversions (typing before read); anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and state divergence.
+    \item \textbf{Multi-DC Replication \& Cold-Start Recovery}: Co-engineered cross-region replication across SG, US, and EU datacenters with multi-master conflict resolution under GDPR/US compliance; resolved critical cold-start bug where active group chats flooded single-chain fetches, guaranteeing reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
-    \item \textbf{Location System Cloud Platform} (IP Geo-Location PoC | 2022 Jan--Feb Spot Bonus Receiver | Top E Rating)
+    \item \textbf{Overseas Location Platform \& API Gateway Infrastructure}
     \begin{itemize}
     \justifying
-    \item \textbf{Overseas Location Governance \& Optimization}: Sole engineer in Singapore independently governing overseas IP geo-location infrastructure ($\sim$100 offline Spark batch jobs and Go microservices); overhauled alert rules to eliminate oncall alarm fatigue, tuned Go runtime memory/GC profiles, and significantly improved ASEAN geo-accuracy, earning a \textbf{Spot Bonus} and top \textbf{Exceeds Expectations (E)} rating.
-    \end{itemize}
-    \item \textbf{API Gateway (AGW) Cloud Platform} (Intern)
-    \begin{itemize}
-    \justifying
-    \item Developed automated self-diagnosis and capacity estimation tools for PaaS gateway routing millions of QPS during Chinese New Year (CNY) live traffic campaigns.
+    \item \textbf{Spark ETL Pipeline Governance}: Sole engineer in Singapore governing the overseas IP geo-location stack ($\sim$100 offline Spark jobs); eliminated queue racing from 12am/2am batch overlap via pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall fatigue.
+    \item \textbf{High-Throughput Go Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof (capacity pre-allocation, struct alignment, GC tuning), significantly boosting ASEAN geo-accuracy; earned team \textbf{Spot Bonus} and top annual rating (\textbf{Top E}).
+    \item \textbf{API Gateway (AGW) Tooling}: Developed automated self-diagnosis and capacity estimation tools for the core PaaS API gateway routing millions of QPS during peak traffic campaigns; promoted within 1 year.
     \end{itemize}
 \end{itemize}
 \sectionsep 
 
 %--------------------------------------------------------------
-%     Other Work Experience / Projects
+%     Product Ventures & Independent Builds
 %--------------------------------------------------------------
-\section{Other Work Experience}
+\section{Product Ventures \& Independent Builds}
 
 \resumeHeading{Independent Products}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{CanCan} (\href{https://cancan.actoria.top}{\underline{cancan.actoria.top}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles.
-    \item \textbf{CoffeeMode} (\href{https://coffee.actoria.top}{\underline{coffee.actoria.top}}): High-performance curated specialty cafe discovery guide with offline-first architecture.
-    \item \textbf{Our Village} (\href{https://village.actoria.top}{\underline{village.actoria.top}}): Decentralized community collaboration and membership management platform.
+    \item \textbf{CanCan} (\href{https://cancan-4tj.pages.dev}{\underline{cancan.pages.dev}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture; alongside \textbf{CoffeeMode} (specialty cafe discovery) and \textbf{Our Village} (neighborhood community platform).
 \end{itemize}
 \sectionsep
 
-\resumeHeading{U-Wave}{Co-Founder, Full Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
+\resumeHeading{U-Wave (Campus Community Platform)}{Co-Founder \& Lead Full-Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
 \begin{itemize}
 \justifying
-    \item Co-founded and built campus lifestyle app from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
+    \item Co-founded campus lifestyle mobile platform from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
 \end{itemize}
 \sectionsep
 

@@ -90,7 +90,7 @@ export function StageEducation({ onScrollToTop }: StageEducationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "uWave 校园社交与实用工具（联合创始人 & 全栈研发）：" : "uWave Campus Community & Utility (Co-Founder & Full Stack): "}
+                {isZh ? "uWave 校园生活与社交平台：" : "uWave Campus Community & Utility: "}
               </strong>
               {isZh
                 ? "在校期间与校友联合创办坡岛高校移动生活平台，纯自然增长至 20,000+ 注册大学生与 4,000 日活跃用户（DAU）；使用 Flutter (BLoC) 独立重构全套移动客户端，后端基于 Spring Cloud 微服务架构设计，平稳支撑选课与二手交易瞬时流量高峰。"
@@ -102,7 +102,7 @@ export function StageEducation({ onScrollToTop }: StageEducationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "CanCan 独立财务凭证与自动对账平台（Creator & Sole Developer）：" : "CanCan Local-First Financial Vault (Creator & Sole Developer): "}
+                {isZh ? "CanCan 本地优先财务与对账平台：" : "CanCan Local-First Financial Platform: "}
               </strong>
               {isZh
                 ? "面向独立经营者与自由职业者的自动化凭证与智能对账平台；基于 Tauri v2 + Rust + SQLCipher + React 19 构建 Local-first 本地优先架构，结合微型 LLM 账单解析与确定性复式记账勾稽引擎，全本地加密保护用户财务隐私。"
@@ -114,7 +114,7 @@ export function StageEducation({ onScrollToTop }: StageEducationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "南洋理工大学全额科技本科卓越奖学金（NTU B.Eng Honors）：" : "NTU Science & Engineering Undergraduate Merit Scholarship: "}
+                {isZh ? "南洋理工大学全额科技卓越奖学金：" : "NTU Science & Engineering Merit Scholarship: "}
               </strong>
               {isZh
                 ? "荣获新加坡南洋理工大学全额本科荣誉奖学金（Full Merit Scholarship，覆盖 100% 学费与全额生活津贴），在计算机体系结构、分布式系统、操作系统内核与算法理论领域打下深厚工程底座。"
