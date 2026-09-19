@@ -70,7 +70,7 @@ export default function ProductsPage() {
       />
       <SiteHeader />
 
-      <main className="relative w-full flex-1 overflow-y-auto">
+      <main className="relative w-full flex-1">
         <ProductsDeck />
       </main>
     </div>

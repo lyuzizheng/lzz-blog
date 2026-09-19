@@ -61,7 +61,8 @@ const pageCode = read("app/products/page.tsx");
 const deckFiles = ["components/products/products-deck.tsx", "components/products/product-slide.tsx"].map(read).join("\n");
 
 check(pageCode.includes("ProductsDeck"), "app/products/page.tsx must mount ProductsDeck");
-check(deckFiles.includes("snap-y") && deckFiles.includes("snap-mandatory"), "deck must use snap-y snap-mandatory");
+const bodyScrollLock = read("components/body-scroll-lock.tsx");
+check(!bodyScrollLock.includes('"/products"'), "/products must stay window-scrollable (mobile cards stack vertically; body scroll lock clips them)");
 check(deckFiles.includes("PRODUCTS.map"), "deck must map through PRODUCTS");
 check(deckFiles.includes("/products/home-preview"), "deck must render the homepage preview plate");
 check(deckFiles.includes("backdrop-blur") && deckFiles.includes("WIP"), "deck must render the blurred WIP veil over the preview");
@@ -83,4 +84,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("products OK: 3 products (≤40 chars copy, status stamps, verified links), 3 mono-color SVGs (#F5F1E8 + #2148B8 + halftone), /products snap-deck wiring, zero IM.");
+console.log("products OK: 3 products (≤40 chars copy, status stamps, verified links), 3 mono-color SVGs (#F5F1E8 + #2148B8 + halftone), /products window-scrollable deck wiring, zero IM.");
