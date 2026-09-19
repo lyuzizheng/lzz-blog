@@ -62,7 +62,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="shrink-0 whitespace-nowrap font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-cobalt sm:text-lg"
+            className="shrink-0 whitespace-nowrap font-display text-base font-bold tracking-tight text-primary transition-colors hover:text-ink-dominant sm:text-lg"
             aria-label="Lzz-Blog"
           >
             Lzz-Blog
@@ -88,7 +88,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                 aria-current={isActive ? "page" : undefined}
                 className={`group relative flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-telemetry text-[11px] transition-all duration-150 ${
                   isActive
-                    ? "border-cobalt bg-surface text-cobalt font-semibold shadow-plate"
+                    ? "border-ink-dominant bg-surface text-ink-dominant font-semibold shadow-plate"
                     : "border-border-plate/60 bg-chamber/40 text-muted hover:border-border-plate hover:text-primary hover:bg-surface"
                 }`}
               >

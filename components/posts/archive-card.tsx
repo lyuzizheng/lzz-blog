@@ -124,7 +124,7 @@ export function ArchiveCard({
               </time>
             </div>
 
-            <h2 className="font-display text-xl sm:text-2xl font-bold leading-snug tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-cobalt">
+            <h2 className="font-display text-xl sm:text-2xl font-bold leading-snug tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-ink-dominant">
               {post.title}
             </h2>
 

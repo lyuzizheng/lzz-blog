@@ -9,10 +9,10 @@
  * 5. Big editorial cards on the timeline: cover photo (or halftone specimen plate),
  *    serif title, summary, tags, created time, reading time; framer-motion scroll-in.
  * 6. Year anchors: giant serif numbers, strictly non-sticky, zero backdrop-blur.
- * 7. Hover interaction: translate-x-1 + cobalt #2148B8; zero hover shadow or upward elevation.
+ * 7. Hover interaction: translate-x-1 + theme ink-dominant (day cobalt / night safelight); zero hover shadow or upward elevation.
  * 8. Mono toolbar: ALL / STUDY / ESSAY channel tabs with hairline indicator;
  *    borderless mono input (bottom hairline, no rounded-full);
- *    pure text tags with cobalt active state (no pill background).
+ *    pure text tags with ink-dominant active state (no pill background).
  * 9. Red lines: zero rounded-xl, zero backdrop-blur, zero hover shadows, lucide icons ≤ 1.
  */
 import fs from "node:fs";
@@ -98,10 +98,10 @@ check(!archiveList.includes("backdrop-blur"), "red line: backdrop-blur must not 
 check(!archiveList.includes("sticky"), "year anchors must be non-sticky");
 check(archiveList.includes("tabular-nums"), "dates and metrics must use tabular-nums");
 check(archiveList.includes("font-display") && (archiveList.includes("text-3xl") || archiveList.includes("text-4xl")), "year anchors must use giant serif numbers");
-// 5. 交互：hover 标题转钴蓝 + translate-x-1，无阴影上浮
+// 5. 交互：hover 标题转主题主墨色（day 钴蓝 / night 安全灯红）+ translate-x-1，无阴影上浮
 check(
-  archiveList.includes("group-hover:text-cobalt") || archiveList.includes("group-hover:text-[#2148B8]"),
-  "row hover must turn title to cobalt"
+  archiveList.includes("group-hover:text-ink-dominant"),
+  "row hover must turn title to theme ink-dominant"
 );
 check(archiveList.includes("group-hover:translate-x-1"), "row hover must slightly indent title (translate-x-1)");
 check(!archiveList.includes("hover:-translate-y"), "hover upward lift (hover:-translate-y) must be removed");
@@ -112,7 +112,7 @@ check(!archiveList.includes("shadow-plate") && !archiveList.includes("shadow-ele
 check(archiveList.includes("ALL") && archiveList.includes("STUDY") && archiveList.includes("ESSAY"), "toolbar must provide ALL, STUDY, and ESSAY channel tabs");
 check(archiveList.includes("border-b") && archiveList.includes("border-0"), "search input must have bottom hairline only");
 check(!archiveList.includes("rounded-full"), "red line: rounded-full search and pill badges must be removed");
-check(archiveList.includes("text-cobalt"), "selected tag must highlight in cobalt text");
+check(archiveList.includes("text-ink-dominant"), "selected tag must highlight in theme ink-dominant text");
 
 // 7. Post 详情页排版
 check(postDetailPage.includes("ReaderEyebrow"), "post detail page must mount ReaderEyebrow with 5 mini negatives");
