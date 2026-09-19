@@ -2,6 +2,7 @@
 
 import React from "react";
 import { SiteHeader } from "@/components/site/site-header";
+import { useTheme } from "@/components/theme-provider";
 import { useI18n } from "@/lib/i18n";
 
 /**
@@ -25,12 +26,15 @@ export function ReaderEyebrow({
 
 export function ReaderColophon() {
   const { t } = useI18n();
+  const { resolvedTheme } = useTheme();
+  // Ink swatch must match --ink-dominant: Safelight Red at night, Cobalt by day.
+  const ink = resolvedTheme === "night" ? "#E05454" : "#2148B8";
   return (
     <footer className="mt-16 border-t border-border-plate pt-4 font-telemetry text-[11px] leading-relaxed text-muted">
       <div className="flex flex-col justify-between gap-2 sm:flex-row">
         <span>© 2026 ZIZHENG LYU · {t.common.atelier}</span>
         <span className="tabular-nums">
-          PAPER #F5F1E8 · INK #2148B8 · SET IN NEWSREADER + NOTO SERIF SC
+          PAPER #F5F1E8 · INK {ink} · SET IN NEWSREADER + NOTO SERIF SC
         </span>
       </div>
     </footer>
