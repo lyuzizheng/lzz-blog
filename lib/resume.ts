@@ -74,7 +74,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "CAREER_DOSSIER N03",
       },
       {
-        text: "WISE 主导产品设计：Payment Defects & Incident 的 Agent 状态追踪与队列管理界面",
+        text: "WISE 集中式跨团队升级系统：基于 Kafka 打造平台化流转核心与接入 SDK，贯通 CS/PayOps/Fraud/KYC 生产链路",
         status: "verified",
         source: "CAREER_DOSSIER N12",
       },
@@ -120,7 +120,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "CAREER_DOSSIER N08",
       },
       {
-        text: "WISE 主导设计并落地 PayOps AI Workflow Platform 与 AI Infra 底座：首批 Onboard 最后一公里资金交易核验匹配，月自动化处理 30k+ cases (准确率 98%+)，每月节省 80,000 GBP 人工成本",
+        text: "WISE AI 自动化评估基座与最后一公里对账：99.8% 准确率 + 40% 召回率，月自动化处理 30k+ 错账，月省 £80,000 GBP",
         status: "verified",
         source: "CAREER_DOSSIER N12",
       },
@@ -139,8 +139,8 @@ export const PRINT_EMPLOYMENT: PrintEmployment[] = [
   {
     period: "2024-11 – Present",
     org: "WISE",
-    role: "Full-Stack Product Engineer",
-    line: "Payment Defects Group：主导设计落地 PayOps AI Workflow Platform，最后一公里资金交易核验月处理 30k+ cases (98%+ 准确率)，月省 80,000 GBP。",
+    role: "Product Engineer 3 · Tech Owner",
+    line: "Regional Platform (Defects, Incidents & Tooling)：主导 AI 规划与评估基建（双盲评审兜底）；落地最后一公里入金对账（99.8% 极高精度，月处理 30k+ 笔，月省 £80k）；建 Kafka 集中升级系统贯通跨团队协同。",
   },
   {
     period: "2024-04 – 2024-07",
