@@ -26,15 +26,15 @@
 \newcommand{\resumeHeading}[4]{\runsubsection{\uppercase{#1}}\descript{ | #2}\hfill\location{#3 | #4}\fakeNewLine}
 
 % Create education heading. Parameters: Name, degree, location, when
-\newcommand{\educationHeading}[4]{\runsubsection{#1}\hspace*{\fill}  \location{#3 | #4}\\
-\descript{#2}\fakeNewLine}
+\newcommand{\educationHeading}[4]{\runsubsection{#1}\hfill\location{#3 | #4}\\
+\descript{#2}\par\vspace{1.5pt}}
 
 % Parameters: courses
-\newcommand{\courseWork}[1]{\textbf{Coursework:} #1}
+\newcommand{\courseWork}[1]{\textbf{Coursework:} #1\par}
 
 % Parameters: courses
-\newcommand{\researchAssistant}[1]{\textbf{Research Assistant (RA):} #1}
-\newcommand{\scholarship}[1]{\textbf{Scholarship:} #1}
+\newcommand{\researchAssistant}[1]{\textbf{Research Assistant (RA):} #1\par}
+\newcommand{\scholarship}[1]{\textbf{Scholarship:} #1\par}
  
 %--------------------------------------------------------------
 \begin{document}
@@ -56,7 +56,7 @@
     \href{https://linkedin.com/in/\linkedInUserName}{\underline{linkedIn/\linkedInUserName}} $|$
     \href{\yourWebsite}{\underline{\yourWebsitename}}
 \end{center}
-\vspace{-6pt}
+\vspace{-2pt}
 
 %--------------------------------------------------------------
 %     Strength Summary
