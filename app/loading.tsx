@@ -6,7 +6,7 @@ import React from "react";
  *
  * 0 CLS: fixed 100dvh matching HomePage layout.
  * Dual-mode aesthetic:
- *   - Night: Safelight Darkroom (Obsidian substrate #100F0E, Safelight Red #E05454)
+ *   - Night: Safelight Darkroom (Obsidian substrate #0D0E11, Safelight Red #E05454)
  *   - Day: Daylight Atelier (Paper substrate #F5F1E8, Cobalt Blue #2148B8)
  * Bilingual support:
  *   - English: DEVELOPING EXPOSURE // 35MM
