@@ -98,3 +98,11 @@ tsconfig.tsbuildinfo
 
 # BRAWUKA-343: maplibre worker assets are copied from node_modules at build time
 public/maplibre/
+
+# LaTeX build artifacts
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.xdv

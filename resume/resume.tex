@@ -1,0 +1,161 @@
+\documentclass[]{resume-openfont}
+
+\pagestyle{fancy}
+\resetHeaderAndFooter
+
+%--------------------------------------------------------------
+% PDF Metadata Configuration (ATS & Search Engine Optimization)
+% Safe, compliant, and standard PDF metadata indexing
+%--------------------------------------------------------------
+\hypersetup{
+    pdftitle={Lyu Zizheng - Senior Product & Systems Engineer Resume},
+    pdfauthor={Lyu Zizheng},
+    pdfsubject={Senior Product and Systems Engineer Resume: High-Concurrency Distributed Systems, Real-Time IM Architecture, Financial Core Payments, AI Evaluation Infrastructure},
+    pdfkeywords={Lyu Zizheng, Senior Software Engineer, Staff Software Engineer, Product Engineer 3, Tech Owner, Wise, ByteDance, TikTok IM, MariBank, Sea Group, Bondee, NTU, Singapore Citizen, Distributed Systems, High Concurrency, Microservices, Golang, Go, Java, TypeScript, Python, Dart, SQL, Kafka, Redis ZSET, Presence Engine, Typing Indicator, Read Receipts, Latency Optimization, Deterministic DAG State Machine, AI Evaluation Infrastructure, Live Shadowing, Canary Release, Payment Core, Payment Defects, Compensation Platform, Distributed Consistency, Idempotency, MAS Compliance, Kubernetes, Docker, Vector, ElasticSearch, Apache Spark, GC Tuning, AWS},
+    pdfcreator={XeLaTeX with resume-openfont},
+    pdfproducer={LaTeX},
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=blue
+}
+
+%--------------------------------------------------------------
+% Convenience command - make it easy to fill template
+
+% Create job position command. Parameters: company, position, location, when
+\newcommand{\resumeHeading}[4]{\runsubsection{\uppercase{#1}}\descript{ | #2}\hfill\location{#3 | #4}\fakeNewLine}
+
+% Create education heading. Parameters: Name, degree, location, when
+\newcommand{\educationHeading}[4]{\runsubsection{#1}\hspace*{\fill}  \location{#3 | #4}\\
+\descript{#2}\fakeNewLine}
+
+% Parameters: courses
+\newcommand{\courseWork}[1]{\textbf{Coursework:} #1}
+
+% Parameters: courses
+\newcommand{\researchAssistant}[1]{\textbf{Research Assistant (RA):} #1}
+\newcommand{\scholarship}[1]{\textbf{Scholarship:} #1}
+ 
+%--------------------------------------------------------------
+\begin{document}
+
+%--------------------------------------------------------------
+%     Profile
+%--------------------------------------------------------------
+\newcommand{\yourName}{Lyu Zizheng}
+\newcommand{\yourWebsite}{https://brabalawuka.cc/}
+\newcommand{\yourWebsitename}{Zizheng's Blog Site}
+\newcommand{\yourEmail}{lyuzizheng@gmail.com}
+\newcommand{\yourPhone}{+6583423169}
+\newcommand{\githubUserName}{Brabalawuka}
+\newcommand{\linkedInUserName}{lyuzizheng}
+
+\begin{center}
+    \textbf{\Huge \scshape \yourName} \\ \vspace{4pt}
+    \small \yourPhone $|$ \href{mailto:\yourEmail}{\underline{\yourEmail}} $|$ 
+    \href{https://linkedin.com/in/\linkedInUserName}{\underline{linkedIn/\linkedInUserName}} $|$
+    \href{\yourWebsite}{\underline{\yourWebsitename}} $|$ Singapore Citizen
+\end{center}
+
+%--------------------------------------------------------------
+%     Strength Summary
+%--------------------------------------------------------------
+\section{Strength Summary}
+\justifying 
+Results-oriented Senior Product \& Systems Engineer with 5+ years of experience architecting high-concurrency distributed systems, financial payment engines, and production AI evaluation infrastructure. Tech Owner at Wise automating 30,000+ monthly payment defects (\textsterling 80k/mo direct savings) via deterministic DAG state machines and shadow gating. Former ByteDance engineer (promoted in 1 year, Spot Bonus, Top E rating) mitigating multi-million QPS broadcast storms on TikTok IM. Pragmatic builder committed to business ROI, distributed consistency, and end-to-end product ownership.
+\sectionsep
+
+%--------------------------------------------------------------
+%     Education
+%--------------------------------------------------------------
+\section{Education}
+\educationHeading{B.Eng. (Honors) in Computer Engineering}{Nanyang Technological University (NTU)}{SG}{Aug 2017 -- May 2021}
+\scholarship{Full NTU Science and Engineering Undergraduate Merit Scholarship (Awarded to top 1\%)}
+\sectionsep
+
+%--------------------------------------------------------------
+%     Experience
+%--------------------------------------------------------------
+\section{Work Experience}
+
+\resumeHeading{WISE}{Product Engineer 3 (Tech Owner)}{SG}{Nov 2024 -- Present}
+\begin{itemize}
+\justifying
+    \item \textbf{Financial AI Automation \& Evaluation Infrastructure}: Architected an end-to-end AI evaluation and execution platform from scratch for last-mile payment linking without golden datasets; engineered deterministic DAG state machines with real-time live shadowing against PayOps, 99.5\% accuracy gating, and a 5\% canary control stream with sub-second circuit-breaker failover.
+    \item \textbf{Payment Defects \& Direct Business Impact}: Automated 30,000+ complex payment defect and unallocated funds cases monthly with 98\%+ accuracy across heterogeneous currency and clearing rail rules; designed risk-tiered blast radius controls (large-amount threshold gating to human approval), yielding \textbf{\textsterling 80,000/month ($\sim$\textsterling 1M/year)} direct operational savings.
+    \item \textbf{Global Compensation Platform \& Cross-Team Escalation}: Re-architected global multi-currency Compensation Platform with automated compliance checks and maker-checker controls; built a Kafka-based cross-team escalation pipeline between Customer Support and PayOps, leveraging structured defect telemetry to eliminate upstream ticket causes.
+\end{itemize}
+\sectionsep
+
+\resumeHeading{MariBank (Sea Group)}{Senior Backend Engineer}{SG}{Apr 2024 -- Jul 2024}
+\begin{itemize}
+\justifying
+    \item \textbf{Digital Banking Credit Core}: Engineered core credit services (Cashloan \& SME Termloan) in Java, enforcing distributed transaction consistency, idempotency, and anti-replay patterns under MAS regulatory compliance; built an internal RAG-based LLM assistant for knowledge retrieval.
+\end{itemize}
+\sectionsep
+
+\resumeHeading{Bondee}{Senior Software Engineer (Employee \#1 in SG)}{SG}{Sep 2023 -- Apr 2024}
+\begin{itemize}
+\justifying
+    \item \textbf{Cloud-Native Infrastructure}: Established foundational cloud-native infrastructure as employee \#1 in Singapore; orchestrated multi-tenant K8s environments and deployed self-hosted Vector + Kafka + ElasticSearch observability pipelines to replace costly managed logging stacks.
+\end{itemize}
+\sectionsep
+
+\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Jan 2021 -- Sep 2023}
+\begin{itemize}
+    \item \textbf{TikTok-Social-Instant Messaging (IM)}
+    \begin{itemize}
+    \justifying
+    \item \textbf{Presence Engine \& Fan-out Storm Mitigation}: Engineered a hybrid push-pull protocol with active heartbeat gating via Redis ZSET to mitigate multi-million QPS broadcast storms during user status changes, eliminating $O(N \times M)$ write amplification by restricting push dispatches exclusively to online, active friends.
+    \item \textbf{Typing Indicator \& Read Receipts}: Implemented ultra-low latency signaling mechanisms for Read Receipts and Typing Indicators across multi-data-center infrastructure; designed client-side debouncing and batch aggregation to eliminate transient signaling spikes while maintaining sub-100ms response.
+    \item \textbf{End-to-End Latency Tuning \& Cold Start Ranking}: Overhauled inbox cold-start loading via ZSET active conversation hierarchies to replace append-only DB table scans (delivering sub-100ms initialization for newly re-installed apps); optimized cross-region RPC payloads and routing paths to reduce P99 latency across core messaging services.
+    \item \textbf{Domain Ownership \& Security Compliance}: Served as Tech Owner for IM core microservices; mentored new engineers and led cross-functional safety/security technical initiatives ensuring compliance with US security standards and EU GDPR.
+    \end{itemize}
+    \item \textbf{Location System Cloud Platform} (IP Geo-Location PoC | 2022 Jan--Feb Spot Bonus Receiver | Top E Rating)
+    \begin{itemize}
+    \justifying
+    \item \textbf{Overseas Location Governance \& Optimization}: Sole engineer in Singapore independently governing overseas IP geo-location infrastructure ($\sim$100 offline Spark batch jobs and Go microservices); overhauled alert rules to eliminate oncall alarm fatigue, tuned Go runtime memory/GC profiles, and significantly improved ASEAN geo-accuracy, earning a \textbf{Spot Bonus} and top \textbf{Exceeds Expectations (E)} rating.
+    \end{itemize}
+    \item \textbf{API Gateway (AGW) Cloud Platform} (Intern)
+    \begin{itemize}
+    \justifying
+    \item Developed automated self-diagnosis and capacity estimation tools for PaaS gateway routing millions of QPS during Chinese New Year (CNY) live traffic campaigns.
+    \end{itemize}
+\end{itemize}
+\sectionsep 
+
+%--------------------------------------------------------------
+%     Other Work Experience / Projects
+%--------------------------------------------------------------
+\section{Other Work Experience}
+
+\resumeHeading{Independent Products}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
+\begin{itemize}
+\justifying
+    \item \textbf{CanCan} (\href{https://cancan-4tj.pages.dev/}{\underline{https://cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles.
+    \item \textbf{CoffeeMode}: Cafe Map for digital nomads to find best places for remote working.
+    \item \textbf{Our Village} (\href{https://gen-growth.com}{\underline{https://gen-growth.com}}): Decentralized community collaboration and membership management platform.
+\end{itemize}
+\sectionsep
+
+\resumeHeading{U-Wave}{Co-Founder, Full Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
+\begin{itemize}
+\justifying
+    \item Co-founded and built campus lifestyle app from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
+\end{itemize}
+\sectionsep
+
+%--------------------------------------------------------------
+%     Skills
+%--------------------------------------------------------------
+\section{Skills}
+\begin{resumeSkillList}
+    \singleItem{Programming Languages:}{Golang, Java, TypeScript, JavaScript, Python, Dart, SQL, Shell}
+    \\
+    \singleItem{Distributed Systems:}{High-Concurrency Architecture, Microservices (gRPC/Thrift), Kafka, Redis, Distributed Consistency}
+    \\
+    \singleItem{Cloud \& Infrastructure:}{Docker, Kubernetes, AWS, Vector, ElasticSearch, Apache Spark, CI/CD Pipelines, Linux}
+    \\
+    \singleItem{Domain Expertise:}{Financial Payment Core \& Defect Automation, IM Protocols \& Presence Engines, AI Evaluation Pipelines}
+\end{resumeSkillList}
+\end{document}

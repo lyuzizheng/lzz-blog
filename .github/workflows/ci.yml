@@ -35,6 +35,16 @@ jobs:
       - name: Run Verification Test Suite
         run: pnpm test
 
+      - name: Compile LaTeX Resume
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: resume.tex
+          working_directory: resume
+          latexmk_use_xelatex: true
+
+      - name: Copy Compiled Resume to Public Assets
+        run: cp -f resume/resume.pdf public/resume.pdf
+
       - name: Build Next.js & OpenNext Cloudflare Worker
         run: pnpm build:worker
 
@@ -69,6 +79,16 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Compile LaTeX Resume
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: resume.tex
+          working_directory: resume
+          latexmk_use_xelatex: true
+
+      - name: Copy Compiled Resume to Public Assets
+        run: cp -f resume/resume.pdf public/resume.pdf
 
       - name: Build Next.js & Cloudflare Edge Bundle
         run: pnpm build:worker
