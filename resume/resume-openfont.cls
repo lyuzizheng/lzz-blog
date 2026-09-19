@@ -14,14 +14,14 @@
 % page setup 
 \RequirePackage{fancyhdr}
 % Set boundaries
-\RequirePackage[hmargin=1.35cm, vmargin=1.15cm]{geometry}
+\RequirePackage[hmargin=1.15cm, vmargin=1.1cm]{geometry}
 % remove ugly boxes around links
 \usepackage[hidelinks]{hyperref}
 % setup custom titles
 \RequirePackage{titlesec}
 % For skills table
 \RequirePackage{enumitem}
-\setlist[itemize]{topsep=1.5pt, partopsep=0pt, parsep=0.5pt, itemsep=1.2pt, leftmargin=1.2em}
+\setlist[itemize]{topsep=2pt, partopsep=0pt, parsep=0.8pt, itemsep=2.2pt, leftmargin=1.15em}
 % Using tables like the profile section
 \RequirePackage{tabularx}
 % Used for the link symbol
@@ -33,12 +33,12 @@
 %--------------------------------------------------------------
 % Reformatting default sections
 % section
-\titlespacing{\section}{0pt}{1.5pt}{1.5pt}
+\titlespacing{\section}{0pt}{5.5pt}{2.5pt}
 \titleformat{\section}{%
 \color{headings}% Using comments to allow us to split the command across multiple line
 \scshape%
 \customLatoLight%
-\fontsize{14.5pt}{18pt}%first number is size, second number is space between lines
+\fontsize{14pt}{17pt}%first number is size, second number is space between lines
 \selectfont%
 \raggedright%
 \uppercase%
@@ -133,7 +133,7 @@
 
 %--------------------------------------------------------------
 % Section separators command
-\newcommand{\sectionsep}[0]{\vspace{4pt}}
+\newcommand{\sectionsep}[0]{\vspace{5.5pt}}
 
 %--------------------------------------------------------------
 % Bullet Lists with fewer gaps command
