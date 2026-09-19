@@ -84,7 +84,7 @@ export function ArchiveFilters({
                 aria-pressed={isSelected}
                 className={`cursor-pointer transition-colors ${
                   isSelected
-                    ? "font-semibold text-cobalt underline decoration-cobalt/60 underline-offset-4"
+                    ? "font-semibold text-ink-dominant underline decoration-ink-dominant/60 underline-offset-4"
                     : "text-muted hover:text-text-primary"
                 }`}
               >

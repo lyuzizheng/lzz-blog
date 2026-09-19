@@ -38,7 +38,7 @@ export interface ProductItem {
   readonly statusTelemetry: string;
   /** 单一官方外链 */
   readonly link: ProductLink;
-  /** DESIGN V2 语言单专色网点矢量头图路径 */
+  /** DESIGN V2 单专色网点矢量图路径（保留资产；当前 plate 渲染主页截图 + 模糊 WIP overlay，实拍就绪后替换） */
   readonly coverSvg: string;
   /** 地理/空间测绘遥测坐标 */
   readonly coordinates: string;

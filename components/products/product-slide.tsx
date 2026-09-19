@@ -6,6 +6,12 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { ProductItem } from "@/lib/products";
 
+/**
+ * 产品主界面实拍图尚未提供（cancan / coffeemode / our-village 均无），
+ * 统一以站点主页截图 + 模糊 WIP 显影 overlay 占位；实拍就绪后按产品替换。
+ */
+const HOME_PREVIEW_IMAGE = "/products/home-preview.jpg";
+
 export interface ProductCardProps {
   product: ProductItem;
   index: number;
@@ -85,19 +91,28 @@ export const ProductCard = React.forwardRef<HTMLElement, ProductCardProps>(
               </div>
             </div>
 
-            {/* 2. Darkroom Blueprint Specimen Plate */}
-            <div className="my-3.5 overflow-hidden rounded-[2px] border border-border-plate bg-[#F5F1E8] p-1.5 shadow-xs transition-transform duration-300 group-hover:border-ink-dominant/40">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#F5F1E8]">
+            {/* 2. Homepage Preview Plate · blurred WIP veil (主界面实拍待补) */}
+            <div className="my-3.5 overflow-hidden rounded-[2px] border border-border-plate bg-chamber p-1.5 shadow-xs transition-transform duration-300 group-hover:border-ink-dominant/40">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1px]">
                 <Image
-                  src={product.coverSvg}
-                  alt={`${product.name} technical blueprint illustration`}
+                  src={HOME_PREVIEW_IMAGE}
+                  alt={`${product.name} interface preview placeholder — homepage capture under WIP veil`}
                   fill
                   priority={isFirst}
-                  className="object-contain p-1.5 transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="object-cover object-top"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
                 />
+                {/* 模糊 WIP 显影层：背板压暗 + 毛玻璃，WIP 章与遥测微字保持锐利 */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-obsidian/40 backdrop-blur-md">
+                  <span className="pl-[0.35em] font-telemetry text-xl font-bold tracking-[0.35em] text-ink-dominant">
+                    WIP
+                  </span>
+                  <span className="font-telemetry text-[9px] uppercase tracking-[0.2em] text-phosphor/70">
+                    {isZh ? "主界面实拍 · 显影中" : "UI CAPTURE · DEVELOPING"}
+                  </span>
+                </div>
               </div>
-              <div className="mt-1 flex items-center justify-between px-1 font-telemetry text-[9px] text-[#857C68]">
+              <div className="mt-1 flex items-center justify-between px-1 font-telemetry text-[9px] text-muted">
                 <span className="tracking-wider">
                   FIG.0{index + 1} · {product.name.toUpperCase()}
                 </span>

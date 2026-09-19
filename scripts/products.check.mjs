@@ -63,7 +63,8 @@ const deckFiles = ["components/products/products-deck.tsx", "components/products
 check(pageCode.includes("ProductsDeck"), "app/products/page.tsx must mount ProductsDeck");
 check(deckFiles.includes("snap-y") && deckFiles.includes("snap-mandatory"), "deck must use snap-y snap-mandatory");
 check(deckFiles.includes("PRODUCTS.map"), "deck must map through PRODUCTS");
-check(deckFiles.includes("coverSvg"), "deck must render coverSvg");
+check(deckFiles.includes("/products/home-preview"), "deck must render the homepage preview plate");
+check(deckFiles.includes("backdrop-blur") && deckFiles.includes("WIP"), "deck must render the blurred WIP veil over the preview");
 check(deckFiles.includes("tagline"), "deck must render tagline");
 check(deckFiles.includes("statusStamp"), "deck must render status stamp");
 check(deckFiles.includes("link"), "deck must render external link");
