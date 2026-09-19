@@ -79,11 +79,11 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "AI 评估平台与自动化路线图（Tech Owner）：" : "AI Workflow Platform & Evaluation Roadmap: "}
+                {isZh ? "AI 评估平台与自动化路线图：" : "AI Workflow Platform & Evaluation Roadmap: "}
               </strong>
               {isZh
-                ? "负责自动化与工单平台技术路线规划；搭建核心 AI 评估平台（AI Evaluation Platform），以基准实时监控与第三方 Ops 双盲评审确立准入与审计安全兜底标准，支持区域工程师自主接入定制对账与异常流转。"
-                : "Formulated technical roadmaps and team planning for the regional platform tooling team; built the core AI Evaluation Platform with baseline live monitoring and 3rd-party Ops blind evaluations as standard audit and safeguard gates."}
+                ? "作为 Tech Owner 负责自动化与工单平台技术路线规划；搭建核心 AI 评估平台（AI Evaluation Platform），以基准实时监控与第三方 Ops 双盲评审确立准入与审计安全兜底标准，支持区域工程师自主接入定制对账与异常流转。"
+                : "As Tech Owner, formulated technical roadmaps and team planning for the regional platform tooling team; built the core AI Evaluation Platform with baseline live monitoring and 3rd-party Ops blind evaluations as standard audit and safeguard gates."}
             </div>
           </li>
 
@@ -91,11 +91,11 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "最后一公里资金对账 AI 工作流（Initialise + Lead 1 Grad）：" : "Last-Mile Payment Linking AI Workflow: "}
+                {isZh ? "最后一公里资金对账 AI 工作流：" : "Last-Mile Payment Linking AI Workflow: "}
               </strong>
               {isZh
-                ? "针对无金集的长尾复杂滞留资金对账，设计确定性 DAG 状态机工作流；调优至 99.8% 极高精度（零错划）与 40% 召回率，月自动化处理 30,000+ 笔错账，扣除推理成本后净贡献 £80,000/月直接运营降本。"
-                : "Designed deterministic DAG state machines for complex unallocated fund matching without golden datasets, tuning for 99.8% precision and 40% recall; automated 30,000+ monthly defect cases, generating £80,000/month direct operational savings."}
+                ? "从零主导并带领初级工程师落地长尾复杂滞留资金对账工作流，设计确定性 DAG 状态机；调优至 99.8% 极高精度（零错划）与 40% 召回率，月自动化处理 30,000+ 笔错账，扣除推理成本后净贡献 £80,000/月直接运营降本。"
+                : "Initiated and led delivery of deterministic DAG state machines for complex unallocated fund matching with a junior engineer; tuned for 99.8% precision and 40% recall, automating 30,000+ monthly defect cases and generating £80,000/month direct operational savings."}
             </div>
           </li>
 
@@ -103,11 +103,11 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "集中式跨团队升级系统（Lead + 跨团队编排）：" : "Centralised Cross-Team Escalation System: "}
+                {isZh ? "集中式跨团队升级系统：" : "Centralised Cross-Team Escalation System: "}
               </strong>
               {isZh
-                ? "基于 Kafka 打造集中式流转编排核心，替代此前 CS、PayOps、Fraud、KYC 之间碎片化的 Slack/Zendesk 沟通；自研目标系统接入 SDK 标准化生命周期协议（receive / ack / de-escalate），保障生产环境跨组稳定流转。"
-                : "Built a Kafka-based orchestration service to replace ad-hoc Slack/Zendesk handoffs across disparate ops systems (CS, PayOps, Fraud, KYC); authored client integration SDKs standardising lifecycle states (receive, ack, de-escalate), currently live across primary cross-team corridors."}
+                ? "主导跨团队协同编排体系，基于 Kafka 打造集中式流转核心，替代此前 CS、PayOps、Fraud、KYC 之间碎片化的 Slack/Zendesk 沟通；自研目标系统接入 SDK 标准化生命周期协议（receive / ack / de-escalate），保障生产环境跨组稳定流转。"
+                : "Led the cross-team architecture of a Kafka-based orchestration service to replace ad-hoc Slack/Zendesk handoffs across CS, PayOps, Fraud, and KYC; authored client integration SDKs standardising lifecycle states (receive, ack, de-escalate), live across primary corridors."}
             </div>
           </li>
         </ul>
