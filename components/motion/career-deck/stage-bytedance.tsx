@@ -86,10 +86,10 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "在线状态引擎（Online Status Engine · 独立设计与实现）：" : "Online Status Engine: "}
+                  {isZh ? "在线状态引擎（Presence Engine）：" : "Online Presence Engine: "}
                 </strong>
                 {isZh
-                  ? "面对数百万级 QPS，放弃全量扫表与不可持续的高频 Redis 全查；设计“动态维护最近在线好友集合 + 5 分钟心跳 TTL”机制，状态变更仅向当前有心跳的活跃好友定向推送，冷启动增量拉取；彻底消除 O(N×M) 写放大瓶颈，同时权衡了状态准确度与聊天促活渗透率。"
+                  ? "针对数百万级 QPS 广播风暴，基于 Redis ZSET 设计“动态维护最近在线好友集合 + 5 分钟心跳 TTL”门禁机制，状态变更仅向活跃在线好友定向推送；彻底消除 O(N×M) 写放大瓶颈，兼顾实时在线感知与聊天促活。"
                   : "Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated O(N*M) Redis bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against real-time messaging penetration."}
               </div>
             </li>
@@ -98,10 +98,10 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "正在输入与已读回执联合优化（Low-Latency Signaling · 独立后端负责）：" : "Typing Indicators & Read Receipts: "}
+                  {isZh ? "正在输入与已读回执时序链路：" : "Typing Indicators & Read Receipts: "}
                 </strong>
                 {isZh
-                  ? "解决“对方正在输入但上一条因同步延迟仍显示未读”的时序因果倒置；将已读回执提入独立低延迟信令通道；针对多机房同一消息 cursor 与时间戳不一致问题，主动将已读时间戳锚定至对应消息 ID 的时间戳，彻底消除跨机房乱序与时钟漂移引起的客户端割裂。"
+                  ? "解决“对方正在输入但上一条因同步延迟仍显示未读”的时序因果倒置；将已读回执提入独立低延迟信令通道，将已读时间戳统一锚定至消息 ID 时间戳，彻底消除多机房时钟漂移与网络抖动导致的客户端状态割裂。"
                   : "Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences."}
               </div>
             </li>
@@ -110,10 +110,10 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "Multi-DC 跨机房多主同步与冷启动排障（Co-impl with Senior / Impl）：" : "Multi-DC Sync & Cold-Start Troubleshooting: "}
+                  {isZh ? "多机房多主同步与首屏冷启动排障：" : "Multi-DC Sync & Cold-Start Troubleshooting: "}
                 </strong>
                 {isZh
-                  ? "配合资深工程师推进 SG/US/EU 三地机房多主写入与跨洋同步合规落地，设计群聊多主冲突缓解策略；排查修复重装 App 导致会话丢失的线上 P0 Bug（大群刷屏淹没单条 user chain），重构会话拉取与排序，保障冷启动首屏各会话 <100ms 完整恢复。"
+                  ? "配合资深工程师推进 SG/US/EU 三地机房跨洋同步与多主写入冲突缓解策略；排查解决重装 App 导致会话丢失的线上 P0 故障（大群刷屏淹没单条 user chain），重构消息拉取与会话树排序逻辑，保障冷启动首屏各会话 <100ms 完整恢复。"
                   : "Co-implemented cross-region replication across SG, US, and EU datacenters under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery."}
               </div>
             </li>
@@ -191,10 +191,10 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "离线 Spark 任务重组与错峰治理（独立接盘与治理）：" : "Spark ETL Pipeline Governance: "}
+                {isZh ? "海外离线 Spark 任务错峰治理：" : "Spark ETL Pipeline Governance: "}
               </strong>
               {isZh
-                ? "作为新加坡唯一常驻研发承接海外全链路；排查治理近百个历史 Spark 批量计算任务，纠正不合理的 CPU 与 Driver/Executor 内存配置；彻底打破大量任务在凌晨 12am/2am 扎堆启动导致的队列竞争与算力短缺，重新编排错峰调度，消除深夜任务失败与队列阻塞。"
+                ? "作为新加坡唯一常驻研发承接海外全链路；排查治理近百个历史 Spark 批量计算任务，纠正不合理的 CPU 与 Driver/Executor 内存配置；消除凌晨 12am/2am 任务扎堆导致的队列竞争与算力短缺，重构调度编排实现错峰执行，保障深夜任务准时产出。"
                 : "Independently governed overseas IP geo-location stack (~100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue."}
             </div>
           </li>
@@ -203,7 +203,7 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "海量高吞吐 Go 调优与 API 网关（AGW）工具：" : "High-Throughput Go Profiling & AGW Tooling: "}
+                {isZh ? "高并发 Go 性能调优与网关工具：" : "High-Throughput Go Profiling & AGW Tooling: "}
               </strong>
               {isZh
                 ? "针对海量吞吐的在线定位微服务，通过 pprof 深入分析堆内存分配与性能瓶颈；预设容量、重排 struct 字段内存对齐并精调 GC pacing，显著提升东盟（ASEAN）定位精度；同时为核心中台 API 网关（AGW）研发自动化自助诊断与容量预估工具，保障千万级 QPS 流量重保。"
@@ -215,11 +215,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "告警收敛重构与极端抗压韧性（7×24 Oncall 治理与排障）：" : "Oncall Alert De-noising & Stress Handling: "}
+                {isZh ? "7×24 Oncall 稳定性保障与告警收敛：" : "7×24 Oncall Reliability & Alert De-noising: "}
               </strong>
               {isZh
-                ? "面对身心俱疲的 7×24 Oncall 频繁警报，主动将故障分类归因、重构收敛报警规则，彻底终结报警疲劳；展现极高逆境精力与抗压能力，独挑大梁保障海外定位高可用，荣获团队 Spot Bonus 嘉奖与年度卓越绩效（Top E 评级）。"
-                : "Tackled severe 7x24 oncall fatigue by categorizing alarm causes and restructuring alert thresholds; demonstrated exceptional stress resilience as the sole engineer safeguarding overseas availability, earning a Spot Bonus and top rating (E)."}
+                ? "面对 7×24 Oncall 高频告警，主动将故障分类归因并重构收敛规则，彻底消除报警疲劳；独挑大梁保障海外定位全天候高可用与极端流量稳定性，荣获团队 Spot Bonus 嘉奖与年度卓越绩效（Top E 评级）。"
+                : "Tackled severe 7x24 oncall fatigue by categorizing alarm causes and restructuring alert thresholds; independently safeguarded overseas availability and peak-traffic stability, earning a Spot Bonus and top rating (E)."}
             </div>
           </li>
         </ul>

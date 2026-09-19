@@ -72,23 +72,11 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "信贷核心与状态机一致性（MariBank）：" : "Credit Core & State Machines (MariBank): "}
+                {isZh ? "数字银行核心信贷状态机：" : "Banking Credit State Machines: "}
               </strong>
               {isZh
-                ? "负责个人消费贷（Cashloan）与小微企业贷（SME Termloan）核心业务，梳理借贷数据流，基于数据库事务与状态机保障各阶段强一致，实现全流程最终一致性。"
+                ? "负责个人消费贷（Cashloan）与小微企业贷（SME Termloan）核心业务，基于数据库事务与状态机保障各阶段强一致，实现跨服务分布式最终一致性。"
                 : "Engineered core credit services (Cashloan & SME Termloan) in Java, implementing state machines to ensure phase-wise strong consistency via DB transactions and end-to-end eventual consistency."}
-            </div>
-          </li>
-
-          <li className="hidden sm:flex items-start gap-2.5">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-            <div>
-              <strong className="font-semibold text-primary">
-                {isZh ? "新加坡 1 号员工与多领域协作（Bondee）：" : "SG Employee #1 & Cross-Discipline Execution (Bondee): "}
-              </strong>
-              {isZh
-                ? "作为新加坡团队首位工程师，身兼后端研发、研究项目协调、商务拓展（BD）与摄影制作等多重职责。"
-                : "Joined as Employee #1 in Singapore, wearing multiple hats across backend engineering, research project coordination, business development, and photography."}
             </div>
           </li>
 
@@ -96,11 +84,23 @@ export function StageExploration({}: StageExplorationProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "自建 Vector + Kafka + ES 日志收集链路（Bondee）：" : "Self-Hosted Vector + Kafka + ES Logging (Bondee): "}
+                {isZh ? "自建 Vector + Kafka 日志链路：" : "Self-Hosted Vector + Kafka Log Pipeline: "}
               </strong>
               {isZh
-                ? "独立部署 DaemonSet + Vector + Kafka + Elasticsearch 全链路日志收集与检索体系，替代高昂的云厂商全托管方案，大幅削减云资源成本。"
-                : "Deployed self-hosted DaemonSet + Vector + Kafka + Elasticsearch log ingestion pipelines, replacing expensive managed cloud logging and cutting recurring costs."}
+                ? "作为新加坡 1 号工程师独立推进基建，部署 DaemonSet + Vector + Kafka + Elasticsearch 全链路日志收集与检索体系，替代高昂的云托管方案并大幅缩减资源开销。"
+                : "As Singapore Employee #1, deployed self-hosted DaemonSet + Vector + Kafka + Elasticsearch log ingestion pipelines, replacing expensive managed cloud services and cutting recurring costs."}
+            </div>
+          </li>
+
+          <li className="hidden sm:flex items-start gap-2.5">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
+            <div>
+              <strong className="font-semibold text-primary">
+                {isZh ? "创始团队跨领域协作：" : "Founding Multi-Discipline Execution: "}
+              </strong>
+              {isZh
+                ? "身兼后端基础架构、研究项目跨国协调、海外商务拓展（BD）与影像制作等多重职责，支撑早期团队在新加坡的平稳落地与敏捷迭代。"
+                : "Joined as Employee #1 in Singapore, driving backend infrastructure while coordinating research projects, business development, and media production during zero-to-one setup."}
             </div>
           </li>
         </ul>
