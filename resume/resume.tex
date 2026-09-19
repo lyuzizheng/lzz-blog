@@ -110,10 +110,11 @@ Results-oriented Senior Product \& Systems Engineer with 5+ years of experience 
     \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences.
     \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
-    \item \textbf{Location System Cloud Platform} (IP Geo-Location PoC | 2022 Jan--Feb Spot Bonus Receiver | Top E Rating)
+    \item \textbf{Overseas Location Platform (Sole Singapore SWE | Spot Bonus | Top Rating E)}
     \begin{itemize}
     \justifying
-    \item \textbf{Overseas Location Governance \& Optimization}: Sole engineer in Singapore independently governing overseas IP geo-location infrastructure ($\sim$100 offline Spark batch jobs and Go microservices); overhauled alert rules to eliminate oncall alarm fatigue, tuned Go runtime memory/GC profiles, and significantly improved ASEAN geo-accuracy, earning a \textbf{Spot Bonus} and top \textbf{Exceeds Expectations (E)} rating.
+    \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue.
+    \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy.
     \end{itemize}
     \item \textbf{API Gateway (AGW) Cloud Platform} (Intern)
     \begin{itemize}

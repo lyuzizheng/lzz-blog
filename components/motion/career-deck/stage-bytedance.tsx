@@ -206,23 +206,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "海外 Location 平台独立维护：" : "Overseas Location Platform (Sole Singapore SWE): "}
+                {isZh ? "离线 Spark 任务重组与错峰治理（独立接盘与治理）：" : "Spark ETL Pipeline Governance: "}
               </strong>
               {isZh
-                ? "作为新加坡常驻工程师独立接管海外 Location 链路全生命周期，负责维护约 100 个离线 Spark ETL 数据清洗任务与线上 Go 定位微服务，保障服务稳定可靠。"
-                : "Sole Singapore engineer governing ~100 offline Spark ETL data pipelines and online Go geo-services. Maintained 7x24 high-reliability oncall."}
-            </div>
-          </li>
-
-          <li className="hidden sm:flex items-start gap-2">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-            <div>
-              <strong className="font-semibold text-primary">
-                {isZh ? "系统减负与 Go 运行时优化：" : "System Governance & Go Runtime Optimization: "}
-              </strong>
-              {isZh
-                ? "系统化清理闲置海外计算资源，重构报警收敛机制消灭无效告警干扰；调优 Go runtime 内存分配与 GC 压力，提升东盟地区地理定位精度，荣获公司 Spot Bonus 与卓越绩效（E 评级）。"
-                : "Purged abandoned overseas cloud resources, tuned Go memory/GC profiles, restructured alert aggregation to eliminate alert fatigue, and improved ASEAN geo-lookup precision; awarded Spot Bonus and top rating (E)."}
+                ? "作为新加坡唯一常驻研发承接海外全链路；排查治理近百个历史 Spark 批量计算任务，纠正不合理的 CPU 与 Driver/Executor 内存配置；彻底打破大量任务在凌晨 12am/2am 扎堆启动导致的队列竞争与算力短缺，重新编排错峰调度，消除深夜任务失败与队列阻塞。"
+                : "Independently governed overseas IP geo-location stack (~100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue."}
             </div>
           </li>
 
@@ -230,23 +218,23 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "跨洋多活同步与秒级丢包排障：" : "Multi-Datacenter Sync & Automated Troubleshooting: "}
+                {isZh ? "海量高吞吐 Go 服务性能压榨（pprof 深度调优）：" : "High-Throughput Go Service Profiling: "}
               </strong>
               {isZh
-                ? "主导跨洋多数据中心（Multi-datacenter / Multi-DC）消息多活同步机制，研发自愈式消息丢包自动排障工具（Troubleshooting Tool），支持秒级异常定位与网络分析。"
-                : "Engineered cross-ocean Multi-datacenter (Multi-DC) message sync and authored automated message loss troubleshooting tooling for sub-second anomaly isolation."}
+                ? "针对海量吞吐的在线定位微服务，通过 pprof 深入分析堆内存分配与性能瓶颈；预设 map 与 slice 初始容量避免扩容损耗，重排 struct 字段内存对齐减少 padding 浪费，精细调整 GC pacing，显著压降内存占用与 p99 耗时，大幅提升东盟（ASEAN）地区 IP 定位精度。"
+                : "Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy."}
             </div>
           </li>
 
-          <li className="hidden sm:flex items-start gap-2">
+          <li className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "核心 PaaS API 网关（AGW）重保支持：" : "Core PaaS API Gateway (AGW): "}
+                {isZh ? "告警收敛重构与极端抗压韧性（7×24 Oncall 治理）：" : "Oncall Alert De-noising & Stress Handling: "}
               </strong>
               {isZh
-                ? "为公司核心 API Gateway 研发服务容量估算与自诊断工具，在重大活动期间平稳支撑数百万 QPS 核心流量洪峰，保障线上零故障。"
-                : "Developed server usage estimation and self-diagnosis tooling for company core API Gateway, sustaining millions of QPS during major traffic campaigns."}
+                ? "面对身心俱疲的 7×24 Oncall 频繁警报，主动将故障分类归因、重构收敛报警规则，彻底终结报警疲劳；展现极高逆境精力与抗压能力，独挑大梁保障海外定位高可用，荣获团队 Spot Bonus 嘉奖与年度卓越绩效（Top E 评级）。"
+                : "Tackled severe 7x24 oncall fatigue by categorizing alarm causes and restructuring alert thresholds; demonstrated exceptional stress resilience as the sole engineer safeguarding overseas availability, earning a Spot Bonus and top rating (E)."}
             </div>
           </li>
         </ul>

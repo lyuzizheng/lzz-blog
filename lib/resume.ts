@@ -87,7 +87,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
     summary: "离线编排与在线服务的双轨治理：先治管道，再谈规模。",
     bullets: [
       {
-        text: "TikTok Location 海外 IP 定位负责人：近百离线 Spark 任务治理，自研分析编排优化资源利用，ASEAN 精度突破",
+        text: "海外 Location 离线 Spark 治理与 Go 压榨：排查近百离线任务重构 12am/2am 错峰调度消除抢占；pprof 优化内存与结构体对齐提升东盟定位精度",
         status: "verified",
         source: "CAREER_DOSSIER N07",
       },
@@ -110,7 +110,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
     summary: "7×24 oncall 一人成军：把救火经验沉淀为不救火的系统。",
     bullets: [
       {
-        text: "Location 海外链路一人撑全链路：带 1 实习生，建 oncall / CI / 告警标准；获 2022.01–02 Spot Bonus",
+        text: "Location 海外链路 7×24 Oncall 独挑大梁：在极端高压下主动归因重构告警规则消除疲劳；获 2022.01–02 Spot Bonus 与年度 Top E 评级",
         status: "verified",
         source: "CAREER_DOSSIER N07",
       },
