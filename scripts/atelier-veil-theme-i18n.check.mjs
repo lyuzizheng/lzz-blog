@@ -41,6 +41,7 @@ check(layout.includes("<head>") && layout.includes("</head>"), "app/layout.tsx m
 check(layout.includes("atelier-init-theme-locale"), "layout must declare pre-hydration init script");
 check(layout.includes("localStorage.getItem('theme')"), "init script must check saved theme");
 check(layout.includes("document.documentElement.setAttribute('data-theme', t)"), "init script must set data-theme");
+check(layout.includes("prefers-color-scheme: light"), "init script must follow OS/browser scheme when no manual override");
 check(layout.includes("localStorage.getItem('lzz_locale')"), "init script must check saved locale");
 check(layout.includes("document.documentElement.setAttribute('data-locale', 'zh')"), "init script must set data-locale for zh");
 

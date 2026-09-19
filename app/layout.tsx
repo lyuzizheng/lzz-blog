@@ -32,9 +32,11 @@ export default function RootLayout({
               (function() {
                 try {
                   var t = localStorage.getItem('theme');
-                  if (t === 'day' || t === 'night') {
-                    document.documentElement.setAttribute('data-theme', t);
+                  if (t !== 'day' && t !== 'night') {
+                    // No manual override (or "system"): follow the OS/browser scheme.
+                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'day' : 'night';
                   }
+                  document.documentElement.setAttribute('data-theme', t);
                   var l = localStorage.getItem('lzz_locale');
                   if (!l) {
                     var m = document.cookie.match(/(?:^|;\\s*)lzz_locale=(en|zh)/);
