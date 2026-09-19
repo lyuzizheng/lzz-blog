@@ -29,33 +29,28 @@ import { useI18n } from "@/lib/i18n";
  */
 const stageVariants: Variants = {
   enter: (direction: number) => ({
-    y: direction > 0 ? 50 : -50,
+    y: direction > 0 ? 40 : -40,
     opacity: 0,
-    scale: 0.98,
-    filter: "blur(3px)",
+    scale: 0.99,
   }),
   center: {
     y: 0,
     opacity: 1,
     scale: 1,
-    filter: "blur(0px)",
     transition: {
-      y: { type: "spring", stiffness: 280, damping: 28, mass: 0.8 },
-      opacity: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
-      scale: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
-      filter: { duration: 0.3 },
+      y: { type: "spring", stiffness: 320, damping: 30, mass: 0.8 },
+      opacity: { duration: 0.24, ease: [0.16, 1, 0.3, 1] },
+      scale: { duration: 0.24, ease: [0.16, 1, 0.3, 1] },
     },
   },
   exit: (direction: number) => ({
-    y: direction > 0 ? -45 : 45,
+    y: direction > 0 ? -35 : 35,
     opacity: 0,
-    scale: 0.98,
-    filter: "blur(3px)",
+    scale: 0.99,
     transition: {
-      y: { duration: 0.32, ease: [0.32, 0, 0.67, 0] },
-      opacity: { duration: 0.28, ease: "easeIn" },
-      scale: { duration: 0.28, ease: "easeIn" },
-      filter: { duration: 0.25 },
+      y: { duration: 0.2, ease: "easeIn" },
+      opacity: { duration: 0.18, ease: "easeIn" },
+      scale: { duration: 0.18, ease: "easeIn" },
     },
   }),
 };
@@ -67,11 +62,11 @@ const canvasVariants: Variants = {
   enter: { opacity: 0 },
   center: {
     opacity: 1,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.25, ease: "easeOut" },
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.4, ease: "easeIn" },
+    transition: { duration: 0.18, ease: "easeIn" },
   },
 };
 
@@ -96,7 +91,7 @@ export function CareerDeck() {
 
       setTimeout(() => {
         isAnimatingRef.current = false;
-      }, 550);
+      }, 300);
     },
     [stageIndex, totalStages],
   );
@@ -182,10 +177,13 @@ export function CareerDeck() {
         e.preventDefault();
       }
 
+      if (isAnimatingRef.current) {
+        return;
+      }
+
       const now = Date.now();
-      // Cooldown after transition: 420ms
-      if (now - lastWheelTriggerRef.current < 420) {
-        wheelAccumulatorRef.current = 0;
+      // Cooldown after transition: 240ms
+      if (now - lastWheelTriggerRef.current < 240) {
         return;
       }
 
@@ -197,12 +195,12 @@ export function CareerDeck() {
         clearTimeout(wheelResetTimerRef.current);
       }
 
-      // Reset accumulator on idle (120ms)
+      // Reset accumulator on idle (100ms)
       wheelResetTimerRef.current = setTimeout(() => {
         wheelAccumulatorRef.current = 0;
-      }, 120);
+      }, 100);
 
-      const THRESHOLD = 16; // Gentle two-finger flick or 1 notch mouse wheel
+      const THRESHOLD = 14; // Gentle two-finger flick or 1 notch mouse wheel
       if (Math.abs(wheelAccumulatorRef.current) >= THRESHOLD) {
         const direction = wheelAccumulatorRef.current;
         wheelAccumulatorRef.current = 0;
@@ -236,29 +234,40 @@ export function CareerDeck() {
   const touchStartTimeRef = useRef<number>(0);
   const lastTouchTriggerRef = useRef<number>(0);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartYRef.current = e.touches[0].clientY;
-    touchStartXRef.current = e.touches[0].clientX;
+  const handleTouchStart = useCallback((e: React.TouchEvent | TouchEvent) => {
+    const touch = "touches" in e ? e.touches[0] : null;
+    if (!touch) return;
+    touchStartYRef.current = touch.clientY;
+    touchStartXRef.current = touch.clientX;
     touchStartTimeRef.current = Date.now();
-  };
+  }, []);
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchMove = useCallback((e: React.TouchEvent | TouchEvent) => {
     if (e.cancelable) {
       e.preventDefault();
     }
-  };
+  }, []);
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const handleTouchEnd = useCallback((e: React.TouchEvent | TouchEvent) => {
     if (touchStartYRef.current === null) return;
-    const now = Date.now();
-    if (now - lastTouchTriggerRef.current < 380) {
+    if (isAnimatingRef.current) {
       touchStartYRef.current = null;
       touchStartXRef.current = null;
       return;
     }
 
-    const touchEndY = e.changedTouches[0].clientY;
-    const touchEndX = e.changedTouches[0].clientX;
+    const now = Date.now();
+    if (now - lastTouchTriggerRef.current < 240) {
+      touchStartYRef.current = null;
+      touchStartXRef.current = null;
+      return;
+    }
+
+    const changed = "changedTouches" in e ? e.changedTouches[0] : null;
+    if (!changed) return;
+
+    const touchEndY = changed.clientY;
+    const touchEndX = changed.clientX;
     const diffY = touchStartYRef.current - touchEndY;
     const diffX = (touchStartXRef.current ?? touchEndX) - touchEndX;
     const duration = Math.max(now - touchStartTimeRef.current, 1);
@@ -267,12 +276,12 @@ export function CareerDeck() {
     touchStartXRef.current = null;
 
     // Check vertical dominance
-    if (Math.abs(diffY) > Math.abs(diffX) * 0.75) {
+    if (Math.abs(diffY) > Math.abs(diffX) * 0.7) {
       const velocityY = Math.abs(diffY) / duration;
-      // Flick: small displacement (>12px) with fast velocity (>0.18 px/ms)
-      // Drag: displacement > 20px
-      const isFlick = velocityY > 0.18 && Math.abs(diffY) > 12;
-      const isDrag = Math.abs(diffY) > 20;
+      // Flick: small displacement (>10px) with fast velocity (>0.15 px/ms)
+      // Drag: displacement > 18px
+      const isFlick = velocityY > 0.15 && Math.abs(diffY) > 10;
+      const isDrag = Math.abs(diffY) > 18;
 
       if (isFlick || isDrag) {
         lastTouchTriggerRef.current = now;
@@ -283,12 +292,32 @@ export function CareerDeck() {
         }
       }
     }
-  };
+  }, [goNext, goPrev]);
 
-  const handleTouchCancel = () => {
+  const handleTouchCancel = useCallback(() => {
     touchStartYRef.current = null;
     touchStartXRef.current = null;
-  };
+  }, []);
+
+  // Global window touch listeners with non-passive touchmove to prevent iOS gesture cancel
+  useEffect(() => {
+    const onTouchStart = (e: TouchEvent) => handleTouchStart(e);
+    const onTouchMove = (e: TouchEvent) => handleTouchMove(e);
+    const onTouchEnd = (e: TouchEvent) => handleTouchEnd(e);
+    const onTouchCancel = () => handleTouchCancel();
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchCancel, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchCancel);
+    };
+  }, [handleTouchStart, handleTouchMove, handleTouchEnd, handleTouchCancel]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -359,7 +388,7 @@ export function CareerDeck() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-100 transition-opacity duration-500"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         >
           {currentStage.id === "hero" && <HeroCanvas mode="hero" />}
           {currentStage.id === "wise" && <WiseCanvas />}

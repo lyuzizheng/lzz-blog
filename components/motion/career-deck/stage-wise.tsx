@@ -59,7 +59,7 @@ export function StageWise({}: StageWiseProps) {
             <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
               99.8<span className="text-xs font-normal text-ink-dominant">%</span>
             </div>
-            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "40% 召回 · 98%+ 准确率" : "40% recall · 98%+ accuracy"}</p>
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "40% 召回 · 99.8% 准确率" : "40% recall · 99.8% precision"}</p>
           </div>
 
           <div className="px-2">
