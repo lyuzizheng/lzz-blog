@@ -57,7 +57,7 @@ export function StageWise({}: StageWiseProps) {
             <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
               99.8<span className="text-xs font-normal text-ink-dominant">%</span>
             </div>
-            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "40% 召回 · 零错划" : "40% recall · zero error"}</p>
+            <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">{isZh ? "40% 召回 · 98%+ 准确率" : "40% recall · 98%+ accuracy"}</p>
           </div>
 
           <div className="px-1.5 sm:px-2">
@@ -77,7 +77,7 @@ export function StageWise({}: StageWiseProps) {
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "AI 自动化规划与评估平台（Initialise / Tech Owner）：" : "AI Automation Roadmap & Evaluation Platform: "}
+                {isZh ? "AI 自动化规划与评估平台（AI Workflow Platform & Evaluation / Tech Owner）：" : "AI Workflow Platform & Evaluation Roadmap: "}
               </strong>
               {isZh
                 ? "负责自动化与工单领域的平台路线图规划与任务拆解，定义平台如何支持各区域团队接入非 Happy-path 异常场景（如各地区定制对账策略、特定银行渠道的 Payout 异常自动化）；从 0 到 1 搭建 AI 评估平台（AI Evaluation Platform），确立基线实时监控（Live Monitoring against baseline）与第三方 Ops 双盲评审（Third Ops Blind Evaluation），作为全组后续新自动化准入的审计与兜底标准。"

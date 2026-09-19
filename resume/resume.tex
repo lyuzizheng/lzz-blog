@@ -11,7 +11,7 @@
     pdftitle={Lyu Zizheng - Senior Product & Systems Engineer Resume},
     pdfauthor={Lyu Zizheng},
     pdfsubject={Senior Product and Systems Engineer Resume: High-Concurrency Distributed Systems, Real-Time IM Architecture, Financial Core Payments, AI Evaluation Infrastructure},
-    pdfkeywords={Lyu Zizheng, Senior Software Engineer, Staff Software Engineer, Product Engineer 3, Tech Owner, Wise, ByteDance, TikTok IM, MariBank, Sea Group, Bondee, NTU, Singapore Citizen, Distributed Systems, High Concurrency, Microservices, Golang, Go, Java, TypeScript, Python, Dart, SQL, Kafka, Redis ZSET, Presence Engine, Typing Indicator, Read Receipts, Latency Optimization, Deterministic DAG State Machine, AI Evaluation Infrastructure, Live Shadowing, Canary Release, Payment Core, Payment Defects, Compensation Platform, Distributed Consistency, Idempotency, MAS Compliance, Kubernetes, Docker, Vector, ElasticSearch, Apache Spark, GC Tuning, AWS},
+    pdfkeywords={Lyu Zizheng, Senior Software Engineer, Staff Software Engineer, Product Engineer 3, Tech Owner, Wise, ByteDance, TikTok IM, MariBank, Sea Group, Bondee, NTU, Singapore Citizen, Distributed Systems, High Concurrency, Microservices, Golang, Go, Java, TypeScript, Python, Dart, SQL, Kafka, Redis, Presence Engine, Typing Indicator, Read Receipts, Latency Optimization, Deterministic DAG State Machine, AI Evaluation Infrastructure, Live Baseline Monitoring, Shadow Gating, Payment Core, Payment Defects, Distributed State Machines, Idempotency, Docker, Vector, ElasticSearch, Apache Spark, GC Tuning, AWS},
     pdfcreator={XeLaTeX with resume-openfont},
     pdfproducer={LaTeX},
     colorlinks=true,
@@ -62,7 +62,7 @@
 %--------------------------------------------------------------
 \section{Strength Summary}
 \justifying 
-Results-oriented Senior Product \& Systems Engineer with 5+ years of experience architecting high-concurrency distributed systems, financial payment engines, and production AI evaluation infrastructure. Tech Owner at Wise automating 30,000+ monthly payment defects (\textsterling 80k/mo direct savings) via deterministic DAG state machines and shadow gating. Former ByteDance engineer (promoted in 1 year, Spot Bonus, Top E rating) mitigating multi-million QPS broadcast storms on TikTok IM. Pragmatic builder committed to business ROI, distributed consistency, and end-to-end product ownership.
+Senior Product \& Systems Engineer with 5+ years of experience in high-concurrency distributed systems, real-time messaging architecture, financial core payments, and production AI evaluation platforms. Tech Owner at Wise architecting automated payment defect remediation (99.8\% precision, \textsterling 80k/mo net savings) and cross-team Kafka coordination platforms. Former ByteDance engineer (promoted in 1 year, Spot Bonus, Top E rating) engineering real-time presence engines, low-latency signaling pipelines, and offline Spark governance under high-volume workloads. Entrepreneurial builder with proven full-stack product ownership from 0 to 1.
 \sectionsep
 
 %--------------------------------------------------------------
@@ -90,18 +90,18 @@ Results-oriented Senior Product \& Systems Engineer with 5+ years of experience 
 \resumeHeading{MariBank (Sea Group)}{Senior Backend Engineer}{SG}{Apr 2024 -- Jul 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Digital Banking Credit Core}: Engineered core credit services (Cashloan \& SME Termloan) in Java, enforcing distributed transaction consistency, idempotency, and anti-replay patterns under MAS regulatory compliance; built an internal RAG-based LLM assistant for knowledge retrieval.
+    \item \textbf{Digital Banking Credit Core}: Explored and developed credit core services (Cashloan \& SME Termloan) in Java; implemented state-machine-driven transaction workflows ensuring phase-wise strong consistency via local database transactions and idempotency, coupled with eventual consistency across the end-to-end loan lifecycle.
 \end{itemize}
 \sectionsep
 
 \resumeHeading{Bondee}{Senior Software Engineer (Employee \#1 in SG)}{SG}{Sep 2023 -- Apr 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Cloud-Native Infrastructure}: Established foundational cloud-native infrastructure as employee \#1 in Singapore; orchestrated multi-tenant K8s environments and deployed self-hosted Vector + Kafka + ElasticSearch observability pipelines to replace costly managed logging stacks.
+    \item \textbf{Founding Engineering \& Observability Pipeline}: Joined as Employee \#1 in Singapore, wearing multiple hats across backend development, research project coordination, business development, and media production; engineered a self-hosted log ingestion and observability pipeline using Vector (DaemonSet) + Kafka + ElasticSearch, replacing expensive cloud-managed logging.
 \end{itemize}
 \sectionsep
 
-\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Jan 2021 -- Sep 2023}
+\resumeHeading{ByteDance}{Senior Backend Engineer (Promoted in 1 Year)}{SG}{Aug 2021 -- Sep 2023}
 \begin{itemize}
     \item \textbf{TikTok-Social-Instant Messaging (IM)}
     \begin{itemize}
@@ -116,32 +116,27 @@ Results-oriented Senior Product \& Systems Engineer with 5+ years of experience 
     \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue.
     \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy.
     \end{itemize}
-    \item \textbf{API Gateway (AGW) Cloud Platform} (Intern)
-    \begin{itemize}
-    \justifying
-    \item Developed automated self-diagnosis and capacity estimation tools for PaaS gateway routing millions of QPS during Chinese New Year (CNY) live traffic campaigns.
-    \end{itemize}
 \end{itemize}
 \sectionsep 
 
 %--------------------------------------------------------------
-%     Other Work Experience / Projects
+%     Product Ventures & Independent Builds
 %--------------------------------------------------------------
-\section{Other Work Experience}
+\section{Product Ventures \& Independent Builds}
 
-\resumeHeading{Independent Products}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
+\resumeHeading{CanCan, CoffeeMode \& Our Village}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{CanCan} (\href{https://cancan-4tj.pages.dev/}{\underline{https://cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles.
-    \item \textbf{CoffeeMode}: Cafe Map for digital nomads to find best places for remote working.
+    \item \textbf{CanCan} (\href{https://cancan.money}{\underline{https://cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture.
+    \item \textbf{CoffeeMode}: Cafe discovery platform for digital nomads to identify optimal remote-working environments.
     \item \textbf{Our Village} (\href{https://gen-growth.com}{\underline{https://gen-growth.com}}): Decentralized community collaboration and membership management platform.
 \end{itemize}
 \sectionsep
 
-\resumeHeading{U-Wave}{Co-Founder, Full Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
+\resumeHeading{U-Wave (Campus Lifestyle Platform)}{Co-Founder \& Full-Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
 \begin{itemize}
 \justifying
-    \item Co-founded and built campus lifestyle app from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
+    \item Co-founded and engineered campus lifestyle platform from scratch, scaling to 20,000 registered students and 4,000 DAU; developed cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
 \end{itemize}
 \sectionsep
 
@@ -152,10 +147,10 @@ Results-oriented Senior Product \& Systems Engineer with 5+ years of experience 
 \begin{resumeSkillList}
     \singleItem{Programming Languages:}{Golang, Java, TypeScript, JavaScript, Python, Dart, SQL, Shell}
     \\
-    \singleItem{Distributed Systems:}{High-Concurrency Architecture, Microservices (gRPC/Thrift), Kafka, Redis, Distributed Consistency}
+    \singleItem{Distributed Systems:}{High-Concurrency Architecture, Microservices (gRPC/Thrift), Kafka, Redis, Distributed State Machines}
     \\
-    \singleItem{Cloud \& Infrastructure:}{Docker, Kubernetes, AWS, Vector, ElasticSearch, Apache Spark, CI/CD Pipelines, Linux}
+    \singleItem{Cloud \& Infrastructure:}{Docker, Vector, ElasticSearch, Apache Spark, CI/CD Pipelines, Linux, AWS}
     \\
-    \singleItem{Domain Expertise:}{Financial Payment Core \& Defect Automation, IM Protocols \& Presence Engines, AI Evaluation Pipelines}
+    \singleItem{Domain Expertise:}{Financial Core Payments \& Defect Remediation, IM Protocols \& Presence Engines, AI Evaluation Pipelines}
 \end{resumeSkillList}
 \end{document}
