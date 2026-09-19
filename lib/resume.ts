@@ -166,7 +166,7 @@ export const PRINT_EMPLOYMENT: PrintEmployment[] = [
     period: "2019-08 – Present",
     org: "Products & uWave",
     role: "Creator & Co-Founder · Full Stack",
-    line: "uWave（联创全栈，20k 注册 / 4k DAU）；CanCan（复式记账与自动化对账，SQLite 本地优先）/ CoffeeMode / Our Village 独立全栈产品。",
+    line: "uWave（联创全栈，20k 注册 / 4k DAU）；CanCan（复式记账与自动化对账，SQLite 本地优先）/ CafeMood / Our Village 独立全栈产品。",
   },
   {
     period: "2017-08 – 2021-05",

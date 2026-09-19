@@ -7,11 +7,11 @@ import { PRODUCTS } from "@/lib/products";
 export const metadata: Metadata = {
   title: "独立作品与实验产品 · Products | Lyu Zizheng",
   description:
-    "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
+    "CanCan 本地对账台、CafeMood 极简咖啡指南与独立全栈产品实验。",
   keywords: [
     ...siteConfig.keywords,
     "CanCan",
-    "CoffeeMode",
+    "CafeMood",
     "Our Village",
     "Independent Developer",
   ],
@@ -21,14 +21,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "独立作品与实验产品 · Products | Lyu Zizheng",
     description:
-      "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
+      "CanCan 本地对账台、CafeMood 极简咖啡指南与独立全栈产品实验。",
     url: `${siteConfig.url}/products`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
     images: [
       {
-        url: `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CoffeeMode 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
+        url: `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CafeMood 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
         width: 1200,
         height: 630,
         alt: "独立作品与实验产品 · Products | Lyu Zizheng",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "独立作品与实验产品 · Products | Lyu Zizheng",
     description:
-      "CanCan 本地对账台、CoffeeMode 极简咖啡指南与独立全栈产品实验。",
+      "CanCan 本地对账台、CafeMood 极简咖啡指南与独立全栈产品实验。",
     images: [
-      `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CoffeeMode 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
+      `${siteConfig.url}/og?title=${encodeURIComponent("独立作品与实验产品")}&sub=${encodeURIComponent("CanCan 本地对账台 · CafeMood 咖啡指南 · 独立产品实验")}&badge=${encodeURIComponent("INDEPENDENT PRODUCTS")}`,
     ],
   },
 };

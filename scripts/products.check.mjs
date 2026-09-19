@@ -14,7 +14,7 @@ const check = (ok, msg) => {
 
 // 1. Data layer: lib/products.ts
 const productsCode = read("lib/products.ts");
-const expectedProducts = ["coffeemode", "cancan", "our-village"];
+const expectedProducts = ["cafemood", "cancan", "our-village"];
 
 for (const id of expectedProducts) {
   check(productsCode.includes(`id: "${id}"`), `lib/products.ts must include "${id}"`);
@@ -35,13 +35,13 @@ for (const status of ["开发中", "已上线"]) {
 }
 
 // 4. External link check
-check(productsCode.includes("https://github.com/lyuzizheng/coffeemode"), "CoffeeMode must have repo link");
+check(productsCode.includes("https://github.com/lyuzizheng/coffeemode"), "CafeMood must have repo link");
 check(productsCode.includes("https://cancan-4tj.pages.dev"), "CanCan must have official link");
 check(productsCode.includes("https://gen-growth.com"), "Our Village must have official link");
 
 // 5. Cover image check: DESIGN V2 requirements
 const svgFiles = [
-  "public/products/coffeemode-mono.svg",
+  "public/products/cafemood-mono.svg",
   "public/products/cancan-mono.svg",
   "public/products/our-village-mono.svg",
 ];

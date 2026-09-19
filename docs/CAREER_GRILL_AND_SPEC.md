@@ -140,7 +140,7 @@
 4. **空白期（2024.08–2024.11）与 Side Projects：创造力唤醒与定位确立**：
    - 从早期玩具项目（Loan Calculator 等已弃用）全面升级为更有实际场景的独立产品：
      - **CanCan**：财务证据库 + 自动化对账台；
-     - **CoffeeMode**：找咖极简指南；
+     - **CafeMood**：找咖极简指南；
      - **Our Village**：去中心化社区成员协作系统。
    - **核心觉醒**：天生具备极强的自主性与创造欲，以前被大厂细分工种与漫长的手写代码链路压抑。借助 AI 工具后，个人的产品端到端交付能力被十倍放大。
    - **彻底确立团队与职业选择标准**：
@@ -167,7 +167,7 @@
 ### 1. Bondee & MariBank 降噪与诚实化：
 - **删除虚胖指标**：剔除 Bondee 中关于海量吞吐与巨额降本的空泛描述，改为突出“作为新加坡首位工程师独立闭环搭建 K8s 容器编排与全链路可观测体系”；
 - **重塑 MariBank 定位**：不写空洞的金融大词，强调在严格金融监管环境下对分布式事务、幂等与信贷 SDLC 的规范理解，淡化流水线痕迹；
-- **项目更新**：简历中剔除过时的 Loan Calculator，换上更有产品深度与架构密度的现役项目（**CanCan、CoffeeMode、Our Village**）。
+- **项目更新**：简历中剔除过时的 Loan Calculator，换上更有产品深度与架构密度的现役项目（**CanCan、CafeMood、Our Village**）。
 
 ---
 
@@ -267,7 +267,7 @@
   - 这种“拧巴”**不是软弱，而是一位务实理想主义者（Pragmatic Idealist）在现实引力与创造欲望之间的动态平衡**。
   - 因为要生存、要扎根新加坡，他必须对风险保持敬畏（重视 Base、重视准证安全、重视公司基本盘）；
   - 因为骨子里的创造欲与不将就（*Never Settle*），他决绝地拒绝了 MariBank 式的高薪“流水线打字机”；
-  - **终极杀手锏：极致的“全面性（End-to-End Comprehensiveness）”**。既有字节 20+ 微服务高并发与百万 QPS 架构的扎实基本功，又有做 U-Wave、CanCan、CoffeeMode 的敏锐产品直觉，更有在 Wise 推动 AI 与复杂业务落地的系统整合力。
+  - **终极杀手锏：极致的“全面性（End-to-End Comprehensiveness）”**。既有字节 20+ 微服务高并发与百万 QPS 架构的扎实基本功，又有做 U-Wave、CanCan、CafeMood 的敏锐产品直觉，更有在 Wise 推动 AI 与复杂业务落地的系统整合力。
 
 ### 2. 四大生涯阶段的“未做好与盲点诊断”
 | 阶段 | 战役 | 暴露的短板 / 未做好的地方 | 进阶后的顿悟与成长 |
@@ -286,7 +286,7 @@
 > 2. 剥离 Bondee 浮夸假指标，强调 1st SWE 的云原生搭建与全能拓荒；
 > 3. 精炼 MariBank，重塑为高标准金融一致性与风控架构认知；
 > 4. 彻底改写 TikTok IM 与 Location，注入 ZSET 会话分层、在线状态推拉心跳过滤与 E 绩效 Spot Bonus；
-> 5. 换下 Loan Calculator，换上 **CanCan、CoffeeMode、Our Village** 现役产品矩阵。
+> 5. 换下 Loan Calculator，换上 **CanCan、CafeMood、Our Village** 现役产品矩阵。
 
 ### 1. Wise 经历重构（替换原简历笼统描述）
 - **WISE | Product Engineer 3 (Promoted from IC2 Top) | SG | Nov 2024 – Present**
@@ -309,7 +309,7 @@
 ### 4. Side Projects & Early Origin 重构
 - **Side Projects | Independent Builder & Vibe Coder | 2024 – Present**
   - **CanCan**: Financial evidence ledger and automated reconciliation platform for independent creators.
-  - **CoffeeMode**: Minimalist specialty cafe discovery guide and local curator.
+  - **CafeMood**: Minimalist specialty cafe discovery guide and local curator.
   - **Our Village**: Decentralized community member management and interaction platform.
 - **U-Wave | Co-Founder, Full Stack Engineer | Aug 2019 – Jan 2021**
   - Co-founded campus utility and social platform serving Singapore universities, scaling to **20,000 registered users and 4,000 DAU**. Built the cross-platform client in Flutter and designed microservices architecture with Spring Cloud.
@@ -380,7 +380,7 @@
 
 我是一个必须认可工作意义感的人。如果八个小时全用来做不喜欢、没有掌控感的事，我会从头顶难受到脚后跟。三个月后我果断斩仓离开——**我明确了自己的绝对底线：我是一个 Product Builder，我坚决不接受做一个纯粹的 Executor（提线木偶执行者）。**
 
-在随后的空白期里，借助 AI 工具的爆发，我找回了纯粹的创造乐趣。我一个人快速做出了 **CanCan**（财务证据与对账台）、**CoffeeMode**（找咖极简指南）和 **Our Village**（社区协作）。我的动手能力被彻底解放，也彻底确立了我找寻下一站的不可妥协标准：必须有业务定义权，必须能发挥端到端的产品创造力。
+在随后的空白期里，借助 AI 工具的爆发，我找回了纯粹的创造乐趣。我一个人快速做出了 **CanCan**（财务证据与对账台）、**CafeMood**（找咖极简指南）和 **Our Village**（社区协作）。我的动手能力被彻底解放，也彻底确立了我找寻下一站的不可妥协标准：必须有业务定义权，必须能发挥端到端的产品创造力。
 
 ---
 

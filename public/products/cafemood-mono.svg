@@ -24,7 +24,7 @@
 
   <!-- Telemetry Header Strip -->
   <g font-family="monospace" font-size="9" fill="#2148B8" letter-spacing="1">
-    <text x="40" y="46">PLATE 01 // COFFEEMODE</text>
+    <text x="40" y="46">PLATE 01 // CAFEMOOD</text>
     <text x="280" y="46">SPEC // 0000-FOUNDER-MANIFESTO</text>
     <text x="580" y="46">LAT 01°17'58"N · LON 103°51'08"E</text>
     <line x1="40" y1="52" x2="760" y2="52" stroke="#2148B8" stroke-width="1" stroke-opacity="0.3" />
