@@ -97,7 +97,7 @@ export const CAPABILITY_DIMENSIONS: CapabilityDimension[] = [
         source: "CAREER_DOSSIER N09",
       },
       {
-        text: "TikTok IM：维护 20+ 个 Go 微服务全球高并发与 7×24 Oncall，主导多数据中心跨洋毫秒级同步，自研消息丢包秒级自动排障工具",
+        text: "TikTok IM：设计 5 分钟心跳在线状态引擎阻断百万 QPS 广播风暴；联合优化正在输入与已读回执信令链路解决跨机房时钟漂移与时序因果倒置",
         status: "verified",
         source: "CAREER_DOSSIER N08",
       },
@@ -158,7 +158,7 @@ export const PRINT_EMPLOYMENT: PrintEmployment[] = [
     period: "2021-08 – 2023-09",
     org: "ByteDance · TikTok",
     role: "Backend · IM / Location / AGW",
-    line: "TikTok IM 维护 20+ Go 微服务全球 7×24 Oncall；主导建设跨洋多活数据中心毫秒级同步机制；自研消息丢包秒级自动排障工具；获团队晋升与 Spot Bonus。",
+    line: "TikTok IM：独立设计在线状态引擎（5分钟心跳门禁抗百万 QPS 广播风暴）；搭建低延迟信令解决正在输入与已读回执跨机房时钟漂移；协同落地 SG/US/EU 多主同步与冷启动 Bug 修复；获团队快速晋升与 Spot Bonus。",
   },
   {
     period: "2019-08 – 2021-01",

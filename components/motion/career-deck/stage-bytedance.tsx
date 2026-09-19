@@ -86,35 +86,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "亿级在线状态引擎（Presence Engine）：" : "Presence Engine & Redis ZSET Heartbeat Gating: "}
+                  {isZh ? "在线状态引擎（Online Status Engine · 独立设计与实现）：" : "Online Status Engine: "}
                 </strong>
                 {isZh
-                  ? "针对千万级用户上下线触发的广播风暴，研发“推拉结合 + Redis ZSET 活跃心跳门禁”方案，限制仅向在线活跃好友定向推送，彻底消除 O(N×M) 写放大；重构冷启动会话排序，首屏初始化耗时优化至 100ms 以内。"
-                  : "Mitigated multi-million QPS fan-out broadcast storms by architecting a hybrid push-pull protocol with active heartbeat gating via Redis ZSET, completely eliminating O(N*M) write amplification; overhauled cold-start inbox ranking to sub-100ms."}
-              </div>
-            </li>
-
-            <li className="hidden sm:flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-              <div>
-                <strong className="font-semibold text-primary">
-                  {isZh ? "正在输入与端到端延迟优化：" : "Typing Indicator & Latency Optimization: "}
-                </strong>
-                {isZh
-                  ? "设计高频临时会话信令通道与客户端防抖自适应聚合，大幅降低网关长连接开销；全链路梳理网关接入层、RPC 编解码到下行推送拓扑，压降核心单聊与群聊 p99 投递延迟。"
-                  : "Engineered ephemeral signaling pipelines with adaptive client debounce; conducted end-to-end latency profiling across gateway ingestion, serialization, and push routing, significantly trimming p99 delivery latency."}
-              </div>
-            </li>
-
-            <li className="hidden sm:flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
-              <div>
-                <strong className="font-semibold text-primary">
-                  {isZh ? "已读回执写放大与存储保护：" : "Read Receipts & Write Amplification Defense: "}
-                </strong>
-                {isZh
-                  ? "针对大群聊海量已读回执引发的写放大与存储冲击，设计异步批量聚合管道与多级高频缓存，建立削峰限流与自适应降级策略，保障底层存储集群高可用。"
-                  : "Tackled massive write amplification from read receipts in large group chats by implementing asynchronous batch aggregation queues, multi-tiered caching, and adaptive traffic throttling."}
+                  ? "面对数百万级 QPS，放弃全量扫表与不可持续的高频 Redis 全查；设计“动态维护最近在线好友集合 + 5 分钟心跳 TTL”机制，状态变更仅向当前有心跳的活跃好友定向推送，冷启动增量拉取；彻底消除 O(N×M) 写放大瓶颈，同时权衡了状态准确度与聊天促活渗透率。"
+                  : "Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated O(N*M) Redis bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against real-time messaging penetration."}
               </div>
             </li>
 
@@ -122,11 +98,23 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "架构治理与新人培养：" : "Scale & Architecture Reviews: "}
+                  {isZh ? "正在输入与已读回执联合优化（Low-Latency Signaling · 独立后端负责）：" : "Typing Indicators & Read Receipts: "}
                 </strong>
                 {isZh
-                  ? "常态维护 20+ 个核心 Go 微服务，确保 7×24 线上稳定运行；担任跨团队新特性架构设计评审人，并辅导多位初级工程师。"
-                  : "Governed 20+ Go microservices under 7x24 oncall SLA, leading technical architecture reviews and mentoring junior engineers."}
+                  ? "解决“对方正在输入但上一条因同步延迟仍显示未读”的时序因果倒置；将已读回执提入独立低延迟信令通道；针对多机房同一消息 cursor 与时间戳不一致问题，主动将已读时间戳锚定至对应消息 ID 的时间戳，彻底消除跨机房乱序与时钟漂移引起的客户端割裂。"
+                  : "Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences."}
+              </div>
+            </li>
+
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
+              <div>
+                <strong className="font-semibold text-primary">
+                  {isZh ? "跨机房多主同步与冷启动 Bug 修复（Co-impl with Senior / Impl）：" : "Multi-DC Sync & Cold-Start Inbox Fix: "}
+                </strong>
+                {isZh
+                  ? "配合资深工程师推进 SG/US/EU 三地机房多主写入与跨洋同步合规落地，设计群聊多主冲突缓解策略；排查修复重装 App 导致会话丢失的线上 P0 Bug（大群刷屏淹没单条 user chain），重构会话拉取与排序，保障冷启动首屏各会话 <100ms 完整恢复。"
+                  : "Co-implemented cross-region replication across SG, US, and EU datacenters under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery."}
               </div>
             </li>
           </ul>

@@ -106,10 +106,9 @@ Results-oriented Senior Product \& Systems Engineer with 5+ years of experience 
     \item \textbf{TikTok-Social-Instant Messaging (IM)}
     \begin{itemize}
     \justifying
-    \item \textbf{Presence Engine \& Fan-out Storm Mitigation}: Engineered a hybrid push-pull protocol with active heartbeat gating via Redis ZSET to mitigate multi-million QPS broadcast storms during user status changes, eliminating $O(N \times M)$ write amplification by restricting push dispatches exclusively to online, active friends.
-    \item \textbf{Typing Indicator \& Read Receipts}: Implemented ultra-low latency signaling mechanisms for Read Receipts and Typing Indicators across multi-data-center infrastructure; designed client-side debouncing and batch aggregation to eliminate transient signaling spikes while maintaining sub-100ms response.
-    \item \textbf{End-to-End Latency Tuning \& Cold Start Ranking}: Overhauled inbox cold-start loading via ZSET active conversation hierarchies to replace append-only DB table scans (delivering sub-100ms initialization for newly re-installed apps); optimized cross-region RPC payloads and routing paths to reduce P99 latency across core messaging services.
-    \item \textbf{Domain Ownership \& Security Compliance}: Served as Tech Owner for IM core microservices; mentored new engineers and led cross-functional safety/security technical initiatives ensuring compliance with US security standards and EU GDPR.
+    \item \textbf{Online Status Engine (Designed \& Implemented End-to-End)}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ Redis bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against real-time messaging penetration.
+    \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences.
+    \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
     \item \textbf{Location System Cloud Platform} (IP Geo-Location PoC | 2022 Jan--Feb Spot Bonus Receiver | Top E Rating)
     \begin{itemize}
