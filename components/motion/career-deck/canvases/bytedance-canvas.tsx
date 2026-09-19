@@ -32,14 +32,6 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
 
       {isIm ? (
         <>
-          {/* Subtle corner architectural telemetry */}
-          <div className="absolute top-3 left-3 sm:top-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
-            <span>+ 03 // TIKTOK · SOCIAL MESSAGING CORE</span>
-          </div>
-          <div className="absolute bottom-3 right-3 sm:bottom-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
-            <span>20+ GO SERVICES // 7×24 ONCALL +</span>
-          </div>
-
           {/* 1. Top-Right: Solid Bold TIKTOK */}
           <div className="absolute -top-2 sm:top-2 md:top-6 right-2 sm:right-6 md:right-10 text-right leading-none">
             <span className="font-display text-7xl sm:text-9xl md:text-[11rem] lg:text-[14rem] font-black uppercase tracking-tighter leading-none text-ink-dominant opacity-[0.07] dark:opacity-[0.09]">
@@ -63,13 +55,7 @@ export function BytedanceCanvas({ mode = "im" }: BytedanceCanvasProps) {
         </>
       ) : (
         <>
-          {/* Subtle corner architectural telemetry */}
-          <div className="absolute top-3 right-3 sm:top-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
-            <span>+ 04 // BYTEDANCE · LOCATION PLATFORM</span>
-          </div>
-          <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
-            <span>7×24 ONCALL ENDURANCE // HIGH STRESS RESILIENCE +</span>
-          </div>
+
 
           {/* 1. Top-Left: Solid Bold BYTEDANCE */}
           <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">

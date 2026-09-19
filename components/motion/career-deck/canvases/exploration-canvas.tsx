@@ -21,13 +21,7 @@ export function ExplorationCanvas() {
         }}
       />
 
-      {/* Subtle corner architectural hairline crosshairs */}
-      <div className="absolute top-3 right-3 sm:top-6 sm:right-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30 text-right">
-        <span>+ 02 // MARIBANK · SEAMONEY · BONDEE</span>
-      </div>
-      <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-8 font-telemetry text-[9px] uppercase tracking-widest text-ink-dominant opacity-30">
-        <span>MAS REGULATED // DISTRIBUTED LEDGER +</span>
-      </div>
+
 
       {/* 1. Top-Left: Solid Bold MARIBANK */}
       <div className="absolute -top-2 sm:top-2 md:top-6 left-2 sm:left-6 md:left-10 text-left leading-none">
