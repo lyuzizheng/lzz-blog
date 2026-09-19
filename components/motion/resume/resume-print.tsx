@@ -27,6 +27,11 @@ export function ResumePrint() {
           {RESUME_BASICS.location} · {RESUME_BASICS.email}
         </p>
         <p className="print-meta">{RESUME_BASICS.education}</p>
+        {"summary" in RESUME_BASICS && RESUME_BASICS.summary && (
+          <p className="print-meta" style={{ marginTop: "4pt", fontStyle: "italic", color: "#222" }}>
+            &ldquo;{RESUME_BASICS.summary}&rdquo;
+          </p>
+        )}
       </header>
 
       <section className="print-avoid-break print-section">
