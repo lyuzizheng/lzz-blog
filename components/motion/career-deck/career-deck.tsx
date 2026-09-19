@@ -108,15 +108,25 @@ export function CareerDeck() {
     return CAREER_STAGES.findIndex((s) => s.id === id);
   }, []);
 
+  // Live mirror of the active stage for the hash listener below.
+  // The listener subscribes once on mount: re-running applyHash on every
+  // stage change would read the still-stale URL (the reflect effect below
+  // replaceStates the new hash afterwards) and bounce 1↔2 into
+  // "Maximum update depth exceeded" (BRAWUKA-527).
+  const stageIndexRef = useRef(0);
+  useEffect(() => {
+    stageIndexRef.current = stageIndex;
+  }, [stageIndex]);
+
   // Apply initial hash on mount + follow external hash changes
   // (back/forward navigation, pasted deep links). Bypasses the animation
   // lock deliberately: a deep link must never be swallowed mid-transition.
   useEffect(() => {
     const applyHash = () => {
       const target = stageIndexFromHash(window.location.hash);
-      if (target < 0 || target === stageIndex) return;
+      if (target < 0 || target === stageIndexRef.current) return;
       isAnimatingRef.current = true;
-      setDirection(target > stageIndex ? 1 : -1);
+      setDirection(target > stageIndexRef.current ? 1 : -1);
       setStageIndex(target);
       setTimeout(() => {
         isAnimatingRef.current = false;
@@ -126,7 +136,7 @@ export function CareerDeck() {
     applyHash();
     window.addEventListener("hashchange", applyHash);
     return () => window.removeEventListener("hashchange", applyHash);
-  }, [stageIndex, stageIndexFromHash]);
+  }, [stageIndexFromHash]);
 
   // Reflect the active stage in the URL so every act is shareable.
   // replaceState (not pushState): deck navigation is one logical page —
