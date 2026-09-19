@@ -142,7 +142,7 @@ export default function RootLayout({
                 align-items: center;
                 justify-content: center;
                 gap: 16px;
-                background-color: #100F0E;
+                background-color: #0D0E11;
                 color: #F4F4F5;
                 pointer-events: auto;
                 transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
@@ -180,7 +180,7 @@ export default function RootLayout({
                 width: 56px;
                 height: 56px;
                 border: 1px solid #262019;
-                background-color: #171512;
+                background-color: #14151B;
                 border-radius: 2px;
                 box-shadow: 0 4px 25px -2px rgba(224, 84, 84, 0.22);
               }
