@@ -62,7 +62,7 @@
 %--------------------------------------------------------------
 \section{Strength Summary}
 \justifying 
-Senior Product \& Systems Engineer with 5+ years of experience in high-concurrency distributed systems, real-time messaging architecture, financial core payments, and production AI evaluation platforms. Tech Owner at Wise architecting automated payment defect remediation (99.8\% precision, \textsterling 80k/mo net savings) and cross-team Kafka coordination platforms. Former ByteDance engineer (promoted in 1 year, Spot Bonus, Top E rating) engineering real-time presence engines, low-latency signaling pipelines, and offline Spark governance under high-volume workloads. Entrepreneurial builder with proven full-stack product ownership from 0 to 1.
+Senior Product \& Systems Engineer (5+ yrs) specializing in high-concurrency distributed systems, real-time messaging architectures, financial payment infrastructure, and production AI evaluation platforms. Tech Owner at Wise automating 30,000+ monthly payment defects (99.8\% precision, \textsterling 80k/mo net savings) and cross-team Kafka orchestration platforms. Former ByteDance engineer (promoted in 1 year, Spot Bonus, Top E rating) mitigating multi-million QPS broadcast storms and governing overseas geo-data pipelines. Entrepreneurial builder with proven full-stack ownership from 0 to 1.
 \sectionsep
 
 %--------------------------------------------------------------
@@ -81,23 +81,23 @@ Senior Product \& Systems Engineer with 5+ years of experience in high-concurren
 \resumeHeading{WISE}{Product Engineer 3 (Tech Owner)}{SG}{Nov 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{AI Automation Roadmap \& Evaluation Platform (Tech Owner, Initialise)}: Formulated technical roadmaps and team planning for the regional platform tooling team outside the happy path (enabling regional engineers to onboard bespoke linking strategies and banking partner payout automations); initialised and built the core AI Evaluation Platform with baseline live monitoring and independent third-party Ops blind evaluations as the audit and safeguard standard for all future automations.
-    \item \textbf{Last-Mile Payment Linking AI Workflow (Initialise, Lead 1 Grad)}: Designed deterministic DAG state machines for complex unallocated fund matching without golden datasets, tuning for \textbf{99.8\% precision} and \textbf{40\% recall} to eliminate financial risk; automated 30,000+ monthly defect cases, yielding \textbf{\textsterling 80,000/month direct operational savings}.
-    \item \textbf{Centralised Cross-Team Escalation System (Lead 1 Grad, Cross-Team)}: Built a Kafka-based orchestration service to replace ad-hoc Slack/Zendesk handoffs across disparate ops systems (CS, PayOps, Fraud, KYC); authored client integration SDKs standardising lifecycle states (receive, ack, de-escalate) and configurable team-to-team routing, currently live across CS $\leftrightarrow$ PayOps, Fraud $\rightarrow$ CS, and KYC $\rightarrow$ CS corridors.
+    \item \textbf{AI Automation Roadmap \& Evaluation Platform (Tech Owner, Initialise)}: Formulated technical roadmaps and team planning for regional platform tooling, supporting bespoke regional linking strategies and banking partner payout defect automations; built the core AI Evaluation Platform with baseline live monitoring and third-party Ops blind evaluations as standard audit and safeguard gates.
+    \item \textbf{Last-Mile Payment Linking AI Workflow (Initialise, Lead 1 Grad)}: Designed deterministic DAG state machines for unallocated fund matching without golden datasets, tuning for \textbf{99.8\% precision} and \textbf{40\% recall}; automated 30,000+ monthly defect cases, generating \textbf{\textsterling 80,000/month direct operational savings}.
+    \item \textbf{Centralised Cross-Team Escalation System (Lead 1 Grad, Cross-Team)}: Built a Kafka orchestration platform replacing fragmented Slack/Zendesk handoffs across CS, PayOps, Fraud, and KYC; authored client SDKs standardizing lifecycle states (receive, ack, de-escalate) and configurable routing, now live across primary cross-team corridors.
 \end{itemize}
 \sectionsep
 
 \resumeHeading{MariBank (Sea Group)}{Senior Backend Engineer}{SG}{Apr 2024 -- Jul 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Digital Banking Credit Core}: Explored and developed credit core services (Cashloan \& SME Termloan) in Java; implemented state-machine-driven transaction workflows ensuring phase-wise strong consistency via local database transactions and idempotency, coupled with eventual consistency across the end-to-end loan lifecycle.
+    \item \textbf{Digital Banking Credit Core}: Engineered credit core services (Cashloan \& SME Termloan) in Java; implemented state-machine workflows ensuring phase-wise strong consistency via database transactions and idempotency, coupled with eventual consistency across the end-to-end loan lifecycle.
 \end{itemize}
 \sectionsep
 
 \resumeHeading{Bondee}{Senior Software Engineer (Employee \#1 in SG)}{SG}{Sep 2023 -- Apr 2024}
 \begin{itemize}
 \justifying
-    \item \textbf{Founding Engineering \& Observability Pipeline}: Joined as Employee \#1 in Singapore, wearing multiple hats across backend development, research project coordination, business development, and media production; engineered a self-hosted log ingestion and observability pipeline using Vector (DaemonSet) + Kafka + ElasticSearch, replacing expensive cloud-managed logging.
+    \item \textbf{Founding Engineering \& Observability Pipeline}: Joined as Singapore Employee \#1 (spanning backend development, research coordination, and BD); deployed a self-hosted log ingestion and observability pipeline using Vector (DaemonSet) + Kafka + ElasticSearch, replacing expensive cloud-managed logging.
 \end{itemize}
 \sectionsep
 
@@ -106,15 +106,15 @@ Senior Product \& Systems Engineer with 5+ years of experience in high-concurren
     \item \textbf{TikTok-Social-Instant Messaging (IM)}
     \begin{itemize}
     \justifying
-    \item \textbf{Online Status Engine (Designed \& Implemented End-to-End)}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ Redis bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against real-time messaging penetration.
-    \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Resolved causality inversions (typing before read) by unifying read receipts and typing into a dedicated low-latency bypass pipeline; anchored read cursors to canonical message ID timestamps to eliminate multi-DC clock skew and out-of-order state divergences.
-    \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance, designing mitigations for multi-master group chat divergence; resolved critical cold-start bug where active group chats flooded single-chain fetches during app re-installation, ensuring reliable sub-100ms multi-chat inbox recovery.
+    \item \textbf{Online Status Engine (End-to-End Owner)}: Architected a dynamic active-friend cache with 5-minute heartbeat TTL to mitigate multi-million QPS broadcast storms; eliminated $O(N \times M)$ bottlenecks by restricting fan-out strictly to active online friends, balancing status accuracy against messaging penetration.
+    \item \textbf{Typing Indicators \& Read Receipts Pipeline (Backend Owner)}: Unified typing and read receipts into a dedicated low-latency bypass pipeline to resolve causality inversions (typing before read); anchored read cursors to message ID timestamps to eliminate multi-DC clock skew and state divergence.
+    \item \textbf{Multi-DC Sync \& Cold-Start Inbox Fix}: Co-implemented cross-region replication (SG, US, EU) under GDPR/US compliance with multi-master conflict mitigations; resolved critical cold-start bug where active group chats flooded single-chain fetches, ensuring reliable sub-100ms multi-chat inbox recovery.
     \end{itemize}
     \item \textbf{Overseas Location Platform \& Gateway Tooling (Sole SG SWE | Spot Bonus | Top Rating E)}
     \begin{itemize}
     \justifying
-    \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); resolved resource contention and queue racing caused by 12am/2am batch overlap through pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall alarm fatigue.
-    \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof; pre-allocated map/slice capacities, aligned struct fields to minimize memory padding, and tuned GC pacing, significantly boosting ASEAN geo-accuracy.
+    \item \textbf{Spark ETL Pipeline Governance}: Independently governed overseas IP geo-location stack ($\sim$100 offline Spark jobs); eliminated queue racing from 12am/2am batch overlap via pipeline rescheduling and CPU/memory tuning; overhauled alert aggregation to eliminate oncall fatigue.
+    \item \textbf{High-Throughput Go Service Profiling}: Optimized memory footprint and p99 latency for high-volume Go microservices using pprof (capacity pre-allocation, struct alignment, GC tuning), significantly boosting ASEAN geo-accuracy.
     \item \textbf{API Gateway (AGW) Tooling}: Developed automated self-diagnosis and capacity estimation tools for the core PaaS API gateway routing millions of QPS during peak traffic campaigns.
     \end{itemize}
 \end{itemize}
@@ -125,19 +125,17 @@ Senior Product \& Systems Engineer with 5+ years of experience in high-concurren
 %--------------------------------------------------------------
 \section{Product Ventures \& Independent Builds}
 
-\resumeHeading{CanCan, CoffeeMode \& Our Village}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
+\resumeHeading{Independent Products}{Creator \& Full-Stack Builder}{SG}{Aug 2024 -- Present}
 \begin{itemize}
 \justifying
-    \item \textbf{CanCan} (\href{https://cancan.money}{\underline{https://cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture.
-    \item \textbf{CoffeeMode}: Cafe discovery platform for digital nomads to identify optimal remote-working environments.
-    \item \textbf{Our Village} (\href{https://gen-growth.com}{\underline{https://gen-growth.com}}): Decentralized community collaboration and membership management platform.
+    \item \textbf{CanCan} (\href{https://cancan.money}{\underline{cancan.money}}): Financial evidence ledger and automated reconciliation platform for independent businesses, enforcing double-entry bookkeeping principles and local-first architecture; alongside \textbf{CoffeeMode} (cafe discovery for remote workers) and \textbf{Our Village} (decentralized community platform).
 \end{itemize}
 \sectionsep
 
 \resumeHeading{U-Wave (Campus Lifestyle Platform)}{Co-Founder \& Full-Stack Engineer}{SG}{Aug 2019 -- Jan 2021}
 \begin{itemize}
 \justifying
-    \item Co-founded and engineered campus lifestyle platform from scratch, scaling to 20,000 registered students and 4,000 DAU; developed cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
+    \item Co-founded campus lifestyle platform from scratch, scaling to 20,000 registered students and 4,000 DAU; engineered cross-platform mobile client with Flutter and architected backend microservices with Spring Cloud, Docker, and Redis.
 \end{itemize}
 \sectionsep
 
