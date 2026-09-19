@@ -19,7 +19,6 @@ export const metadata: Metadata = {
     "Product Engineer 3",
     "Redis ZSET",
     "Kafka",
-    "Singapore Citizen",
   ],
   alternates: {
     canonical: `${siteConfig.url}/resume`,

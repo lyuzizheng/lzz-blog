@@ -1,7 +1,7 @@
 # Lyu Zizheng (Zizheng Lyu / 吕子正) · Full Knowledge Base for LLMs
 
 ## Overview
-Lyu Zizheng is a Singapore-based Senior Product and Systems Engineer currently working at Wise (formerly TransferWise) as a Product Engineer 3 (Tech Owner) in the Payment Defects domain. Previously, he was a Senior Backend Engineer at ByteDance / TikTok, where he worked on core Instant Messaging (IM) infrastructure, Presence fan-out mitigation, and overseas Location platform reliability. He holds a Bachelor of Engineering (Honors) in Computer Engineering from Nanyang Technological University (NTU) on a Full Undergraduate Merit Scholarship and is a Singapore Citizen.
+Lyu Zizheng is a Singapore-based Senior Product and Systems Engineer currently working at Wise (formerly TransferWise) as a Product Engineer 3 (Tech Owner) in the Payment Defects domain. Previously, he was a Senior Backend Engineer at ByteDance / TikTok, where he worked on core Instant Messaging (IM) infrastructure, Presence fan-out mitigation, and overseas Location platform reliability. He holds a Bachelor of Engineering (Honors) in Computer Engineering from Nanyang Technological University (NTU) on a Full Undergraduate Merit Scholarship.
 
 Primary Contact & Profiles:
 - Website: https://brabalawuka.cc
@@ -64,7 +64,7 @@ Key Technical Achievements:
 ### 4. Education & Entrepreneurship
 - Nanyang Technological University (NTU):
   - B.Eng. (Honors) in Computer Engineering (Aug 2017 – May 2021).
-  - Recipient of the Full NTU Science and Engineering Undergraduate Merit Scholarship (awarded to top 1% of applicants).
+  - Recipient of the Full NTU Science and Engineering Undergraduate Merit Scholarship.
 - U-Wave (Co-Founder & Full Stack Engineer, 2019 – 2021):
   - Co-founded campus lifestyle mobile platform for Singapore tertiary students.
   - Scaled to 20,000 registered users and 4,000 DAU.
