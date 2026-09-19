@@ -22,32 +22,32 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
     return (
       <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-6 overflow-hidden">
         <div className="relative z-10 space-y-2.5 sm:space-y-4">
-          {/* 1. Header & Role Meta */}
-          <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-ink-dominant">
-                {isZh ? "03 // 字节跳动 · 即时通讯 · 2022–2023" : "03 // TIKTOK IM & SOCIAL MESSAGING · 2022–2023"}
-              </span>
-              <span className="text-[10px] sm:text-[11px] opacity-75">1 年快速晋升 · 20+ GO 微服务</span>
-            </div>
-            <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
-              <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-                Senior Backend Engineer
+          {/* 1. Header & Role */}
+          <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry">
+            <div className="flex items-baseline justify-between">
+              <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+                TikTok · ByteDance
               </h2>
+              <span className="text-[11px] sm:text-xs text-muted tabular-nums">
+                2022 – 2023 · SINGAPORE
+              </span>
+            </div>
+            <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-xs sm:text-sm text-secondary">
+              <span className="font-semibold text-ink-dominant">Senior Backend Engineer</span>
               <span className="text-muted opacity-40">·</span>
-              <span className="font-telemetry text-[11px] sm:text-xs text-muted">
-                {isZh ? "TikTok Social Messaging (IM 核心链路)" : "TikTok Social Messaging Core"}
+              <span className="text-muted text-[11px] sm:text-xs">
+                {isZh ? "社交即时通讯 (IM 核心链路) · 20+ Go 核心微服务" : "Social Messaging (IM Core) · 20+ Go Microservices"}
               </span>
             </div>
           </div>
 
           {/* 2. High-Concurrency Telemetry Bar */}
-          <div className="grid grid-cols-3 divide-x divide-border-plate/60 rounded-[2px] border border-border-plate/60 bg-surface/40 py-1.5 sm:py-2.5 text-center">
-            <div className="px-1.5 sm:px-2">
+          <div className="grid grid-cols-3 divide-x divide-border-plate/60 rounded-[2px] border border-border-plate/60 bg-surface/50 py-2 sm:py-3 text-center">
+            <div className="px-2">
               <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
                 {isZh ? "广播写放大" : "FAN-OUT STORM"}
               </span>
-              <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+              <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
                 O(1)<span className="text-xs font-normal text-ink-dominant"> cap</span>
               </div>
               <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -55,11 +55,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               </p>
             </div>
 
-            <div className="px-1.5 sm:px-2">
+            <div className="px-2">
               <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
                 {isZh ? "冷启动加载" : "COLD START"}
               </span>
-              <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+              <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
                 &lt;100<span className="text-xs font-normal text-ink-dominant">ms</span>
               </div>
               <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -67,11 +67,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               </p>
             </div>
 
-            <div className="px-1.5 sm:px-2">
+            <div className="px-2">
               <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
                 {isZh ? "核心微服务" : "MICROSERVICES"}
               </span>
-              <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+              <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
                 20<span className="text-xs font-normal text-ink-dominant">+</span>
               </div>
               <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -81,8 +81,8 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
           </div>
 
           {/* 3. Non-AI Grounded Bullets */}
-          <ul className="space-y-2 font-body text-[11px] leading-snug text-secondary sm:space-y-2.5 sm:text-sm sm:leading-relaxed">
-            <li className="flex items-start gap-2">
+          <ul className="space-y-2.5 font-body text-xs sm:text-sm leading-relaxed text-secondary">
+            <li className="flex items-start gap-2.5">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
@@ -94,7 +94,7 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               </div>
             </li>
 
-            <li className="flex items-start gap-2">
+            <li className="flex items-start gap-2.5">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
@@ -106,11 +106,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               </div>
             </li>
 
-            <li className="flex items-start gap-2">
+            <li className="flex items-start gap-2.5">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
               <div>
                 <strong className="font-semibold text-primary">
-                  {isZh ? "跨机房多主同步与冷启动 Bug 修复（Co-impl with Senior / Impl）：" : "Multi-DC Sync & Cold-Start Inbox Fix: "}
+                  {isZh ? "Multi-DC 跨机房多主同步与冷启动排障（Co-impl with Senior / Impl）：" : "Multi-DC Sync & Cold-Start Troubleshooting: "}
                 </strong>
                 {isZh
                   ? "配合资深工程师推进 SG/US/EU 三地机房多主写入与跨洋同步合规落地，设计群聊多主冲突缓解策略；排查修复重装 App 导致会话丢失的线上 P0 Bug（大群刷屏淹没单条 user chain），重构会话拉取与排序，保障冷启动首屏各会话 <100ms 完整恢复。"
@@ -118,21 +118,6 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
               </div>
             </li>
           </ul>
-
-          {/* 4. Tech Stack Pills */}
-          <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
-            <span className="font-semibold text-primary">STACK:</span>
-            {["Go", "Redis (ZSET)", "RPC Microservices", "Kafka", "Protobuf", "Latency Tuning", "High Concurrency"].map((tech, idx) => (
-              <span
-                key={tech}
-                className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${
-                  idx > 4 ? "hidden sm:inline-block" : "inline-block"
-                }`}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     );
@@ -142,32 +127,32 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
   return (
     <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-6 overflow-hidden">
       <div className="relative z-10 space-y-2.5 sm:space-y-4">
-        {/* 1. Stage Eyebrow & Role Meta */}
-        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold text-ink-dominant">
-              {isZh ? "04 // 字节跳动 · 定位与基建 · 2021–2022" : "04 // BYTEDANCE LOCATION & INFRA · 2021–2022"}
-            </span>
-            <span className="text-[10px] sm:text-[11px] opacity-75">SPOT BONUS · TOP RATING E</span>
-          </div>
-          <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
-            <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-              Backend Engineer
+        {/* 1. Header & Role */}
+        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+              ByteDance Infra
             </h2>
+            <span className="text-[11px] sm:text-xs text-muted tabular-nums">
+              2021 – 2022 · SINGAPORE
+            </span>
+          </div>
+          <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-xs sm:text-sm text-secondary">
+            <span className="font-semibold text-ink-dominant">Backend Engineer</span>
             <span className="text-muted opacity-40">·</span>
-            <span className="font-telemetry text-[11px] sm:text-xs text-muted">
-              {isZh ? "Overseas Location Platform & Core PaaS" : "Overseas Location Platform & API Gateway"}
+            <span className="text-muted text-[11px] sm:text-xs">
+              {isZh ? "海外地理位置中台与核心 API 网关 · 卓越绩效评级 Top E" : "Overseas Location Platform & Core API Gateway · Top Rating E"}
             </span>
           </div>
         </div>
 
         {/* 2. Operational Highlights Bar */}
-        <div className="grid grid-cols-3 divide-x border border-border-plate/60 rounded-[2px] divide-border-plate/60 bg-surface/40 py-1.5 sm:py-2.5 text-center">
-          <div className="px-1.5 sm:px-2">
+        <div className="grid grid-cols-3 divide-x border border-border-plate/60 rounded-[2px] divide-border-plate/60 bg-surface/50 py-2 sm:py-3 text-center">
+          <div className="px-2">
             <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "离线数据链路" : "SPARK ETL"}
             </span>
-            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
               ~100<span className="text-xs font-normal text-ink-dominant"> jobs</span>
             </div>
             <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -175,11 +160,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             </p>
           </div>
 
-          <div className="px-1.5 sm:px-2">
+          <div className="px-2">
             <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "网关重大保活" : "PEAK GATEWAY"}
             </span>
-            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
               Millions<span className="text-xs font-normal text-ink-dominant"> QPS</span>
             </div>
             <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -187,11 +172,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             </p>
           </div>
 
-          <div className="px-1.5 sm:px-2">
+          <div className="px-2">
             <span className="font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               {isZh ? "绩效与嘉奖" : "RECOGNITION"}
             </span>
-            <div className="font-display text-base font-bold text-primary tabular-nums sm:text-xl">
+            <div className="font-display text-lg font-bold text-primary tabular-nums sm:text-2xl">
               Top E
             </div>
             <p className="font-telemetry text-[8px] sm:text-[9px] text-muted">
@@ -201,8 +186,8 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
         </div>
 
         {/* 3. Non-AI Grounded Bullets */}
-        <ul className="space-y-2 font-body text-[11px] leading-snug text-secondary sm:space-y-2.5 sm:text-sm sm:leading-relaxed">
-          <li className="flex items-start gap-2">
+        <ul className="space-y-2.5 font-body text-xs sm:text-sm leading-relaxed text-secondary">
+          <li className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -214,7 +199,7 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -226,11 +211,11 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
-                {isZh ? "告警收敛重构与极端抗压韧性（7×24 Oncall 治理）：" : "Oncall Alert De-noising & Stress Handling: "}
+                {isZh ? "告警收敛重构与极端抗压韧性（7×24 Oncall 治理与排障）：" : "Oncall Alert De-noising & Stress Handling: "}
               </strong>
               {isZh
                 ? "面对身心俱疲的 7×24 Oncall 频繁警报，主动将故障分类归因、重构收敛报警规则，彻底终结报警疲劳；展现极高逆境精力与抗压能力，独挑大梁保障海外定位高可用，荣获团队 Spot Bonus 嘉奖与年度卓越绩效（Top E 评级）。"
@@ -238,21 +223,6 @@ export function StageBytedance({ mode = "im" }: StageBytedanceProps) {
             </div>
           </li>
         </ul>
-
-        {/* 4. Tech Stack Pills */}
-        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
-          <span className="font-semibold text-primary">STACK:</span>
-          {["Go", "Apache Spark", "Multi-DC", "Kafka", "RPC Framework", "Troubleshooting", "PaaS Gateway"].map((tech, idx) => (
-            <span
-              key={tech}
-              className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${
-                idx > 4 ? "hidden sm:inline-block" : "inline-block"
-              }`}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );

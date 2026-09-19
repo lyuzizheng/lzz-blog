@@ -18,28 +18,28 @@ export function StageExploration({}: StageExplorationProps) {
   return (
     <div className="relative mx-auto flex h-full w-full max-w-2xl lg:max-w-3xl flex-col justify-center px-4 py-2 sm:px-8 sm:py-6 overflow-hidden">
       <div className="relative z-10 space-y-2.5 sm:space-y-4">
-        {/* 1. Header & Role (统一为一个整合 Section) */}
-        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry text-[11px] sm:text-xs uppercase tracking-widest text-muted">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold text-ink-dominant">
-              {isZh ? "02 // 银行信贷与云原生 · 新加坡 · 2023–2024" : "02 // BANKING & CLOUD-NATIVE · SINGAPORE · 2023–2024"}
-            </span>
-            <span className="text-[10px] sm:text-[11px] opacity-75">FULL-TIME · SENIOR SWE</span>
-          </div>
-          <div className="mt-0.5 sm:mt-1 flex flex-wrap items-baseline gap-x-2 text-primary">
-            <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-              Senior Software Engineer
+        {/* 1. Header & Role */}
+        <div className="border-b border-border-plate/60 pb-2 sm:pb-3 font-telemetry">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+              MariBank &amp; Bondee
             </h2>
+            <span className="text-[11px] sm:text-xs text-muted tabular-nums">
+              2023 – 2024 · SINGAPORE
+            </span>
+          </div>
+          <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-xs sm:text-sm text-secondary">
+            <span className="font-semibold text-ink-dominant">Senior Software Engineer</span>
             <span className="text-muted opacity-40">·</span>
-            <span className="font-telemetry text-[11px] sm:text-xs text-muted">
-              MariBank (Sea Group) &amp; Bondee
+            <span className="text-muted text-[11px] sm:text-xs">
+              {isZh ? "信贷状态机事务一致性 / 创始员工自建日志架构" : "Banking Credit Consistency & Founding Logging Infra"}
             </span>
           </div>
         </div>
 
         {/* 2. Asymmetric Dual-Focus Highlight Cards */}
         <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-2 sm:p-3">
+          <div className="rounded-[2px] border border-border-plate/60 bg-surface/50 p-2 sm:p-3">
             <div className="flex items-center justify-between font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
               <span className="truncate">{isZh ? "数字银行核心信贷" : "MARIBANK"}</span>
               <span className="tabular-nums hidden sm:inline">Apr–Jul 24</span>
@@ -52,9 +52,9 @@ export function StageExploration({}: StageExplorationProps) {
             </p>
           </div>
 
-          <div className="rounded-[2px] border border-border-plate/60 bg-surface/40 p-2 sm:p-3">
+          <div className="rounded-[2px] border border-border-plate/60 bg-surface/50 p-2 sm:p-3">
             <div className="flex items-center justify-between font-telemetry text-[9px] sm:text-[10px] uppercase tracking-wider text-muted">
-              <span className="truncate">{isZh ? "云原生基础设施" : "BONDEE"}</span>
+              <span className="truncate">{isZh ? "自研日志基础设施" : "BONDEE"}</span>
               <span className="tabular-nums hidden sm:inline">Oct 23–Apr 24</span>
             </div>
             <div className="mt-0.5 sm:mt-1 font-display text-xs sm:text-sm font-bold text-primary">
@@ -67,8 +67,8 @@ export function StageExploration({}: StageExplorationProps) {
         </div>
 
         {/* 3. Unified High-Signal Bullets (Grounded, non-AI prose) */}
-        <ul className="space-y-2 font-body text-[11px] leading-snug text-secondary sm:space-y-2.5 sm:text-sm sm:leading-relaxed">
-          <li className="flex items-start gap-2">
+        <ul className="space-y-2.5 font-body text-xs sm:text-sm leading-relaxed text-secondary">
+          <li className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -80,7 +80,7 @@ export function StageExploration({}: StageExplorationProps) {
             </div>
           </li>
 
-          <li className="hidden sm:flex items-start gap-2">
+          <li className="hidden sm:flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -92,7 +92,7 @@ export function StageExploration({}: StageExplorationProps) {
             </div>
           </li>
 
-          <li className="flex items-start gap-2">
+          <li className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-dominant" />
             <div>
               <strong className="font-semibold text-primary">
@@ -104,21 +104,6 @@ export function StageExploration({}: StageExplorationProps) {
             </div>
           </li>
         </ul>
-
-        {/* 4. Tech Stack Pills */}
-        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1 font-telemetry text-[10px] sm:text-[11px] text-muted">
-          <span className="font-semibold text-primary">STACK:</span>
-          {["Java", "Spring Cloud", "Go", "Docker", "Vector", "Apache Kafka", "Elasticsearch", "Distributed State Machines"].map((tech, idx) => (
-            <span
-              key={tech}
-              className={`rounded-[2px] border border-border-plate/60 bg-surface/60 px-1 sm:px-1.5 py-0.5 ${
-                idx > 4 ? "hidden sm:inline-block" : "inline-block"
-              }`}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );
