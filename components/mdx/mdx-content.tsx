@@ -1,13 +1,17 @@
 import React from "react";
-import * as runtime from "react/jsx-runtime";
 import Link from "next/link";
 import { CodeBlock } from "./code-block";
 import { Aside } from "./aside";
 import { YouTube, Bilibili, Tweet, Spotify, Notice } from "./embeds";
 import { probePublicImage } from "@/lib/image-size";
+import { mdxModules } from "#site/mdx";
+
+type MdxComponent = React.ComponentType<{
+  components?: Record<string, unknown>;
+}>;
 
 interface MdxContentProps {
-  code: string;
+  slug: string;
   components?: Record<string, React.ComponentType<unknown>>;
   className?: string;
 }
@@ -184,28 +188,22 @@ const defaultComponents = {
   Aside,
 };
 
-export function MdxContent({ code, components = {}, className = "" }: MdxContentProps) {
-  // Evaluated during server render (SSG): the compiled MDX code string and the
-  // rendered article never enter the client bundle or the RSC payload.
-  let Component: React.ComponentType<{
-    components?: Record<string, unknown>;
-  }> | null = null;
+export async function MdxContent({ slug, components = {}, className = "" }: MdxContentProps) {
+  // The compiled MDX is a real ESM module emitted by velite under .velite/mdx/.
+  // Importing it works in every runtime — including Cloudflare Workers, where
+  // eval/new Function are forbidden — so worker-side revalidation renders the
+  // same markup as the build-time prerender.
+  let Component: MdxComponent | null = null;
   try {
-    if (code) {
-      const evaluated: unknown = new Function(code)({ ...runtime });
-      if (
-        evaluated !== null &&
-        typeof evaluated === "object" &&
-        "default" in evaluated &&
-        typeof evaluated.default === "function"
-      ) {
-        Component = evaluated.default as React.ComponentType<{
-          components?: Record<string, unknown>;
-        }>;
+    const loader = mdxModules[slug];
+    if (loader) {
+      const mod = await loader();
+      if (typeof mod.default === "function") {
+        Component = mod.default as MdxComponent;
       }
     }
   } catch (err) {
-    console.error("Failed to evaluate MDX code:", err);
+    console.error(`Failed to load MDX module for ${slug}:`, err);
   }
 
   if (!Component) {

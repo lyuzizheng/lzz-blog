@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "#site/content": ["./.velite"]
+      "#site/content": ["./.velite"],
+      "#site/mdx": ["./.velite/mdx/index.ts"]
     }
   },
   "include": [

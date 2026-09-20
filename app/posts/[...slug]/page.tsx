@@ -126,7 +126,7 @@ export default async function PostDetailPage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,40rem)_14rem] lg:justify-between">
           <div className="min-w-0">
             <div className="reader-article max-w-[40rem]">
-              <MdxContent code={post.content} />
+              <MdxContent slug={post.slug} />
             </div>
 
             {post.tags.length > 0 && (
