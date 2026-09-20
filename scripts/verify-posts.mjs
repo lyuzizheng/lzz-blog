@@ -47,6 +47,13 @@ for (const p of posts) {
     console.error(`FAIL: Post missing compiled content: ${p.slug}`);
     errors++;
   }
+  // The runtime imports .velite/mdx/<slug>.mjs (real ESM — Workers forbids eval).
+  const mdxModulePath = path.resolve(`.velite/mdx/${p.slug}.mjs`);
+  if (!fs.existsSync(mdxModulePath)) {
+    console.error(`FAIL: Missing compiled MDX module for ${p.slug}: ${mdxModulePath}`);
+    errors++;
+  }
+
 
   slugSet.add(p.slug.toLowerCase());
   permalinkSet.add(p.permalink.toLowerCase());
