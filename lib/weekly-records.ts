@@ -23,6 +23,32 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "14–20 Sep 2026",
+    dateTime: "2026-09-14",
+    atAGlance:
+      "22 PRs opened, 13 authored PRs merged (including carry-over work), 50 teammate PRs reviewed with 45 approved, 14 owned Jira items updated with one completed, 2 Confluence pages contributed to, 249 Slack messages authored, and 6 accepted work meetings totalling 5 hours 30 minutes.",
+    highlights: [
+      {
+        title: "AI-assisted operations",
+        body: "Completed cross-service reliability and contract fixes covering confidence propagation, bounded search timeouts, closed-process handling, and safer automatic case completion.",
+      },
+      {
+        title: "Workflow architecture",
+        body: "Completed the previous defect-handling milestone and began a staged redesign around process-scoped state, bounded run and result lifecycles, independent execution, cancellation cleanup, and legacy cutover. The design and first foundation landed; the remaining implementation stayed in progress.",
+      },
+      {
+        title: "Operational tooling and correctness",
+        body: "Delivered targeted fixes across access, file and event compatibility, recipient and link validation, internal navigation, and monetary precision. Of 14 currently owned Jira items updated during the week, one was completed, 12 remained in progress, and one was a planned follow-up.",
+      },
+      {
+        title: "Collaboration",
+        body: "Reviewed 50 teammate PRs and approved 45, authored 249 Slack messages, and contributed to 2 Confluence pages covering the automation roadmap and weekly record. Codex supported 16 work-focused threads; no new retained Devin CLI session was created.",
+      },
+    ],
+    calendar:
+      "The primary Google Calendar contained 17 events: 6 accepted work meetings totalling 5 hours 30 minutes, one accepted personal task lasting 30 minutes, 2 pending work invitations totalling 2 hours, one declined work invitation lasting 45 minutes, and 7 transparent working-location or personal all-day entries. Only accepted work meetings are included in the collaboration total.",
+  },
+  {
     period: "7–13 Sep 2026",
     dateTime: "2026-09-07",
     atAGlance:
