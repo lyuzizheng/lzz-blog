@@ -90,6 +90,14 @@ expect(
   "posts index (metadata + client island)",
 );
 
+// 3b. Legacy compat alias (BRAWUKA-524): /career → /resume, hash preserved
+// client-side by the browser (fragment never reaches the server).
+expect(
+  "next.config.ts",
+  (s) => s.includes('source: "/career"') && s.includes('destination: "/resume"'),
+  "career compat redirect (/career → /resume)",
+);
+
 // 4. CI gate exists.
 expectExists(".github/workflows/ci.yml", "CI workflow (typecheck+test+build)");
 

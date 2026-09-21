@@ -15,6 +15,24 @@ const nextConfig: NextConfig = {
     // Trim first-load JS: barrel imports resolve to per-module ESM.
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  // BRAWUKA-524 · /career is the legacy compat alias of /resume. Browsers
+  // inherit the request fragment across 308 (RFC 9110 §10.2.2), so deep
+  // links map 1:1: /career#wise → /resume#wise, etc. Hash never reaches the
+  // server — no extra routing code needed client-side.
+  redirects: async () => [
+    {
+      source: "/career",
+      destination: "/resume",
+      permanent: true,
+    },
+    {
+      // Next's trailingSlash redirect /career/ → /career runs first, so this
+      // edge fires on the merged platform where both rules coexist.
+      source: "/career/",
+      destination: "/resume",
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: "/:path*",
