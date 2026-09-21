@@ -78,7 +78,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
             const isActive =
               pathname === neg.href ||
               (neg.key === "blogs" && pathname.startsWith("/posts")) ||
-              (neg.key === "career" && pathname.startsWith("/resume"));
+              (neg.key === "career" && pathname.startsWith("/career"));
 
             return (
               <Link
@@ -141,7 +141,7 @@ export function SiteHeader({ showControls = true, className = "" }: SiteHeaderPr
                   const isActive =
                     pathname === neg.href ||
                     (neg.key === "blogs" && pathname.startsWith("/posts")) ||
-                    (neg.key === "career" && pathname.startsWith("/resume"));
+                    (neg.key === "career" && pathname.startsWith("/career"));
 
                   return (
                     <Link

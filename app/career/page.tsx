@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     "Kafka",
   ],
   alternates: {
-    canonical: `${siteConfig.url}/resume`,
+    canonical: `${siteConfig.url}/career`,
   },
   openGraph: {
     title: "Lyu Zizheng · 履历与工程生涯 (Career & Resume)",
     description:
       "Wise 资深产品工程师（Tech Owner），前字节跳动 TikTok IM 核心研发。5 年+ 高并发分布式系统、实时通讯与金融 AI 自动化评估平台经验。",
-    url: `${siteConfig.url}/resume`,
+    url: `${siteConfig.url}/career`,
     siteName: siteConfig.name,
     locale: "zh_CN",
     type: "profile",
@@ -64,7 +64,7 @@ export default function ResumePage() {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     name: "Lyu Zizheng · Career & Engineering Profile",
-    url: `${siteConfig.url}/resume`,
+    url: `${siteConfig.url}/career`,
     mainEntity: {
       "@type": "Person",
       name: "Lyu Zizheng",
@@ -78,7 +78,7 @@ export default function ResumePage() {
         "@type": "CollegeOrUniversity",
         name: "Nanyang Technological University",
       },
-      url: `${siteConfig.url}/resume`,
+      url: `${siteConfig.url}/career`,
       image: `${siteConfig.url}/avatar.jpg`,
       sameAs: [
         siteConfig.social.linkedin,

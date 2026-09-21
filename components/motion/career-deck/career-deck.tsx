@@ -97,7 +97,7 @@ export function CareerDeck() {
   );
 
   // Deep links: URL hash ↔ stage (#wise, #exploration, #bytedance-im, …).
-  // Hero (index 0) keeps the canonical bare /resume — no hash.
+  // Hero (index 0) keeps the canonical bare /career — no hash.
   const stageIndexFromHash = useCallback((hash: string): number => {
     const id = hash.replace(/^#/, "");
     if (id === "products" || id === "roots") return 5;

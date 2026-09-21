@@ -7,9 +7,9 @@
  *  1. Data layer: N10 ledger-stamp, N09 pipeline-flow, verified battle metrics in Wise & TikTok.
  *  2. Horizontal reel retirement: flight-path-timeline.tsx no longer has GSAP pin/horizontal scrub.
  *  3. Fixed 100dvh Snap-Deck Architecture:
- *     - app/resume/page.tsx mounts SiteHeader (100% Header Parity with /posts and site)
- *     - app/resume/page.tsx uses 100dvh container with overflow-hidden
- *     - app/resume/page.tsx keeps publication-grade ResumePrint for print mode
+ *     - app/career/page.tsx mounts SiteHeader (100% Header Parity with /posts and site)
+ *     - app/career/page.tsx uses 100dvh container with overflow-hidden
+ *     - app/career/page.tsx keeps publication-grade ResumePrint for print mode
  *  4. Vertical Snap-Deck Dynamics & Controls:
  *     - career-deck.tsx implements wheel debounce, touch swipe, and keyboard listeners (ArrowDown/Up, J/K)
  *     - career-deck.tsx implements vertical snap spring physics with Y-parallax and opacity fading
@@ -52,14 +52,14 @@ check(dossier.includes("Vector + Kafka"), "Bondee N09 must contain Vector + Kafk
 
 // 2. Horizontal reel retirement
 //    The legacy components/motion/flight-path/ wrapper has been removed;
-//    app/resume/page.tsx now mounts CareerDeck directly.
+//    app/career/page.tsx now mounts CareerDeck directly.
 
 // 3. Header parity & 100dvh layout
-const resumePage = read("app/resume/page.tsx");
-check(resumePage.includes("SiteHeader"), "app/resume/page.tsx must mount SiteHeader (100% Header Parity)");
-check(resumePage.includes("100dvh"), "app/resume/page.tsx must use 100dvh fixed container");
-check(resumePage.includes("CareerDeck"), "app/resume/page.tsx must mount CareerDeck");
-check(resumePage.includes("ResumePrint"), "app/resume/page.tsx must keep publication-grade ResumePrint for print mode");
+const resumePage = read("app/career/page.tsx");
+check(resumePage.includes("SiteHeader"), "app/career/page.tsx must mount SiteHeader (100% Header Parity)");
+check(resumePage.includes("100dvh"), "app/career/page.tsx must use 100dvh fixed container");
+check(resumePage.includes("CareerDeck"), "app/career/page.tsx must mount CareerDeck");
+check(resumePage.includes("ResumePrint"), "app/career/page.tsx must keep publication-grade ResumePrint for print mode");
 
 // 4. Vertical Snap Dynamics & Canvases
 const deck = read("components/motion/career-deck/career-deck.tsx");

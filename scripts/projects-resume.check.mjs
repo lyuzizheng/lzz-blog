@@ -19,7 +19,7 @@ const printSheet = read("components/motion/resume/resume-print.tsx");
 const printButton = read("components/motion/resume/print-button.tsx");
 const css = read("app/globals.css");
 const home = read("app/page.tsx");
-const resumePage = read("app/resume/page.tsx");
+const resumePage = read("app/career/page.tsx");
 
 // 1. Products dataset: the 3 named products, no fabricated numbers
 for (const id of ["cancan", "cafemood", "our-village"]) {
@@ -59,7 +59,7 @@ check(!home.includes("SpotlightCard") && !home.includes("Pillars"), "homepage mu
 check(home.includes("HomeAtelier"), "homepage must render the HomeAtelier single-screen film index (BRAWUKA-78)");
 check(home.includes("/posts"), "homepage must link onward to /posts");
 check(home.includes("/photography"), "homepage must link onward to /photography");
-check(home.includes("/resume"), "homepage must link onward to /resume");
+check(home.includes("/career"), "homepage must link onward to /career");
 
 if (failures.length > 0) {
   console.error("projects-resume check FAILED:");

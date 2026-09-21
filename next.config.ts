@@ -15,6 +15,24 @@ const nextConfig: NextConfig = {
     // Trim first-load JS: barrel imports resolve to per-module ESM.
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  // BRAWUKA-524 · /career is canonical; /resume is the legacy alias.
+  // Browsers inherit the request fragment across 308 (RFC 9110 §10.2.2), so
+  // deep links map 1:1: /resume#wise → /career#wise. Hash never reaches the
+  // server — no extra routing code needed client-side.
+  redirects: async () => [
+    {
+      source: "/resume",
+      destination: "/career",
+      permanent: true,
+    },
+    {
+      // Next's trailingSlash redirect /resume/ → /resume runs first, so this
+      // edge fires on the merged platform where both rules coexist.
+      source: "/resume/",
+      destination: "/career",
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: "/:path*",

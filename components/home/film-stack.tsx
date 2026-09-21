@@ -43,7 +43,7 @@ const FILMS: ReadonlyArray<FilmSpec> = [
   },
   {
     key: "career",
-    href: "/resume",
+    href: "/career",
     frameNo: "▶ 02A",
     stock: "ILFORD HP5+",
     emblem: "flight",

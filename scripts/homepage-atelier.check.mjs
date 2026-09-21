@@ -55,7 +55,7 @@ check(homeAtelier.includes("SOCIAL_LINKS"), "identity card must render the socia
 check(homeAtelier.includes("t.home.title") && homeAtelier.includes("t.home.heroSubtitle"), "identity card must render localized name + bio");
 check(exists("public/avatar.jpg"), "public/avatar.jpg must exist");
 // 4. 工作台实景（BRAWUKA-83/86）：五条路由常驻散落 + 极简工作台（底片堆层已移除）+ 无提示文案
-for (const route of ["/posts", "/resume", "/photography", "/products", "/weekly-records"]) {
+for (const route of ["/posts", "/career", "/photography", "/products", "/weekly-records"]) {
   check(filmStack.includes(`"${route}"`), `film stack must carry a frame for ${route}`);
 }
 for (const label of ["blogs", "career", "photography", "projects", "records"]) {

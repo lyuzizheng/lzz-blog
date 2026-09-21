@@ -38,13 +38,13 @@ export const metadata: Metadata = {
  *
  * 一个 100dvh 画框到底：中央 avatar + 名字 + 描述 + 社交矩阵，
  * 下方五张 35mm 负片散落，点击后各自通向独立章节页
- * （Blogs /posts · Career /resume · Photography /photography · Projects /products
+ * （Blogs /posts · Career /career · Photography /photography · Projects /products
  * · Weekly Records /weekly-records）。
  * 无 Slide、无翻页、无全局 sticky chrome。
  */
 const CHAPTER_ROUTES = [
   "/posts",
-  "/resume",
+  "/career",
   "/photography",
   "/products",
   "/weekly-records",
