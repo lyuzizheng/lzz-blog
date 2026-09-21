@@ -62,7 +62,7 @@ export function SiteFooter({ variant = "atelier" }: { variant?: "atelier" | "dar
             <Link href="/weekly-records" className="transition-colors hover:text-text-primary">
               {t.home.films.records}
             </Link>
-            <Link href="/resume" className="transition-colors hover:text-text-primary">
+            <Link href="/career" className="transition-colors hover:text-text-primary">
               {isZh ? "个人履历" : "RESUME"}
             </Link>
             <Link href="/status" className="transition-colors hover:text-text-primary">

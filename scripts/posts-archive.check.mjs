@@ -64,7 +64,7 @@ check(!archiveList.includes("t.posts.subtitle"), "marketing subtitle must not be
 check(readerChrome.includes("SiteHeader"), "reader chrome must delegate to the shared site header");
 check(siteHeader.includes("CHAPTER_NEGATIVES"), "shared site header must declare 5 chapter negatives");
 const chaptersSource = read("lib/chapters.ts");
-for (const ch of ["/posts", "/resume", "/photography", "/products", "/weekly-records"]) {
+for (const ch of ["/posts", "/career", "/photography", "/products", "/weekly-records"]) {
   check(chaptersSource.includes(`"${ch}"`), `reader header must include negative link for ${ch}`);
 }
 check(siteHeader.includes("LanguageSwitch") && siteHeader.includes("SafelightSwitch"), "shared site header must include language and safelight switches");

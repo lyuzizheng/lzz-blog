@@ -90,6 +90,19 @@ expect(
   "posts index (metadata + client island)",
 );
 
+// 3b. Career canonical (BRAWUKA-524): /career is the page, /resume 308s to it.
+// Hash maps 1:1 client-side (fragment never reaches the server).
+expect(
+  "next.config.ts",
+  (s) => s.includes('source: "/resume"') && s.includes('destination: "/career"'),
+  "career canonical redirect (/resume → /career)",
+);
+expect(
+  "app/sitemap.ts",
+  (s) => s.includes("/career") && !s.includes("/resume"),
+  "sitemap lists /career (no /resume)",
+);
+
 // 4. CI gate exists.
 expectExists(".github/workflows/ci.yml", "CI workflow (typecheck+test+build)");
 

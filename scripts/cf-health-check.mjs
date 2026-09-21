@@ -48,10 +48,16 @@ const ROUTES = [
     label: "Darkroom Photography Gallery",
   },
   {
-    path: "/resume",
+    path: "/career",
     expectedStatus: 200,
     expectedContentType: "text/html",
-    label: "Career Dossier & Resume",
+    label: "Career Dossier (/career canonical)",
+  },
+  {
+    path: "/resume",
+    expectedStatus: 308,
+    expectedContentType: "",
+    label: "Legacy /resume alias (308 to /career)",
   },
   {
     path: "/feed.xml",

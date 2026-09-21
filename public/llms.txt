@@ -2,7 +2,7 @@
 > Senior Product & Systems Engineer with 5+ years of experience architecting high-concurrency distributed systems, real-time messaging engines, financial payment platforms, and production AI evaluation infrastructure. Tech Owner at Wise (Payment Defects). Former ByteDance / TikTok engineer (IM & Platform Infrastructure). Nanyang Technological University (NTU) Computer Engineering Honors with Full Undergraduate Merit Scholarship.
 
 - Website: https://brabalawuka.cc
-- Resume: https://brabalawuka.cc/resume
+- Career: https://brabalawuka.cc/career
 - PDF Resume: https://brabalawuka.cc/resume.pdf
 - Full Context for LLMs: https://brabalawuka.cc/llms-full.txt
 - GitHub: https://github.com/Brabalawuka

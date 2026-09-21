@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLenis } from "@/components/motion/smooth-scroll-provider";
 
-const FIXED_PATHS = new Set(["/", "/resume"]);
+const FIXED_PATHS = new Set(["/", "/career"]);
 
 /**
- * Locks body scroll and pauses inertial Lenis on fixed single-screen pages (home, resume).
+ * Locks body scroll and pauses inertial Lenis on fixed single-screen pages (home, career).
  * /products is NOT fixed: on mobile its three cards stack vertically and must
  * window-scroll; locking body here clipped everything below the fold.
  * Scrollable routes (posts, photography, products, status) keep vertical scroll but
