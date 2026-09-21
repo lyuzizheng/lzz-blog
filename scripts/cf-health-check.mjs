@@ -124,6 +124,9 @@ async function probeRoute(route) {
   try {
     const response = await fetch(target, {
       method: "GET",
+      // BRAWUKA-524: 3xx expectations (e.g. legacy /resume → /career) must be
+      // observed, not followed — undici follows redirects by default.
+      redirect: "manual",
       signal: controller.signal,
       headers: {
         "User-Agent": "LZZ-Blog-DevOps-HealthCheck/1.0",
