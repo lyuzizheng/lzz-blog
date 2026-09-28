@@ -23,6 +23,32 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "21–27 Sep 2026",
+    dateTime: "2026-09-21",
+    atAGlance:
+      "220 PRs opened, 204 authored PRs merged (including carry-over work), 23 teammate PRs reviewed with 10 approved, 8 currently assigned Jira items updated with 2 completed, one Confluence page contributed to, and 6 accepted work meetings totalling 5 hours 30 minutes.",
+    highlights: [
+      {
+        title: "Workflow lifecycle and reliability",
+        body: "Completed task-based result submission, execution persistence, a missing recovery transition, and cross-service workflow routing. Linked-process cancellation, input resumption, and expanded end-to-end coverage remained in review at week end.",
+      },
+      {
+        title: "Correctness across service boundaries",
+        body: "Shipped fixes for monetary precision and cross-version workflow payload decoding, with focused regression coverage. Related follow-ups strengthened error contracts, lifecycle guards, and integration behaviour.",
+      },
+      {
+        title: "Product and platform delivery",
+        body: "Delivered a high volume of small, reviewable changes across an independent web product and supporting tools, focused on security, rate limiting, data consistency, recomputation, API behaviour, observability, and tests.",
+      },
+      {
+        title: "Collaboration",
+        body: "Reviewed 23 teammate PRs and approved 10, progressed 8 currently assigned Jira items with 2 completed and 6 still in progress, and contributed to one Confluence page. Codex supported 10 visible work-focused threads; no new retained Devin CLI session was created.",
+      },
+    ],
+    calendar:
+      "The primary Google Calendar contained 20 events: 6 accepted work meetings totalling 5 hours 30 minutes, 5 pending work invitations totalling 6 hours 30 minutes, one declined work invitation lasting 45 minutes, one 8-hour time-off entry, and 7 transparent working-location records. Only accepted work meetings are included in the collaboration total.",
+  },
+  {
     period: "14–20 Sep 2026",
     dateTime: "2026-09-14",
     atAGlance:
