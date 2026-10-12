@@ -23,6 +23,32 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "5–11 Oct 2026",
+    dateTime: "2026-10-05",
+    atAGlance:
+      "6 PRs opened, 5 authored PRs merged, one teammate PR reviewed and approved, 6 currently assigned Jira items progressed with none completed, 3 Confluence pages contributed to, 3 visible work-focused Codex threads, and 7 accepted work meetings totalling 5 hours 15 minutes.",
+    highlights: [
+      {
+        title: "AI-assisted workflow delivery",
+        body: "Shipped five reviewed changes across AI-assisted linking, runtime improvements, and deployment safeguards.",
+      },
+      {
+        title: "Ongoing reliability work",
+        body: "Progressed 6 assigned operational items, all still in progress at week end. One authored PR also remained open for follow-up.",
+      },
+      {
+        title: "Planning and collaboration",
+        body: "Contributed to 3 planning and project pages, and reviewed and approved one teammate change. Codex supported 3 visible work-focused threads.",
+      },
+      {
+        title: "Evidence coverage",
+        body: "Slack activity was unavailable because the connector required reauthentication. Retained Devin CLI history was incomplete, so no Devin total is reported.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 15 minutes. Working-location, leave, holiday, declined, pending, and duplicate shared-calendar entries were excluded from the accepted-meeting total.",
+  },
+  {
     period: "21–27 Sep 2026",
     dateTime: "2026-09-21",
     atAGlance:
