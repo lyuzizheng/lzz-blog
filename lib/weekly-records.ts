@@ -38,7 +38,7 @@ export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
       },
       {
         title: "Collaboration and follow-ups",
-        body: "Reviewed and approved 3 teammate PRs and contributed to 2 project and roadmap pages. One newly assigned backlog follow-up remained planned. Codex supported workflow design, architecture review, and platform migration work.",
+        body: "Reviewed and approved 3 teammate PRs and contributed to 2 project documentation pages. One newly assigned backlog follow-up remained planned. Codex supported workflow design, architecture review, and platform migration work.",
       },
       {
         title: "Evidence coverage",
