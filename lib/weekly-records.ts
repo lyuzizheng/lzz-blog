@@ -46,7 +46,7 @@ export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
       },
     ],
     calendar:
-      "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 30 minutes. Pending and declined invitations, leave, working locations, on-call assignments, and duplicate shared-calendar entries were excluded. Accepted invitations do not confirm attendance.",
+      "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 30 minutes. Pending and declined invitations, leave, working locations, on-call assignments, and shared-calendar entries without a user-accepted invitation were excluded. Accepted invitations do not confirm attendance.",
   },
   {
     period: "5–11 Oct 2026",
