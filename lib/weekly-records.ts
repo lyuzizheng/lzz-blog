@@ -23,6 +23,32 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "12–18 Oct 2026",
+    dateTime: "2026-10-12",
+    atAGlance:
+      "23 PRs opened, 20 authored PRs merged, 3 teammate PRs reviewed and approved, 3 Confluence pages contributed to, and 7 accepted work meetings totalling 5 hours 30 minutes.",
+    highlights: [
+      {
+        title: "Workflow safety and planning",
+        body: "Completed changes to manual fallback handling and copilot delivery plans. Three feature PRs covering rollout routing and case ownership remained open at week end.",
+      },
+      {
+        title: "Platform and product reliability",
+        body: "Modernised serialization support and strengthened privacy, diagnostic exports, and review-state consistency in an independent product. Supporting changes improved delivery checks and repository guidance.",
+      },
+      {
+        title: "Collaboration and follow-ups",
+        body: "Reviewed and approved 3 teammate PRs and contributed to 3 project and roadmap pages. One newly assigned backlog follow-up remained planned. Codex supported workflow design, architecture review, and migration planning.",
+      },
+      {
+        title: "Evidence coverage",
+        body: "Slack follow-ups and complete Devin CLI activity could not be verified, so no totals are reported for those sources. Commit activity overlapped the merged PRs and was not counted as additional delivery.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 30 minutes. Pending and declined invitations, leave, working locations, on-call assignments, and duplicate shared-calendar entries were excluded. Accepted invitations do not confirm attendance.",
+  },
+  {
     period: "5–11 Oct 2026",
     dateTime: "2026-10-05",
     atAGlance:
