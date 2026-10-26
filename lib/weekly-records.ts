@@ -26,7 +26,7 @@ export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
     period: "19–25 Oct 2026",
     dateTime: "2026-10-19",
     atAGlance:
-      "19 PRs opened, 17 authored PRs merged (including carry-over work), 28 teammate PRs reviewed with 26 approved, 13 tracked follow-ups closed, and 5 accepted work meetings totalling 3 hours.",
+      "19 PRs opened, 17 authored PRs merged (including carry-over work), 28 teammate PRs reviewed with 26 approved, 13 tracked follow-ups closed, one project documentation page updated, and 5 accepted work meetings totalling 3 hours.",
     highlights: [
       {
         title: "Workflow delivery and reliability",
