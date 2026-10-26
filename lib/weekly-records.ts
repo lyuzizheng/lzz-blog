@@ -97,6 +97,32 @@ export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
       "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 15 minutes. Working-location, leave, holiday, declined, pending, and duplicate shared-calendar entries were excluded from the accepted-meeting total.",
   },
   {
+    period: "28 Sep–4 Oct 2026",
+    dateTime: "2026-09-28",
+    atAGlance:
+      "46 PRs opened, 49 authored PRs merged (including carry-over work), 8 teammate PRs reviewed with 7 approved, 5 currently assigned Jira items progressed, 2 Confluence pages contributed to, and 6 accepted work meetings totalling 4 hours 50 minutes.",
+    highlights: [
+      {
+        title: "AI-assisted operations",
+        body: "Advanced reliability and safety across AI-assisted payment linking, including stronger validation, traceability, timeout handling, and clearer error behaviour.",
+      },
+      {
+        title: "Platform safety and maintainability",
+        body: "Delivered access-control cleanup, staging and deployment safeguards, and focused test and architecture hardening across internal tooling.",
+      },
+      {
+        title: "Ongoing follow-ups",
+        body: "Progressed 5 currently assigned operational items, all still in progress at week end, and contributed to 2 planning and design pages.",
+      },
+      {
+        title: "Collaboration",
+        body: "Reviewed 8 teammate PRs and approved 7. Slack activity was unavailable because the connector required reauthentication; Codex and Devin activity were excluded because complete counts were not available.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary calendar contained 30 events: 6 accepted work meetings totalling 4 hours 50 minutes, 16 pending work invitations totalling 26 hours, one declined invitation lasting 45 minutes, one additional busy or time-off block, and 6 transparent working-location records. Other calendars contained 15 holiday, engineering, and leave entries, which were excluded from work-meeting totals.",
+  },
+  {
     period: "21–27 Sep 2026",
     dateTime: "2026-09-21",
     atAGlance:

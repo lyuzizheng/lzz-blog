@@ -26,7 +26,7 @@ check(component.includes("AnimatePresence") && component.includes("useReducedMot
 check(component.includes("<RecordsTimeline") && component.includes("WORK_WEEKLY_RECORDS"), "Work tab must render the agent-maintained timeline");
 check(!component.includes('href="#personal"') && !component.includes('href="#work"'), "record tabs must replace the old vertically stacked anchor sections");
 check(records.includes("PERSONAL_WEEKLY_RECORDS") && records.includes("must not change"), "Personal records must remain outside the weekly agent workflow");
-check((records.match(/period: "/g) || []).length === 16, "Work timeline must contain all 16 published weekly records");
+check((records.match(/period: "/g) || []).length === 17, "Work timeline must contain all 17 published weekly records");
 check(records.includes('period: "19–25 Oct 2026"'), "timeline must include the latest published week");
 check(records.includes('period: "29 Jun–5 Jul 2026"'), "timeline must include the oldest imported week");
 check(chapters.includes('href: "/weekly-records"') && chapters.includes('frameNo: "05"'), "Weekly Records must be the fifth chapter negative");
@@ -39,4 +39,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("weekly-records OK: fifth chapter film, Personal/Work cross-fade tabs, 16 published Work entries, bilingual shell, sitemap.");
+console.log("weekly-records OK: fifth chapter film, Personal/Work cross-fade tabs, 17 published Work entries, bilingual shell, sitemap.");
