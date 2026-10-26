@@ -23,6 +23,28 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "19–25 Oct 2026",
+    dateTime: "2026-10-19",
+    atAGlance:
+      "19 PRs opened, 17 authored PRs merged (including carry-over work), 28 teammate PRs reviewed with 26 approved, 13 tracked follow-ups closed, one project documentation page updated, and 5 accepted work meetings totalling 3 hours.",
+    highlights: [
+      {
+        title: "Workflow delivery and reliability",
+        body: "Merged workflow ownership and rollout-routing changes, preserved approval paths and optional data fields during platform upgrades, and reduced misleading compatibility warnings. These changes improved consistency across service boundaries.",
+      },
+      {
+        title: "Product correctness and privacy",
+        body: "Improved authentication session handling, parser validation, and protection of committed data in independent products. Strengthened password-save consent and added regression coverage for review relationships.",
+      },
+      {
+        title: "Ongoing follow-ups",
+        body: "Case-list filtering and display changes, routing metadata, recipient-name handling, and batch-processing plans remained open at week end. Three newer assigned items were in progress, and one platform task remained planned.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary calendar contained 5 work invitations accepted by me, totalling 3 hours. Four pending invitations (4 hours 30 minutes), one declined invitation (45 minutes), working locations, on-call blocks, leave, and shared-calendar responses were excluded. Accepted invitations do not confirm attendance.",
+  },
+  {
     period: "12–18 Oct 2026",
     dateTime: "2026-10-12",
     atAGlance:
@@ -73,6 +95,32 @@ export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
     ],
     calendar:
       "All 7 visible calendars were checked. The primary Google Calendar contained 7 accepted work meetings totalling 5 hours 15 minutes. Working-location, leave, holiday, declined, pending, and duplicate shared-calendar entries were excluded from the accepted-meeting total.",
+  },
+  {
+    period: "28 Sep–4 Oct 2026",
+    dateTime: "2026-09-28",
+    atAGlance:
+      "46 PRs opened, 49 authored PRs merged (including carry-over work), 8 teammate PRs reviewed with 7 approved, 5 currently assigned Jira items progressed, 2 Confluence pages contributed to, and 6 accepted work meetings totalling 4 hours 50 minutes.",
+    highlights: [
+      {
+        title: "AI-assisted operations",
+        body: "Advanced reliability and safety across AI-assisted payment linking, including stronger validation, traceability, timeout handling, and clearer error behaviour.",
+      },
+      {
+        title: "Platform safety and maintainability",
+        body: "Delivered access-control cleanup, staging and deployment safeguards, and focused test and architecture hardening across internal tooling.",
+      },
+      {
+        title: "Ongoing follow-ups",
+        body: "Progressed 5 currently assigned operational items, all still in progress at week end, and contributed to 2 planning and design pages.",
+      },
+      {
+        title: "Collaboration",
+        body: "Reviewed 8 teammate PRs and approved 7. Slack activity was unavailable because the connector required reauthentication; Codex and Devin activity were excluded because complete counts were not available.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary calendar contained 30 events: 6 accepted work meetings totalling 4 hours 50 minutes, 16 pending work invitations totalling 26 hours, one declined invitation lasting 45 minutes, one additional busy or time-off block, and 6 transparent working-location records. Other calendars contained 15 holiday, engineering, and leave entries, which were excluded from work-meeting totals.",
   },
   {
     period: "21–27 Sep 2026",
