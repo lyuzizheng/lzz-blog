@@ -23,6 +23,28 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "19–25 Oct 2026",
+    dateTime: "2026-10-19",
+    atAGlance:
+      "19 PRs opened, 17 authored PRs merged (including carry-over work), 28 teammate PRs reviewed with 26 approved, 13 tracked follow-ups closed, and 5 accepted work meetings totalling 3 hours.",
+    highlights: [
+      {
+        title: "Workflow delivery and reliability",
+        body: "Merged workflow ownership and rollout-routing changes, preserved approval paths and optional data fields during platform upgrades, and reduced misleading compatibility warnings. These changes improved consistency across service boundaries.",
+      },
+      {
+        title: "Product correctness and privacy",
+        body: "Improved authentication session handling, parser validation, and protection of committed data in independent products. Strengthened password-save consent and added regression coverage for review relationships.",
+      },
+      {
+        title: "Ongoing follow-ups",
+        body: "Case-list filtering and display changes, routing metadata, recipient-name handling, and batch-processing plans remained open at week end. Three newer assigned items were in progress, and one platform task remained planned.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The primary calendar contained 5 work invitations accepted by me, totalling 3 hours. Four pending invitations (4 hours 30 minutes), one declined invitation (45 minutes), working locations, on-call blocks, leave, and shared-calendar responses were excluded. Accepted invitations do not confirm attendance.",
+  },
+  {
     period: "12–18 Oct 2026",
     dateTime: "2026-10-12",
     atAGlance:
