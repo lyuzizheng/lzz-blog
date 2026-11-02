@@ -23,6 +23,28 @@ export const PERSONAL_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [];
  */
 export const WORK_WEEKLY_RECORDS: ReadonlyArray<WeeklyRecord> = [
   {
+    period: "26 Oct–1 Nov 2026",
+    dateTime: "2026-10-26",
+    atAGlance:
+      "16 PRs opened, 14 authored PRs merged (including carry-over work), 10 other PRs reviewed and approved, 2 tracked follow-ups completed, and 12 accepted work invitations totalling 9 hours 30 minutes.",
+    highlights: [
+      {
+        title: "Workflow reliability",
+        body: "Merged clearer case-creation ownership, shared command handling, and end-to-end workflow tests. Completed missing-value search filters, routing metadata, and recipient-name fixes.",
+      },
+      {
+        title: "Product safety and operations",
+        body: "Strengthened search input validation, crawler preferences, browser security policy, operational alerting, and database monitoring in an independent web product.",
+      },
+      {
+        title: "Ongoing follow-ups",
+        body: "Copilot suggestions, asynchronous batch-processing design, access-role consolidation, and launch safeguards remained open at week end. Reopened work remained active and was excluded from the completion total.",
+      },
+    ],
+    calendar:
+      "All 7 visible calendars were checked. The 12 accepted work invitations totalled 9 hours 30 minutes, including a company briefing. Pending and declined invitations, working locations, leave, and duplicate calendar entries were excluded. Accepted invitations do not confirm attendance.",
+  },
+  {
     period: "12–18 Oct 2026",
     dateTime: "2026-10-12",
     atAGlance:
